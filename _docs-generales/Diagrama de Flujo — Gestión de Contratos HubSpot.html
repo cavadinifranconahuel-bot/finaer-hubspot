@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)file:///C:/Users/Usuario/OneDrive/Gesti%C3%B3n%20de%20Contratos%20-%20HubSpot/diagrama_flujo.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagrama de Flujo — Gestión de Contratos HubSpot</title>
+  <script src="./Diagrama de Flujo — Gestión de Contratos HubSpot_files/mermaid.min.js.descarga"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 40px 20px;
+      color: #2d3748;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      padding: 50px;
+    }
+    .header {
+      border-bottom: 3px solid #ff7a59;
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .logo-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #ff7a59;
+      display: inline-block;
+    }
+    .logo-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ff7a59;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #718096;
+    }
+    .meta {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #a0aec0;
+    }
+    .diagram-container {
+      margin: 30px 0;
+      padding: 30px;
+      background: #fafbfc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      overflow-x: auto;
+    }
+    .legend {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .legend-item {
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid;
+    }
+    .legend-item.trigger { border-color: #4299e1; }
+    .legend-item.process { border-color: #48bb78; }
+    .legend-item.output  { border-color: #ed8936; }
+    .legend-item h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .legend-item.trigger h4 { color: #4299e1; }
+    .legend-item.process h4 { color: #48bb78; }
+    .legend-item.output  h4 { color: #ed8936; }
+    .legend-item p { font-size: 13px; color: #4a5568; line-height: 1.5; }
+    footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #a0aec0;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="logo-area">
+      <span class="logo-dot"></span>
+      <span class="logo-label">FINAER — HubSpot CRM</span>
+    </div>
+    <h1>Gestión de Contratos</h1>
+    <p class="subtitle">Diagrama de flujo del proceso automatizado</p>
+    <p class="meta">Versión 1.0 &nbsp;·&nbsp; Abril 2026 &nbsp;·&nbsp; Propuesta de implementación</p>
+  </div>
+
+  <div class="diagram-container">
+    <div class="mermaid" data-processed="true"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="-8 -8 674.625 1270.375" style="max-width: 674.625px;" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-1776709705360"><style>#mermaid-1776709705360{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#mermaid-1776709705360 .error-icon{fill:#552222;}#mermaid-1776709705360 .error-text{fill:#552222;stroke:#552222;}#mermaid-1776709705360 .edge-thickness-normal{stroke-width:2px;}#mermaid-1776709705360 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1776709705360 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1776709705360 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1776709705360 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1776709705360 .marker{fill:#333333;stroke:#333333;}#mermaid-1776709705360 .marker.cross{stroke:#333333;}#mermaid-1776709705360 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1776709705360 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-1776709705360 .cluster-label text{fill:#333;}#mermaid-1776709705360 .cluster-label span,#mermaid-1776709705360 p{color:#333;}#mermaid-1776709705360 .label text,#mermaid-1776709705360 span,#mermaid-1776709705360 p{fill:#333;color:#333;}#mermaid-1776709705360 .node rect,#mermaid-1776709705360 .node circle,#mermaid-1776709705360 .node ellipse,#mermaid-1776709705360 .node polygon,#mermaid-1776709705360 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-1776709705360 .flowchart-label text{text-anchor:middle;}#mermaid-1776709705360 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1776709705360 .node .label{text-align:center;}#mermaid-1776709705360 .node.clickable{cursor:pointer;}#mermaid-1776709705360 .arrowheadPath{fill:#333333;}#mermaid-1776709705360 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-1776709705360 .flowchart-link{stroke:#333333;fill:none;}#mermaid-1776709705360 .edgeLabel{background-color:#e8e8e8;text-align:center;}#mermaid-1776709705360 .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}#mermaid-1776709705360 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-1776709705360 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-1776709705360 .cluster text{fill:#333;}#mermaid-1776709705360 .cluster span,#mermaid-1776709705360 p{color:#333;}#mermaid-1776709705360 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1776709705360 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-1776709705360 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="6" viewBox="0 0 10 10" class="marker flowchart" id="mermaid-1776709705360_flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart" id="mermaid-1776709705360_flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="mermaid-1776709705360_flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="mermaid-1776709705360_flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="mermaid-1776709705360_flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="mermaid-1776709705360_flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-B" id="L-A-B-0" d="M324.995,98L323.983,103.75C322.971,109.5,320.946,121,320.672,133.404C320.397,145.807,321.872,159.115,322.609,165.769L323.347,172.422"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-A" id="L-B-A-0" d="M344.311,177.69L344.979,170.158C345.648,162.627,346.984,147.563,346.793,135.152C346.602,122.74,344.884,112.98,344.025,108.1L343.166,103.22"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-C" id="L-B-C-0" d="M334.121,389.875L334.038,395.542C333.954,401.208,333.788,412.542,333.704,423.075C333.621,433.608,333.621,443.342,333.621,448.208L333.621,453.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-D" id="L-C-D-0" d="M333.621,518.375L333.621,522.542C333.621,526.708,333.621,535.042,333.621,542.492C333.621,549.942,333.621,556.508,333.621,559.792L333.621,563.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-D LE-E" id="L-D-E-0" d="M333.621,723.375L333.621,727.542C333.621,731.708,333.621,740.042,333.621,747.492C333.621,754.942,333.621,761.508,333.621,764.792L333.621,768.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F1" id="L-E-F1-0" d="M217.48,827.03L191.83,832.254C166.18,837.478,114.879,847.927,89.229,856.434C63.578,864.942,63.578,871.508,63.578,874.792L63.578,878.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F2" id="L-E-F2-0" d="M282.956,833.375L275.919,837.542C268.882,841.708,254.808,850.042,247.771,857.492C240.734,864.942,240.734,871.508,240.734,874.792L240.734,878.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F3" id="L-E-F3-0" d="M379.586,833.375L385.97,837.542C392.354,841.708,405.123,850.042,411.507,857.492C417.891,864.942,417.891,871.508,417.891,874.792L417.891,878.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F4" id="L-E-F4-0" d="M449.762,827.809L473.976,832.904C498.19,837.998,546.618,848.186,570.833,856.564C595.047,864.942,595.047,871.508,595.047,874.792L595.047,878.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F1 LE-G" id="L-F1-G-0" d="M63.578,924.375L63.578,928.542C63.578,932.708,63.578,941.042,89.475,950.483C115.372,959.924,167.165,970.473,193.062,975.747L218.959,981.022"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F2 LE-G" id="L-F2-G-0" d="M240.734,924.375L240.734,928.542C240.734,932.708,240.734,941.042,247.011,948.925C253.288,956.808,265.842,964.241,272.118,967.958L278.395,971.675"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F3 LE-G" id="L-F3-G-0" d="M417.891,924.375L417.891,928.542C417.891,932.708,417.891,941.042,412.246,948.892C406.602,956.743,395.313,964.11,389.669,967.794L384.025,971.478"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F4 LE-G" id="L-F4-G-0" d="M595.047,924.375L595.047,928.542C595.047,932.708,595.047,941.042,570.585,950.355C546.123,959.668,497.2,969.961,472.738,975.107L448.276,980.253"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-G LE-H" id="L-G-H-0" d="M333.621,1034.375L333.621,1038.542C333.621,1042.708,333.621,1051.042,333.621,1058.492C333.621,1065.942,333.621,1072.508,333.621,1075.792L333.621,1079.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-H LE-I" id="L-H-I-0" d="M244.301,1139.644L226.785,1144.599C209.27,1149.554,174.238,1159.465,156.723,1167.703C139.207,1175.942,139.207,1182.508,139.207,1185.792L139.207,1189.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-H LE-J" id="L-H-J-0" d="M333.621,1144.375L333.621,1148.542C333.621,1152.708,333.621,1161.042,333.621,1168.492C333.621,1175.942,333.621,1182.508,333.621,1185.792L333.621,1189.075"></path><path marker-end="url(#mermaid-1776709705360_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-H LE-K" id="L-H-K-0" d="M422.941,1140.816L439.021,1145.576C455.1,1150.336,487.259,1159.855,503.339,1167.898C519.418,1175.942,519.418,1182.508,519.418,1185.792L519.418,1189.075"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g transform="translate(348.3203125, 132.5)" class="edgeLabel"><g transform="translate(-9.3984375, -9.5)" class="label"><foreignobject height="19" width="18.796875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">No</span></div></foreignobject></g></g><g transform="translate(333.62109375, 423.875)" class="edgeLabel"><g transform="translate(-6.1328125, -9.5)" class="label"><foreignobject height="19" width="12.265625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">Sí</span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignobject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignobject></g></g></g><g class="nodes"><g transform="translate(333.62109375, 49)" data-id="A" data-node="true" id="flowchart-A-0" class="node default flowchart-label"><rect height="98" width="237.03125" y="-49" x="-118.515625" ry="0" rx="0" style="fill:#ebf8ff;stroke:#4299e1;stroke-width:2px;" class="basic label-container"></rect><g transform="translate(-108.515625, -39)" style="" class="label"><rect></rect><foreignobject height="78" width="217.03125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">🗂️ Deal en Pipeline de Ventas<br>―――――――――――――――<br>Solicitud A-XXXXXX<br>Etapa: Pendiente firma fianza</span></div></foreignobject></g></g><g transform="translate(333.62109375, 278.1875)" data-id="B" data-node="true" id="flowchart-B-1" class="node default flowchart-label"><polygon style="" transform="translate(-111.1875,111.1875)" class="label-container" points="111.1875,0 222.375,-111.1875 111.1875,-222.375 0,-111.1875"></polygon><g transform="translate(-72.1875, -19)" style="" class="label"><rect></rect><foreignobject height="38" width="144.375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">¿Se completa<br>fecha_firma_fianza?</span></div></foreignobject></g></g><g transform="translate(333.62109375, 488.375)" data-id="C" data-node="true" id="flowchart-C-5" class="node default flowchart-label"><rect height="60" width="278.5625" y="-30" x="-139.28125" ry="0" rx="0" style="fill:#fffbeb;stroke:#d69e2e;stroke-width:2px;" class="basic label-container"></rect><g transform="translate(-129.28125, -20)" style="" class="label"><rect></rect><foreignobject height="40" width="258.5625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">⚡ WORKFLOW<br>Contratos — Crear Deal desde Firma</span></div></foreignobject></g></g><g transform="translate(333.62109375, 645.875)" data-id="D" data-node="true" id="flowchart-D-8" class="node default flowchart-label"><rect height="155" width="309.6875" y="-77.5" x="-154.84375" ry="0" rx="0" style="fill:#f0fff4;stroke:#48bb78;stroke-width:2px;" class="basic label-container"></rect><g transform="translate(-144.84375, -67.5)" style="" class="label"><rect></rect><foreignobject height="135" width="289.6875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">📋 Crear Deal nuevo<br>en Pipeline 'Gestión de Contratos'<br>―――――――――――――――<br>• Etapa inicial: Pendiente<br>• Nombre: Contrato — {Código solicitud}<br>• Fecha firma copiada<br>• OC responsable copiado</span></div></foreignobject></g></g><g transform="translate(333.62109375, 803.375)" data-id="E" data-node="true" id="flowchart-E-10" class="node default flowchart-label"><rect height="60" width="232.28125" y="-30" x="-116.140625" ry="0" rx="0" style="fill:#faf5ff;stroke:#9f7aea;stroke-width:2px;" class="basic label-container"></rect><g transform="translate(-106.140625, -20)" style="" class="label"><rect></rect><foreignobject height="40" width="212.28125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">🔄 Asignación rotativa<br>entre ejecutivos de contratos</span></div></foreignobject></g></g><g transform="translate(63.578125, 903.875)" data-id="F1" data-node="true" id="flowchart-F1-12" class="node default flowchart-label"><rect height="41" width="127.15625" y="-20.5" x="-63.578125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-53.578125, -10.5)" style="" class="label"><rect></rect><foreignobject height="21" width="107.15625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">👤 Ejecutivo 1</span></div></foreignobject></g></g><g transform="translate(240.734375, 903.875)" data-id="F2" data-node="true" id="flowchart-F2-14" class="node default flowchart-label"><rect height="41" width="127.15625" y="-20.5" x="-63.578125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-53.578125, -10.5)" style="" class="label"><rect></rect><foreignobject height="21" width="107.15625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">👤 Ejecutivo 2</span></div></foreignobject></g></g><g transform="translate(417.890625, 903.875)" data-id="F3" data-node="true" id="flowchart-F3-16" class="node default flowchart-label"><rect height="41" width="127.15625" y="-20.5" x="-63.578125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-53.578125, -10.5)" style="" class="label"><rect></rect><foreignobject height="21" width="107.15625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">👤 Ejecutivo 3</span></div></foreignobject></g></g><g transform="translate(595.046875, 903.875)" data-id="F4" data-node="true" id="flowchart-F4-18" class="node default flowchart-label"><rect height="41" width="127.15625" y="-20.5" x="-63.578125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-53.578125, -10.5)" style="" class="label"><rect></rect><foreignobject height="21" width="107.15625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">👤 Ejecutivo 4</span></div></foreignobject></g></g><g transform="translate(333.62109375, 1004.375)" data-id="G" data-node="true" id="flowchart-G-23" class="node default flowchart-label"><rect height="60" width="218.9375" y="-30" x="-109.46875" ry="0" rx="0" style="fill:#fff5f5;stroke:#fc8181;stroke-width:2px;" class="basic label-container"></rect><g transform="translate(-99.46875, -20)" style="" class="label"><rect></rect><foreignobject height="40" width="198.9375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">🔔 Notificación automática<br>al ejecutivo asignado</span></div></foreignobject></g></g><g transform="translate(333.62109375, 1114.375)" data-id="H" data-node="true" id="flowchart-H-25" class="node default flowchart-label"><rect height="60" width="178.640625" y="-30" x="-89.3203125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-79.3203125, -20)" style="" class="label"><rect></rect><foreignobject height="40" width="158.640625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">📌 Ejecutivo gestiona<br>el contrato</span></div></foreignobject></g></g><g transform="translate(139.20703125, 1224.375)" data-id="I" data-node="true" id="flowchart-I-27" class="node default flowchart-label"><rect height="60" width="162.328125" y="-30" x="-81.1640625" ry="0" rx="0" style="fill:#ebf8ff;stroke:#4299e1;" class="basic label-container"></rect><g transform="translate(-71.1640625, -20)" style="" class="label"><rect></rect><foreignobject height="40" width="142.328125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">PENDIENTE<br>⏳ Sin intervención</span></div></foreignobject></g></g><g transform="translate(333.62109375, 1224.375)" data-id="J" data-node="true" id="flowchart-J-29" class="node default flowchart-label"><rect height="60" width="126.5" y="-30" x="-63.25" ry="0" rx="0" style="fill:#fffbeb;stroke:#d69e2e;" class="basic label-container"></rect><g transform="translate(-53.25, -20)" style="" class="label"><rect></rect><foreignobject height="40" width="106.5"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">EN GESTIÓN<br>🔧 Trabajando</span></div></foreignobject></g></g><g transform="translate(519.41796875, 1224.375)" data-id="K" data-node="true" id="flowchart-K-31" class="node default flowchart-label"><rect height="60" width="145.09375" y="-30" x="-72.546875" ry="0" rx="0" style="fill:#f0fff4;stroke:#48bb78;stroke-width:2px;" class="basic label-container"></rect><g transform="translate(-62.546875, -20)" style="" class="label"><rect></rect><foreignobject height="40" width="125.09375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">EMITIDO<br>✅ Contrato listo</span></div></foreignobject></g></g></g></g></g></svg></div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item trigger">
+      <h4>Disparador</h4>
+      <p>La carga de la fecha de firma en el Deal de ventas activa el flujo automáticamente.</p>
+    </div>
+    <div class="legend-item process">
+      <h4>Automatización</h4>
+      <p>Un workflow de HubSpot crea el Deal de contratos, asigna al ejecutivo y envía la notificación.</p>
+    </div>
+    <div class="legend-item output">
+      <h4>Gestión manual</h4>
+      <p>El ejecutivo asignado avanza el Deal entre las etapas del pipeline según el estado real del contrato.</p>
+    </div>
+  </div>
+
+  <footer>
+    FINAER &nbsp;·&nbsp; Proyecto HubSpot — Gestión de Contratos &nbsp;·&nbsp; 2026
+  </footer>
+
+</div>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { curve: 'basis', padding: 20 } });
+</script>
+
+
+<div class="mermaidTooltip" style="opacity: 0;"></div></body></html>

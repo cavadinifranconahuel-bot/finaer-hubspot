@@ -1,0 +1,230 @@
+{
+  "id": "4092196041",
+  "isEnabled": true,
+  "flowType": "WORKFLOW",
+  "revisionId": "9",
+  "name": "Visitas Comerciales - Crear Deal desde Formulario",
+  "createdAt": "2026-04-15T14:27:15.202Z",
+  "updatedAt": "2026-04-17T19:18:40.470Z",
+  "startActionId": "2",
+  "nextAvailableActionId": "3",
+  "actions": [
+    {
+      "actionId": "1",
+      "actionTypeVersion": 0,
+      "actionTypeId": "0-14",
+      "fields": {
+        "object_type_id": "0-3",
+        "properties": [
+          {
+            "targetProperty": "dealname",
+            "value": {
+              "staticValue": "Visita - {{ enrolled_object.visita_empresa_nombre }} ({{ enrolled_object.visita_estado_cartera }})",
+              "type": "STATIC_VALUE"
+            }
+          },
+          {
+            "targetProperty": "dealstage",
+            "value": {
+              "staticValue": "4921967837",
+              "type": "STATIC_VALUE"
+            }
+          },
+          {
+            "targetProperty": "visita_empresa_id",
+            "value": {
+              "propertyName": "visita_empresa_id",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_estado_cartera",
+            "value": {
+              "propertyName": "visita_estado_cartera",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_resultado_gestion",
+            "value": {
+              "propertyName": "visita_resultado_gestion",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_proxima_accion",
+            "value": {
+              "propertyName": "visita_proxima_accion",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_satisfaccion",
+            "value": {
+              "propertyName": "visita_satisfaccion",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_nivel_interes",
+            "value": {
+              "propertyName": "visita_nivel_interes",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_vigencia_cliente",
+            "value": {
+              "propertyName": "visita_vigencia_cliente",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_potencial_comercial",
+            "value": {
+              "propertyName": "visita_potencial_comercial",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_empresa_nombre",
+            "value": {
+              "propertyName": "visita_empresa_nombre",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_fecha_proxima_presencial",
+            "value": {
+              "propertyName": "visita_fecha_proxima_presencial",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_fecha_seguimiento",
+            "value": {
+              "propertyName": "visita_fecha_seguimiento",
+              "type": "OBJECT_PROPERTY"
+            }
+          },
+          {
+            "targetProperty": "visita_descripcion",
+            "value": {
+              "propertyName": "visita_descripcion",
+              "type": "OBJECT_PROPERTY"
+            }
+          }
+        ],
+        "associations": [
+          {
+            "target": {
+              "associationCategory": "HUBSPOT_DEFINED",
+              "associationTypeId": 3
+            },
+            "value": {
+              "type": "ENROLLED_OBJECT"
+            }
+          }
+        ],
+        "use_explicit_associations": "true"
+      },
+      "type": "SINGLE_CONNECTION"
+    },
+    {
+      "actionId": "2",
+      "actionTypeVersion": 0,
+      "actionTypeId": "0-1",
+      "connection": {
+        "edgeType": "STANDARD",
+        "nextActionId": "1"
+      },
+      "fields": {
+        "delta": "2",
+        "time_unit": "MINUTES"
+      },
+      "type": "SINGLE_CONNECTION"
+    }
+  ],
+  "enrollmentCriteria": {
+    "shouldReEnroll": true,
+    "listFilterBranch": {
+      "filterBranches": [
+        {
+          "filterBranches": [],
+          "filters": [
+            {
+              "formId": "87e8826e-d3ee-40b9-8c6f-43c7f7bc79e0",
+              "operator": "FILLED_OUT",
+              "filterType": "FORM_SUBMISSION"
+            }
+          ],
+          "filterBranchType": "AND",
+          "filterBranchOperator": "AND"
+        },
+        {
+          "filterBranches": [],
+          "filters": [
+            {
+              "formId": "d6c9f335-6294-49aa-b45a-d438c0cf3b01",
+              "operator": "FILLED_OUT",
+              "filterType": "FORM_SUBMISSION"
+            }
+          ],
+          "filterBranchType": "AND",
+          "filterBranchOperator": "AND"
+        },
+        {
+          "filterBranches": [],
+          "filters": [
+            {
+              "formId": "911cfc9b-d7ed-475e-9996-5a5eff800d8d",
+              "operator": "FILLED_OUT",
+              "filterType": "FORM_SUBMISSION"
+            }
+          ],
+          "filterBranchType": "AND",
+          "filterBranchOperator": "AND"
+        },
+        {
+          "filterBranches": [],
+          "filters": [
+            {
+              "formId": "c364bc13-5096-4ebe-94b2-0dc189b4dcc7",
+              "operator": "FILLED_OUT",
+              "filterType": "FORM_SUBMISSION"
+            }
+          ],
+          "filterBranchType": "AND",
+          "filterBranchOperator": "AND"
+        },
+        {
+          "filterBranches": [],
+          "filters": [
+            {
+              "formId": "5d66904e-89fc-4db1-917c-f0c2e3c70ede",
+              "operator": "FILLED_OUT",
+              "filterType": "FORM_SUBMISSION"
+            }
+          ],
+          "filterBranchType": "AND",
+          "filterBranchOperator": "AND"
+        }
+      ],
+      "filters": [],
+      "filterBranchType": "OR",
+      "filterBranchOperator": "OR"
+    },
+    "unEnrollObjectsNotMeetingCriteria": false,
+    "reEnrollmentTriggersFilterBranches": [],
+    "type": "LIST_BASED"
+  },
+  "timeWindows": [],
+  "blockedDates": [],
+  "customProperties": {},
+  "dataSources": [],
+  "crmObjectCreationStatus": "COMPLETE",
+  "suppressionListIds": [],
+  "canEnrollFromSalesforce": false,
+  "objectTypeId": "0-1",
+  "type": "CONTACT_FLOW"
+}

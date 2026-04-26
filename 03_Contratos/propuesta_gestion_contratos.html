@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta — Gestión de Contratos en HubSpot</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+      background: #e8e8e8;
+      padding: 40px 20px;
+      color: #222;
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+      padding: 80px 90px;
+    }
+    /* ─── Portada ─────────────────────────────────────── */
+    .cover {
+      text-align: center;
+      padding: 60px 0 80px;
+      border-bottom: 2px solid #ff7a59;
+      margin-bottom: 60px;
+    }
+    .cover .tag {
+      display: inline-block;
+      background: #ff7a59;
+      color: #fff;
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 3px;
+      margin-bottom: 24px;
+    }
+    .cover h1 {
+      font-size: 28pt;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .cover h2 {
+      font-size: 14pt;
+      font-weight: 400;
+      color: #718096;
+      margin-bottom: 40px;
+    }
+    .cover .meta-grid {
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      gap: 8px 32px;
+      text-align: left;
+      font-size: 10pt;
+      color: #4a5568;
+    }
+    .cover .meta-grid strong { color: #1a202c; }
+
+    /* ─── Tipografía general ──────────────────────────── */
+    h2 {
+      font-size: 14pt;
+      font-weight: 700;
+      color: #1a202c;
+      margin-top: 40px;
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #ff7a59;
+    }
+    h3 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #2d3748;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    p { margin-bottom: 12px; color: #333; }
+    ul, ol { margin: 0 0 14px 22px; }
+    li { margin-bottom: 5px; color: #333; }
+
+    /* ─── Callout / highlight box ──────────────────────── */
+    .callout {
+      background: #ebf8ff;
+      border-left: 4px solid #4299e1;
+      padding: 14px 18px;
+      border-radius: 0 6px 6px 0;
+      margin: 20px 0;
+      font-size: 10.5pt;
+      color: #2c5282;
+    }
+    .callout.warning {
+      background: #fffbeb;
+      border-color: #d69e2e;
+      color: #744210;
+    }
+    .callout.success {
+      background: #f0fff4;
+      border-color: #48bb78;
+      color: #22543d;
+    }
+
+    /* ─── Tablas ───────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 10pt;
+    }
+    thead tr { background: #2d3748; color: #fff; }
+    thead th { padding: 10px 14px; text-align: left; font-weight: 600; }
+    tbody tr:nth-child(even) { background: #f7fafc; }
+    tbody td { padding: 9px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 9pt;
+      font-weight: 600;
+    }
+    .badge.verde  { background: #c6f6d5; color: #22543d; }
+    .badge.azul   { background: #bee3f8; color: #2c5282; }
+    .badge.naranja{ background: #feebc8; color: #7b341e; }
+    .badge.gris   { background: #e2e8f0; color: #4a5568; }
+
+    /* ─── Pipeline visual ─────────────────────────────── */
+    .pipeline {
+      display: flex;
+      gap: 0;
+      margin: 20px 0 28px;
+      overflow-x: auto;
+    }
+    .stage {
+      flex: 1;
+      text-align: center;
+      padding: 14px 10px;
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-right: none;
+      font-size: 10pt;
+    }
+    .stage:first-child { border-radius: 6px 0 0 6px; }
+    .stage:last-child  { border-radius: 0 6px 6px 0; border-right: 1px solid #e2e8f0; }
+    .stage .icon { font-size: 18px; display: block; margin-bottom: 5px; }
+    .stage .label { font-weight: 700; color: #2d3748; font-size: 10pt; display: block; }
+    .stage .desc { font-size: 8.5pt; color: #718096; margin-top: 3px; }
+    .stage.active { background: #ebf8ff; border-color: #4299e1; }
+    .stage.done   { background: #f0fff4; border-color: #48bb78; }
+
+    /* ─── KPI cards ────────────────────────────────────── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 16px 0 28px;
+    }
+    .kpi-card {
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: #fafbfc;
+    }
+    .kpi-card .kpi-num { font-size: 20pt; font-weight: 700; color: #ff7a59; }
+    .kpi-card .kpi-label { font-size: 10pt; font-weight: 600; color: #2d3748; }
+    .kpi-card .kpi-desc { font-size: 9pt; color: #718096; margin-top: 4px; }
+
+    /* ─── Sección numerada ────────────────────────────── */
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #ff7a59;
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 10pt;
+      margin-right: 10px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    .step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 14px;
+      background: #fafbfc;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .step-row .step-num {
+      background: #ff7a59;
+      color: #fff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11pt;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-row .step-content h4 { font-size: 11pt; font-weight: 700; color: #2d3748; margin-bottom: 4px; }
+    .step-row .step-content p { margin-bottom: 0; font-size: 10pt; }
+
+    /* ─── Footer ──────────────────────────────────────── */
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 9pt;
+      color: #a0aec0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { box-shadow: none; padding: 60px 70px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PORTADA -->
+  <div class="cover">
+    <span class="tag">Propuesta de implementación</span>
+    <h1>Gestión de Contratos<br>en HubSpot</h1>
+    <h2>Automatización del proceso de emisión y control de contratos</h2>
+    <div class="meta-grid">
+      <span><strong>Organización:</strong></span><span>FINAER</span>
+      <span><strong>Área:</strong></span><span>Equipo de Gestión de Contratos</span>
+      <span><strong>Plataforma:</strong></span><span>HubSpot CRM — Portal EU1 145725856</span>
+      <span><strong>Versión:</strong></span><span>1.0 — Abril 2026</span>
+      <span><strong>Estado:</strong></span><span>Propuesta para aprobación</span>
+    </div>
+  </div>
+
+
+  <!-- 1. RESUMEN EJECUTIVO -->
+  <h2>1. Resumen ejecutivo</h2>
+  <p>
+    El equipo de gestión de contratos de FINAER administra actualmente el control y emisión de contratos de forma manual mediante una hoja de cálculo. Este documento propone migrar ese proceso a HubSpot CRM, aprovechando la integración ya existente con el sistema administrativo y los registros de solicitudes que ya operan en la plataforma.
+  </p>
+  <div class="callout success">
+    <strong>Objetivo principal:</strong> Reemplazar la planilla manual por un pipeline nativo de HubSpot que asigne contratos automáticamente, notifique al ejecutivo responsable y genere métricas de gestión en tiempo real — sin agregar carga operativa al equipo.
+  </div>
+  <p>
+    La propuesta prioriza la adopción sobre la complejidad: el proceso replicado en HubSpot es intencionalmente similar al que el equipo ya conoce, con los mismos campos y las mismas responsabilidades, pero con las ventajas de la automatización y la trazabilidad.
+  </p>
+
+
+  <!-- 2. SITUACIÓN ACTUAL -->
+  <h2>2. Situación actual</h2>
+  <h3>Proceso vigente</h3>
+  <p>
+    Cuando una solicitud alcanza la etapa de firma, el equipo de contratos recibe la información por canales informales y registra manualmente en una hoja de cálculo compartida los siguientes datos:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Campo</th>
+        <th>Descripción</th>
+        <th>Estado actual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Fecha</td>
+        <td>Fecha de ingreso al equipo</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>OC</td>
+        <td>Ejecutivo comercial responsable</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>Controlador</td>
+        <td>Ejecutivo de contratos asignado</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>Código solicitud</td>
+        <td>Código A-XXXXXX del sistema admin</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>Nombre solicitante</td>
+        <td>Nombre del garante / solicitante</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>Fecha firma</td>
+        <td>Fecha y hora de firma del contrato</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>Controlado</td>
+        <td>Si el contrato fue controlado (Sí/No)</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>Observaciones</td>
+        <td>Notas libres del ejecutivo</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+      <tr>
+        <td>Categoría</td>
+        <td>Tipo de contrato</td>
+        <td><span class="badge gris">Manual</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Problemas del proceso actual</h3>
+  <ul>
+    <li>Sin asignación automática: la distribución de trabajo depende de coordinación manual.</li>
+    <li>Sin notificaciones: el ejecutivo debe estar atento a la planilla para detectar nuevos contratos.</li>
+    <li>Sin métricas: no es posible medir volumen, tiempos o carga por persona de forma sistemática.</li>
+    <li>Riesgo de pérdida de información: una fila mal completada o no registrada genera brechas.</li>
+    <li>Duplicación de datos: la información ya existe en el sistema admin y en HubSpot, pero se re-ingresa manualmente.</li>
+  </ul>
+
+
+  <!-- 3. SOLUCIÓN PROPUESTA -->
+  <h2>3. Solución propuesta</h2>
+  <h3>Pipeline "Gestión de Contratos" en HubSpot</h3>
+  <p>
+    Se crea un nuevo pipeline de negocios (Deals) en HubSpot específico para el equipo de contratos. Cada contrato a gestionar es un registro independiente, creado automáticamente cuando la fecha de firma es cargada en la solicitud original.
+  </p>
+
+  <div class="pipeline">
+    <div class="stage active">
+      <span class="icon">⏳</span>
+      <span class="label">Pendiente</span>
+      <span class="desc">Recién asignado,<br>sin intervención</span>
+    </div>
+    <div class="stage active">
+      <span class="icon">🔧</span>
+      <span class="label">En gestión</span>
+      <span class="desc">Ejecutivo<br>trabajando</span>
+    </div>
+    <div class="stage done">
+      <span class="icon">✅</span>
+      <span class="label">Emitido</span>
+      <span class="desc">Contrato listo<br>y controlado</span>
+    </div>
+    <div class="stage">
+      <span class="icon">🚫</span>
+      <span class="label">Baja</span>
+      <span class="desc">Cancelado /<br>no procede</span>
+    </div>
+  </div>
+
+  <h3>Campos del registro de contrato</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Campo</th>
+        <th>Tipo</th>
+        <th>Origen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Nombre del contrato</td>
+        <td>Texto</td>
+        <td><span class="badge verde">Automático</span> — generado por workflow</td>
+      </tr>
+      <tr>
+        <td>Ejecutivo asignado</td>
+        <td>Usuario HubSpot</td>
+        <td><span class="badge verde">Automático</span> — asignación rotativa</td>
+      </tr>
+      <tr>
+        <td>Fecha firma fianza</td>
+        <td>Fecha</td>
+        <td><span class="badge verde">Automático</span> — copiada del Deal de ventas</td>
+      </tr>
+      <tr>
+        <td>Código de solicitud</td>
+        <td>Texto</td>
+        <td><span class="badge verde">Automático</span> — copiado del Deal de ventas</td>
+      </tr>
+      <tr>
+        <td>OC responsable</td>
+        <td>Texto</td>
+        <td><span class="badge verde">Automático</span> — copiado del Deal de ventas</td>
+      </tr>
+      <tr>
+        <td>Categoría del contrato</td>
+        <td>Selección</td>
+        <td><span class="badge azul">Manual</span> — el ejecutivo selecciona</td>
+      </tr>
+      <tr>
+        <td>Observaciones</td>
+        <td>Texto libre</td>
+        <td><span class="badge azul">Manual</span> — el ejecutivo completa</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Principio de adopción:</strong> El equipo completa únicamente los campos que hoy ya completa en la planilla. El resto se llena automáticamente desde los datos que ya existen en HubSpot.
+  </div>
+
+
+  <!-- 4. AUTOMATIZACIÓN -->
+  <h2>4. Automatización</h2>
+  <p>El flujo completo se implementa con un único workflow en HubSpot:</p>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Disparador: fecha de firma cargada</h4>
+      <p>Cuando se completa la propiedad <em>Fecha firma fianza</em> en un Deal del Pipeline de Ventas, el workflow se activa automáticamente.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Creación del Deal de contratos</h4>
+      <p>Se crea un nuevo Deal en el pipeline "Gestión de Contratos", en etapa "Pendiente", con los datos del Deal de ventas ya cargados.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Asignación rotativa al equipo</h4>
+      <p>HubSpot distribuye el nuevo contrato automáticamente entre los ejecutivos del equipo de contratos, en rotación equitativa.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Notificación al ejecutivo asignado</h4>
+      <p>El ejecutivo recibe una notificación inmediata en HubSpot (y opcionalmente por email) con el link directo al registro del contrato.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <h4>Gestión y cierre</h4>
+      <p>El ejecutivo avanza el Deal entre las etapas del pipeline a medida que gestiona el contrato. Al finalizar, lo mueve a "Emitido".</p>
+    </div>
+  </div>
+
+
+  <!-- 5. MÉTRICAS -->
+  <h2>5. Métricas y KPIs disponibles</h2>
+  <p>Con este modelo, los reportes nativos de HubSpot permiten medir automáticamente:</p>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num">📊</div>
+      <div class="kpi-label">Volumen por período</div>
+      <div class="kpi-desc">Contratos creados por semana, mes o ejecutivo comercial (OC).</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">⚖️</div>
+      <div class="kpi-label">Carga por ejecutivo</div>
+      <div class="kpi-desc">Contratos asignados y pendientes por cada miembro del equipo de contratos.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">⏱️</div>
+      <div class="kpi-label">Tiempo de gestión</div>
+      <div class="kpi-desc">Tiempo promedio desde la asignación hasta la emisión del contrato.</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">📋</div>
+      <div class="kpi-label">Stock pendiente</div>
+      <div class="kpi-desc">Contratos en estado Pendiente o En gestión en tiempo real.</div>
+    </div>
+  </div>
+
+
+  <!-- 6. PLAN DE IMPLEMENTACIÓN -->
+  <h2>6. Plan de implementación</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tarea</th>
+        <th>Responsable</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Confirmar valores del campo "Categoría" con el equipo</td>
+        <td>Franco Cavadini</td>
+        <td><span class="badge naranja">Pendiente</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Confirmar usuarios HubSpot del equipo de contratos</td>
+        <td>Franco Cavadini</td>
+        <td><span class="badge naranja">Pendiente</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Crear pipeline "Gestión de Contratos" con sus etapas</td>
+        <td>Claude / HubSpot Admin</td>
+        <td><span class="badge gris">A iniciar</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Crear propiedades: categoría y observaciones en Deals</td>
+        <td>Claude / HubSpot Admin</td>
+        <td><span class="badge gris">A iniciar</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Crear workflow de automatización completo</td>
+        <td>Claude / HubSpot Admin</td>
+        <td><span class="badge gris">A iniciar</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Prueba piloto con 3–5 contratos reales</td>
+        <td>Equipo de contratos</td>
+        <td><span class="badge gris">A iniciar</span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Ajustes post-piloto y activación definitiva</td>
+        <td>Franco Cavadini</td>
+        <td><span class="badge gris">A iniciar</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- 7. CRITERIOS DE ÉXITO -->
+  <h2>7. Criterios de éxito</h2>
+  <ul>
+    <li>El equipo abandona la planilla de cálculo como herramienta principal de seguimiento.</li>
+    <li>Cada contrato que llega a firma genera automáticamente un registro en HubSpot, sin intervención manual del OC ni del equipo de contratos.</li>
+    <li>Los ejecutivos completan solo 2 campos por contrato: categoría y observaciones.</li>
+    <li>El tiempo de notificación desde la carga de la fecha de firma hasta que el ejecutivo recibe el aviso es inferior a 2 minutos.</li>
+    <li>Se puede obtener el stock de contratos pendientes en tiempo real sin consultar a nadie.</li>
+  </ul>
+
+  <div class="callout warning">
+    <strong>Nota sobre adopción:</strong> El éxito de este proyecto depende directamente de que el proceso en HubSpot sea igual o más simple que la planilla. Si en alguna etapa del piloto se detecta fricción operativa, se ajusta el diseño antes de la activación masiva.
+  </div>
+
+
+  <footer>
+    <span>FINAER &nbsp;·&nbsp; Propuesta de implementación — Gestión de Contratos en HubSpot</span>
+    <span>Versión 1.0 &nbsp;·&nbsp; Abril 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

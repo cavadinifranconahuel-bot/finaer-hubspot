@@ -1,0 +1,3745 @@
+{
+  "fecha": "2026-04-24T17:45:22.384Z",
+  "resumen": {
+    "entradas_procesadas": 188,
+    "actualizados": 145,
+    "no_encontrados": 13,
+    "errores": 30,
+    "tickets_actualizados_total": 208
+  },
+  "revisar_manualmente": [
+    {
+      "razon": "Dos personas distintas con el mismo expediente 12186 — verificar si es correcto",
+      "entradas": [
+        "Pedro Ignacio Flores Flores - 12186",
+        "David Maximiliano Ezequiel San Giovanni - 12186"
+      ]
+    },
+    {
+      "razon": "Mismo expediente 10088 con dos variantes de nombre — verificar cuál es el nombre real en HubSpot",
+      "entradas": [
+        "VIVIAN CELESTE CAMUS - 10088",
+        "Camus Viviana - 10088"
+      ]
+    },
+    {
+      "razon": "Mismo expediente 12891 con dos variantes del nombre — verificar cuál es el correcto",
+      "entradas": [
+        "Lautaro Zanabria - 12891",
+        "Lautaro Dabel Zanabria - 12891"
+      ]
+    },
+    {
+      "razon": "Nombre incorrecto según usuario — OMITIDO del script, gestionar a mano",
+      "entradas": [
+        "Pablo enrique Acosta Pereyra - 10958 (el expediente 10958 ya está asignado a Ricardo Javier Facundo Toffoletti)"
+      ]
+    },
+    {
+      "razon": "Nombre incompleto \"PIZZA\" — OMITIDO, se usa \"Barbara Gisele Pizza - 12839\" en su lugar",
+      "entradas": [
+        "PIZZA - 12839"
+      ]
+    }
+  ],
+  "no_encontrados": [
+    "Susana Beatriz Lopez Gonzalez — exp. 13064",
+    "David Maximiliano Ezequiel San Giovanni — exp. 12186",
+    "Argentino Alberto Giménez — exp. 12756",
+    "Guido Marcelo Paz — exp. 10522",
+    "Dardo Daniel Alves — exp. 12952",
+    "Rosa Noemi Del Valle Bielik — exp. 12443",
+    "Guillermo Ariel Benítez — exp. 12948",
+    "Myrian Laura Vargas — exp. 11162",
+    "Esteban Ariel Ruggirello — exp. 11100",
+    "Damaris Ailen Sotelo Cabrera — exp. 12907",
+    "Camus Viviana — exp. 10088",
+    "Mauro Manuel Miguel Martinez — exp. 12834",
+    "Malcolm Ariel Gularte — exp. 12851"
+  ],
+  "errores_detalle": [
+    {
+      "nombre": "Romina Mariel Silva",
+      "expediente": "10929",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410867832045",
+          "nombre_en_ticket": "Romina Mariel Silva",
+          "subject": "Romina Mariel Silva - 10929",
+          "expedienteAnterior": "10929",
+          "expedienteNuevo": "10929",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414705140943",
+          "nombre_en_ticket": "Romina Mariel Silva",
+          "subject": "Romina Mariel Silva - 10929",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10929",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Daniel FERNANDEZ",
+      "expediente": "12940",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "409757154492",
+          "nombre_en_ticket": "Daniel Fernandez",
+          "subject": "\tDaniel Fernandez-12940",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12940",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411727275252",
+          "nombre_en_ticket": "Daniel Fernandez",
+          "subject": "Daniel Fernandez - 12940",
+          "expedienteAnterior": "12940",
+          "expedienteNuevo": "12940",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414292117728",
+          "nombre_en_ticket": "Daniel FERNANDEZ",
+          "subject": "Daniel FERNANDEZ - 12940",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12940",
+          "updateOk": false
+        },
+        {
+          "ticketId": "414791602400",
+          "nombre_en_ticket": "Daniel FERNANDEZ",
+          "subject": "Daniel FERNANDEZ - 12940",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12940",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Alan Matías Ibarra",
+      "expediente": "11599",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413989791951",
+          "nombre_en_ticket": "Alan Matías Ibarra",
+          "subject": "Alan Matías Ibarra - 11599",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11599",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414797101297",
+          "nombre_en_ticket": "Alan Matías Ibarra",
+          "subject": "Alan Matías Ibarra - 11599",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11599",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Erika Yamila ALIANO",
+      "expediente": "12965",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "412336428231",
+          "nombre_en_ticket": "Erika Yamila ALIANO",
+          "subject": "Erika Yamila ALIANO - 12965",
+          "expedienteAnterior": "12965",
+          "expedienteNuevo": "12965",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414719372476",
+          "nombre_en_ticket": "Erika Yamila ALIANO",
+          "subject": "Erika Yamila ALIANO - 12965",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12965",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "JUAN PABLO DEBIASSI",
+      "expediente": "11389",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414277129406",
+          "nombre_en_ticket": "JUAN PABLO DEBIASSI",
+          "subject": "JUAN PABLO DEBIASSI - 11389",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11389",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414326907100",
+          "nombre_en_ticket": "JUAN PABLO DEBIASSI",
+          "subject": "JUAN PABLO DEBIASSI - 32.660.840",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11389",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "VIVIAN CELESTE CAMUS",
+      "expediente": "10088",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414248838393",
+          "nombre_en_ticket": "VIVIAN CELESTE CAMUS",
+          "subject": "VIVIAN CELESTE CAMUS - 10088",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10088",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "ROMINA ANAHI PONCE",
+      "expediente": "10927",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413622416623",
+          "nombre_en_ticket": "ROMINA ANAHI PONCE",
+          "subject": "ROMINA ANAHI PONCE - 10927",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10927",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414236608698",
+          "nombre_en_ticket": "ROMINA ANAHI PONCE",
+          "subject": "ROMINA ANAHI PONCE - 10927",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10927",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Julio Oscar Benitez",
+      "expediente": "12065",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410405074125",
+          "nombre_en_ticket": "Julio Oscar Benitez",
+          "subject": "Julio Oscar Benitez - 12065",
+          "expedienteAnterior": "12065",
+          "expedienteNuevo": "12065",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414293076168",
+          "nombre_en_ticket": "Julio Oscar Benitez",
+          "subject": "Julio Oscar Benitez - 12065",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12065",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Ana ligia Gonzalez Suarez",
+      "expediente": "11502",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "412954663106",
+          "nombre_en_ticket": "Ana Ligia Gonzalez Suarez",
+          "subject": "Ana Ligia Gonzalez Suarez-11502",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11502",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413963227361",
+          "nombre_en_ticket": "Ana ligia Gonzalez Suarez",
+          "subject": "Ana ligia Gonzalez Suarez - 11502",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11502",
+          "updateOk": false
+        },
+        {
+          "ticketId": "414773058787",
+          "nombre_en_ticket": "Ana ligia Gonzalez Suarez",
+          "subject": "Ana ligia Gonzalez Suarez - 11502",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11502",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Loana Marlene Zamora",
+      "expediente": "12608",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414026728695",
+          "nombre_en_ticket": "Loana Marlene Zamora",
+          "subject": "Loana Marlene Zamora - 12608",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12608",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414132573405",
+          "nombre_en_ticket": "Loana Marlene Zamora",
+          "subject": "Loana Marlene Zamora - 41.451.917",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12608",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "LUJAN NOELIA PAREDES",
+      "expediente": "13059",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410343539928",
+          "nombre_en_ticket": "LUJAN NOELIA PAREDES",
+          "subject": "LUJAN NOELIA PAREDES - 13059",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13059",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414182097082",
+          "nombre_en_ticket": "LUJAN NOELIA PAREDES",
+          "subject": "LUJAN NOELIA PAREDES - 13059",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13059",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Liliana Edith Falcon",
+      "expediente": "10242",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411699934416",
+          "nombre_en_ticket": "Liliana Edith Falcon",
+          "subject": "Liliana Edith Falcon - 10242",
+          "expedienteAnterior": "10242",
+          "expedienteNuevo": "10242",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413986039013",
+          "nombre_en_ticket": "Liliana Edith Falcon",
+          "subject": "Liliana Edith Falcon - 10242",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10242",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Araceli Victoria Inés Alegre",
+      "expediente": "10686",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413862117570",
+          "nombre_en_ticket": "Araceli victoria ines Alegre",
+          "subject": "Araceli victoria ines Alegre - 10686",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10686",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414006596855",
+          "nombre_en_ticket": "Araceli Victoria Inés Alegre",
+          "subject": "Araceli Victoria Inés Alegre - 10686",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10686",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "PELLEJERO CAROLA EUGENIA",
+      "expediente": "11713",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414027860181",
+          "nombre_en_ticket": "PELLEJERO CAROLA EUGENIA",
+          "subject": "PELLEJERO CAROLA EUGENIA - 11713",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11713",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413998969068",
+          "nombre_en_ticket": "PELLEJERO CAROLA EUGENIA",
+          "subject": "PELLEJERO CAROLA EUGENIA - 11713",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11713",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Cintia Vanesa Sena",
+      "expediente": "9779",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411701846230",
+          "nombre_en_ticket": "Cintia Vanesa Sena",
+          "subject": "Claudio Alberto Mollica - 12939",
+          "expedienteAnterior": "12939",
+          "expedienteNuevo": "9779",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413825608899",
+          "nombre_en_ticket": "Cintia Vanesa Sena",
+          "subject": "Cintia Vanesa Sena - 9779",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "9779",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "JESICA ALEJANDRA GARAYALDE",
+      "expediente": "11580",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410837138665",
+          "nombre_en_ticket": "Jesica Alejandra Garayalde",
+          "subject": "Jesica Alejandra Garayalde - 11580",
+          "expedienteAnterior": "11580",
+          "expedienteNuevo": "11580",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413338249455",
+          "nombre_en_ticket": "JESICA ALEJANDRA GARAYALDE",
+          "subject": "JESICA ALEJANDRA GARAYALDE - 11580",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11580",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Ignacio Sosa",
+      "expediente": "12218",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413044757740",
+          "nombre_en_ticket": "Ignacio Sosa",
+          "subject": "Ignacio Sosa-12218",
+          "expedienteAnterior": "12218",
+          "expedienteNuevo": "12218",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413358431453",
+          "nombre_en_ticket": "Ignacio Sosa",
+          "subject": "Ignacio Sosa - 12218",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12218",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Luis Ignacio Gassmann",
+      "expediente": "10376",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413037774047",
+          "nombre_en_ticket": "Luis Ignacio Gassmann",
+          "subject": "Luis Ignacio Gassmann - 10376",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10376",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413028205779",
+          "nombre_en_ticket": "Luis Ignacio Gassmann",
+          "subject": "Luis Ignacio Gassmann - 10376",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10376",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Lautaro Zanabria",
+      "expediente": "12891",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413192717506",
+          "nombre_en_ticket": "Lautaro Zanabria",
+          "subject": "Lautaro Zanabria - 12891",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12891",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Íngrid Jaqueline Gomez",
+      "expediente": "12838",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "400274257115",
+          "nombre_en_ticket": "INGRID JAQUELINE GOMEZ",
+          "subject": "A-AYU584-12838",
+          "expedienteAnterior": "12838",
+          "expedienteNuevo": "12838",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413179997424",
+          "nombre_en_ticket": "Íngrid Jaqueline Gomez",
+          "subject": "Íngrid Jaqueline Gomez - 12838",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12838",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "ramirez ricardo",
+      "expediente": "12360",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413001552081",
+          "nombre_en_ticket": "ramirez ricardo",
+          "subject": "ramirez ricardo - 11.660.881",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12360",
+          "updateOk": false
+        },
+        {
+          "ticketId": "413035871441",
+          "nombre_en_ticket": "ramirez ricardo",
+          "subject": "ramirez ricardo - 12360",
+          "expedienteAnterior": "12360",
+          "expedienteNuevo": "12360",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Pablo Alejo Guzman",
+      "expediente": "12957",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411368325357",
+          "nombre_en_ticket": "PABLO ALEJO GUZMAN",
+          "subject": "PABLO ALEJO GUZMAN - 12957",
+          "expedienteAnterior": "12957",
+          "expedienteNuevo": "12957",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413123043570",
+          "nombre_en_ticket": "Pablo Alejo Guzman",
+          "subject": "Pablo Alejo Guzman-12957",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12957",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Melany Celeste Viggiani",
+      "expediente": "12673",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413015362802",
+          "nombre_en_ticket": "Melany Celeste Viggiani",
+          "subject": "Melany Celeste Viggiani-12673",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12673",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "WILLIAM ALONSO ALARCON MEJIA",
+      "expediente": "12372",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411593825480",
+          "nombre_en_ticket": "WILLIAM ALONSO ALARCON MEJIA",
+          "subject": "WILLIAM ALONSO ALARCON MEJIA - 12372",
+          "expedienteAnterior": "12372",
+          "expedienteNuevo": "12372",
+          "updateOk": true
+        },
+        {
+          "ticketId": "412429547718",
+          "nombre_en_ticket": "WILLIAM ALONSO ALARCON MEJIA",
+          "subject": "WILLIAM ALONSO ALARCON MEJIA - 12372",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12372",
+          "updateOk": false
+        },
+        {
+          "ticketId": "414712280297",
+          "nombre_en_ticket": "WILLIAM ALONSO ALARCON MEJIA",
+          "subject": "WILLIAM ALONSO ALARCON MEJIA - 12372",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12372",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Maximiliano Ezequiel Diaz",
+      "expediente": "12953",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411062963449",
+          "nombre_en_ticket": "Maximiliano Ezequiel Diaz",
+          "subject": "Maximiliano Ezequiel Diaz - 34.511.261",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12953",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411066624206",
+          "nombre_en_ticket": "Maximiliano Ezequiel Diaz",
+          "subject": "Maximiliano Ezequiel Diaz - 34.511.261",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12953",
+          "updateOk": false
+        },
+        {
+          "ticketId": "412412050655",
+          "nombre_en_ticket": "Maximiliano Ezequiel Diaz",
+          "subject": "Maximiliano Ezequiel Diaz-12953",
+          "expedienteAnterior": "12953",
+          "expedienteNuevo": "12953",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Fernando Damian Manrique",
+      "expediente": "9840",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411599669466",
+          "nombre_en_ticket": "Fernando Damian Manrique",
+          "subject": "Myrian Laura Vargas - 11162",
+          "expedienteAnterior": "11162",
+          "expedienteNuevo": "9840",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411705756880",
+          "nombre_en_ticket": "Fernando Damian Manrique",
+          "subject": "Fernando Damian Manrique - 9840",
+          "expedienteAnterior": "9840",
+          "expedienteNuevo": "9840",
+          "updateOk": true
+        },
+        {
+          "ticketId": "412412050654",
+          "nombre_en_ticket": "Fernando Damian Manrique",
+          "subject": "Rodrigo Matias Coronel-11159",
+          "expedienteAnterior": "11159",
+          "expedienteNuevo": "9840",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Juan Manuel Castro",
+      "expediente": "12932",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410476767463",
+          "nombre_en_ticket": "Juan Manuel Castro",
+          "subject": "Maria Raquel Isola - 12889",
+          "expedienteAnterior": "12889",
+          "expedienteNuevo": "12932",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411616573655",
+          "nombre_en_ticket": "Juan Manuel Castro",
+          "subject": "Juan Manuel Castro - 12932",
+          "expedienteAnterior": "12932",
+          "expedienteNuevo": "12932",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Yesica Romina CABRERA",
+      "expediente": "12968",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411559924974",
+          "nombre_en_ticket": "Yesica Romina CABRERA",
+          "subject": "Yesica Romina CABRERA - 30.097.992",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12968",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411652997317",
+          "nombre_en_ticket": "Yesica Romina CABRERA",
+          "subject": "Yesica Romina CABRERA - 12968",
+          "expedienteAnterior": "12968",
+          "expedienteNuevo": "12968",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Cesar Andres Gomez",
+      "expediente": "12871",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410064097523",
+          "nombre_en_ticket": "Cesar Andres Gomez",
+          "subject": "Cesar Andres Gomez - 12871",
+          "expedienteAnterior": "12871",
+          "expedienteNuevo": "12871",
+          "updateOk": true
+        },
+        {
+          "ticketId": "410946724027",
+          "nombre_en_ticket": "Cesar Andres Gomez",
+          "subject": "Cesar Andres Gomez - 12871",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12871",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Ricardo Javier Facundo Toffoletti",
+      "expediente": "10958",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410285897933",
+          "nombre_en_ticket": "Ricardo Javier Facundo Toffoletti",
+          "subject": "Pablo enrique Acosta Pereyra - 10958 (esta mal el nombre del inquilino)",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10958",
+          "updateOk": false
+        },
+        {
+          "ticketId": "410296699074",
+          "nombre_en_ticket": "Ricardo Javier Facundo Toffoletti",
+          "subject": "Ricardo Javier Facundo Toffoletti - 10958",
+          "expedienteAnterior": "10958",
+          "expedienteNuevo": "10958",
+          "updateOk": true
+        }
+      ]
+    }
+  ],
+  "detalle_completo": [
+    {
+      "nombre": "Jose Ignacio Vega",
+      "expediente": "13146",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414710681809",
+          "nombre_en_ticket": "Jose Ignacio Vega",
+          "subject": "Jose Ignacio Vega - 13146",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13146",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Dana Azul Urra Vargas",
+      "expediente": "13143",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414761362619",
+          "nombre_en_ticket": "Dana Azul Urra Vargas",
+          "subject": "Dana Azul Urra Vargas - 13143",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13143",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Romina Mariel Silva",
+      "expediente": "10929",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410867832045",
+          "nombre_en_ticket": "Romina Mariel Silva",
+          "subject": "Romina Mariel Silva - 10929",
+          "expedienteAnterior": "10929",
+          "expedienteNuevo": "10929",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414705140943",
+          "nombre_en_ticket": "Romina Mariel Silva",
+          "subject": "Romina Mariel Silva - 10929",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10929",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Agustin Cordoba",
+      "expediente": "10678",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414787613936",
+          "nombre_en_ticket": "Agustin Cordoba",
+          "subject": "Agustin Cordoba - 10678",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10678",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Martin Pablo Solari",
+      "expediente": "11990",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414266114275",
+          "nombre_en_ticket": "Martin Pablo Solari",
+          "subject": "Martin Pablo Solari - 11990",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11990",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Daniel FERNANDEZ",
+      "expediente": "12940",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "409757154492",
+          "nombre_en_ticket": "Daniel Fernandez",
+          "subject": "\tDaniel Fernandez-12940",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12940",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411727275252",
+          "nombre_en_ticket": "Daniel Fernandez",
+          "subject": "Daniel Fernandez - 12940",
+          "expedienteAnterior": "12940",
+          "expedienteNuevo": "12940",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414292117728",
+          "nombre_en_ticket": "Daniel FERNANDEZ",
+          "subject": "Daniel FERNANDEZ - 12940",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12940",
+          "updateOk": false
+        },
+        {
+          "ticketId": "414791602400",
+          "nombre_en_ticket": "Daniel FERNANDEZ",
+          "subject": "Daniel FERNANDEZ - 12940",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12940",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Alan Matías Ibarra",
+      "expediente": "11599",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413989791951",
+          "nombre_en_ticket": "Alan Matías Ibarra",
+          "subject": "Alan Matías Ibarra - 11599",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11599",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414797101297",
+          "nombre_en_ticket": "Alan Matías Ibarra",
+          "subject": "Alan Matías Ibarra - 11599",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11599",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Erika Yamila ALIANO",
+      "expediente": "12965",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "412336428231",
+          "nombre_en_ticket": "Erika Yamila ALIANO",
+          "subject": "Erika Yamila ALIANO - 12965",
+          "expedienteAnterior": "12965",
+          "expedienteNuevo": "12965",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414719372476",
+          "nombre_en_ticket": "Erika Yamila ALIANO",
+          "subject": "Erika Yamila ALIANO - 12965",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12965",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Eliana Elizabeth Di Lorenzo",
+      "expediente": "12603",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414737387713",
+          "nombre_en_ticket": "Eliana Elizabeth Di Lorenzo",
+          "subject": "Eliana Elizabeth Di Lorenzo - 12603",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12603",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Bruno Daniel Mercado",
+      "expediente": "11310",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414668013815",
+          "nombre_en_ticket": "Bruno Daniel Mercado",
+          "subject": "Bruno Daniel Mercado - 11310",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11310",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Raul Alberto Caro",
+      "expediente": "12496",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414624948428",
+          "nombre_en_ticket": "Raul Alberto Caro",
+          "subject": "Raul Alberto Caro - 12496",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12496",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Juan Manuel Pintos",
+      "expediente": "13125",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414627077325",
+          "nombre_en_ticket": "Juan Manuel Pintos",
+          "subject": "Juan Manuel Pintos - 13125",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13125",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Enrique Jose Fuentes",
+      "expediente": "13120",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414653154500",
+          "nombre_en_ticket": "Enrique Jose Fuentes",
+          "subject": "Enrique Jose Fuentes - 13120",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13120",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "María Lidia Toro",
+      "expediente": "12562",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414553202898",
+          "nombre_en_ticket": "María Lidia Toro",
+          "subject": "María Lidia Toro - 12562",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12562",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Claudio Gabriel Villalba",
+      "expediente": "10874",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414592604393",
+          "nombre_en_ticket": "Claudio Gabriel Villalba",
+          "subject": "Claudio Gabriel Villalba - 10874",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10874",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Analia Elda Fernandez Villalba",
+      "expediente": "13114",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414583506136",
+          "nombre_en_ticket": "Analia Elda Fernandez Villalba",
+          "subject": "Analia Elda Fernandez Villalba - 13114",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13114",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Valentina Nahiara Chacon",
+      "expediente": "13111",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414564102382",
+          "nombre_en_ticket": "Valentina Nahiara Chacon",
+          "subject": "Valentina Nahiara Chacon - 13111",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13111",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Eduardo Hernán Mason",
+      "expediente": "12943",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414654723321",
+          "nombre_en_ticket": "Eduardo Hernán Mason",
+          "subject": "Eduardo Hernán Mason - 12943",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12943",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Héctor Joel Zagaray Spogli",
+      "expediente": "12788",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414605164767",
+          "nombre_en_ticket": "Héctor Joel Zagaray Spogli",
+          "subject": "Héctor Joel Zagaray Spogli - 12788",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12788",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Milagros Micaela Ruiz",
+      "expediente": "13104",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414585350364",
+          "nombre_en_ticket": "Milagros Micaela Ruiz",
+          "subject": "Milagros Micaela Ruiz - 13104",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13104",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Yenelis Del Valle Contreras Pinto",
+      "expediente": "12116",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414558639324",
+          "nombre_en_ticket": "Yenelis Del Valle Contreras Pinto",
+          "subject": "Yenelis Del Valle Contreras Pinto - 12116",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12116",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Jaqueline Denise Salazar",
+      "expediente": "12017",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414472914117",
+          "nombre_en_ticket": "Jaqueline Denise Salazar",
+          "subject": "Jaqueline Denise Salazar - 12017",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12017",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Anuark Orlando JIMENEZ VEGA",
+      "expediente": "13121",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414518641901",
+          "nombre_en_ticket": "Anuark Orlando JIMENEZ VEGA",
+          "subject": "Anuark Orlando JIMENEZ VEGA - 13121",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13121",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Tomas Agustin Galleri",
+      "expediente": "8609",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414487063779",
+          "nombre_en_ticket": "Tomas Agustin Galleri",
+          "subject": "Tomas Agustin Galleri - 8609",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "8609",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Laura Gabriela Muller",
+      "expediente": "13140",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414157112506",
+          "nombre_en_ticket": "Laura Gabriela Muller",
+          "subject": "Laura Gabriela Muller - 13140",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13140",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Nelida Edisa Castro",
+      "expediente": "12339",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414297363687",
+          "nombre_en_ticket": "Nelida Edisa Castro",
+          "subject": "Nelida Edisa Castro - 12339",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12339",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sofía Ailin Loto",
+      "expediente": "11717",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414365009086",
+          "nombre_en_ticket": "Sofía Ailin Loto",
+          "subject": "Sofía Ailin Loto - 11717",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11717",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Liseth Milagros Colan Barraza",
+      "expediente": "9787",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414316733678",
+          "nombre_en_ticket": "Liseth Milagros Colan Barraza",
+          "subject": "Liseth Milagros Colan Barraza - 9787",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "9787",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Silvina Lorena Taboada",
+      "expediente": "13091",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414311411954",
+          "nombre_en_ticket": "Silvina Lorena Taboada",
+          "subject": "Silvina Lorena Taboada - 13091",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13091",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Blas Ramon Duarte Ojeda",
+      "expediente": "11275",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414277253353",
+          "nombre_en_ticket": "Blas Ramon Duarte Ojeda",
+          "subject": "Blas Ramon Duarte Ojeda - 11275",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11275",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "JUAN PABLO DEBIASSI",
+      "expediente": "11389",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414277129406",
+          "nombre_en_ticket": "JUAN PABLO DEBIASSI",
+          "subject": "JUAN PABLO DEBIASSI - 11389",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11389",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414326907100",
+          "nombre_en_ticket": "JUAN PABLO DEBIASSI",
+          "subject": "JUAN PABLO DEBIASSI - 32.660.840",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11389",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "VIVIAN CELESTE CAMUS",
+      "expediente": "10088",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414248838393",
+          "nombre_en_ticket": "VIVIAN CELESTE CAMUS",
+          "subject": "VIVIAN CELESTE CAMUS - 10088",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10088",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "ROMINA ANAHI PONCE",
+      "expediente": "10927",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413622416623",
+          "nombre_en_ticket": "ROMINA ANAHI PONCE",
+          "subject": "ROMINA ANAHI PONCE - 10927",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10927",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414236608698",
+          "nombre_en_ticket": "ROMINA ANAHI PONCE",
+          "subject": "ROMINA ANAHI PONCE - 10927",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10927",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Julio Oscar Benitez",
+      "expediente": "12065",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410405074125",
+          "nombre_en_ticket": "Julio Oscar Benitez",
+          "subject": "Julio Oscar Benitez - 12065",
+          "expedienteAnterior": "12065",
+          "expedienteNuevo": "12065",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414293076168",
+          "nombre_en_ticket": "Julio Oscar Benitez",
+          "subject": "Julio Oscar Benitez - 12065",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12065",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Nadia Soledad Rodriguez",
+      "expediente": "13074",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414251939028",
+          "nombre_en_ticket": "Nadia Soledad Rodriguez",
+          "subject": "Nadia Soledad Rodriguez - 13074",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13074",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sebastian adrian chasona santamaria",
+      "expediente": "12265",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414310996169",
+          "nombre_en_ticket": "Sebastian adrian chasona santamaria",
+          "subject": "Sebastian adrian chasona santamaria - 12265",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12265",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "FLORES SANTANDER AUGUSTO NICOLAS",
+      "expediente": "13117",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414185856206",
+          "nombre_en_ticket": "FLORES SANTANDER AUGUSTO NICOLAS",
+          "subject": "FLORES SANTANDER AUGUSTO NICOLAS - 13117",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13117",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Nahuel Agustín Enríquez Ceballos",
+      "expediente": "10818",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414027383003",
+          "nombre_en_ticket": "Nahuel Agustín Enríquez Ceballos",
+          "subject": "Nahuel Agustín Enríquez Ceballos - 10818",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10818",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Leandro Daniel Orayen",
+      "expediente": "13072",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414220662000",
+          "nombre_en_ticket": "Leandro Daniel Orayen",
+          "subject": "Leandro Daniel Orayen - 13072",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13072",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Alejandro Ismael Guil",
+      "expediente": "12170",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414029221081",
+          "nombre_en_ticket": "Alejandro Ismael Guil",
+          "subject": "Alejandro Ismael Guil - 12170",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12170",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Alejandro Fabian Carabelli",
+      "expediente": "13066",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413995786479",
+          "nombre_en_ticket": "Alejandro Fabian Carabelli",
+          "subject": "Alejandro Fabian Carabelli - 13066",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13066",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Cristian Javier Hinojosa",
+      "expediente": "13065",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414044346604",
+          "nombre_en_ticket": "Cristian Javier Hinojosa",
+          "subject": "Cristian Javier Hinojosa - 13065",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13065",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Florencia Leila García",
+      "expediente": "11976",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414064954565",
+          "nombre_en_ticket": "Florencia Leila García",
+          "subject": "Florencia Leila García - 11976",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11976",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Leticia Honda Tavares",
+      "expediente": "12951",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414006968555",
+          "nombre_en_ticket": "Leticia Honda Tavares",
+          "subject": "Leticia Honda Tavares - 12951",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12951",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ricardo Raúl Esteban Quintana",
+      "expediente": "13069",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414134581453",
+          "nombre_en_ticket": "Ricardo Raúl Esteban Quintana",
+          "subject": "Ricardo Raúl Esteban Quintana - 13069",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13069",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Susana Beatriz Lopez Gonzalez",
+      "expediente": "13064",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Héctor Javier Fresco",
+      "expediente": "12628",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414025276617",
+          "nombre_en_ticket": "Héctor Javier Fresco",
+          "subject": "Héctor Javier Fresco - 12628",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12628",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ana ligia Gonzalez Suarez",
+      "expediente": "11502",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "412954663106",
+          "nombre_en_ticket": "Ana Ligia Gonzalez Suarez",
+          "subject": "Ana Ligia Gonzalez Suarez-11502",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11502",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413963227361",
+          "nombre_en_ticket": "Ana ligia Gonzalez Suarez",
+          "subject": "Ana ligia Gonzalez Suarez - 11502",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11502",
+          "updateOk": false
+        },
+        {
+          "ticketId": "414773058787",
+          "nombre_en_ticket": "Ana ligia Gonzalez Suarez",
+          "subject": "Ana ligia Gonzalez Suarez - 11502",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11502",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Loana Marlene Zamora",
+      "expediente": "12608",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414026728695",
+          "nombre_en_ticket": "Loana Marlene Zamora",
+          "subject": "Loana Marlene Zamora - 12608",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12608",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414132573405",
+          "nombre_en_ticket": "Loana Marlene Zamora",
+          "subject": "Loana Marlene Zamora - 41.451.917",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12608",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Florencia Johanna Gadea",
+      "expediente": "11116",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414145223922",
+          "nombre_en_ticket": "Florencia Johanna Gadea",
+          "subject": "Florencia Johanna Gadea - 11116",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11116",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "LUJAN NOELIA PAREDES",
+      "expediente": "13059",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410343539928",
+          "nombre_en_ticket": "LUJAN NOELIA PAREDES",
+          "subject": "LUJAN NOELIA PAREDES - 13059",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13059",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414182097082",
+          "nombre_en_ticket": "LUJAN NOELIA PAREDES",
+          "subject": "LUJAN NOELIA PAREDES - 13059",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13059",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Liliana Edith Falcon",
+      "expediente": "10242",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411699934416",
+          "nombre_en_ticket": "Liliana Edith Falcon",
+          "subject": "Liliana Edith Falcon - 10242",
+          "expedienteAnterior": "10242",
+          "expedienteNuevo": "10242",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413986039013",
+          "nombre_en_ticket": "Liliana Edith Falcon",
+          "subject": "Liliana Edith Falcon - 10242",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10242",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Emily Caroline Cutipa Coruro",
+      "expediente": "11141",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414137940215",
+          "nombre_en_ticket": "Emily Caroline Cutipa Coruro",
+          "subject": "Emily Caroline Cutipa Coruro - 11141",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11141",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Tiziano Baquini",
+      "expediente": "10986",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414006658238",
+          "nombre_en_ticket": "Tiziano Baquini",
+          "subject": "Tiziano Baquini - 10986",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10986",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Nahuel Ernesto Woodley",
+      "expediente": "9567",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414003128519",
+          "nombre_en_ticket": "Nahuel Ernesto Woodley",
+          "subject": "Nahuel Ernesto Woodley - 9567",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "9567",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sebastian Gabriel Cordoba",
+      "expediente": "12503",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414048741615",
+          "nombre_en_ticket": "Sebastian Gabriel Cordoba",
+          "subject": "Sebastian Gabriel Cordoba - 12503",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12503",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Araceli Victoria Inés Alegre",
+      "expediente": "10686",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413862117570",
+          "nombre_en_ticket": "Araceli victoria ines Alegre",
+          "subject": "Araceli victoria ines Alegre - 10686",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10686",
+          "updateOk": true
+        },
+        {
+          "ticketId": "414006596855",
+          "nombre_en_ticket": "Araceli Victoria Inés Alegre",
+          "subject": "Araceli Victoria Inés Alegre - 10686",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10686",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Laura Romina Romero Gomez",
+      "expediente": "11121",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413984152763",
+          "nombre_en_ticket": "Laura Romina Romero Gomez",
+          "subject": "Laura Romina Romero Gomez - 11121",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11121",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Luciano Ezequiel Ferreras",
+      "expediente": "11633",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414075297984",
+          "nombre_en_ticket": "Luciano Ezequiel Ferreras",
+          "subject": "Luciano Ezequiel Ferreras - 11633",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11633",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Pedro Ignacio Flores Flores",
+      "expediente": "12186",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414132386015",
+          "nombre_en_ticket": "Pedro Ignacio Flores Flores",
+          "subject": "Pedro Ignacio Flores Flores - 12186",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12186",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "David Maximiliano Ezequiel San Giovanni",
+      "expediente": "12186",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Elias Gabriel Piuca",
+      "expediente": "11918",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414075285727",
+          "nombre_en_ticket": "Elias Gabriel Piuca",
+          "subject": "Elias Gabriel Piuca - 11918",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11918",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sebastian Muñoz",
+      "expediente": "13057",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414180214976",
+          "nombre_en_ticket": "Sebastian Muñoz",
+          "subject": "Sebastian Muñoz - 13057",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13057",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Nahuel Maximiliano Olivera",
+      "expediente": "12512",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414032394477",
+          "nombre_en_ticket": "Nahuel Maximiliano Olivera",
+          "subject": "Nahuel Maximiliano Olivera - 12512",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12512",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Gerardo Ezequiel Cardozo",
+      "expediente": "13056",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414170897623",
+          "nombre_en_ticket": "Gerardo Ezequiel Cardozo",
+          "subject": "Gerardo Ezequiel Cardozo - 13056",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13056",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Malena Karina Verde Contreras",
+      "expediente": "13055",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414019280098",
+          "nombre_en_ticket": "Malena Karina Verde Contreras",
+          "subject": "Malena Karina Verde Contreras - 13055",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13055",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Argentino Alberto Giménez",
+      "expediente": "12756",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Anderson Brayyan Cumari Flores",
+      "expediente": "12172",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414013791437",
+          "nombre_en_ticket": "Anderson Brayyan Cumari Flores",
+          "subject": "Anderson Brayyan Cumari Flores - 12172",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12172",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Yamila Vanesa Cheli",
+      "expediente": "13052",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414132259007",
+          "nombre_en_ticket": "Yamila Vanesa Cheli",
+          "subject": "Yamila Vanesa Cheli - 13052",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13052",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Julian Ariel Urcelay",
+      "expediente": "13048",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414012006612",
+          "nombre_en_ticket": "Julian Ariel Urcelay",
+          "subject": "Julian Ariel Urcelay - 13048",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13048",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Micaela Anahi Leiva",
+      "expediente": "12670",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414144846025",
+          "nombre_en_ticket": "Micaela Anahi Leiva",
+          "subject": "Micaela Anahi Leiva - 12670",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12670",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Eugenio Omar Acuña",
+      "expediente": "12397",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414069597370",
+          "nombre_en_ticket": "Eugenio Omar Acuña",
+          "subject": "Eugenio Omar Acuña - 12397",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12397",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Fernando Matias Paz",
+      "expediente": "11680",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414026364121",
+          "nombre_en_ticket": "Fernando Matias Paz",
+          "subject": "Fernando Matias Paz - 11680",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11680",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sebastian Iaquinta",
+      "expediente": "11883",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414029810917",
+          "nombre_en_ticket": "Sebastian Iaquinta",
+          "subject": "Sebastian Iaquinta - 11883",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11883",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Maria Valentina Padron Padra",
+      "expediente": "11230",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413994650825",
+          "nombre_en_ticket": "Maria Valentina Padron Padra",
+          "subject": "Maria Valentina Padron Padra - 11230",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11230",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "RUBEN DARIO LEON",
+      "expediente": "13098",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414076507339",
+          "nombre_en_ticket": "RUBEN DARIO LEON",
+          "subject": "RUBEN DARIO LEON - 13098",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13098",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Jimena Ailin Couto",
+      "expediente": "12123",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "414037515492",
+          "nombre_en_ticket": "Jimena Ailin Couto",
+          "subject": "Jimena Ailin Couto - 12123",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12123",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "PELLEJERO CAROLA EUGENIA",
+      "expediente": "11713",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "414027860181",
+          "nombre_en_ticket": "PELLEJERO CAROLA EUGENIA",
+          "subject": "PELLEJERO CAROLA EUGENIA - 11713",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11713",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413998969068",
+          "nombre_en_ticket": "PELLEJERO CAROLA EUGENIA",
+          "subject": "PELLEJERO CAROLA EUGENIA - 11713",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11713",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Oscar Guillermo Suarez",
+      "expediente": "9009",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413897577664",
+          "nombre_en_ticket": "Oscar Guillermo Suarez",
+          "subject": "Oscar Guillermo Suarez - 9009",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "9009",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Carlos Hector Tojeiro Galvan",
+      "expediente": "13043",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413816029399",
+          "nombre_en_ticket": "Carlos Hector Tojeiro Galvan",
+          "subject": "Carlos Hector Tojeiro Galvan - 13043",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13043",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Noelia Gisselle Chamorro",
+      "expediente": "13040",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413785412835",
+          "nombre_en_ticket": "Noelia Gisselle Chamorro",
+          "subject": "Noelia Gisselle Chamorro - 13040",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13040",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Cintia Vanesa Sena",
+      "expediente": "9779",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411701846230",
+          "nombre_en_ticket": "Cintia Vanesa Sena",
+          "subject": "Claudio Alberto Mollica - 12939",
+          "expedienteAnterior": "12939",
+          "expedienteNuevo": "9779",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413825608899",
+          "nombre_en_ticket": "Cintia Vanesa Sena",
+          "subject": "Cintia Vanesa Sena - 9779",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "9779",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Maria Gabriela Antunez",
+      "expediente": "10910",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413890313454",
+          "nombre_en_ticket": "Maria Gabriela Antunez",
+          "subject": "Maria Gabriela Antunez - 10910",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10910",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Jazmin Magdalena Gutierrez",
+      "expediente": "9578",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413626095808",
+          "nombre_en_ticket": "Jazmin Magdalena Gutierrez",
+          "subject": "Jazmin Magdalena Gutierrez - 9578",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "9578",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Andrea Cecilia Franco",
+      "expediente": "13036",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413644728553",
+          "nombre_en_ticket": "Andrea Cecilia Franco",
+          "subject": "Andrea Cecilia Franco - 13036",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13036",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "JESICA ALEJANDRA GARAYALDE",
+      "expediente": "11580",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410837138665",
+          "nombre_en_ticket": "Jesica Alejandra Garayalde",
+          "subject": "Jesica Alejandra Garayalde - 11580",
+          "expedienteAnterior": "11580",
+          "expedienteNuevo": "11580",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413338249455",
+          "nombre_en_ticket": "JESICA ALEJANDRA GARAYALDE",
+          "subject": "JESICA ALEJANDRA GARAYALDE - 11580",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11580",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Ezequiel Alejandro Baroni",
+      "expediente": "13031",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413347707078",
+          "nombre_en_ticket": "Ezequiel Alejandro Baroni",
+          "subject": "Ezequiel Alejandro Baroni - 13031",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13031",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Leiliz Ariani Villalobos Mejia",
+      "expediente": "13030",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413351449819",
+          "nombre_en_ticket": "Leiliz Ariani Villalobos Mejia",
+          "subject": "Leiliz Ariani Villalobos Mejia - 13030",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13030",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Santiago Mauricio Ladino Andrade",
+      "expediente": "12558",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413367400648",
+          "nombre_en_ticket": "Santiago Mauricio Ladino Andrade",
+          "subject": "Santiago Mauricio Ladino Andrade - 12558",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12558",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ignacio Sosa",
+      "expediente": "12218",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413044757740",
+          "nombre_en_ticket": "Ignacio Sosa",
+          "subject": "Ignacio Sosa-12218",
+          "expedienteAnterior": "12218",
+          "expedienteNuevo": "12218",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413358431453",
+          "nombre_en_ticket": "Ignacio Sosa",
+          "subject": "Ignacio Sosa - 12218",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12218",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Yanna Alexandra Rodríguez Correa",
+      "expediente": "12698",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413394772189",
+          "nombre_en_ticket": "Yanna Alexandra Rodríguez Correa",
+          "subject": "Yanna Alexandra Rodríguez Correa - 12698",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12698",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Hector Bustos Ferreyra",
+      "expediente": "10670",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413339785405",
+          "nombre_en_ticket": "Hector Bustos Ferreyra",
+          "subject": "Hector Bustos Ferreyra - 10670",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10670",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Leiva Matias",
+      "expediente": "12504",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413376591075",
+          "nombre_en_ticket": "Leiva Matias",
+          "subject": "Leiva Matias -12504",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12504",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Celeste Agustina Silva",
+      "expediente": "13024",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413383790815",
+          "nombre_en_ticket": "Celeste Agustina Silva",
+          "subject": "Celeste Agustina Silva - 13024",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13024",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Cristian Andres Montes",
+      "expediente": "13020",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413354600640",
+          "nombre_en_ticket": "Cristian Andres Montes",
+          "subject": "Cristian Andres Montes - 13020",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13020",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "María Alicia Puppo",
+      "expediente": "11017",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413285377228",
+          "nombre_en_ticket": "María Alicia Puppo",
+          "subject": "María Alicia Puppo-11017",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11017",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Catalina Haydee Goñi",
+      "expediente": "11511",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413258326232",
+          "nombre_en_ticket": "CATALINA HAYDEE GOÑI",
+          "subject": "Catalina Haydee Goñi-11511",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11511",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Luis Ignacio Gassmann",
+      "expediente": "10376",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413037774047",
+          "nombre_en_ticket": "Luis Ignacio Gassmann",
+          "subject": "Luis Ignacio Gassmann - 10376",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10376",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413028205779",
+          "nombre_en_ticket": "Luis Ignacio Gassmann",
+          "subject": "Luis Ignacio Gassmann - 10376",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10376",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Lautaro Zanabria",
+      "expediente": "12891",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413192717506",
+          "nombre_en_ticket": "Lautaro Zanabria",
+          "subject": "Lautaro Zanabria - 12891",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12891",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Lautaro Dabel Zanabria",
+      "expediente": "12891",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410295628016",
+          "nombre_en_ticket": "Lautaro Dabel Zanabria",
+          "subject": "Lautaro Dabel Zanabria - 12891",
+          "expedienteAnterior": "12891",
+          "expedienteNuevo": "12891",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Íngrid Jaqueline Gomez",
+      "expediente": "12838",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "400274257115",
+          "nombre_en_ticket": "INGRID JAQUELINE GOMEZ",
+          "subject": "A-AYU584-12838",
+          "expedienteAnterior": "12838",
+          "expedienteNuevo": "12838",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413179997424",
+          "nombre_en_ticket": "Íngrid Jaqueline Gomez",
+          "subject": "Íngrid Jaqueline Gomez - 12838",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12838",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "ramirez ricardo",
+      "expediente": "12360",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413001552081",
+          "nombre_en_ticket": "ramirez ricardo",
+          "subject": "ramirez ricardo - 11.660.881",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12360",
+          "updateOk": false
+        },
+        {
+          "ticketId": "413035871441",
+          "nombre_en_ticket": "ramirez ricardo",
+          "subject": "ramirez ricardo - 12360",
+          "expedienteAnterior": "12360",
+          "expedienteNuevo": "12360",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Pablo Alejo Guzman",
+      "expediente": "12957",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411368325357",
+          "nombre_en_ticket": "PABLO ALEJO GUZMAN",
+          "subject": "PABLO ALEJO GUZMAN - 12957",
+          "expedienteAnterior": "12957",
+          "expedienteNuevo": "12957",
+          "updateOk": true
+        },
+        {
+          "ticketId": "413123043570",
+          "nombre_en_ticket": "Pablo Alejo Guzman",
+          "subject": "Pablo Alejo Guzman-12957",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12957",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Vanesa Del Carmen Rojas",
+      "expediente": "12959",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412963682502",
+          "nombre_en_ticket": "Vanesa Del Carmen Rojas",
+          "subject": "Vanesa Del Carmen Rojas-12959",
+          "expedienteAnterior": "12959",
+          "expedienteNuevo": "12959",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Rosario Belen Molinas",
+      "expediente": "12991",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413044757739",
+          "nombre_en_ticket": "Rosario Belen Molinas",
+          "subject": "Rosario Belen Molinas-12991",
+          "expedienteAnterior": "12991",
+          "expedienteNuevo": "12991",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Franco Jose Parra",
+      "expediente": "12987",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413029780674",
+          "nombre_en_ticket": "Franco Jose Parra",
+          "subject": "Franco Jose Parra-12987",
+          "expedienteAnterior": "12987",
+          "expedienteNuevo": "12987",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ludmila Paola Baldi",
+      "expediente": "12674",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413013579990",
+          "nombre_en_ticket": "Ludmila Paola Baldi",
+          "subject": "Ludmila Paola Baldi-12674",
+          "expedienteAnterior": "12674",
+          "expedienteNuevo": "12674",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Cristian Emanuel Molina",
+      "expediente": "12048",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413013579989",
+          "nombre_en_ticket": "Cristian Emanuel Molina",
+          "subject": "Cristian Emanuel Molina-12048",
+          "expedienteAnterior": "12048",
+          "expedienteNuevo": "12048",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Fernando Luis Damiani",
+      "expediente": "12981",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413013579988",
+          "nombre_en_ticket": "Fernando Luis Damiani",
+          "subject": "Fernando Luis Damiani-12981",
+          "expedienteAnterior": "12981",
+          "expedienteNuevo": "12981",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Rodrigo Daniel Brites",
+      "expediente": "12246",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413011745992",
+          "nombre_en_ticket": "Rodrigo Daniel Brites",
+          "subject": "Rodrigo Daniel Brites-12246",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12246",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Analia Azucena Lopez",
+      "expediente": "11797",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412988827854",
+          "nombre_en_ticket": "Analia Azucena Lopez",
+          "subject": "Analia Azucena Lopez-11797",
+          "expedienteAnterior": "11797",
+          "expedienteNuevo": "11797",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ezequiel Galeano",
+      "expediente": "12414",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412988827853",
+          "nombre_en_ticket": "Ezequiel Galeano",
+          "subject": "Ezequiel Galeano-12414",
+          "expedienteAnterior": "12414",
+          "expedienteNuevo": "12414",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Belén Cinthia Sandoval",
+      "expediente": "13000",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413037533391",
+          "nombre_en_ticket": "Belén Cinthia Sandoval",
+          "subject": "Belén Cinthia Sandoval-13000",
+          "expedienteAnterior": "13000",
+          "expedienteNuevo": "13000",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Amado Carlos Jorge",
+      "expediente": "11841",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412963682500",
+          "nombre_en_ticket": "Amado Carlos Jorge",
+          "subject": "Amado Carlos Jorge-11841",
+          "expedienteAnterior": "11841",
+          "expedienteNuevo": "11841",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Cesar Luis Orellano",
+      "expediente": "11601",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412967244001",
+          "nombre_en_ticket": "Cesar Luis Orellano",
+          "subject": "Cesar Luis Orellano-11601",
+          "expedienteAnterior": "11601",
+          "expedienteNuevo": "11601",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Yamila Teresa Rey",
+      "expediente": "11211",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413117653219",
+          "nombre_en_ticket": "Yamila Teresa Rey",
+          "subject": "Yamila Teresa Rey-11211",
+          "expedienteAnterior": "11211",
+          "expedienteNuevo": "11211",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "María Belen Enriquez",
+      "expediente": "12995",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412963682499",
+          "nombre_en_ticket": "María Belen Enriquez",
+          "subject": "María Belen Enriquez-12995",
+          "expedienteAnterior": "12995",
+          "expedienteNuevo": "12995",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Cristian Edgardo Blanco",
+      "expediente": "10955",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413158297818",
+          "nombre_en_ticket": "Cristian Edgardo Blanco",
+          "subject": "Cristian Edgardo Blanco-10955",
+          "expedienteAnterior": "10955",
+          "expedienteNuevo": "10955",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Matías Sebastián Alvarez",
+      "expediente": "11232",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413141808377",
+          "nombre_en_ticket": "Matías Sebastián Alvarez",
+          "subject": "Matías Sebastián Alvarez-11232",
+          "expedienteAnterior": "11232",
+          "expedienteNuevo": "11232",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Favio Rodolfo Tapia",
+      "expediente": "10965",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413041106149",
+          "nombre_en_ticket": "Favio Rodolfo Tapia",
+          "subject": "Favio Rodolfo Tapia-10965",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10965",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Facundo Leandro Barros",
+      "expediente": "12419",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413158297817",
+          "nombre_en_ticket": "Facundo Leandro Barros",
+          "subject": "Facundo Leandro Barros-12419",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12419",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Rolando Sarmiento",
+      "expediente": "12751",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413145408755",
+          "nombre_en_ticket": "Rolando Sarmiento",
+          "subject": "Rolando Sarmiento-12751",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12751",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Paula Patricia Hanriquez",
+      "expediente": "10815",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413145408754",
+          "nombre_en_ticket": "Paula Patricia Hanriquez",
+          "subject": "Paula Patricia Hanriquez-10815",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10815",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Santiago Gabriel Martin",
+      "expediente": "12986",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413085732088",
+          "nombre_en_ticket": "Santiago Gabriel Martin",
+          "subject": "Santiago Gabriel Martin-12986",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12986",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Gisela Romina Cerdan",
+      "expediente": "12982",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412999730403",
+          "nombre_en_ticket": "Gisela Romina Cerdan",
+          "subject": "Gisela Romina Cerdan-12982",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12982",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Diego Oscar Fernandez",
+      "expediente": "13010",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412992521423",
+          "nombre_en_ticket": "Diego Oscar Fernandez",
+          "subject": "Diego Oscar Fernandez-13010",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13010",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Camila Evelyn Gonzalez",
+      "expediente": "11968",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413041106147",
+          "nombre_en_ticket": "Camila Evelyn Gonzalez",
+          "subject": "Camila Evelyn Gonzalez-11968",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11968",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Melany Celeste Viggiani",
+      "expediente": "12673",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "413015362802",
+          "nombre_en_ticket": "Melany Celeste Viggiani",
+          "subject": "Melany Celeste Viggiani-12673",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12673",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Gonzalo Agustin Giammarino",
+      "expediente": "11817",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413015362801",
+          "nombre_en_ticket": "Gonzalo Agustin Giammarino",
+          "subject": "Gonzalo Agustin Giammarino-11817",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "11817",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Bruno Pinelli",
+      "expediente": "12016",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413017240794",
+          "nombre_en_ticket": "Bruno Pinelli",
+          "subject": "Bruno Pinelli-12016",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12016",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Eduardo Ticlla Chacchi",
+      "expediente": "12994",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412987103442",
+          "nombre_en_ticket": "Eduardo Ticlla Chacchi",
+          "subject": "Eduardo Ticlla Chacchi-12994",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12994",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Agustin Raul Ramirez",
+      "expediente": "13018",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "413134933225",
+          "nombre_en_ticket": "Agustin Raul Ramirez",
+          "subject": "Agustin Raul Ramirez - 13018",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13018",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Amanda Sophia Bautista Casanova",
+      "expediente": "13028",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412986894576",
+          "nombre_en_ticket": "Amanda Sophia Bautista Casanova",
+          "subject": "Amanda Sophia Bautista Casanova - 13028",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13028",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sandra Lorena Gonzalez",
+      "expediente": "11905",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412694554868",
+          "nombre_en_ticket": "Sandra Lorena Gonzalez",
+          "subject": "Sandra Lorena Gonzalez - 11905",
+          "expedienteAnterior": "11905",
+          "expedienteNuevo": "11905",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Miguel Ángel Escalona Torrealba",
+      "expediente": "12975",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412362130669",
+          "nombre_en_ticket": "Miguel Ángel Escalona Torrealba",
+          "subject": "Miguel Ángel Escalona Torrealba - 12975",
+          "expedienteAnterior": "12975",
+          "expedienteNuevo": "12975",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "WILLIAM ALONSO ALARCON MEJIA",
+      "expediente": "12372",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411593825480",
+          "nombre_en_ticket": "WILLIAM ALONSO ALARCON MEJIA",
+          "subject": "WILLIAM ALONSO ALARCON MEJIA - 12372",
+          "expedienteAnterior": "12372",
+          "expedienteNuevo": "12372",
+          "updateOk": true
+        },
+        {
+          "ticketId": "412429547718",
+          "nombre_en_ticket": "WILLIAM ALONSO ALARCON MEJIA",
+          "subject": "WILLIAM ALONSO ALARCON MEJIA - 12372",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12372",
+          "updateOk": false
+        },
+        {
+          "ticketId": "414712280297",
+          "nombre_en_ticket": "WILLIAM ALONSO ALARCON MEJIA",
+          "subject": "WILLIAM ALONSO ALARCON MEJIA - 12372",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12372",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "ESTHER MATILDE DOMINGUEZ",
+      "expediente": "11346",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412374484163",
+          "nombre_en_ticket": "ESTHER MATILDE DOMINGUEZ",
+          "subject": "ESTHER MATILDE DOMINGUEZ - 11346",
+          "expedienteAnterior": "11346",
+          "expedienteNuevo": "11346",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Adriana Mariela Alvarez",
+      "expediente": "11058",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412406662363",
+          "nombre_en_ticket": "Adriana Mariela Alvarez",
+          "subject": "Adriana Mariela Alvarez-11058",
+          "expedienteAnterior": "11058",
+          "expedienteNuevo": "11058",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Guido Marcelo Paz",
+      "expediente": "10522",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Analía Friosso",
+      "expediente": "12946",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412401250496",
+          "nombre_en_ticket": "Analía Friosso",
+          "subject": "Analía Friosso - 12946",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12946",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Dardo Daniel Alves",
+      "expediente": "12952",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Maximiliano Ezequiel Diaz",
+      "expediente": "12953",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411062963449",
+          "nombre_en_ticket": "Maximiliano Ezequiel Diaz",
+          "subject": "Maximiliano Ezequiel Diaz - 34.511.261",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12953",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411066624206",
+          "nombre_en_ticket": "Maximiliano Ezequiel Diaz",
+          "subject": "Maximiliano Ezequiel Diaz - 34.511.261",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12953",
+          "updateOk": false
+        },
+        {
+          "ticketId": "412412050655",
+          "nombre_en_ticket": "Maximiliano Ezequiel Diaz",
+          "subject": "Maximiliano Ezequiel Diaz-12953",
+          "expedienteAnterior": "12953",
+          "expedienteNuevo": "12953",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Rosa Noemi Del Valle Bielik",
+      "expediente": "12443",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Guillermo Ariel Benítez",
+      "expediente": "12948",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Ruth Noemi Elizabeth Moreno",
+      "expediente": "12362",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412336427223",
+          "nombre_en_ticket": "Ruth Noemi Elizabeth Moreno",
+          "subject": "Ruth Noemi Elizabeth Moreno-12362",
+          "expedienteAnterior": "12362",
+          "expedienteNuevo": "12362",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Mercedes Victoria Seculitch",
+      "expediente": "12966",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "412198448349",
+          "nombre_en_ticket": "Mercedes Victoria Seculitch",
+          "subject": "Mercedes Victoria Seculitch - 12966",
+          "expedienteAnterior": "12966",
+          "expedienteNuevo": "12966",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Fernando Damian Manrique",
+      "expediente": "9840",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411599669466",
+          "nombre_en_ticket": "Fernando Damian Manrique",
+          "subject": "Myrian Laura Vargas - 11162",
+          "expedienteAnterior": "11162",
+          "expedienteNuevo": "9840",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411705756880",
+          "nombre_en_ticket": "Fernando Damian Manrique",
+          "subject": "Fernando Damian Manrique - 9840",
+          "expedienteAnterior": "9840",
+          "expedienteNuevo": "9840",
+          "updateOk": true
+        },
+        {
+          "ticketId": "412412050654",
+          "nombre_en_ticket": "Fernando Damian Manrique",
+          "subject": "Rodrigo Matias Coronel-11159",
+          "expedienteAnterior": "11159",
+          "expedienteNuevo": "9840",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Ayelen Katia Camacho",
+      "expediente": "12142",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411643545837",
+          "nombre_en_ticket": "Ayelen Katia Camacho",
+          "subject": "Ayelen Katia Camacho - 12142",
+          "expedienteAnterior": "12142",
+          "expedienteNuevo": "12142",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Nicolas Esquivel",
+      "expediente": "11259",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411728973007",
+          "nombre_en_ticket": "Nicolas Esquivel",
+          "subject": "Nicolas Esquivel - 11259",
+          "expedienteAnterior": "11259",
+          "expedienteNuevo": "11259",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Myrian Laura Vargas",
+      "expediente": "11162",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Daiana Giselle Ayala",
+      "expediente": "12373",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411620169942",
+          "nombre_en_ticket": "Daiana Giselle Ayala",
+          "subject": "Daiana Giselle Ayala - 12373",
+          "expedienteAnterior": "12373",
+          "expedienteNuevo": "12373",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Angel Sebastian Pucheta",
+      "expediente": "12933",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411662369990",
+          "nombre_en_ticket": "Angel Sebastian Pucheta",
+          "subject": "Angel Sebastian Pucheta - 12933",
+          "expedienteAnterior": "12933",
+          "expedienteNuevo": "12933",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Juan Manuel Castro",
+      "expediente": "12932",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410476767463",
+          "nombre_en_ticket": "Juan Manuel Castro",
+          "subject": "Maria Raquel Isola - 12889",
+          "expedienteAnterior": "12889",
+          "expedienteNuevo": "12932",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411616573655",
+          "nombre_en_ticket": "Juan Manuel Castro",
+          "subject": "Juan Manuel Castro - 12932",
+          "expedienteAnterior": "12932",
+          "expedienteNuevo": "12932",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sabrina Perez Noemi",
+      "expediente": "13027",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411667408114",
+          "nombre_en_ticket": "Sabrina Perez Noemi",
+          "subject": "Sabrina Perez Noemi - 13027",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "13027",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Yesica Romina CABRERA",
+      "expediente": "12968",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "411559924974",
+          "nombre_en_ticket": "Yesica Romina CABRERA",
+          "subject": "Yesica Romina CABRERA - 30.097.992",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12968",
+          "updateOk": false
+        },
+        {
+          "ticketId": "411652997317",
+          "nombre_en_ticket": "Yesica Romina CABRERA",
+          "subject": "Yesica Romina CABRERA - 12968",
+          "expedienteAnterior": "12968",
+          "expedienteNuevo": "12968",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "GABRIEL EDUARDO MARTINEZ",
+      "expediente": "12682",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411541907644",
+          "nombre_en_ticket": "GABRIEL EDUARDO MARTINEZ",
+          "subject": "GABRIEL EDUARDO MARTINEZ - 12682",
+          "expedienteAnterior": "12682",
+          "expedienteNuevo": "12682",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Roberto Sebastian Carrizo Nicolau",
+      "expediente": "11938",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411297761480",
+          "nombre_en_ticket": "Roberto Sebastian Carrizo Nicolau",
+          "subject": "Roberto Sebastian Carrizo Nicolau - 11938",
+          "expedienteAnterior": "11938",
+          "expedienteNuevo": "11938",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Rey Analia",
+      "expediente": "12927",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411405311200",
+          "nombre_en_ticket": "Rey Analia",
+          "subject": "Rey Analia - 12927",
+          "expedienteAnterior": "12927",
+          "expedienteNuevo": "12927",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ivana Noemi Velazquez Rosales",
+      "expediente": "12925",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411353142511",
+          "nombre_en_ticket": "Ivana Noemi Velazquez Rosales",
+          "subject": "Ivana Noemi Velazquez Rosales - 12925",
+          "expedienteAnterior": "12925",
+          "expedienteNuevo": "12925",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ignacio Gabriel Pachu",
+      "expediente": "11850",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "411322866890",
+          "nombre_en_ticket": "Ignacio Gabriel Pachu",
+          "subject": "Ignacio Gabriel Pachu - 11850",
+          "expedienteAnterior": "11850",
+          "expedienteNuevo": "11850",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Esteban Ariel Ruggirello",
+      "expediente": "11100",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Cesar Andres Gomez",
+      "expediente": "12871",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410064097523",
+          "nombre_en_ticket": "Cesar Andres Gomez",
+          "subject": "Cesar Andres Gomez - 12871",
+          "expedienteAnterior": "12871",
+          "expedienteNuevo": "12871",
+          "updateOk": true
+        },
+        {
+          "ticketId": "410946724027",
+          "nombre_en_ticket": "Cesar Andres Gomez",
+          "subject": "Cesar Andres Gomez - 12871",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12871",
+          "updateOk": false
+        }
+      ]
+    },
+    {
+      "nombre": "Adrian Alejandro Nieva",
+      "expediente": "12922",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410777598164",
+          "nombre_en_ticket": "Adrian Alejandro Nieva",
+          "subject": "Adrian Alejandro Nieva - 12922",
+          "expedienteAnterior": "12922",
+          "expedienteNuevo": "12922",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "pablo jose Antognazza",
+      "expediente": "12936",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410841007322",
+          "nombre_en_ticket": "pablo jose Antognazza",
+          "subject": "pablo jose Antognazza - 12936",
+          "expedienteAnterior": "12936",
+          "expedienteNuevo": "12936",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Gonzalo Nicolas Origuela",
+      "expediente": "12453",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410862590200",
+          "nombre_en_ticket": "Gonzalo Nicolas Origuela",
+          "subject": "Gonzalo Nicolas Origuela - 12453",
+          "expedienteAnterior": "12453",
+          "expedienteNuevo": "12453",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Pablo Javier Martinez Olivera",
+      "expediente": "12912",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410800358594",
+          "nombre_en_ticket": "Pablo Javier Martinez Olivera",
+          "subject": "Pablo Javier Martinez Olivera - 12912",
+          "expedienteAnterior": "12912",
+          "expedienteNuevo": "12912",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ángel Javier López Fuentes",
+      "expediente": "12869",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410837225661",
+          "nombre_en_ticket": "Ángel Javier López Fuentes",
+          "subject": "Ángel Javier López Fuentes - 12869",
+          "expedienteAnterior": "12869",
+          "expedienteNuevo": "12869",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Benjamin Nicolás Hernán Acosta",
+      "expediente": "12100",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410892866748",
+          "nombre_en_ticket": "Benjamin Nicolás Hernán Acosta",
+          "subject": "Benjamin Nicolás Hernán Acosta - 12100",
+          "expedienteAnterior": "12100",
+          "expedienteNuevo": "12100",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Diego Jose Garcia",
+      "expediente": "10317",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410809582805",
+          "nombre_en_ticket": "Diego Jose Garcia",
+          "subject": "Diego Jose Garcia - 10317",
+          "expedienteAnterior": "10317",
+          "expedienteNuevo": "10317",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Aurora Raquel Ifran",
+      "expediente": "11095",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410880211187",
+          "nombre_en_ticket": "Aurora Raquel Ifran",
+          "subject": "Aurora Raquel Ifran - 11095",
+          "expedienteAnterior": "11095",
+          "expedienteNuevo": "11095",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "ALEXIS EMANUEL CASTILLO",
+      "expediente": "12945",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410777330923",
+          "nombre_en_ticket": "ALEXIS EMANUEL CASTILLO",
+          "subject": "ALEXIS EMANUEL CASTILLO - 12945",
+          "expedienteAnterior": "12945",
+          "expedienteNuevo": "12945",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Damaris Ailen Sotelo Cabrera",
+      "expediente": "12907",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Barbara Gisele Pizza",
+      "expediente": "12839",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410847951069",
+          "nombre_en_ticket": "Barbara Gisele Pizza",
+          "subject": "Barbara Gisele Pizza - 12839",
+          "expedienteAnterior": "12839",
+          "expedienteNuevo": "12839",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Javier Sebastián Brailovsky",
+      "expediente": "12902",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410885520581",
+          "nombre_en_ticket": "Javier Sebastián Brailovsky",
+          "subject": "Javier Sebastián Brailovsky - 12902",
+          "expedienteAnterior": "12902",
+          "expedienteNuevo": "12902",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Nicolas Dario Landriel",
+      "expediente": "10150",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410387547368",
+          "nombre_en_ticket": "Nicolas Dario Landriel",
+          "subject": "Nicolas Dario Landriel - 10150",
+          "expedienteAnterior": "10150",
+          "expedienteNuevo": "10150",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Sergio Ciro Daniel Callier",
+      "expediente": "12892",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410485981423",
+          "nombre_en_ticket": "Sergio Ciro Daniel Callier",
+          "subject": "Sergio Ciro Daniel Callier - 12892",
+          "expedienteAnterior": "12892",
+          "expedienteNuevo": "12892",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Juan Tomas Bravo",
+      "expediente": "12433",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410322270407",
+          "nombre_en_ticket": "Juan Tomas Bravo",
+          "subject": "Juan Tomas Bravo - 12433",
+          "expedienteAnterior": "12433",
+          "expedienteNuevo": "12433",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Camus Viviana",
+      "expediente": "10088",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "JUAN PABLO SANCHEZ",
+      "expediente": "12920",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410296701154",
+          "nombre_en_ticket": "JUAN PABLO SANCHEZ",
+          "subject": "JUAN PABLO SANCHEZ - 12920",
+          "expedienteAnterior": "12920",
+          "expedienteNuevo": "12920",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ricardo Javier Facundo Toffoletti",
+      "expediente": "10958",
+      "estado": "ERROR_UPDATE",
+      "tickets": [
+        {
+          "ticketId": "410285897933",
+          "nombre_en_ticket": "Ricardo Javier Facundo Toffoletti",
+          "subject": "Pablo enrique Acosta Pereyra - 10958 (esta mal el nombre del inquilino)",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "10958",
+          "updateOk": false
+        },
+        {
+          "ticketId": "410296699074",
+          "nombre_en_ticket": "Ricardo Javier Facundo Toffoletti",
+          "subject": "Ricardo Javier Facundo Toffoletti - 10958",
+          "expedienteAnterior": "10958",
+          "expedienteNuevo": "10958",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Carmela Coro Julian",
+      "expediente": "12974",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "410145248501",
+          "nombre_en_ticket": "Carmela Coro Julian",
+          "subject": "Carmela Coro Julian - 12974",
+          "expedienteAnterior": "(vacío)",
+          "expedienteNuevo": "12974",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Lia Mariana Arce",
+      "expediente": "12899",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "409833703636",
+          "nombre_en_ticket": "Lia Mariana Arce",
+          "subject": "Lia Mariana Arce - 12899",
+          "expedienteAnterior": "12899",
+          "expedienteNuevo": "12899",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Valentina Almeyra",
+      "expediente": "12847",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "409737793738",
+          "nombre_en_ticket": "Valentina Almeyra",
+          "subject": "\tValentina Almeyra-12847",
+          "expedienteAnterior": "12847",
+          "expedienteNuevo": "12847",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Ivan Federico Esterman",
+      "expediente": "9568",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "409753367800",
+          "nombre_en_ticket": "Ivan Federico Esterman",
+          "subject": "\tIvan Federico Esterman-9568",
+          "expedienteAnterior": "9568",
+          "expedienteNuevo": "9568",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Mauro Manuel Miguel Martinez",
+      "expediente": "12834",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Anyarit Fedora Peralta Garcia",
+      "expediente": "12652",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "405647808740",
+          "nombre_en_ticket": "Anyarit Fedora Peralta Garcia",
+          "subject": "Anyarit Fedora Peralta Garcia-12652",
+          "expedienteAnterior": "12652",
+          "expedienteNuevo": "12652",
+          "updateOk": true
+        }
+      ]
+    },
+    {
+      "nombre": "Malcolm Ariel Gularte",
+      "expediente": "12851",
+      "estado": "NO_ENCONTRADO",
+      "tickets": []
+    },
+    {
+      "nombre": "Elías Leonel Guzman",
+      "expediente": "12830",
+      "estado": "OK",
+      "tickets": [
+        {
+          "ticketId": "400341828838",
+          "nombre_en_ticket": "Elías Leonel Guzman",
+          "subject": "Elías Leonel Guzman-12830",
+          "expedienteAnterior": "12830",
+          "expedienteNuevo": "12830",
+          "updateOk": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagrama de Flujo — Gestión de Contratos HubSpot</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 40px 20px;
+      color: #2d3748;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      padding: 50px;
+    }
+    .header {
+      border-bottom: 3px solid #ff7a59;
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .logo-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #ff7a59;
+      display: inline-block;
+    }
+    .logo-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ff7a59;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #718096;
+    }
+    .meta {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #a0aec0;
+    }
+    .diagram-container {
+      margin: 30px 0;
+      padding: 30px;
+      background: #fafbfc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      overflow-x: auto;
+    }
+    .legend {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .legend-item {
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid;
+    }
+    .legend-item.trigger { border-color: #4299e1; }
+    .legend-item.process { border-color: #48bb78; }
+    .legend-item.output  { border-color: #ed8936; }
+    .legend-item h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .legend-item.trigger h4 { color: #4299e1; }
+    .legend-item.process h4 { color: #48bb78; }
+    .legend-item.output  h4 { color: #ed8936; }
+    .legend-item p { font-size: 13px; color: #4a5568; line-height: 1.5; }
+    footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #a0aec0;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="logo-area">
+      <span class="logo-dot"></span>
+      <span class="logo-label">FINAER — HubSpot CRM</span>
+    </div>
+    <h1>Gestión de Contratos</h1>
+    <p class="subtitle">Diagrama de flujo del proceso automatizado</p>
+    <p class="meta">Versión 1.0 &nbsp;·&nbsp; Abril 2026 &nbsp;·&nbsp; Propuesta de implementación</p>
+  </div>
+
+  <div class="diagram-container">
+    <div class="mermaid">
+flowchart TD
+    A["🗂️ Deal en Pipeline de Ventas\n―――――――――――――――\nSolicitud A-XXXXXX\nEtapa: Pendiente firma fianza"] --> B{"¿Se completa\nfecha_firma_fianza?"}
+
+    B -- No --> A
+    B -- Sí --> C
+
+    C["⚡ WORKFLOW\nContratos — Crear Deal desde Firma"]
+
+    C --> D["📋 Crear Deal nuevo\nen Pipeline 'Gestión de Contratos'\n―――――――――――――――\n• Etapa inicial: Pendiente\n• Nombre: Contrato — {Código solicitud}\n• Fecha firma copiada\n• OC responsable copiado"]
+
+    D --> E["🔄 Asignación rotativa\nentre ejecutivos de contratos"]
+
+    E --> F1["👤 Ejecutivo 1"]
+    E --> F2["👤 Ejecutivo 2"]
+    E --> F3["👤 Ejecutivo 3"]
+    E --> F4["👤 Ejecutivo 4"]
+
+    F1 & F2 & F3 & F4 --> G["🔔 Notificación automática\nal ejecutivo asignado"]
+
+    G --> H["📌 Ejecutivo gestiona\nel contrato"]
+
+    H --> I["PENDIENTE\n⏳ Sin intervención"]
+    H --> J["EN GESTIÓN\n🔧 Trabajando"]
+    H --> K["EMITIDO\n✅ Contrato listo"]
+
+    style A fill:#ebf8ff,stroke:#4299e1,stroke-width:2px
+    style C fill:#fffbeb,stroke:#d69e2e,stroke-width:2px
+    style D fill:#f0fff4,stroke:#48bb78,stroke-width:2px
+    style E fill:#faf5ff,stroke:#9f7aea,stroke-width:2px
+    style G fill:#fff5f5,stroke:#fc8181,stroke-width:2px
+    style I fill:#ebf8ff,stroke:#4299e1
+    style J fill:#fffbeb,stroke:#d69e2e
+    style K fill:#f0fff4,stroke:#48bb78,stroke-width:2px
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item trigger">
+      <h4>Disparador</h4>
+      <p>La carga de la fecha de firma en el Deal de ventas activa el flujo automáticamente.</p>
+    </div>
+    <div class="legend-item process">
+      <h4>Automatización</h4>
+      <p>Un workflow de HubSpot crea el Deal de contratos, asigna al ejecutivo y envía la notificación.</p>
+    </div>
+    <div class="legend-item output">
+      <h4>Gestión manual</h4>
+      <p>El ejecutivo asignado avanza el Deal entre las etapas del pipeline según el estado real del contrato.</p>
+    </div>
+  </div>
+
+  <footer>
+    FINAER &nbsp;·&nbsp; Proyecto HubSpot — Gestión de Contratos &nbsp;·&nbsp; 2026
+  </footer>
+
+</div>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { curve: 'basis', padding: 20 } });
+</script>
+</body>
+</html>
