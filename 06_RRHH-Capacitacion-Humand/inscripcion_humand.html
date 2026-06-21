@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inscripción Capacitación Humand — FINAER</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@10/public/assets/styles/choices.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f8fa;display:flex;justify-content:center;padding:40px 16px;min-height:100vh}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.12);padding:40px;max-width:640px;width:100%}
+.logo{font-size:13px;font-weight:700;color:#0057b7;letter-spacing:1px;margin-bottom:20px;text-transform:uppercase}
+h1{font-size:22px;color:#1a1a2e;margin-bottom:6px}
+.sub{color:#666;font-size:14px;margin-bottom:28px}
+.aviso{background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:12px 16px;font-size:13px;color:#5d4037;margin-bottom:26px;line-height:1.5}
+.campo{margin-bottom:22px}
+label{display:block;font-size:13px;font-weight:600;color:#333;margin-bottom:7px}
+.nota{font-size:11px;color:#888;font-weight:400;margin-left:4px}
+input[type=email]{width:100%;padding:10px 14px;border:1px solid #ccc;border-radius:6px;font-size:14px;outline:none;transition:border .2s}
+input[type=email]:focus{border-color:#0057b7}
+select.turno{width:100%;padding:10px 14px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff;outline:none;cursor:pointer}
+select.turno:focus{border-color:#0057b7}
+.choices{font-size:14px}
+.choices__inner{border:1px solid #ccc;border-radius:6px;min-height:44px}
+.choices__list--dropdown .choices__item--selectable{padding:10px 14px}
+button{width:100%;padding:13px;background:#0057b7;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;margin-top:6px}
+button:hover:not(:disabled){background:#0043a0}
+button:disabled{background:#aaa;cursor:default}
+.msg-ok{display:none;text-align:center;padding:32px 0}
+.msg-ok h2{color:#2e7d32;font-size:20px;margin-bottom:8px}
+.msg-ok p{color:#555;font-size:14px}
+.msg-err{display:none;background:#fdecea;border:1px solid #f5c6c6;border-radius:6px;padding:12px 14px;font-size:13px;color:#c62828;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">FINAER</div>
+  <h1>Inscripción Capacitación Humand</h1>
+  <p class="sub">Inscribí a tu equipo en el turno de capacitación correspondiente.</p>
+  <div class="aviso">
+    📋 <strong>Cupo máximo por turno: 30 personas.</strong><br>
+    Coordinen con sus referentes para distribuir el equipo sin afectar la operación.<br>
+    Ante cualquier duda, consultá a Franco Cavadini.
+  </div>
+
+  <form id="f">
+    <div class="campo">
+      <label>Tu email corporativo *</label>
+      <input type="email" id="em" placeholder="nombre@finaersa.com.ar" required autocomplete="email">
+    </div>
+
+    <div class="campo">
+      <label>Turno de capacitación *</label>
+      <select id="tu" class="turno" required>
+        <option value="">— Seleccioná un turno —</option>
+        <option value="jueves_2_julio">Jueves 2 de Julio</option>
+        <option value="viernes_3_julio">Viernes 3 de Julio</option>
+        <option value="lunes_6_julio">Lunes 6 de Julio</option>
+        <option value="martes_7_julio">Martes 7 de Julio</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Recursos a inscribir * <span class="nota">(escribí para buscar por nombre)</span></label>
+      <select id="re" multiple required>
+        <option value="aramos@finaersa.com.ar">Agustin Ignacio Ramos Forastiere</option>
+<option value="amoreira@finaersa.com.ar">Ailen Moreira Speranza</option>
+<option value="anemina@finaersa.com.ar">Aldana Belén Nemiña Rozencwaig</option>
+<option value="afernandez@finaersa.com.ar">Alejandra Antonia Fernandez</option>
+<option value="aorellana@finaersa.com.ar">Alejandro Luis Lopez Orellana</option>
+<option value="aveira@finaersa.com.ar">Alejandro Veira Tassara</option>
+<option value="arodriguez@finaersa.com.ar">Alicia Beatriz Rodriguez</option>
+<option value="falvarez@finaersa.com.ar">Alvarez Marinelarena Franco</option>
+<option value="azangarini@finaersa.com.ar">Ambar Nerea Zangarini</option>
+<option value="asamokec@finaersa.com.ar">Ana Laura Samokec</option>
+<option value="agodoy@finaersa.com.ar">Anabella Ayelen Tarrio Godoy</option>
+<option value="aquisbert@finaersa.com.ar">Anahi Wayra Quisbert Catari</option>
+<option value="alopez@finaersa.com.ar">Anairis Alicia Lopez Benitez</option>
+<option value="acurutchet@finaersa.com.ar">Analia Curutchet</option>
+<option value="analiasilva@finaersa.com.ar">Analía Silva</option>
+<option value="acolmenares@finaersa.com.ar">Andreina Del Colmenarez Navas</option>
+<option value="aschettino@finaersa.com.ar">Antonella Paola Schettino</option>
+<option value="bmerayo@finaersa.com.ar">Baltazar Merayo</option>
+<option value="bbarranco@finaersa.com.ar">Barbara Beatriz Barranco</option>
+<option value="bmonardez@finaersa.com.ar">Belén Monardez</option>
+<option value="bavendano@finaersa.com.ar">Bernardo Luis Avendaño</option>
+<option value="cinsua@finaersa.com.ar">Camila Insua</option>
+<option value="rbenitez@finaersa.com.ar">Cardozo Rocio Cecilia Benitez</option>
+<option value="cgarcia@finaersa.com.ar">Carina Elizabeth Garcia</option>
+<option value="cramoslandolfi@finaersa.com.ar">Carla Johanna Ramos Landolfi</option>
+<option value="caguirre@finaersa.com.ar">Carla Nerea Aguirre</option>
+<option value="cperrone@finaersa.com.ar">Carolina Andrea Perrone</option>
+<option value="crodriguez@finaersa.com.ar">Cecilia Roxana Rodriguez</option>
+<option value="cbronzi@finaersa.com.ar">Cecilia Vanesa Bronzi</option>
+<option value="cpardo@finaersa.com.ar">Cesar Alejandro Pardo</option>
+<option value="claudioadorna@finaersa.com.ar">Claudio Norberto Adorna</option>
+<option value="nvillegas@finaersa.com.ar">Clidia Natalia Villegas</option>
+<option value="csciscivo@finaersa.com.ar">Constanza Sciscivo</option>
+<option value="dgallardo@finaersa.com.ar">Daphne Amanda Gallardo García</option>
+<option value="dromero@finaersa.com.ar">Debora Belen Romero</option>
+<option value="diannino@finaersa.com.ar">Demian Andre Iannino</option>
+<option value="dobregon@finaersa.com.ar">Diego Andres Obregón</option>
+<option value="dgiani@finaersa.com.ar">Diego Fernando Giani</option>
+<option value="dapolo@finaersa.com.ar">Diego Gabriel Apolo</option>
+<option value="ddiaz@finaersa.com.ar">Diego Martin Diaz</option>
+<option value="ecanotriana@finaersa.com.ar">Edward Antonio Cano Triana</option>
+<option value="eklein@finaersa.com.ar">Elizabeth Cristina Klein</option>
+<option value="emorales@finaersa.com.ar">Emanuel Alberto Morales</option>
+<option value="eduarte@finaersa.com.ar">Emiliano Martin Duarte</option>
+<option value="erusso@finaersa.com.ar">Emiliano Russo</option>
+<option value="eloyola@finaersa.com.ar">Enrique Edgardo Loyola</option>
+<option value="ediaz@finaersa.com.ar">Esteban Fabian Diaz</option>
+<option value="etaboada@finaersa.com.ar">Eugenia Taboada</option>
+<option value="fraimondo@finaersa.com.ar">Fabrizio Alejandro Raimondo</option>
+<option value="galatif@finaersa.com.ar">Florencia Pilar Galati</option>
+<option value="fwehner@finaersa.com.ar">Florencia Solange Wehner</option>
+<option value="fvelasco@finaersa.com.ar">Florencia Soledad Velasco</option>
+<option value="fcavadini@finaersa.com.ar">Franco Nahuel Cavadini</option>
+<option value="fkazazian@finaersa.com.ar">Franco Nicolas Kazazian</option>
+<option value="fvasile@finaersa.com.ar">Franco Nicolas Vasile</option>
+<option value="fvidigt@finaersa.com.ar">Franco Vidigt</option>
+<option value="gavila@finaersa.com.ar">Gabriela Rodriguez Avila</option>
+<option value="gnegrette@finaersa.com.ar">Gerardo Andrés Guanipa Negrete</option>
+<option value="gmateo@finaersa.com.ar">Gisela Lorena Mateo</option>
+<option value="gsoliz@finaersa.com.ar">Giselle Karina Soliz</option>
+<option value="gmoine@finaersa.com.ar">Gonzalo Pereyra Moine</option>
+<option value="gtorres@finaersa.com.ar">Guadalupe Aldana Torres</option>
+<option value="gmartinelli@finaersa.com.ar">Guido Martinelli</option>
+<option value="gandrada@finaersa.com.ar">Gustavo Gabriel Andrada</option>
+<option value="gzarate@finaersa.com.ar">Gustavo Zarate Ruiz Diaz</option>
+<option value="hblanco@finaersa.com.ar">Hernan Blanco</option>
+<option value="hfernandez@finaersa.com.ar">Horacio Alejandro Fernandez</option>
+<option value="hcapitani@finaersa.com.ar">Horacio Capitani Apiolazza</option>
+<option value="imonasterio@finaersa.com.ar">Iara Belén Monasterio</option>
+<option value="iheredia@finaersa.com.ar">Ignacio Heredia</option>
+<option value="mtesti@finaersa.com.ar">Ignacio Martin Testi</option>
+<option value="vcasco@finaersa.com.ar">Isidro Vicente Casco</option>
+<option value="jmandiola@finaersa.com.ar">Jaqueline Margot Mandiola</option>
+<option value="jmarcano@finaersa.com.ar">Jeagnina Marly Vara Marcano</option>
+<option value="jparrado@finaersa.com.ar">Jesica Gabriela Parrado</option>
+<option value="jcolmenares@finaersa.com.ar">Jessica Carolina Alfonzo Colmenares</option>
+<option value="kcorrea@finaersa.com.ar">Jineet Karina Correa Pereira</option>
+<option value="johannap@finaersa.com.ar">Johanna Elizabeth Perez</option>
+<option value="jgalvan@finaersa.com.ar">Johanna Nadia Galvan</option>
+<option value="jsilva@finaersa.com.ar">Jorge Julio Cammisa Silva</option>
+<option value="jreyes@finaersa.com.ar">Josefina Reyes</option>
+<option value="jagopian@finaersa.com.ar">Juan Ignacio Agopian</option>
+<option value="jfuentes@finaersa.com.ar">Juan Ignacio Fuentes</option>
+<option value="jlandeira@finaersa.com.ar">Juan Ignacio Landeira</option>
+<option value="jinovas@finaersa.com.ar">Juan Ignacio Novas Brignone</option>
+<option value="jbejar@finaersa.com.ar">Juan Manuel Bejar</option>
+<option value="jvittori@finaersa.com.ar">Juan Pablo Vittori</option>
+<option value="jzahor@finaersa.com.ar">Julian David Zahor</option>
+<option value="jreartes@finaersa.com.ar">Julián Reartes</option>
+<option value="jgorga@finaersa.com.ar">Julieta Gorga</option>
+<option value="kmadia@finaersa.com.ar">Karina Lorena Madia</option>
+<option value="ltaboas@finaersa.com.ar">Laura Andrea Bettina Taboas</option>
+<option value="lrinaldi@finaersa.com.ar">Leandro Rinaldi</option>
+<option value="lbarbosa@finaersa.com.ar">Leonel Angel Barbosa</option>
+<option value="lgonzalez@finaersa.com.ar">Liliana Beatriz Gonzalez</option>
+<option value="lsagardia@finaersa.com.ar">Liliana Beatriz Sagardia</option>
+<option value="lorenalarzen@finaersa.com.ar">Lorena Veronica Larzen</option>
+<option value="lmartinez@finaersa.com.ar">Lucas Emanuel Martinez</option>
+<option value="lreynaga@finaersa.com.ar">Lucas Nahuel Antonio Reynaga</option>
+<option value="lfernandez@finaersa.com.ar">Lucia Araujo Fernandez</option>
+<option value="llopez@finaersa.com.ar">Lucia Eliana Lopez</option>
+<option value="lfrias@finaersa.com.ar">Lucia Julieta Frias</option>
+<option value="lcingolani@finaersa.com.ar">Luciana Aylén Cingolani</option>
+<option value="lucianorgentile@gmail.com">Luciano Raniero Gentile</option>
+<option value="lurbina@finaersa.com.ar">Luis Antonio Urbina Zerpa</option>
+<option value="mkalpin@finaersa.com.ar">Marcelo Ignacio Kalpin</option>
+<option value="bcuello@finaersa.com.ar">Maria Belen Cuello</option>
+<option value="ines.soto@finaersa.com.ar">Maria Ines Soto</option>
+<option value="mjolivera@finaersa.com.ar">Maria Jose Olivera Herbas</option>
+<option value="mdasso@finaersa.com.ar">Mariano Augusto Dasso</option>
+<option value="mperin@finaersa.com.ar">Mariano Ezequiel Perin</option>
+<option value="mstoroni@finaersa.com.ar">Mariano Hernán Storoni</option>
+<option value="mcastrolawor@finaersa.com.ar">Marina Castro Lawor</option>
+<option value="mmino@finaersa.com.ar">Marina Elizabeth Miño</option>
+<option value="mmagurno@finaersa.com.ar">Martin Eduardo Magurno</option>
+<option value="mfogliacco@finaersa.com.ar">Martin Esteban Fogliacco</option>
+<option value="mpinto@finaersa.com.ar">Mauricio Pinto</option>
+<option value="mrivarola@finaersa.com.ar">Melina Aylen Rivarola</option>
+<option value="mgonzalez@finaersa.com.ar">Mercedes Gonzalez</option>
+<option value="mmazza@finaersa.com.ar">Mercedes Mazza</option>
+<option value="mkulevicius@finaersa.com.ar">Micaela Alejandra Kulevicius Pedemonte</option>
+<option value="mmassironi@finaersa.com.ar">Micaela Massironi</option>
+<option value="sradicci@finaersa.com.ar">Myriam Soledad Radicci</option>
+<option value="nbazillo@finaersa.com.ar">Nahuel Ignacio Bazillo</option>
+<option value="ngallegos@finaersa.com.ar">Nariela Maria Elizabeth Gallegos</option>
+<option value="nscalia@finaersa.com.ar">Natalia Concepción Scalia</option>
+<option value="nmartinez@finaersa.com.ar">Natalia Micaela Martinez Olivera</option>
+<option value="fanaran@finaersa.com.ar">Natalia Sol Fanara</option>
+<option value="ngrimoldi@finaersa.com.ar">Nazarena Grimoldi</option>
+<option value="nferre@finaersa.com.ar">Nicolás Alejandro Ferré</option>
+<option value="ncottate@finaersa.com.ar">Nicolas Ariel Ottate Carcabelo</option>
+<option value="ncapone@finaersa.com.ar">Nicolas Capone</option>
+<option value="nchalupowicz@finaersa.com.ar">Nicole Jazmin Chalupowicz</option>
+<option value="nguzman@finaersa.com.ar">Noelia Guzman Jimenez</option>
+<option value="ncabral@finaersa.com.ar">Noelia Lujan Cabral</option>
+<option value="opatrone@finaersa.com.ar">Olga Beatriz Patrone</option>
+<option value="ovargas@finaersa.com.ar">Oscar Vargas</option>
+<option value="mfagundez@finaersa.com.ar">Pablo Martin Fagundez</option>
+<option value="pjasem@finaersa.com.ar">Pablo Nicolas Sanhueza Jasem</option>
+<option value="pvillalba@finaersa.com.ar">Patricia Edith Villalba Avalos</option>
+<option value="palegre@finaersa.com.ar">Patricio Emmanuel Alegre</option>
+<option value="pwoyze@finaersa.com.ar">Peter Alejandro Woyzechowsky Muratowa</option>
+<option value="ppineda@finaersa.com.ar">Pierina Salomé Pineda Maldonado</option>
+<option value="krada@finaersa.com.ar">Rada Kheiber Javier Borrego</option>
+<option value="rmino@finaersa.com.ar">Ramiro Miño</option>
+<option value="rerahal@finaersa.com.ar">Raul Eduardo Rahal</option>
+<option value="ritawildman@finaersa.com.ar">Rita Carlota Wildman Machado</option>
+<option value="rvera@finaersa.com.ar">Rodrigo Vera Montero</option>
+<option value="rmanzato@finaersa.com.ar">Romina Carla Manzato</option>
+<option value="rbobadilla@finaersa.com.ar">Romina Ivana Bobadilla</option>
+<option value="rdeantonio@finaersa.com.ar">Romina Judith De Antonio</option>
+<option value="rcirer@finaersa.com.ar">Romina Mariela Cirer</option>
+<option value="saflores@finaersa.com.ar">Sabrina Anahi Flores</option>
+<option value="smorgante@finaersa.com.ar">Salvador Ezequiel Morgante</option>
+<option value="sfernandezfurnari@finaersa.com.ar">Santiago Alejandro Fernandez Furnari</option>
+<option value="sbagnera@finaersa.com.ar">Santiago Eduardo Bagnera</option>
+<option value="saranguez@finaersa.com.ar">Sofia Aranguez</option>
+<option value="smemme@finaersa.com.ar">Sofia Belen Memme</option>
+<option value="scolque@finaersa.com.ar">Soledad Silvana Colque</option>
+<option value="tabud@finaersa.com.ar">Tais Nair Abud</option>
+<option value="tdrolaiser@finaersa.com.ar">Tamara Daiana Rolaiser</option>
+<option value="tvillavicencio@finaersa.com.ar">Thiago Villavicencio</option>
+<option value="tembon@finaersa.com.ar">Tomas Embon</option>
+<option value="vcamba@finaersa.com.ar">Valeria Camba</option>
+<option value="vsalinas@finaersa.com.ar">Valeria Carolina Salinas</option>
+<option value="vgallardo@finaersa.com.ar">Valeria Fabiola Gallardo</option>
+<option value="valmiron@finaersa.com.ar">Valeria Fernanda Almiron</option>
+<option value="valonso@finaersa.com.ar">Valeria Roxana Alonso</option>
+<option value="vpugliese@finaersa.com.ar">Vanesa Elizabeth Pugliese</option>
+<option value="vnunez@finaersa.com.ar">Vanesa Soledad Nuñez</option>
+<option value="vmoldes@finaersa.com.ar">Vanesa Yanina Moldes</option>
+<option value="vzalinkevicius@finaersa.com.ar">Vanina Vazquez Zalinkevicius</option>
+<option value="vrojas@finaersa.com.ar">Veronica Lorena Rojas</option>
+<option value="vrodriguez@finaersa.com.ar">Veronica Mariana Rodriguez</option>
+<option value="cthompson@finaersa.com.ar">Vyleta Maria Candela Thompson</option>
+<option value="ypacheco@finaersa.com.ar">Yamila Aldana Pacheco Demarchi</option>
+<option value="ygalati@finaersa.com.ar">Yamila Mariel Galati</option>
+      </select>
+    </div>
+
+    <button type="submit" id="bt">Inscribir equipo</button>
+    <div class="msg-err" id="er">❌ No se pudo enviar la inscripción. Intentá de nuevo o contactá a Franco Cavadini.</div>
+  </form>
+
+  <div class="msg-ok" id="ok">
+    <h2>✅ ¡Inscripción enviada!</h2>
+    <p>El equipo quedó registrado. Podés cerrar esta página.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/choices.js@10/public/assets/scripts/choices.min.js"></script>
+<script>
+const ch = new Choices('#re', {
+  removeItemButton: true,
+  searchEnabled: true,
+  searchPlaceholderValue: 'Escribí un nombre para buscar...',
+  placeholder: true,
+  placeholderValue: 'Seleccioná personas...',
+  noResultsText: 'Sin resultados',
+  noChoicesText: 'No hay más opciones',
+  itemSelectText: '',
+  shouldSort: false,
+  searchFields: ['label']
+});
+
+document.getElementById('f').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const bt = document.getElementById('bt');
+  const erDiv = document.getElementById('er');
+  erDiv.style.display = 'none';
+  bt.disabled = true;
+  bt.textContent = 'Enviando...';
+
+  const em  = document.getElementById('em').value.trim();
+  const tu  = document.getElementById('tu').value;
+  const sel = ch.getValue(true);
+
+  if (!em || !tu || !sel.length) {
+    alert('Completá todos los campos antes de enviar.');
+    bt.disabled = false; bt.textContent = 'Inscribir equipo'; return;
+  }
+
+  const payload = {
+    fields: [
+      { name: 'email', value: em },
+      { name: 'turno_capacitacion_humand', value: tu },
+      ...sel.map(v => ({ name: 'recursos_inscribir_humand', value: v }))
+    ],
+    context: { pageUri: location.href }
+  };
+
+  console.log('Enviando payload:', JSON.stringify(payload));
+  try {
+    const r = await fetch(
+      'https://api.hsforms.com/submissions/v3/integration/submit/145725856/afcadf5d-3a40-4844-b3a4-4df144c9bebb',
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }
+    );
+    const respText = await r.text();
+    console.log('Respuesta HubSpot:', r.status, respText);
+    if (r.ok) {
+      document.getElementById('f').style.display = 'none';
+      document.getElementById('ok').style.display = 'block';
+    } else {
+      erDiv.textContent = '❌ Error al enviar (status ' + r.status + '): ' + respText.slice(0, 200);
+      erDiv.style.display = 'block';
+      bt.disabled = false;
+      bt.textContent = 'Inscribir equipo';
+    }
+  } catch(err) {
+    console.error('Error fetch:', err);
+    erDiv.textContent = '❌ Error de red: ' + err.message;
+    erDiv.style.display = 'block';
+    bt.disabled = false;
+    bt.textContent = 'Inscribir equipo';
+  }
+});
+</script>
+</body>
+</html>

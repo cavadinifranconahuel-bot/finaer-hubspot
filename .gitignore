@@ -4,3 +4,7 @@ node_modules/
 *.log
 .DS_Store
 .tmp.drivedownload/
+.tmp.driveupload/
+hubspot.config.yaml
+emails_list.json
+temp_analisis/

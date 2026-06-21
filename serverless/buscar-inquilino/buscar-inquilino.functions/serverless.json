@@ -1,0 +1,12 @@
+{
+  "runtime": "NODE18X",
+  "version": "1.0",
+  "environment": {},
+  "secrets": ["HUBSPOT_TOKEN"],
+  "endpoints": {
+    "buscar": {
+      "method": "GET",
+      "file": "index.js"
+    }
+  }
+}

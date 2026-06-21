@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notificación de Incumplimiento — FINAER</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f5; padding: 32px 16px; }
+
+.progress { display: flex; align-items: center; justify-content: center; max-width: 600px; margin: 0 auto 28px; }
+.step-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: #e0e0e0; color: #999; transition: all .3s; flex-shrink: 0; }
+.step-dot.active { background: #e30613; color: #fff; }
+.step-dot.done { background: #4a4a49; color: #fff; }
+.step-line { width: 48px; height: 3px; background: #e0e0e0; transition: background .3s; }
+.step-line.done { background: #4a4a49; }
+.step-label { font-size: 10px; color: #999; text-align: center; margin-top: 4px; white-space: nowrap; }
+.progress-wrap { display: flex; flex-direction: column; align-items: center; }
+
+.card { background: #fff; border-radius: 10px; box-shadow: 0 2px 16px rgba(0,0,0,.12); padding: 40px; max-width: 600px; margin: 0 auto 40px; width: 100%; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.panel-title { font-size: 17px; font-weight: 700; color: #2f3743; margin-bottom: 6px; }
+.panel-sub { font-size: 13px; color: #777; margin-bottom: 24px; line-height: 1.5; }
+
+.campo { margin-bottom: 16px; }
+.campo label { display: block; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+.campo input, .campo select, .campo textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+  font-size: 14px; outline: none; transition: border .2s; background: #fafafa;
+}
+.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: #e30613; background: #fff; }
+.campo textarea { resize: vertical; min-height: 80px; }
+.campo-req label::after { content: ' *'; color: #e30613; }
+
+.seccion-titulo { font-size: 11px; font-weight: 700; color: #e30613; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 12px; padding-bottom: 6px; border-bottom: 1.5px solid #fadadb; }
+.seccion-titulo:first-child { margin-top: 0; }
+
+/* Tipos checkboxes */
+.tipos-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.tipo-check { display: flex; align-items: center; gap: 7px; font-size: 14px; color: #444; cursor: pointer; padding: 9px 14px; border: 1.5px solid #ddd; border-radius: 8px; background: #fafafa; transition: all .2s; user-select: none; }
+.tipo-check input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #e30613; flex-shrink: 0; }
+.tipo-check.checked { background: #fff5f5; border-color: #e30613; color: #c0050f; font-weight: 600; }
+
+/* Montos dinámicos */
+.monto-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
+.monto-row .campo { margin-bottom: 0; }
+
+/* Card inquilino */
+.inq-card { background: #f5f5f5; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 20px; margin-bottom: 24px; }
+.inq-nombre { font-size: 18px; font-weight: 700; color: #2f3743; margin-bottom: 14px; }
+.inq-fila { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e8e8e8; font-size: 13px; }
+.inq-fila:last-child { border-bottom: none; }
+.inq-fila .lbl { color: #888; }
+.inq-fila .val { font-weight: 600; color: #2f3743; text-align: right; max-width: 55%; }
+.inq-vacio { color: #bbb; font-style: italic; font-weight: 400; }
+
+.dos-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dos-col .campo { margin-bottom: 0; }
+
+.btns { display: flex; gap: 12px; margin-top: 24px; }
+.btn-back { flex: 1; padding: 12px; background: #fff; color: #e30613; border: 1.5px solid #e30613; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
+.btn-back:hover { background: #fff5f5; }
+.btn-next { flex: 2; padding: 12px; background: #e30613; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; }
+.btn-next:hover { background: #c0050f; }
+.btn-next:disabled { background: #aaa; cursor: default; }
+.btn-next.full { flex: 1; }
+
+.alert { padding: 12px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; display: none; }
+.alert.error { background: #fdecea; border: 1px solid #f5c6c6; color: #c62828; }
+.alert.warn { background: #fff8e1; border: 1px solid #ffe082; color: #8a6d00; }
+
+.no-encontrado { text-align: center; padding: 20px 0; }
+.no-encontrado .icon { font-size: 36px; margin-bottom: 12px; }
+.no-encontrado p { color: #666; font-size: 14px; line-height: 1.6; }
+
+.success-panel { text-align: center; padding: 12px 0; }
+.success-panel .icon { font-size: 48px; margin-bottom: 16px; }
+.success-panel h2 { font-size: 20px; color: #2f3743; margin-bottom: 8px; }
+.success-panel p { color: #666; font-size: 14px; line-height: 1.6; }
+
+@media (max-width: 480px) {
+  .card { padding: 24px 18px; }
+  .step-line { width: 28px; }
+  .monto-row { grid-template-columns: 1fr; }
+  .dos-col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress">
+  <div class="progress-wrap"><div class="step-dot active" id="dot1">1</div><div class="step-label">Inquilino</div></div>
+  <div class="step-line" id="line1"></div>
+  <div class="progress-wrap"><div class="step-dot" id="dot2">2</div><div class="step-label">Confirmación</div></div>
+  <div class="step-line" id="line2"></div>
+  <div class="progress-wrap"><div class="step-dot" id="dot3">3</div><div class="step-label">Incumplimiento</div></div>
+  <div class="step-line" id="line3"></div>
+  <div class="progress-wrap"><div class="step-dot" id="dot4">4</div><div class="step-label">Tus datos</div></div>
+</div>
+
+<div class="card">
+
+  <!-- PASO 1: DNI -->
+  <div class="panel active" id="panel1">
+    <div class="panel-title">DNI del inquilino</div>
+    <div class="panel-sub">Ingresá el número de DNI del inquilino para verificar sus datos antes de continuar.</div>
+    <div class="alert error" id="err1"></div>
+    <div class="campo campo-req">
+      <label>Número de DNI</label>
+      <input type="text" id="dni-input" placeholder="Ej: 30123456" maxlength="12" inputmode="numeric">
+    </div>
+    <div class="btns">
+      <button class="btn-next full" id="btn1" onclick="buscarDNI()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PASO 2: Confirmación del inquilino -->
+  <div class="panel" id="panel2">
+    <div class="panel-title">Confirmá los datos del inquilino</div>
+    <div class="panel-sub">Verificá que estos sean los datos del inquilino sobre el cual querés notificar el incumplimiento.</div>
+    <div class="alert warn" id="warn2"></div>
+    <div id="inq-content"></div>
+    <div class="btns">
+      <button class="btn-back" onclick="irA(1)">← Atrás</button>
+      <button class="btn-next" id="btn2" onclick="confirmarInquilino()">Confirmar y continuar →</button>
+    </div>
+  </div>
+
+  <!-- PASO 3: Datos del incumplimiento -->
+  <div class="panel" id="panel3">
+    <div class="panel-title">Datos del incumplimiento</div>
+    <div class="panel-sub">Seleccioná los tipos de deuda y completá los montos y la fecha correspondiente.</div>
+    <div class="alert error" id="err3"></div>
+
+    <div class="campo campo-req">
+      <label>Tipo de incumplimiento</label>
+      <div class="tipos-grid">
+        <label class="tipo-check" id="lbl-Alquiler"><input type="checkbox" value="Alquiler" name="tipo" onchange="toggleMonto(this)"> Alquiler</label>
+        <label class="tipo-check" id="lbl-Expensas"><input type="checkbox" value="Expensas" name="tipo" onchange="toggleMonto(this)"> Expensas</label>
+        <label class="tipo-check" id="lbl-Luz"><input type="checkbox" value="Luz" name="tipo" onchange="toggleMonto(this)"> Luz</label>
+        <label class="tipo-check" id="lbl-Gas"><input type="checkbox" value="Gas" name="tipo" onchange="toggleMonto(this)"> Gas</label>
+        <label class="tipo-check" id="lbl-ABL"><input type="checkbox" value="ABL" name="tipo" onchange="toggleMonto(this)"> ABL</label>
+        <label class="tipo-check" id="lbl-Aysa"><input type="checkbox" value="Aysa" name="tipo" onchange="toggleMonto(this)"> AYSA</label>
+      </div>
+    </div>
+
+    <div class="campo campo-req" style="margin-top:20px;">
+      <label>Fecha desde que se adeuda</label>
+      <input type="date" id="fecha-desde" max="">
+    </div>
+
+    <div id="montos-container"></div>
+
+    <div class="campo" style="margin-top:16px;">
+      <label>Observaciones (opcional)</label>
+      <textarea id="descripcion" placeholder="Cualquier información adicional relevante..."></textarea>
+    </div>
+
+    <div class="btns">
+      <button class="btn-back" onclick="irA(2)">← Atrás</button>
+      <button class="btn-next" onclick="validarPaso3()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PASO 4: Datos del notificante + bancarios -->
+  <div class="panel" id="panel4">
+    <div class="panel-title">Tus datos</div>
+    <div class="panel-sub">Completá tus datos de contacto y los bancarios para recibir el reembolso en caso de resolución.</div>
+    <div class="alert error" id="err4"></div>
+
+    <div class="seccion-titulo">Quién notifica</div>
+    <div class="dos-col" style="margin-bottom:16px;">
+      <div class="campo campo-req"><label>Nombre</label><input type="text" id="notificante-nombre" placeholder="Tu nombre"></div>
+      <div class="campo campo-req"><label>Apellido</label><input type="text" id="notificante-apellido" placeholder="Tu apellido"></div>
+    </div>
+    <div class="dos-col" style="margin-bottom:16px;">
+      <div class="campo campo-req"><label>Email</label><input type="email" id="notificante-email" placeholder="correo@ejemplo.com"></div>
+      <div class="campo campo-req"><label>Teléfono</label><input type="tel" id="notificante-telefono" placeholder="Ej: 1155556666" inputmode="numeric"></div>
+    </div>
+
+    <div class="seccion-titulo">Datos bancarios (opcional)</div>
+    <div class="campo">
+      <label>CBU / Alias</label>
+      <input type="text" id="cbu" placeholder="22 dígitos o alias">
+    </div>
+    <div class="dos-col" style="margin-bottom:16px;">
+      <div class="campo">
+        <label>Banco</label>
+        <select id="banco">
+          <option value="">— Seleccioná un banco —</option>
+          <option>BANCO DE GALICIA Y BUENOS AIRES S.A.</option>
+          <option>BANCO DE LA NACION ARGENTINA</option>
+          <option>BANCO DE LA PROVINCIA DE BUENOS AIRES</option>
+          <option>BANCO SANTANDER ARGENTINA S.A.</option>
+          <option>BANCO BBVA ARGENTINA S.A.</option>
+          <option>BANCO MACRO S.A.</option>
+          <option>BANCO SUPERVIELLE S.A.</option>
+          <option>BANCO CREDICOOP COOPERATIVO LIMITADO</option>
+          <option>BANCO DE LA CIUDAD DE BUENOS AIRES</option>
+          <option>BANCO HIPOTECARIO S.A.</option>
+          <option>BANCO PATAGONIA S.A.</option>
+          <option>BANCO COMAFI SOCIEDAD ANONIMA</option>
+          <option>BANCO INDUSTRIAL S.A.</option>
+          <option>BANCO PIANO S.A.</option>
+          <option>BANCO COLUMBIA S.A.</option>
+          <option>BANCO COINAG S.A.</option>
+          <option>BRUBANK S.A.U.</option>
+          <option>UALA BANK S.A.U.</option>
+          <option>BIBANK S.A.</option>
+          <option>NARANJA DIGITAL COMPANIA FINANCIERA S.A.</option>
+          <option>INDUSTRIAL AND COMMERCIAL BANK OF CHINA</option>
+          <option>CITIBANK N.A.</option>
+          <option>JPMORGAN CHASE BANK, NATIONAL ASSOCIATION</option>
+          <option>BNP PARIBAS</option>
+          <option>BANK OF CHINA LIMITED SUCURSAL BUENOS AIRES</option>
+          <option>BANCO DE LA PROVINCIA DE CORDOBA S.A.</option>
+          <option>BANCO DE SAN JUAN S.A.</option>
+          <option>BANCO MUNICIPAL DE ROSARIO</option>
+          <option>BANCO DEL CHUBUT S.A.</option>
+          <option>BANCO DE SANTA CRUZ S.A.</option>
+          <option>BANCO DE LA PAMPA S.A.</option>
+          <option>BANCO DE CORRIENTES S.A.</option>
+          <option>BANCO PROVINCIA DEL NEUQUEN SOCIEDAD ANONIMA</option>
+          <option>BANCO PROVINCIA DE TIERRA DEL FUEGO</option>
+          <option>BANCO DE SAN JUAN S.A.</option>
+          <option>BANCO DE SANTIAGO DEL ESTERO S.A.</option>
+          <option>BANCO DE FORMOSA S.A.</option>
+          <option>BANCO RIOJA SOCIEDAD ANONIMA UNIPERSONAL</option>
+          <option>BANCO DEL SOL S.A.</option>
+          <option>NUEVO BANCO DEL CHACO S.A.</option>
+          <option>NUEVO BANCO DE SANTA FE SOCIEDAD ANONIMA</option>
+          <option>NUEVO BANCO DE ENTRE RIOS S.A.</option>
+          <option>BANCO DE INVERSION Y COMERCIO EXTERIOR S.A.</option>
+          <option>BANCO DE VALORES S.A.</option>
+          <option>BANCO ROELA S.A.</option>
+          <option>BANCO MARIVA S.A.</option>
+          <option>BANCO JULIO SOCIEDAD ANONIMA</option>
+          <option>BANCO CMF S.A.</option>
+          <option>BANCO MASVENTAS S.A.</option>
+          <option>BANCO SAENZ S.A.</option>
+          <option>BANCO MERIDIAN S.A.</option>
+          <option>BANCO VOII S.A.</option>
+          <option>BANCO BICA S.A.</option>
+          <option>BANCO SUCREDITO REGIONAL S.A.U.</option>
+          <option>BANCO DINO S.A.</option>
+          <option>BANCO DE SERVICIOS FINANCIEROS S.A.</option>
+          <option>BANCO DE SERVICIOS Y TRANSACCIONES SAU</option>
+          <option>BANCO CETELEM ARGENTINA S.A.</option>
+          <option>BANCO DE COMERCIO S.A.</option>
+          <option>BANCO DE LA REPUBLICA ORIENTAL DEL URUGUAY</option>
+          <option>BACS BANCO DE CREDITO Y SECURITIZACION S.A.</option>
+          <option>RCI BANQUE S.A.</option>
+          <option>COMPANIA FINANCIERA ARGENTINA S.A.</option>
+          <option>VOLKSWAGEN FINANCIAL SERVICES COMPANIA FINANCIERA S.A.</option>
+          <option>FCA COMPANIA FINANCIERA S.A.</option>
+          <option>GPAT COMPANIA FINANCIERA S.A.U.</option>
+          <option>MERCEDES-BENZ COMPANIA FINANCIERA ARGENTINA</option>
+          <option>ROMBO COMPANIA FINANCIERA S.A.</option>
+          <option>JOHN DEERE CREDIT COMPANIA FINANCIERA S.A.</option>
+          <option>PSA FINANCE ARGENTINA COMPANIA FINANCIERA</option>
+          <option>TOYOTA COMPANIA FINANCIERA DE ARGENTINA</option>
+          <option>MONTEMAR COMPANIA FINANCIERA S.A.</option>
+          <option>REBA COMPANIA FINANCIERA S.A.</option>
+          <option>CREDITO REGIONAL COMPANIA FINANCIERA S.A.</option>
+        </select>
+      </div>
+      <div class="campo"><label>Titular de la cuenta</label><input type="text" id="titular" placeholder="Nombre y apellido"></div>
+    </div>
+
+    <div class="btns">
+      <button class="btn-back" onclick="irA(3)">← Atrás</button>
+      <button class="btn-next" id="btn-enviar" onclick="enviar()">Enviar Incumplimiento ✓</button>
+    </div>
+  </div>
+
+  <!-- PASO 5: Éxito -->
+  <div class="panel" id="panel5">
+    <div class="success-panel">
+      <div class="icon">✅</div>
+      <h2>Incumplimiento enviado</h2>
+      <p>Recibimos la notificación de incumplimiento.<br>El equipo de FINAER se pondrá en contacto a la brevedad.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const HS_TOKEN  = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8'; // temporal — TL ocultará via proxy
+const PORTAL_ID = '145725856';
+const FORM_ID   = '4bab489a-1156-4a4e-9924-d9ce7c241985'; // form Contacto → workflow crea el ticket
+let datosInquilino = null;
+
+const TIPO_CAMPO = {
+  'Alquiler': 'deuda_alquiler',
+  'Expensas': 'deuda_expensas',
+  'Luz':      'deuda_luz',
+  'Gas':      'deuda_gas',
+  'ABL':      'deuda_abl',
+  'Aysa':     'deuda_aysa'
+};
+
+function irA(paso) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel' + paso).classList.add('active');
+  actualizarProgress(paso);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function actualizarProgress(paso) {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot' + i);
+    dot.classList.remove('active', 'done');
+    if (i < paso) dot.classList.add('done');
+    else if (i === paso) dot.classList.add('active');
+    if (i < 4) document.getElementById('line' + i).classList.toggle('done', i < paso);
+  }
+}
+
+function toggleMonto(checkbox) {
+  const tipo  = checkbox.value;
+  const lbl   = document.getElementById('lbl-' + tipo);
+  const cont  = document.getElementById('montos-container');
+  const divId = 'monto-bloque-' + tipo;
+
+  if (checkbox.checked) {
+    lbl.classList.add('checked');
+    if (!document.getElementById(divId)) {
+      const div = document.createElement('div');
+      div.id = divId;
+      div.innerHTML = `
+        <div class="seccion-titulo" style="margin-top:20px;">${tipo}</div>
+        <div class="campo campo-req">
+          <label>Monto adeudado — ${tipo}</label>
+          <input type="text" id="monto-${tipo}" inputmode="decimal" placeholder="Ej: 150000">
+        </div>`;
+      cont.appendChild(div);
+    }
+  } else {
+    lbl.classList.remove('checked');
+    const el = document.getElementById(divId);
+    if (el) el.remove();
+  }
+}
+
+async function buscarDNI() {
+  const dni = document.getElementById('dni-input').value.trim().replace(/\D/g, '');
+  const err = document.getElementById('err1');
+  const btn = document.getElementById('btn1');
+  err.style.display = 'none';
+  if (!dni || dni.length < 7) { err.textContent = 'Ingresá un DNI válido (mínimo 7 dígitos).'; err.style.display = 'block'; return; }
+  btn.disabled = true; btn.textContent = 'Buscando...';
+
+  const hs = (method, path, body) => fetch('https://api.hubapi.com' + path, {
+    method, headers: { 'Authorization': 'Bearer ' + HS_TOKEN, 'Content-Type': 'application/json' },
+    ...(body ? { body: JSON.stringify(body) } : {})
+  }).then(r => r.json());
+
+  try {
+    // Call 1: buscar contacto por DNI
+    const contactData = await hs('POST', '/crm/v3/objects/contacts/search', {
+      filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
+      properties: ['firstname', 'lastname'],
+      limit: 1
+    });
+
+    if (!contactData.results || contactData.results.length === 0) {
+      mostrarNoEncontrado(); irA(2); return;
+    }
+
+    const contact = contactData.results[0];
+    const contactId = contact.id;
+    const nombre = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') || '—';
+
+    // Call 2: buscar deal activo en pipeline de ventas (etapas con garantía vigente)
+    const dealData = await hs('POST', '/crm/v3/objects/deals/search', {
+      filterGroups: [{ filters: [
+        { propertyName: 'associations.contact', operator: 'EQ', value: contactId },
+        { propertyName: 'hs_pipeline', operator: 'EQ', value: 'default' },
+        { propertyName: 'dealstage', operator: 'IN', values: ['closedlost', '1934076144', '1934076145'] }
+      ]}],
+      properties: ['dealname'],
+      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
+      limit: 1
+    });
+
+    let garantia = '—';
+    let inmobiliaria = '—';
+
+    if (dealData.results && dealData.results.length > 0) {
+      const deal = dealData.results[0];
+      garantia = deal.properties.dealname || '—';
+
+      // Call 3: companies asociadas al deal
+      const assocData = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
+
+      if (assocData.results && assocData.results.length > 0) {
+        // Call 4: nombre de la inmobiliaria
+        const companyData = await hs('GET', `/crm/v3/objects/companies/${assocData.results[0].id}?properties=name`);
+        inmobiliaria = companyData.properties?.name || '—';
+      }
+    }
+
+    datosInquilino = { dni, nombre, garantia, domicilio: null, inmobiliaria };
+    mostrarDatosInquilino(datosInquilino);
+    irA(2);
+
+  } catch (e) {
+    err.textContent = 'Error al buscar el DNI. Intentá nuevamente.';
+    err.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Siguiente →';
+  }
+}
+
+function mostrarDatosInquilino(d) {
+  document.getElementById('inq-content').innerHTML = `
+    <div class="inq-card">
+      <div class="inq-nombre">${d.nombre}</div>
+      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
+      <div class="inq-fila"><span class="lbl">Número de garantía</span><span class="val">${d.garantia}</span></div>
+      <div class="inq-fila"><span class="lbl">Domicilio del inmueble</span><span class="val ${!d.domicilio ? 'inq-vacio' : ''}">${d.domicilio || 'Sin datos'}</span></div>
+      <div class="inq-fila"><span class="lbl">Inmobiliaria</span><span class="val">${d.inmobiliaria}</span></div>
+    </div>
+    <p style="font-size:13px;color:#666;">¿Estos son los datos de tu inquilino? Confirmá para continuar.</p>`;
+  document.getElementById('btn2').style.display = '';
+  document.getElementById('warn2').style.display = 'none';
+}
+
+function mostrarNoEncontrado() {
+  document.getElementById('inq-content').innerHTML = `
+    <div class="no-encontrado">
+      <div class="icon">🔍</div>
+      <p>No encontramos ningún inquilino con ese DNI en nuestro sistema.<br><br>Verificá el número ingresado o contactate con FINAER al <strong>0800-666-3400</strong>.</p>
+    </div>`;
+  document.getElementById('btn2').style.display = 'none';
+  document.getElementById('warn2').style.display = 'none';
+}
+
+function confirmarInquilino() { if (!datosInquilino) return; irA(3); }
+
+function validarPaso3() {
+  const err   = document.getElementById('err3');
+  const tipos = [...document.querySelectorAll('input[name="tipo"]:checked')].map(c => c.value);
+  const fecha = document.getElementById('fecha-desde').value;
+
+  if (!tipos.length) { err.textContent = 'Seleccioná al menos un tipo de incumplimiento.'; err.style.display = 'block'; return; }
+  if (!fecha)        { err.textContent = 'Ingresá la fecha desde que se adeuda.'; err.style.display = 'block'; return; }
+
+  for (const tipo of tipos) {
+    const el  = document.getElementById('monto-' + tipo);
+    const val = parseFloat((el ? el.value : '').replace(',', '.')) || 0;
+    if (val <= 0) { err.textContent = `Ingresá el monto para "${tipo}" (debe ser mayor a $0).`; err.style.display = 'block'; return; }
+  }
+
+  err.style.display = 'none';
+  irA(4);
+}
+
+async function enviar() {
+  const err = document.getElementById('err4');
+  const btn = document.getElementById('btn-enviar');
+  err.style.display = 'none';
+
+  const firstname = document.getElementById('notificante-nombre').value.trim();
+  const lastname  = document.getElementById('notificante-apellido').value.trim();
+  const email     = document.getElementById('notificante-email').value.trim();
+  const phone     = document.getElementById('notificante-telefono').value.trim();
+  if (!firstname || !lastname || !email || !phone) {
+    err.textContent = 'Completá nombre, apellido, email y teléfono para continuar.';
+    err.style.display = 'block'; return;
+  }
+
+  const tipos   = [...document.querySelectorAll('input[name="tipo"]:checked')].map(c => c.value);
+  const fecha   = document.getElementById('fecha-desde').value;
+  const fechaMs = fecha ? new Date(fecha).getTime().toString() : '';
+
+  const montoVal = (tipo) => {
+    const el = document.getElementById('monto-' + tipo);
+    return el ? (parseFloat(el.value.replace(',', '.')) || 0).toString() : '0';
+  };
+
+  // Todos los datos del ticket serializados como JSON en un solo campo del Contacto.
+  // El workflow los lee, crea el Ticket vía CRM API y limpia este campo.
+  const ticketData = {
+    dni_inquilino:                     datosInquilino.dni,
+    nombre_y_apellido_del_inquilino:   datosInquilino.nombre,
+    numero_garantia:                   datosInquilino.garantia,
+    tipo_de_incumplimiento:            tipos.join(';'),
+    fecha_desde_que_adeuda:            fechaMs,
+    content:                           document.getElementById('descripcion').value.trim(),
+    alias_cbu_impagos:                 document.getElementById('cbu').value.trim(),
+    banco:                             document.getElementById('banco').value,
+    nombre_y_apellido_del_propietario: document.getElementById('titular').value.trim()
+  };
+  for (const tipo of tipos) {
+    const campo = TIPO_CAMPO[tipo];
+    if (campo) ticketData[campo] = montoVal(tipo);
+  }
+
+  const formPayload = {
+    fields: [
+      { objectTypeId: '0-1', name: 'email',                   value: email },
+      { objectTypeId: '0-1', name: 'firstname',               value: firstname },
+      { objectTypeId: '0-1', name: 'lastname',                value: lastname },
+      { objectTypeId: '0-1', name: 'phone',                   value: phone },
+      { objectTypeId: '0-1', name: 'payload_incumplimiento',  value: JSON.stringify(ticketData) }
+    ],
+    context: {
+      pageUri:  'landing.finaersa.com.ar/es/test-consulta-dni',
+      pageName: 'Notificacion de Incumplimiento'
+    }
+  };
+
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  try {
+    const r = await fetch(
+      `https://api.hsforms.com/submissions/v3/integration/submit/${PORTAL_ID}/${FORM_ID}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formPayload) }
+    );
+    const data = await r.json().catch(() => ({}));
+    if (r.ok) {
+      irA(5);
+    } else {
+      err.textContent = 'Error al enviar: ' + (data.message || JSON.stringify(data));
+      err.style.display = 'block';
+    }
+  } catch (e) {
+    err.textContent = 'Error de conexión. Verificá tu internet e intentá nuevamente.';
+    err.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Enviar Incumplimiento ✓';
+  }
+}
+
+document.getElementById('fecha-desde').max = new Date().toISOString().split('T')[0];
+document.getElementById('dni-input').addEventListener('keydown', e => { if (e.key === 'Enter') buscarDNI(); });
+</script>
+</body>
+</html>

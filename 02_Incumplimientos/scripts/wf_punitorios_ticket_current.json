@@ -1,0 +1,227 @@
+{
+  "id": "4231647440",
+  "isEnabled": true,
+  "objectTypeId": "0-5",
+  "flowType": "WORKFLOW",
+  "revisionId": "23",
+  "name": "WF — Calculo Punitorios en Ticket",
+  "createdAt": "2026-05-11T20:44:27.284Z",
+  "updatedAt": "2026-05-12T13:17:07.771Z",
+  "startActionId": "2",
+  "nextAvailableActionId": "3",
+  "actions": [
+    {
+      "actionId": "2",
+      "secretNames": [
+        "token"
+      ],
+      "sourceCode": "const hubspot = require('@hubspot/api-client');\nexports.main = async (event, callback) => {\n  const client = new hubspot.Client({ accessToken: process.env.token });\n  const ticketId = event.object.objectId;\n  try {\n    const rawMora = event.inputFields['fecha_de_inicio_de_mora'];\n    const rawNeg  = event.inputFields['fecha_negociacion'];\n    if (!rawMora || !rawNeg) {\n      console.log('Faltan fechas');\n      return callback({ outputFields: {} });\n    }\n    const fechaMora = isNaN(rawMora) ? new Date(rawMora) : new Date(parseInt(rawMora));\n    const fechaNeg  = isNaN(rawNeg)  ? new Date(rawNeg)  : new Date(parseInt(rawNeg));\n    fechaMora.setHours(0,0,0,0);\n    fechaNeg.setHours(0,0,0,0);\n    const daysDiff = Math.max(0, Math.floor((fechaNeg - fechaMora) / 86400000));\n\n    const alquiler = parseFloat(event.inputFields['deuda_alquiler'])              || 0;\n    const expensas = parseFloat(event.inputFields['deuda_expensas'])              || 0;\n    const gas      = parseFloat(event.inputFields['deuda_gas'])                   || 0;\n    const luz      = parseFloat(event.inputFields['deuda_luz'])                   || 0;\n    const abl      = parseFloat(event.inputFields['deuda_abl'])                   || 0;\n    const aysa     = parseFloat(event.inputFields['deuda_aysa'])                  || 0;\n    const llaves   = parseFloat(event.inputFields['deuda_por_entrega_de_llaves']) || 0;\n\n    const punitorioAlquiler  = Math.round(alquiler * 0.005 * daysDiff * 100) / 100;\n    const punitorioServicios = Math.round((expensas + gas + luz + abl + aysa + llaves) * 0.001 * daysDiff * 100) / 100;\n    const totalPunitorios    = Math.round((punitorioAlquiler + punitorioServicios) * 100) / 100;\n\n    await client.crm.tickets.basicApi.update(ticketId, {\n      properties: {\n        punitorio_alquiler:  punitorioAlquiler.toString(),\n        punitorio_servicios: punitorioServicios.toString(),\n        total_punitorios:    totalPunitorios.toString()\n      }\n    });\n    console.log('Punitorios — Alquiler:', punitorioAlquiler, '| Servicios:', punitorioServicios, '| Total:', totalPunitorios);\n  } catch(e) { console.error('Error:', e.message); throw e; }\n  callback({ outputFields: {} });\n};",
+      "runtime": "NODE20X",
+      "inputFields": [
+        {
+          "name": "deuda_abl",
+          "value": {
+            "propertyName": "deuda_abl",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "deuda_aysa",
+          "value": {
+            "propertyName": "deuda_aysa",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "deuda_alquiler",
+          "value": {
+            "propertyName": "deuda_alquiler",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "deuda_expensas",
+          "value": {
+            "propertyName": "deuda_expensas",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "deuda_gas",
+          "value": {
+            "propertyName": "deuda_gas",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "deuda_luz",
+          "value": {
+            "propertyName": "deuda_luz",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "deuda_por_entrega_de_llaves",
+          "value": {
+            "propertyName": "deuda_por_entrega_de_llaves",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "fecha_negociacion",
+          "value": {
+            "propertyName": "fecha_negociacion",
+            "type": "OBJECT_PROPERTY"
+          }
+        },
+        {
+          "name": "fecha_de_inicio_de_mora",
+          "value": {
+            "propertyName": "fecha_de_inicio_de_mora",
+            "type": "OBJECT_PROPERTY"
+          }
+        }
+      ],
+      "outputFields": [],
+      "type": "CUSTOM_CODE"
+    }
+  ],
+  "enrollmentCriteria": {
+    "shouldReEnroll": true,
+    "listFilterBranch": {
+      "filterBranches": [
+        {
+          "filterBranches": [],
+          "filters": [
+            {
+              "property": "hs_pipeline",
+              "operation": {
+                "operator": "IS_ANY_OF",
+                "includeObjectsWithNoValueSet": false,
+                "values": [
+                  "3353793749"
+                ],
+                "operationType": "ENUMERATION"
+              },
+              "filterType": "PROPERTY"
+            },
+            {
+              "property": "fecha_de_inicio_de_mora",
+              "operation": {
+                "operator": "IS_KNOWN",
+                "includeObjectsWithNoValueSet": false,
+                "operationType": "ALL_PROPERTY"
+              },
+              "filterType": "PROPERTY"
+            },
+            {
+              "property": "fecha_negociacion",
+              "operation": {
+                "operator": "IS_KNOWN",
+                "includeObjectsWithNoValueSet": false,
+                "operationType": "ALL_PROPERTY"
+              },
+              "filterType": "PROPERTY"
+            }
+          ],
+          "filterBranchType": "AND",
+          "filterBranchOperator": "AND"
+        }
+      ],
+      "filters": [],
+      "filterBranchType": "OR",
+      "filterBranchOperator": "OR"
+    },
+    "unEnrollObjectsNotMeetingCriteria": false,
+    "reEnrollmentTriggersFilterBranches": [
+      {
+        "filterBranches": [],
+        "filters": [
+          {
+            "property": "hs_name",
+            "operation": {
+              "operator": "IS_EQUAL_TO",
+              "includeObjectsWithNoValueSet": false,
+              "value": "fecha_de_inicio_de_mora",
+              "operationType": "STRING"
+            },
+            "filterType": "PROPERTY"
+          },
+          {
+            "property": "hs_value",
+            "operation": {
+              "operator": "IS_KNOWN",
+              "includeObjectsWithNoValueSet": false,
+              "operationType": "ALL_PROPERTY"
+            },
+            "filterType": "PROPERTY"
+          }
+        ],
+        "filterBranchType": "AND",
+        "filterBranchOperator": "AND"
+      },
+      {
+        "filterBranches": [],
+        "filters": [
+          {
+            "property": "hs_name",
+            "operation": {
+              "operator": "IS_EQUAL_TO",
+              "includeObjectsWithNoValueSet": false,
+              "value": "hs_pipeline",
+              "operationType": "STRING"
+            },
+            "filterType": "PROPERTY"
+          },
+          {
+            "property": "hs_value",
+            "operation": {
+              "operator": "IS_ANY_OF",
+              "includeObjectsWithNoValueSet": false,
+              "values": [
+                "3353793749"
+              ],
+              "operationType": "ENUMERATION"
+            },
+            "filterType": "PROPERTY"
+          }
+        ],
+        "filterBranchType": "AND",
+        "filterBranchOperator": "AND"
+      },
+      {
+        "filterBranches": [],
+        "filters": [
+          {
+            "property": "hs_name",
+            "operation": {
+              "operator": "IS_EQUAL_TO",
+              "includeObjectsWithNoValueSet": false,
+              "value": "fecha_negociacion",
+              "operationType": "STRING"
+            },
+            "filterType": "PROPERTY"
+          },
+          {
+            "property": "hs_value",
+            "operation": {
+              "operator": "IS_KNOWN",
+              "includeObjectsWithNoValueSet": false,
+              "operationType": "ALL_PROPERTY"
+            },
+            "filterType": "PROPERTY"
+          }
+        ],
+        "filterBranchType": "AND",
+        "filterBranchOperator": "AND"
+      }
+    ],
+    "type": "LIST_BASED"
+  },
+  "timeWindows": [],
+  "blockedDates": [],
+  "customProperties": {},
+  "dataSources": [],
+  "crmObjectCreationStatus": "COMPLETE",
+  "type": "PLATFORM_FLOW"
+}

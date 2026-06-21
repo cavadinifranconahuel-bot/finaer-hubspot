@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nectia — Operaciones que escalan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy:      #0B1929;
+            --cream:     #F5F0E8;
+            --gold:      #C9A87C;
+            --gold-dark: #7A6040;
+            --text-dark: #0B1929;
+            --text-body: #4A4A5A;
+            --white:     #FFFFFF;
+            --gray-out:  #6B7280;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ── HEADER ─────────────────────────────── */
+        header {
+            background: var(--navy);
+            padding: 22px 56px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-text { display: flex; flex-direction: column; gap: 2px; }
+
+        .logo-name {
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .logo-tagline {
+            color: var(--gold);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        /* ── HERO ────────────────────────────────── */
+        .hero {
+            background: var(--navy);
+            padding: 96px 56px 88px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .hero-inner { max-width: 800px; }
+
+        .hero h1 {
+            font-size: clamp(28px, 4vw, 50px);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.18;
+            margin-bottom: 28px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        .hero p {
+            font-size: clamp(16px, 1.8vw, 19px);
+            color: rgba(255,255,255,0.68);
+            max-width: 620px;
+            line-height: 1.75;
+        }
+
+        /* ── SÍNTOMAS ────────────────────────────── */
+        .sintomas {
+            background: var(--cream);
+            padding: 80px 56px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .sintomas h2 {
+            font-size: clamp(20px, 2.6vw, 32px);
+            font-weight: 700;
+            color: var(--text-dark);
+            max-width: 520px;
+            margin-bottom: 48px;
+            line-height: 1.3;
+        }
+
+        .sintomas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            max-width: 980px;
+        }
+
+        .sintoma-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 26px 28px;
+            border-left: 3px solid var(--gold);
+        }
+
+        .sintoma-card p {
+            font-size: 15px;
+            color: var(--text-body);
+            line-height: 1.65;
+        }
+
+        /* ── QUÉ HACE NECTIA ─────────────────────── */
+        .que-hace {
+            background: var(--white);
+            padding: 80px 56px;
+        }
+
+        .que-hace-inner { max-width: 780px; }
+
+        .que-hace h2 {
+            font-size: clamp(20px, 2.6vw, 32px);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .que-hace p {
+            font-size: 17px;
+            color: var(--text-body);
+            line-height: 1.75;
+            margin-bottom: 16px;
+        }
+
+        /* ── PROCESO ─────────────────────────────── */
+        .proceso {
+            background: var(--cream);
+            padding: 80px 56px;
+        }
+
+        .proceso h2 {
+            font-size: clamp(20px, 2.6vw, 32px);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 48px;
+            line-height: 1.3;
+        }
+
+        .proceso-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 36px;
+            max-width: 980px;
+        }
+
+        .step-number {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .step-divider {
+            width: 36px;
+            height: 2px;
+            background: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .step h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.65;
+        }
+
+        /* ── CTA ─────────────────────────────────── */
+        .cta-section {
+            background: var(--navy);
+            padding: 88px 56px;
+        }
+
+        .cta-inner { max-width: 680px; }
+
+        .cta-section h2 {
+            font-size: clamp(22px, 3vw, 40px);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+
+        .cta-section .cta-lead {
+            font-size: 17px;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 48px;
+            line-height: 1.75;
+        }
+
+        /* HubSpot form — overrides sobre fondo oscuro */
+        .hs-form-field { margin-bottom: 20px !important; }
+
+        .hs-form-field label {
+            color: rgba(255,255,255,0.78) !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.02em !important;
+            display: block !important;
+            margin-bottom: 6px !important;
+        }
+
+        .hs-input,
+        .hs-input[type="text"],
+        .hs-input[type="email"],
+        textarea.hs-input {
+            background: rgba(255,255,255,0.07) !important;
+            border: 1px solid rgba(255,255,255,0.18) !important;
+            border-radius: 6px !important;
+            color: rgba(255,255,255,0.92) !important;
+            padding: 12px 16px !important;
+            width: 100% !important;
+            font-size: 15px !important;
+            transition: border-color 0.2s !important;
+        }
+
+        .hs-input:focus { border-color: var(--gold) !important; outline: none !important; }
+
+        .hs-button.primary {
+            background: var(--gold) !important;
+            color: var(--navy) !important;
+            border: none !important;
+            padding: 14px 36px !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            border-radius: 6px !important;
+            cursor: pointer !important;
+            margin-top: 8px !important;
+            transition: opacity 0.2s !important;
+        }
+
+        .hs-button.primary:hover { opacity: 0.88 !important; }
+
+        .hs-error-msgs li { color: #F87171 !important; font-size: 13px !important; }
+
+        /* ── FOOTER ──────────────────────────────── */
+        footer {
+            background: var(--navy);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: 20px 56px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p { color: rgba(255,255,255,0.35); font-size: 13px; }
+
+        /* ── RESPONSIVE ──────────────────────────── */
+        @media (max-width: 768px) {
+            header,
+            .hero,
+            .sintomas,
+            .que-hace,
+            .proceso,
+            .cta-section,
+            footer {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .hero { padding-top: 64px; padding-bottom: 64px; }
+            .sintomas, .que-hace, .proceso, .cta-section { padding-top: 56px; padding-bottom: 56px; }
+            footer { flex-direction: column; gap: 8px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════ -->
+<header>
+    <div class="logo-wrapper">
+        <!-- Logo Nectia — SVG inline (Intersección: muchos → uno → muchos ordenados) -->
+        <svg width="52" height="52" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Línea vertical central -->
+            <line x1="100" y1="8" x2="100" y2="192" stroke="#7A6040" stroke-width="3.5" stroke-linecap="round"/>
+
+            <!-- Curvas izquierda: inputs blancos → nodo central -->
+            <path d="M36 38 C70 38, 85 100, 100 100" stroke="#C9A87C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M36 74 C68 74, 84 100, 100 100" stroke="#C9A87C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M36 126 C68 126, 84 100, 100 100" stroke="#C9A87C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M36 162 C70 162, 85 100, 100 100" stroke="#C9A87C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+            <!-- Nodos intermedios izquierda (relay) -->
+            <circle cx="67" cy="60" r="8" fill="#C9A87C"/>
+            <circle cx="67" cy="100" r="8" fill="#5C4730"/>
+            <circle cx="67" cy="140" r="8" fill="#C9A87C"/>
+
+            <!-- Círculos blancos izquierda (fuentes) -->
+            <circle cx="32" cy="38"  r="13" fill="#DDD8CE"/>
+            <circle cx="32" cy="74"  r="13" fill="#DDD8CE"/>
+            <circle cx="32" cy="126" r="13" fill="#DDD8CE"/>
+            <circle cx="32" cy="162" r="13" fill="#DDD8CE"/>
+
+            <!-- Nodo central -->
+            <circle cx="100" cy="100" r="21" fill="#C9A87C"/>
+
+            <!-- Líneas salida derecha (anguladas → horizontales) -->
+            <polyline points="100,100 112,52  174,52"  stroke="#6B7280" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="100,100 112,78  174,78"  stroke="#6B7280" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line    x1="100" y1="100" x2="174" y2="100"               stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"/>
+            <polyline points="100,100 112,122 174,122" stroke="#6B7280" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="100,100 112,148 174,148" stroke="#6B7280" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- Nodos salida derecha (outputs) -->
+            <circle cx="178" cy="52"  r="7" fill="#6B7280"/>
+            <circle cx="178" cy="78"  r="7" fill="#6B7280"/>
+            <circle cx="178" cy="100" r="7" fill="#6B7280"/>
+            <circle cx="178" cy="122" r="7" fill="#6B7280"/>
+            <circle cx="178" cy="148" r="7" fill="#6B7280"/>
+        </svg>
+
+        <div class="logo-text">
+            <span class="logo-name">Nectia</span>
+            <span class="logo-tagline">Operaciones que escalan</span>
+        </div>
+    </div>
+</header>
+
+
+<!-- ════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section class="hero">
+    <div class="hero-inner">
+        <h1>La información de tu negocio debería vivir en el sistema.<br><em>No en la persona que lo opera.</em></h1>
+        <p>En las empresas de servicios que están creciendo, los procesos suelen depender de personas clave. No porque nadie haya querido que sea así — sino porque así se fue construyendo. El resultado es un equipo que funciona, pero que no puede escalar sin que esa dependencia se vuelva un problema.</p>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     SÍNTOMAS
+════════════════════════════════════════════ -->
+<section class="sintomas">
+    <div class="section-label">¿Te suena familiar?</div>
+    <h2>Señales de que el proceso depende más de las personas que del sistema</h2>
+
+    <div class="sintomas-grid">
+        <div class="sintoma-card">
+            <p>Para saber el estado de un cliente, hay que preguntarle a alguien.</p>
+        </div>
+        <div class="sintoma-card">
+            <p>Cuando una persona se va, hay contexto que se va con ella.</p>
+        </div>
+        <div class="sintoma-card">
+            <p>Dos áreas manejan datos distintos del mismo cliente.</p>
+        </div>
+        <div class="sintoma-card">
+            <p>No hay visibilidad de qué está funcionando sin pedirle un reporte a alguien.</p>
+        </div>
+        <div class="sintoma-card">
+            <p>El equipo dedica tiempo a actualizar registros en lugar de vender o implementar el servicio.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     QUÉ HACE NECTIA
+════════════════════════════════════════════ -->
+<section class="que-hace">
+    <div class="que-hace-inner">
+        <div class="section-label">Qué hacemos</div>
+        <h2>Ordenamos la operación para que la información viva en el sistema</h2>
+        <p>Trabajamos con empresas B2B de servicios para que cualquier miembro del equipo pueda acceder a la información que necesita, cuando la necesita — sin depender de que alguien esté disponible para contarla.</p>
+        <p>Empezamos por entender cómo trabaja tu empresa hoy. Desde ahí construimos el proceso que la acompaña cuando crece.</p>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     CÓMO TRABAJAMOS
+════════════════════════════════════════════ -->
+<section class="proceso">
+    <div class="section-label">Cómo trabajamos</div>
+    <h2>Un camino que parte de la realidad, no del modelo ideal</h2>
+
+    <div class="proceso-steps">
+        <div class="step">
+            <div class="step-number">01</div>
+            <div class="step-divider"></div>
+            <h3>Diagnóstico</h3>
+            <p>Entendemos cómo trabaja el equipo hoy e identificamos dónde se rompe el proceso.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">02</div>
+            <div class="step-divider"></div>
+            <h3>Diseño</h3>
+            <p>Definimos la arquitectura de procesos y datos adaptada a la realidad de tu operación.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">03</div>
+            <div class="step-divider"></div>
+            <h3>Implementación</h3>
+            <p>Configuramos el sistema directamente — sin intermediarios, sin soluciones genéricas.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">04</div>
+            <div class="step-divider"></div>
+            <h3>Acompañamiento</h3>
+            <p>El proceso tiene que funcionar con el equipo real. Nos quedamos hasta que funciona.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     CTA + FORMULARIO
+════════════════════════════════════════════ -->
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2>Si algo de esto resuena, hablemos.</h2>
+        <p class="cta-lead">Trabajamos con empresas de servicios que no podían saber el estado de sus cuentas sin consultar a su equipo. Hoy esa información está disponible en tiempo real para quien la necesite, sin depender de que alguien esté disponible para contarla.</p>
+
+        <!-- Formulario HubSpot -->
+        <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+        <script>
+          hbspt.forms.create({
+            portalId: "50298764",
+            formId: "20A6GJWNvSx29pFxFWv4Tcg"
+          });
+        </script>
+    </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer>
+    <p>© 2026 Nectia. Todos los derechos reservados.</p>
+    <p>contacto@nectia.com</p>
+</footer>
+
+</body>
+</html>
