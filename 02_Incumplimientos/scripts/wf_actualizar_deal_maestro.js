@@ -1,6 +1,9 @@
 // wf_actualizar_deal_maestro.js
 // WF: "Mora 2 — Actualizar Deal Maestro" (ID: 4465889492)
-// Trigger: Deal en pipeline 3403406575 con deuda_alquiler IS_KNOWN (re-enrollment activo)
+// Trigger: Deal en pipeline 3403406575 con alquiler IS_KNOWN (re-enrollment activo)
+//
+// Nombres internos de propiedades en DEALS:
+//   alquiler / deuda_expensas / luz / gas / abl / deuda_aysa / deuda_por_entrega_de_llaves
 //
 // Lógica:
 //   1. Lee nro_expediente del deal de período que triggereó
@@ -26,9 +29,8 @@ exports.main = async (event, callback) => {
   // ── 1. Buscar todos los deals de período con este nro_expediente ─────────
   const PROPS_PERIODO = [
     'dealname',
-    'deuda_alquiler', 'deuda_expensas', 'deuda_luz', 'deuda_gas',
-    'deuda_abl', 'deuda_aysa', 'deuda_por_entrega_de_llaves',
-    'tipo_de_incumplimiento'
+    'alquiler', 'deuda_expensas', 'luz', 'gas', 'abl', 'deuda_aysa',
+    'deuda_por_entrega_de_llaves', 'tipo_de_incumplimiento'
   ];
 
   let allDeals = [];
@@ -55,7 +57,7 @@ exports.main = async (event, callback) => {
     return callback({ outputFields: { resultado: 'OMITIDO: no hay deals de período para este expediente' } });
   }
 
-  // ── 2. Sumar todos los conceptos ─────────────────────────────────────────
+  // ── 2. Sumar todos los conceptos de todos los períodos ───────────────────
   let sumAlquiler = 0;
   let sumExpensas = 0;
   let sumLuz      = 0;
@@ -67,11 +69,11 @@ exports.main = async (event, callback) => {
 
   for (const d of allDeals) {
     const p = d.properties;
-    sumAlquiler += parseFloat(p.deuda_alquiler              || 0);
+    sumAlquiler += parseFloat(p.alquiler                    || 0);
     sumExpensas += parseFloat(p.deuda_expensas              || 0);
-    sumLuz      += parseFloat(p.deuda_luz                   || 0);
-    sumGas      += parseFloat(p.deuda_gas                   || 0);
-    sumAbl      += parseFloat(p.deuda_abl                   || 0);
+    sumLuz      += parseFloat(p.luz                         || 0);
+    sumGas      += parseFloat(p.gas                         || 0);
+    sumAbl      += parseFloat(p.abl                         || 0);
     sumAysa     += parseFloat(p.deuda_aysa                  || 0);
     sumLlaves   += parseFloat(p.deuda_por_entrega_de_llaves || 0);
     (p.tipo_de_incumplimiento || '').split(/[,;]/).map(t => t.trim()).filter(Boolean).forEach(t => tiposSet.add(t));
@@ -93,11 +95,11 @@ exports.main = async (event, callback) => {
   });
 
   const propsMaestro = {
-    deuda_alquiler:              String(sumAlquiler),
+    alquiler:                    String(sumAlquiler),
     deuda_expensas:              String(sumExpensas),
-    deuda_luz:                   String(sumLuz),
-    deuda_gas:                   String(sumGas),
-    deuda_abl:                   String(sumAbl),
+    luz:                         String(sumLuz),
+    gas:                         String(sumGas),
+    abl:                         String(sumAbl),
     deuda_aysa:                  String(sumAysa),
     deuda_por_entrega_de_llaves: String(sumLlaves),
     ...(nombreInquilino ? { nombre_y_apellido_del_inquilino: nombreInquilino } : {}),

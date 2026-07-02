@@ -3,6 +3,11 @@
 // Trigger: Ticket en pipeline 3353793749, etapa Cerrado (4594251972),
 //          resultado_del_caso = "Resuelto con pago total FINAER" o "Resuelto con pago parcial FINAER"
 //
+// Nombres internos de propiedades de DEUDA:
+//   Tickets: deuda_alquiler / deuda_expensas / deuda_luz / deuda_gas / deuda_abl / deuda_aysa
+//   Deals:   alquiler       / deuda_expensas / luz       / gas       / abl       / deuda_aysa
+//   (deuda_expensas, deuda_aysa y deuda_por_entrega_de_llaves son iguales en ambos objetos)
+//
 // Lógica:
 //   ¿Existe deal en pipeline 3403406575 con mismo nro_expediente y periodo_de_deuda?
 //   → SÍ: nutre campos vacíos + merge tipo_de_incumplimiento + nota + asegura asociación con maestro
@@ -15,6 +20,7 @@ exports.main = async (event, callback) => {
 
   const ticketId = String(event.object.objectId);
 
+  // Leer inputs del ticket (nombres de propiedades de TICKET con prefijo deuda_)
   const nroExpediente      = event.inputFields['nro_expediente'];
   const periodoDeDeuda     = event.inputFields['periodo_de_deuda'];
   const nombreInquilino    = event.inputFields['nombre_y_apellido_del_inquilino'] || '';
@@ -47,9 +53,8 @@ exports.main = async (event, callback) => {
     }],
     properties: [
       'dealname',
-      'deuda_alquiler', 'deuda_expensas', 'deuda_luz', 'deuda_gas',
-      'deuda_abl', 'deuda_aysa', 'deuda_por_entrega_de_llaves',
-      'tipo_de_incumplimiento'
+      'alquiler', 'deuda_expensas', 'luz', 'gas', 'abl', 'deuda_aysa',
+      'deuda_por_entrega_de_llaves', 'tipo_de_incumplimiento'
     ],
     limit: 1
   });
@@ -107,17 +112,18 @@ exports.main = async (event, callback) => {
     const dealId = deal.id;
     const p      = deal.properties;
 
-    // Solo escribir conceptos que el deal todavía no tiene
+    // Mapeo ticket → deal: nombres de propiedades de DEAL (sin prefijo deuda_ en alquiler/luz/gas/abl)
     const CAMPOS_DEUDA = {
-      deuda_alquiler:              tAlquiler,
+      alquiler:                    tAlquiler,
       deuda_expensas:              tExpensas,
-      deuda_luz:                   tLuz,
-      deuda_gas:                   tGas,
-      deuda_abl:                   tAbl,
+      luz:                         tLuz,
+      gas:                         tGas,
+      abl:                         tAbl,
       deuda_aysa:                  tAysa,
       deuda_por_entrega_de_llaves: tLlaves
     };
 
+    // Solo escribir conceptos que el deal todavía no tiene
     const propiedadesNuevas = {};
     for (const [campo, valor] of Object.entries(CAMPOS_DEUDA)) {
       if (parseFloat(p[campo] || 0) === 0 && valor > 0) {
@@ -138,7 +144,7 @@ exports.main = async (event, callback) => {
     // Nota
     const conceptosNuevos = Object.entries(CAMPOS_DEUDA)
       .filter(([campo, valor]) => parseFloat(p[campo] || 0) === 0 && valor > 0)
-      .map(([campo, valor]) => `  ${campo.replace('deuda_', '')}: $${fmt(valor)}`);
+      .map(([campo, valor]) => `  ${campo}: $${fmt(valor)}`);
 
     const detalleConceptos = conceptosNuevos.length > 0
       ? conceptosNuevos.join('\n')
@@ -171,11 +177,11 @@ exports.main = async (event, callback) => {
       nombre_y_apellido_del_inquilino: nombreInquilino,
       ...(dniInquilino       ? { dni_inquilino:          dniInquilino }       : {}),
       ...(tipoIncumplimiento ? { tipo_de_incumplimiento: tipoIncumplimiento } : {}),
-      ...(tAlquiler ? { deuda_alquiler:              String(tAlquiler) } : {}),
+      ...(tAlquiler ? { alquiler:                    String(tAlquiler) } : {}),
       ...(tExpensas ? { deuda_expensas:              String(tExpensas) } : {}),
-      ...(tLuz      ? { deuda_luz:                   String(tLuz)     } : {}),
-      ...(tGas      ? { deuda_gas:                   String(tGas)     } : {}),
-      ...(tAbl      ? { deuda_abl:                   String(tAbl)     } : {}),
+      ...(tLuz      ? { luz:                         String(tLuz)     } : {}),
+      ...(tGas      ? { gas:                         String(tGas)     } : {}),
+      ...(tAbl      ? { abl:                         String(tAbl)     } : {}),
       ...(tAysa     ? { deuda_aysa:                  String(tAysa)    } : {}),
       ...(tLlaves   ? { deuda_por_entrega_de_llaves: String(tLlaves)  } : {})
     }
