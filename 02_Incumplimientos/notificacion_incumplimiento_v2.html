@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notificación de Incumplimiento — FINAER</title>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BLOQUE 1 — ENCABEZADO (headHtml en HubSpot)
+════════════════════════════════════════════════════════════ -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Kumbh+Sans:wght@400;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+.fi-wrap{max-width:700px;margin:32px auto 60px;padding:0 16px}
+.fi-card{background:#fff;border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.11);padding:40px}
+.fi-card h1{font-size:22px;font-weight:700;color:#2f3743;margin-bottom:6px;font-family:'Kumbh Sans',sans-serif}
+.fi-card .sub{color:#777;font-size:14px;margin-bottom:32px;line-height:1.6;font-family:'Kumbh Sans',sans-serif}
+
+/* Sección header */
+.fi-seccion{margin:28px 0 18px;padding-bottom:8px;border-bottom:2px solid #fadadb}
+.fi-seccion span{font-size:11px;font-weight:700;color:#e30613;letter-spacing:1.2px;font-family:'Kumbh Sans',sans-serif}
+
+/* Header de período con botón eliminar */
+.fi-periodo-header{display:flex;align-items:flex-end;justify-content:space-between;
+  margin:28px 0 18px;padding-bottom:8px;border-bottom:2px solid #fadadb}
+.fi-periodo-header .fi-ptitulo{font-size:11px;font-weight:700;color:#e30613;letter-spacing:1.2px;font-family:'Kumbh Sans',sans-serif}
+.fi-btn-eliminar{background:none;border:1.5px solid #e30613;color:#e30613;border-radius:6px;
+  padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Kumbh Sans',sans-serif;
+  transition:all .2s;white-space:nowrap;margin-left:16px}
+.fi-btn-eliminar:hover{background:#e30613;color:#fff}
+
+/* Campos */
+.fi-campo{margin-bottom:20px}
+.fi-campo label{display:block;font-size:12px;font-weight:700;color:#444;margin-bottom:7px;
+  letter-spacing:.4px;font-family:'Kumbh Sans',sans-serif}
+.fi-campo .nota{font-size:11px;color:#999;font-weight:400;letter-spacing:0;margin-left:4px}
+.fi-campo input[type=text],
+.fi-campo input[type=number],
+.fi-campo input[type=email],
+.fi-campo input[type=tel],
+.fi-campo select,
+.fi-campo textarea{
+  width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:50px;
+  font-size:14px;background:#fafafa;outline:none;transition:border .2s;font-family:'Kumbh Sans',sans-serif
+}
+.fi-campo textarea{border-radius:16px}
+.fi-campo input[type=file]{
+  width:100%;padding:8px 10px;border:1.5px dashed #ccc;border-radius:50px;
+  font-size:13px;background:#fafafa;cursor:pointer;font-family:'Kumbh Sans',sans-serif;color:#666
+}
+.fi-campo input:focus,.fi-campo select:focus,.fi-campo textarea:focus{border-color:#e30613;background:#fff}
+.fi-campo textarea{resize:vertical;min-height:80px}
+
+.fi-dos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* Multiselect conceptos */
+.fi-multiselect{position:relative}
+.fi-ms-trigger{
+  width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:50px;
+  font-size:14px;background:#fafafa;outline:none;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'Kumbh Sans',sans-serif;color:#444;text-align:left;transition:border .2s
+}
+.fi-ms-trigger.abierto{border-color:#e30613;background:#fff}
+.fi-ms-dropdown{
+  display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;
+  background:#fff;border:1.5px solid #ddd;border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:100;overflow:hidden
+}
+.fi-ms-dropdown.visible{display:block}
+.fi-ms-option{
+  display:flex !important;flex-direction:row !important;align-items:center !important;
+  gap:10px;padding:9px 14px;cursor:pointer;
+  font-size:13px;color:#444;font-family:'Kumbh Sans',sans-serif;
+  transition:background .15s;user-select:none;line-height:1.2
+}
+.fi-ms-option:hover{background:#fdf0f0}
+.fi-ms-option:has(input:checked){background:#fff5f5}
+.fi-ms-option input[type=checkbox]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.fi-ms-check{
+  width:17px !important;height:17px !important;min-width:17px;
+  border:1.5px solid #ccc;border-radius:4px;flex-shrink:0;
+  display:inline-flex !important;align-items:center !important;justify-content:center !important;
+  transition:all .15s;background:#fff
+}
+.fi-ms-check.marcado{background:#e30613 !important;border-color:#e30613}
+.fi-ms-check.marcado::after{
+  content:'';width:4px;height:8px;border:2px solid #fff;
+  border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);display:block
+}
+.fi-ms-arrow{font-size:10px;color:#999;transition:transform .2s}
+.fi-ms-trigger.abierto .fi-ms-arrow{transform:rotate(180deg)}
+.fi-banco-search{
+  width:100%;padding:9px 14px;border:none;border-bottom:1px solid #eee;
+  font-size:13px;font-family:'Kumbh Sans',sans-serif;outline:none;
+  background:#fafafa;border-radius:0;display:block
+}
+.fi-banco-search:focus{background:#fff}
+.fi-banco-lista{max-height:220px;overflow-y:auto}
+.fi-banco-opt{
+  padding:9px 14px;font-size:13px;color:#444;font-family:'Kumbh Sans',sans-serif;
+  cursor:pointer;transition:background .15s
+}
+.fi-banco-opt:hover{background:#fdf0f0}
+.fi-banco-opt.seleccionado{background:#fff5f5;color:#e30613;font-weight:600}
+.fi-banco-opt.oculto{display:none}
+
+/* Fila de detalle por concepto: nombre | monto | archivo */
+.fi-detalles{margin-top:12px}
+.fi-detalle-fila{
+  display:grid;grid-template-columns:130px 1fr 1fr;gap:12px;align-items:end;
+  margin-bottom:10px;padding:14px 16px;
+  background:#fafafa;border:1.5px solid #eee;border-radius:8px
+}
+.fi-detalle-nombre{
+  font-size:13px;font-weight:600;color:#444;font-family:'Kumbh Sans',sans-serif;
+  padding-bottom:2px;align-self:center
+}
+.fi-detalle-fila .fi-campo{margin:0}
+
+/* Botón agregar período */
+.fi-btn-agregar{
+  width:100%;padding:11px;background:#fff;color:#e30613;border:2px dashed #e30613;
+  border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;
+  transition:all .2s;margin:4px 0 24px;font-family:'Kumbh Sans',sans-serif
+}
+.fi-btn-agregar:hover:not(:disabled){background:#fff5f5}
+.fi-btn-agregar:disabled{color:#bbb;border-color:#ddd;cursor:default;background:#fafafa}
+
+/* Botón enviar */
+.fi-btn{
+  width:100%;padding:13px;background:#e30613;color:#fff;border:none;border-radius:8px;
+  font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:10px;
+  font-family:'Kumbh Sans',sans-serif;letter-spacing:.3px
+}
+.fi-btn:hover:not(:disabled){background:#c0050f}
+.fi-btn:disabled{background:#ccc;cursor:default}
+
+.fi-ok{display:none;text-align:center;padding:48px 0}
+.fi-ok h2{color:#2e7d32;font-size:20px;margin-bottom:10px;font-family:'Kumbh Sans',sans-serif}
+.fi-ok p{color:#555;font-size:14px;line-height:1.7;font-family:'Kumbh Sans',sans-serif}
+.fi-err{display:none;background:#fdecea;border:1px solid #f5c6c6;border-radius:6px;
+  padding:12px 14px;font-size:13px;color:#c62828;margin-top:12px;font-family:'Kumbh Sans',sans-serif}
+
+.fi-card h1,.fi-card h2,.fi-seccion span,.fi-ptitulo{font-family:'Montserrat',sans-serif}
+
+@media(max-width:600px){
+  .fi-card{padding:28px 18px}
+  .fi-dos{grid-template-columns:1fr}
+  .fi-detalle-fila{grid-template-columns:1fr;gap:8px}
+  .fi-detalle-nombre{font-size:12px}
+}
+</style>
+<!-- ═══════════════════════ FIN BLOQUE 1 ═══════════════════════ -->
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BLOQUE 2 — PIE (footerHtml en HubSpot)
+════════════════════════════════════════════════════════════ -->
+<div class="fi-wrap">
+<div class="fi-card">
+
+  <h1>Notificación de incumplimiento</h1>
+  <p class="sub">Completá el formulario para notificar la deuda del inquilino. Podés informar hasta 4 períodos distintos en una sola carga.</p>
+
+  <form id="fi-frm" novalidate>
+
+    <!-- DATOS DEL INQUILINO -->
+    <div class="fi-seccion"><span>Datos del inquilino</span></div>
+    <div class="fi-dos">
+      <div class="fi-campo">
+        <label>Nombre y apellido *</label>
+        <input type="text" id="nombre_y_apellido_del_inquilino" placeholder="Ej: Juan Carlos Pérez" required>
+      </div>
+      <div class="fi-campo">
+        <label>DNI *</label>
+        <input type="number" id="dni_inquilino" placeholder="Ej: 30123456" required>
+      </div>
+    </div>
+
+    <!-- PERÍODOS DINÁMICOS -->
+    <div id="fi-periodos"></div>
+    <button type="button" class="fi-btn-agregar" id="fi-agregar">+ Agregar otro período</button>
+
+    <!-- DATOS DEL ADMINISTRADOR O PROPIETARIO -->
+    <div class="fi-seccion"><span>Datos del administrador o propietario</span></div>
+    <div class="fi-dos">
+      <div class="fi-campo"><label>Nombre *</label><input type="text" id="firstname" placeholder="Nombre" required></div>
+      <div class="fi-campo"><label>Apellido *</label><input type="text" id="lastname" placeholder="Apellido" required></div>
+    </div>
+    <div class="fi-dos">
+      <div class="fi-campo"><label>Correo electrónico *</label><input type="email" id="email" placeholder="correo@inmobiliaria.com" required></div>
+      <div class="fi-campo"><label>Teléfono</label><input type="tel" id="phone" placeholder="11 1234-5678"></div>
+    </div>
+
+    <!-- DATOS BANCARIOS -->
+    <div class="fi-seccion"><span>Datos bancarios para el pago</span></div>
+    <div class="fi-dos">
+      <div class="fi-campo"><label>CBU o alias</label><input type="text" id="alias_cbu_impagos" placeholder="CBU o alias de la cuenta"></div>
+      <div class="fi-campo">
+        <label>Banco</label>
+        <div class="fi-multiselect" id="banco-wrap">
+          <button type="button" class="fi-ms-trigger" onclick="toggleBanco()">
+            <span id="banco-label">Seleccioná el banco</span>
+            <span class="fi-ms-arrow">▼</span>
+          </button>
+          <div class="fi-ms-dropdown" id="banco-dropdown">
+            <input type="text" class="fi-banco-search" id="banco-search"
+                   placeholder="Buscar banco..." oninput="filtrarBancos()">
+            <div class="fi-banco-lista" id="banco-lista"></div>
+          </div>
+          <input type="hidden" id="banco" value="">
+        </div>
+      </div>
+    </div>
+    <div class="fi-dos">
+      <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular"></div>
+      <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="20-12345678-9"></div>
+    </div>
+
+    <!-- INFORMACIÓN ADICIONAL -->
+    <div class="fi-seccion"><span>Información adicional</span></div>
+    <div class="fi-campo">
+      <label>Observaciones <span class="nota">(opcional)</span></label>
+      <textarea id="observaciones_incumplimiento" placeholder="Detallá cualquier información adicional relevante..."></textarea>
+    </div>
+
+    <button type="submit" class="fi-btn" id="fi-btn">Enviar notificación</button>
+    <div class="fi-err" id="fi-err">No se pudo enviar la notificación. Por favor intentá de nuevo o contactate con FINAER.</div>
+
+  </form>
+
+  <div class="fi-ok" id="fi-ok">
+    <h2>Notificación enviada</h2>
+    <p>Tu notificación fue recibida correctamente.<br>El equipo de FINAER se va a comunicar a la brevedad.</p>
+  </div>
+
+</div>
+</div>
+
+<script>
+// Mover el formulario antes del footer del template
+(function(){
+  var wrap = document.querySelector('.fi-wrap');
+  var foot = document.querySelector('footer');
+  if (wrap && foot && foot.parentNode) foot.parentNode.insertBefore(wrap, foot);
+})();
+
+const PORTAL_ID = '145725856';
+const FORM_ID   = '16350864-6359-4241-9d44-d8639a7af726';
+const MAX_PERIODOS = 4;
+
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+               'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+const CONCEPTOS = [
+  { id:'alquiler', label:'Alquiler',             campo:'deuda_alquiler'  },
+  { id:'expensas', label:'Expensas',             campo:'deuda_expensas'  },
+  { id:'luz',      label:'Luz',                  campo:'deuda_luz'       },
+  { id:'gas',      label:'Gas',                  campo:'deuda_gas'       },
+  { id:'abl',      label:'ABL',                  campo:'deuda_abl'       },
+  { id:'aysa',     label:'Aysa',                 campo:'deuda_aysa'      },
+  { id:'inmueble', label:'No devolvió inmueble', campo:null              }
+];
+
+const CAMPOS_MONTO = ['deuda_alquiler','deuda_expensas','deuda_luz','deuda_gas','deuda_abl','deuda_aysa'];
+
+let periodoCount  = 0;
+let periodosActivos = [];
+
+// ── Genera opciones de meses ───────────────────────────────────────────────
+function generarMeses() {
+  let opts = '<option value="">Seleccioná el mes</option>';
+  for (let y = 2026; y <= 2027; y++) {
+    for (let m = 0; m < 12; m++) {
+      opts += `<option>${MESES[m]} - ${y}</option>`;
+    }
+  }
+  return opts;
+}
+
+// ── Crea un bloque de período y lo agrega al DOM ───────────────────────────
+function crearPeriodo() {
+  if (periodosActivos.length >= MAX_PERIODOS) return;
+  periodoCount++;
+  const n = periodoCount;
+  periodosActivos.push(n);
+
+  const opcionesMs = CONCEPTOS.map(c => `
+    <label class="fi-ms-option">
+      <input type="checkbox" class="tipo-p${n}" value="${c.label}"
+             data-campo="${c.campo || ''}" data-cid="${c.id}"
+             onchange="onConcepto(this,${n});updateMsLabel('ms-${n}')">
+      <span class="fi-ms-check"></span>
+      <span>${c.label}</span>
+    </label>
+  `).join('');
+
+  const esEliminar = n > 1;
+  const div = document.createElement('div');
+  div.className = 'fi-periodo';
+  div.id = `pb-${n}`;
+  div.innerHTML = `
+    <div class="fi-periodo-header">
+      <span class="fi-ptitulo" id="titulo-p${n}">Período de deuda</span>
+      ${esEliminar ? `<button type="button" class="fi-btn-eliminar" onclick="eliminarPeriodo(${n})">✕ Eliminar período</button>` : ''}
+    </div>
+    <div class="fi-campo">
+      <label>Mes al que corresponde la deuda *</label>
+      <select id="periodo_${n}">${generarMeses()}</select>
+    </div>
+    <div class="fi-campo">
+      <label>Concepto/s adeudado/s *</label>
+      <div class="fi-multiselect" id="ms-${n}">
+        <button type="button" class="fi-ms-trigger" onclick="toggleMs('ms-${n}')">
+          <span class="fi-ms-label">Seleccioná los conceptos</span>
+          <span class="fi-ms-arrow">▼</span>
+        </button>
+        <div class="fi-ms-dropdown">${opcionesMs}</div>
+      </div>
+    </div>
+    <div class="fi-detalles" id="detalles-${n}"></div>
+  `;
+
+  document.getElementById('fi-periodos').appendChild(div);
+  actualizarUI();
+}
+
+// ── Elimina un período del DOM ─────────────────────────────────────────────
+function eliminarPeriodo(n) {
+  document.getElementById(`pb-${n}`)?.remove();
+  periodosActivos = periodosActivos.filter(x => x !== n);
+  actualizarUI();
+}
+
+// ── Actualiza títulos y estado del botón agregar ───────────────────────────
+function actualizarUI() {
+  periodosActivos.forEach((n, i) => {
+    const t = document.getElementById(`titulo-p${n}`);
+    if (t) t.textContent = i === 0 ? 'Período de deuda' : `Período ${i + 1}`;
+  });
+  const btn = document.getElementById('fi-agregar');
+  const lleno = periodosActivos.length >= MAX_PERIODOS;
+  btn.disabled = lleno;
+  btn.textContent = lleno
+    ? 'Máximo de períodos alcanzado (4)'
+    : '+ Agregar otro período';
+}
+
+// ── Lógica concepto → fila monto + archivo ────────────────────────────────
+function onConcepto(cb, n) {
+  const campo  = cb.dataset.campo;
+  const cid    = cb.dataset.cid;
+  const filaId = `df-${cid}-${n}`;
+  const cont   = document.getElementById(`detalles-${n}`);
+
+  // Actualizar visual del check
+  const check = cb.nextElementSibling;
+  if (check && check.classList.contains('fi-ms-check')) {
+    check.classList.toggle('marcado', cb.checked);
+  }
+
+  if (cb.checked && campo) {
+    const fila = document.createElement('div');
+    fila.className = 'fi-detalle-fila';
+    fila.id = filaId;
+    fila.innerHTML = `
+      <div class="fi-detalle-nombre">${cb.value}</div>
+      <div class="fi-campo">
+        <label>Monto <span class="nota">(ARS)</span></label>
+        <input type="number" id="${campo}_${n}" min="0" placeholder="0">
+      </div>
+      <div class="fi-campo">
+        <label>Comprobante <span class="nota">(opcional)</span></label>
+        <input type="file" id="archivo_${cid}_${n}" accept=".pdf,.jpg,.jpeg,.png">
+      </div>
+    `;
+    cont.appendChild(fila);
+  } else {
+    document.getElementById(filaId)?.remove();
+    const inp = document.getElementById(`${campo}_${n}`);
+    if (inp) inp.value = '';
+  }
+}
+
+// ── Multiselect conceptos ─────────────────────────────────────────────────
+function toggleMs(id) {
+  const ms = document.getElementById(id);
+  const dropdown = ms.querySelector('.fi-ms-dropdown');
+  const trigger  = ms.querySelector('.fi-ms-trigger');
+  const isOpen   = dropdown.classList.contains('visible');
+  document.querySelectorAll('.fi-ms-dropdown.visible').forEach(d => {
+    d.classList.remove('visible');
+    d.closest('.fi-multiselect').querySelector('.fi-ms-trigger').classList.remove('abierto');
+  });
+  if (!isOpen) {
+    dropdown.classList.add('visible');
+    trigger.classList.add('abierto');
+  }
+}
+
+function updateMsLabel(id) {
+  const ms      = document.getElementById(id);
+  const checked = [...ms.querySelectorAll('input[type=checkbox]:checked')].map(cb => cb.value);
+  ms.querySelector('.fi-ms-label').textContent =
+    checked.length === 0 ? 'Seleccioná los conceptos'
+    : checked.length <= 2 ? checked.join(', ')
+    : `${checked.length} conceptos seleccionados`;
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.fi-multiselect')) {
+    document.querySelectorAll('.fi-ms-dropdown.visible').forEach(d => {
+      d.classList.remove('visible');
+      d.closest('.fi-multiselect').querySelector('.fi-ms-trigger').classList.remove('abierto');
+    });
+  }
+});
+
+// ── Banco buscable ────────────────────────────────────────────────────────
+const BANCOS = [
+  'BANCO DE GALICIA Y BUENOS AIRES S.A.',
+  'BANCO DE LA NACION ARGENTINA',
+  'BANCO DE LA PROVINCIA DE BUENOS AIRES',
+  'BANCO BBVA ARGENTINA S.A.',
+  'BANCO SANTANDER ARGENTINA S.A.',
+  'BANCO MACRO S.A.',
+  'BANCO CREDICOOP COOPERATIVO LIMITADO',
+  'BANCO SUPERVIELLE S.A.',
+  'BANCO DE LA CIUDAD DE BUENOS AIRES',
+  'BANCO HIPOTECARIO S.A.',
+  'BANCO PATAGONIA S.A.',
+  'BANCO COMAFI SOCIEDAD ANONIMA',
+  'BRUBANK S.A.U.',
+  'UALA BANK S.A.U.',
+  'NARANJA DIGITAL COMPANIA FINANCIERA S.A.',
+  'BIBANK S.A.',
+  'BANCO DE LA PROVINCIA DE CORDOBA S.A.',
+  'BANCO DE SAN JUAN S.A.',
+  'BANCO MUNICIPAL DE ROSARIO',
+  'BANCO DEL CHUBUT S.A.',
+  'BANCO DE SANTA CRUZ S.A.',
+  'BANCO DE LA PAMPA S.A.',
+  'BANCO DE CORRIENTES S.A.',
+  'BANCO PROVINCIA DEL NEUQUEN SOCIEDAD ANONIMA',
+  'BANCO DE VALORES S.A.',
+  'BANCO ROELA S.A.',
+  'BANCO MARIVA S.A.',
+  'BANCO MERIDIAN S.A.',
+  'BANCO PIANO S.A.',
+  'BANCO JULIO SOCIEDAD ANONIMA',
+  'BANCO DEL SOL S.A.',
+  'NUEVO BANCO DEL CHACO S.A.',
+  'BANCO VOII S.A.',
+  'BANCO DE FORMOSA S.A.',
+  'BANCO CMF S.A.',
+  'BANCO DE SANTIAGO DEL ESTERO S.A.',
+  'BANCO INDUSTRIAL S.A.',
+  'NUEVO BANCO DE SANTA FE SOCIEDAD ANONIMA',
+  'NUEVO BANCO DE ENTRE RIOS S.A.',
+  'BANCO COLUMBIA S.A.',
+  'BANCO COINAG S.A.',
+  'BANCO DE COMERCIO S.A.',
+  'BANCO DINO S.A.',
+  'BANCO DE SERVICIOS Y TRANSACCIONES SAU',
+  'BANCO DE INVERSION Y COMERCIO EXTERIOR S.A.',
+  'BACS BANCO DE CREDITO Y SECURITIZACION S.A.',
+  'BNP PARIBAS',
+  'CITIBANK N.A.',
+  'JPMORGAN CHASE BANK, NATIONAL ASSOCIATION',
+  'INDUSTRIAL AND COMMERCIAL BANK OF CHINA',
+  'BANK OF CHINA LIMITED SUCURSAL BUENOS AIRES',
+  'BANCO DE LA REPUBLICA ORIENTAL DEL URUGUAY',
+  'COMPANIA FINANCIERA ARGENTINA S.A.',
+  'TOYOTA COMPANIA FINANCIERA DE ARGENTINA',
+  'MERCEDES-BENZ COMPANIA FINANCIERA ARGENTINA',
+  'VOLKSWAGEN FINANCIAL SERVICES COMPANIA FINANCIERA S.A.',
+  'ROMBO COMPANIA FINANCIERA S.A.',
+  'PSA FINANCE ARGENTINA COMPANIA FINANCIERA',
+  'JOHN DEERE CREDIT COMPANIA FINANCIERA S.A.',
+  'GPAT COMPANIA FINANCIERA S.A.U.',
+  'REBA COMPANIA FINANCIERA S.A.',
+  'CREDITO REGIONAL COMPANIA FINANCIERA S.A.'
+];
+
+(function initBancos() {
+  const lista = document.getElementById('banco-lista');
+  BANCOS.forEach(nombre => {
+    const div = document.createElement('div');
+    div.className = 'fi-banco-opt';
+    div.textContent = nombre;
+    div.addEventListener('click', function() { seleccionarBanco(nombre, this); });
+    lista.appendChild(div);
+  });
+})();
+
+function toggleBanco() {
+  const wrap     = document.getElementById('banco-wrap');
+  const dropdown = document.getElementById('banco-dropdown');
+  const trigger  = wrap.querySelector('.fi-ms-trigger');
+  const isOpen   = dropdown.classList.contains('visible');
+
+  // Cerrar todos los demás
+  document.querySelectorAll('.fi-ms-dropdown.visible').forEach(d => {
+    d.classList.remove('visible');
+    d.closest('.fi-multiselect').querySelector('.fi-ms-trigger').classList.remove('abierto');
+  });
+
+  if (!isOpen) {
+    dropdown.classList.add('visible');
+    trigger.classList.add('abierto');
+    document.getElementById('banco-search').focus();
+  }
+}
+
+function filtrarBancos() {
+  const q = document.getElementById('banco-search').value.toLowerCase();
+  document.querySelectorAll('#banco-lista .fi-banco-opt').forEach(opt => {
+    opt.classList.toggle('oculto', !opt.textContent.toLowerCase().includes(q));
+  });
+}
+
+function seleccionarBanco(nombre, el) {
+  document.getElementById('banco').value = nombre;
+  document.getElementById('banco-label').textContent = nombre;
+
+  // Marcar seleccionado visualmente
+  document.querySelectorAll('#banco-lista .fi-banco-opt').forEach(o => o.classList.remove('seleccionado'));
+  el.classList.add('seleccionado');
+
+  // Cerrar dropdown
+  document.getElementById('banco-dropdown').classList.remove('visible');
+  document.getElementById('banco-wrap').querySelector('.fi-ms-trigger').classList.remove('abierto');
+
+  // Limpiar búsqueda y mostrar todas las opciones
+  document.getElementById('banco-search').value = '';
+  filtrarBancos();
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+const val = id => (document.getElementById(id) || {}).value?.trim() || '';
+
+// ── Validación ─────────────────────────────────────────────────────────────
+function validar() {
+  const requeridos = [
+    ['nombre_y_apellido_del_inquilino', 'Nombre del inquilino'],
+    ['dni_inquilino',                   'DNI del inquilino'],
+    ['firstname',                       'Nombre del contacto'],
+    ['lastname',                        'Apellido del contacto'],
+    ['email',                           'Correo electrónico'],
+  ];
+  for (const [id, lbl] of requeridos) {
+    if (!val(id)) { alert('Completá el campo: ' + lbl); return false; }
+  }
+  for (let i = 0; i < periodosActivos.length; i++) {
+    const n   = periodosActivos[i];
+    const ord = i + 1;
+    if (!val(`periodo_${n}`)) {
+      alert(`Seleccioná el mes del período ${ord}.`); return false;
+    }
+    if (![...document.querySelectorAll(`.tipo-p${n}:checked`)].length) {
+      alert(`Seleccioná al menos un concepto adeudado para el período ${ord}.`); return false;
+    }
+  }
+  return true;
+}
+
+// ── Submit ─────────────────────────────────────────────────────────────────
+document.getElementById('fi-frm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validar()) return;
+
+  const btn    = document.getElementById('fi-btn');
+  const errDiv = document.getElementById('fi-err');
+  errDiv.style.display = 'none';
+  btn.disabled    = true;
+  btn.textContent = 'Enviando...';
+
+  const fields = [
+    { name:'nombre_y_apellido_del_inquilino',   value:val('nombre_y_apellido_del_inquilino') },
+    { name:'dni_inquilino',                     value:val('dni_inquilino') },
+    { name:'firstname',                         value:val('firstname') },
+    { name:'lastname',                          value:val('lastname') },
+    { name:'email',                             value:val('email') },
+    { name:'phone',                             value:val('phone') },
+    { name:'alias_cbu_impagos',                 value:val('alias_cbu_impagos') },
+    { name:'banco',                             value:val('banco') },
+    { name:'nombre_y_apellido_del_propietario', value:val('nombre_y_apellido_del_propietario') },
+    { name:'cuit_cuil',                         value:val('cuit_cuil') },
+    { name:'observaciones_incumplimiento',       value:val('observaciones_incumplimiento') },
+  ];
+
+  // Datos de cada período activo (renumerados 1…N en el payload)
+  periodosActivos.forEach((n, i) => {
+    const sfx   = i + 1;
+    const tipos = [...document.querySelectorAll(`.tipo-p${n}:checked`)].map(c => c.value).join(';');
+    const pNom  = sfx === 1 ? 'periodo_de_deuda'       : `periodo_de_deuda_${sfx}`;
+    const tNom  = sfx === 1 ? 'tipo_de_incumplimiento' : `tipo_de_incumplimiento_${sfx}`;
+
+    fields.push({ name: pNom, value: val(`periodo_${n}`) });
+    fields.push({ name: tNom, value: tipos });
+
+    CAMPOS_MONTO.forEach(c => {
+      const v = val(`${c}_${n}`);
+      if (v) fields.push({ name: sfx === 1 ? c : `${c}_${sfx}`, value: v });
+    });
+
+    // TODO: subir archivos por concepto via Cloudflare Worker antes del submit
+    // Los inputs file están listos en el DOM para cuando se integre el Worker
+  });
+
+  const payload = {
+    fields: fields.filter(f => f.value !== ''),
+    context: { pageUri: location.href }
+  };
+
+  try {
+    const r = await fetch(
+      `https://api.hsforms.com/submissions/v3/integration/submit/${PORTAL_ID}/${FORM_ID}`,
+      { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) }
+    );
+    if (r.ok) {
+      document.getElementById('fi-frm').style.display        = 'none';
+      document.getElementById('fi-agregar').style.display    = 'none';
+      document.getElementById('fi-periodos').style.display   = 'none';
+      document.querySelector('.fi-card h1').style.display    = 'none';
+      document.querySelector('.fi-card .sub').style.display  = 'none';
+      document.getElementById('fi-ok').style.display         = 'block';
+    } else {
+      const txt = await r.text();
+      console.error('HubSpot error:', r.status, txt);
+      errDiv.style.display = 'block';
+      btn.disabled    = false;
+      btn.textContent = 'Enviar notificación';
+    }
+  } catch(err) {
+    console.error(err);
+    errDiv.textContent = 'Error de conexión. Verificá tu internet e intentá de nuevo.';
+    errDiv.style.display  = 'block';
+    btn.disabled    = false;
+    btn.textContent = 'Enviar notificación';
+  }
+});
+
+// ── Inicializar ────────────────────────────────────────────────────────────
+document.getElementById('fi-agregar').addEventListener('click', crearPeriodo);
+crearPeriodo();
+</script>
+<!-- ═══════════════════════ FIN BLOQUE 2 ═══════════════════════ -->
+
+</body>
+</html>
