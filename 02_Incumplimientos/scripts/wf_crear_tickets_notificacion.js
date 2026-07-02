@@ -87,11 +87,14 @@ exports.main = async (event, callback) => {
           { propertyName: 'hs_pipeline',       operator: 'EQ', value: '3353793749' }
         ]
       }],
-      properties: ['subject', 'tipo_de_incumplimiento', ...MONTO_PROPS],
+      properties: ['subject', 'tipo_de_incumplimiento', 'hs_pipeline_stage', ...MONTO_PROPS],
       sorts: [{ propertyName: 'createdate', direction: 'DESCENDING' }],
       limit: 1
     });
-    return r.b.results?.[0] || null;
+    const ticket = r.b.results?.[0] || null;
+    // Si el ticket encontrado está en Cerrado, crear uno nuevo en lugar de actualizar
+    if (ticket?.properties?.hs_pipeline_stage === '4594251972') return null;
+    return ticket;
   }
 
   // ── Crear nota en el ticket con los conceptos/montos nuevos ─────────────
