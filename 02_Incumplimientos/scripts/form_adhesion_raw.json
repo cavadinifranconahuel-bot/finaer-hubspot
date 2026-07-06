@@ -1,0 +1,341 @@
+{
+  "id": "ed2a220e-0d3b-4d8d-a84f-13b870540258",
+  "name": "Adhesión",
+  "createdAt": "2025-04-14T16:25:19.124Z",
+  "updatedAt": "2026-05-19T15:39:58.460Z",
+  "archived": false,
+  "fieldGroups": [
+    {
+      "groupType": "default_group",
+      "richTextType": "text",
+      "fields": [
+        {
+          "objectTypeId": "0-1",
+          "name": "firstname",
+          "label": "Nombre del responsable",
+          "required": true,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        },
+        {
+          "objectTypeId": "0-1",
+          "name": "lastname",
+          "label": "Apellido del responsable",
+          "required": true,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        },
+        {
+          "objectTypeId": "0-1",
+          "name": "email",
+          "label": "Correo del responsable",
+          "required": true,
+          "hidden": false,
+          "validation": {
+            "blockedEmailDomains": [],
+            "useDefaultBlockList": false
+          },
+          "fieldType": "email"
+        },
+        {
+          "objectTypeId": "0-1",
+          "name": "confirmacion_correo",
+          "label": "Confirmación Correo",
+          "required": true,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        },
+        {
+          "objectTypeId": "0-1",
+          "name": "phone",
+          "label": "Número de teléfono",
+          "required": false,
+          "hidden": false,
+          "useCountryCodeSelect": false,
+          "validation": {
+            "minAllowedDigits": 7,
+            "maxAllowedDigits": 20
+          },
+          "fieldType": "phone"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "razon_social",
+          "label": "Razón social / Nombre de Inmobiliaria",
+          "required": true,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "domain",
+          "label": "Sitio web&#xa0;",
+          "required": false,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "provincia",
+          "label": "Provincia",
+          "required": true,
+          "hidden": false,
+          "options": [
+            {
+              "label": "Ciudad Autónoma de Buenos Aires",
+              "value": "Ciudad Autónoma de Buenos Aires",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Buenos Aires (Zona Norte)",
+              "value": "Buenos Aires (Zona Norte)",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Buenos Aires (Zona Oeste)",
+              "value": "Buenos Aires (Zona Oeste)",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Buenos Aires (Zona Sur)",
+              "value": "Buenos Aires (Zona Sur)",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Buenos Aires (Provincia)",
+              "value": "Buenos Aires (Provincia)",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Catamarca",
+              "value": "Catamarca",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Chaco",
+              "value": "Chaco",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Chubut",
+              "value": "Chubut",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Córdoba",
+              "value": "Córdoba",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Corrientes",
+              "value": "Corrientes",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Entre Ríos",
+              "value": "Entre Ríos",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Formosa",
+              "value": "Formosa",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Jujuy",
+              "value": "Jujuy",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "La Pampa",
+              "value": "La Pampa",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "La Rioja",
+              "value": "La Rioja",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Mendoza",
+              "value": "Mendoza",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Misiones",
+              "value": "Misiones",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Neuquén",
+              "value": "Neuquén",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Río Negro",
+              "value": "Río Negro",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Salta",
+              "value": "Salta",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "San Juan",
+              "value": "San Juan",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "San Luis",
+              "value": "San Luis",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Santa Cruz",
+              "value": "Santa Cruz",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Santa Fe",
+              "value": "Santa Fe",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Santiago del Estero",
+              "value": "Santiago del Estero",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Tierra del Fuego",
+              "value": "Tierra del Fuego",
+              "description": "",
+              "displayOrder": -1
+            },
+            {
+              "label": "Tucumán",
+              "value": "Tucumán",
+              "description": "",
+              "displayOrder": -1
+            }
+          ],
+          "fieldType": "dropdown"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "city",
+          "label": "Ciudad",
+          "required": true,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "calle",
+          "label": "Calle",
+          "required": true,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "nro__calle",
+          "label": "Número",
+          "required": true,
+          "hidden": false,
+          "fieldType": "number"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "piso",
+          "label": "Piso",
+          "required": false,
+          "hidden": false,
+          "fieldType": "number"
+        },
+        {
+          "objectTypeId": "0-2",
+          "name": "depto_",
+          "label": "Depto.",
+          "required": false,
+          "hidden": false,
+          "fieldType": "single_line_text"
+        }
+      ]
+    }
+  ],
+  "configuration": {
+    "language": "es",
+    "cloneable": true,
+    "postSubmitAction": {
+      "type": "thank_you",
+      "value": ""
+    },
+    "editable": true,
+    "archivable": true,
+    "recaptchaEnabled": false,
+    "notifyContactOwner": false,
+    "notifyRecipients": [
+      "67403109",
+      "31770857",
+      "29211065",
+      "32991627",
+      "31930706",
+      "30083749",
+      "77082050"
+    ],
+    "createNewContactForNewEmail": true,
+    "prePopulateKnownValues": true,
+    "allowLinkToResetKnownValues": false,
+    "embedType": "V4"
+  },
+  "displayOptions": {
+    "renderRawHtml": false,
+    "theme": "default_style",
+    "submitButtonText": "",
+    "style": {
+      "fontFamily": "arial, helvetica, sans-serif",
+      "backgroundWidth": "100%",
+      "labelTextColor": "#33475b",
+      "labelTextSize": "11px",
+      "helpTextColor": "#7C98B6",
+      "helpTextSize": "11px",
+      "legalConsentTextColor": "#33475b",
+      "legalConsentTextSize": "14px",
+      "submitColor": "#ff7a59",
+      "submitAlignment": "left",
+      "submitFontColor": "#ffffff",
+      "submitSize": "12px"
+    },
+    "cssClass": null
+  },
+  "legalConsentOptions": {
+    "type": "none"
+  },
+  "formType": "hubspot"
+}

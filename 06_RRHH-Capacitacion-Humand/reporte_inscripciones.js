@@ -15,10 +15,11 @@ function api(method, apiPath) {
 }
 
 const TURNOS = {
-  miercoles_1_julio: 'Miércoles 1 de Julio',
   jueves_2_julio:    'Jueves 2 de Julio',
+  viernes_3_julio:   'Viernes 3 de Julio',
   lunes_6_julio:     'Lunes 6 de Julio',
-  martes_7_julio:    'Martes 7 de Julio'
+  martes_7_julio:    'Martes 7 de Julio',
+  miercoles_8_julio: 'Miércoles 8 de Julio'
 };
 
 // Leer mapa email → nombre desde la nómina

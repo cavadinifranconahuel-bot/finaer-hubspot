@@ -8,3 +8,7 @@ node_modules/
 hubspot.config.yaml
 emails_list.json
 temp_analisis/
+temp_alumni/
+temp_renovacion/
+nomina_datos.json
+reporte_inscripciones.csv

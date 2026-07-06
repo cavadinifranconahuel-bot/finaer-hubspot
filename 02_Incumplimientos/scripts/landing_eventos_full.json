@@ -1,0 +1,444 @@
+{
+  "archivedAt": "1970-01-01T00:00:00Z",
+  "archivedInDashboard": false,
+  "attachedStylesheets": [],
+  "authorName": "Diego Diaz",
+  "categoryId": 1,
+  "contentTypeCategory": 1,
+  "createdAt": "2026-02-20T16:12:01.157Z",
+  "createdById": "31930706",
+  "currentState": "PUBLISHED",
+  "domain": "",
+  "featuredImage": "",
+  "featuredImageAltText": "",
+  "footerHtml": "</div>\n",
+  "headHtml": "<style>\n  @media (max-width: 768px) {\n    .mobile-form-wrapper {\n      max-width: 100% !important;\n      width: 100% !important;\n      padding: 0 1rem;\n      margin: 0 !important;\n      box-sizing: border-box;\n    }\n  }\n</style>\n<div class=\"mobile-form-wrapper\">\n",
+  "htmlTitle": "Landing Registros Eventos Finaer",
+  "id": "366631027916",
+  "layoutSections": {
+    "dnd_area": {
+      "cells": [],
+      "cssClass": "",
+      "cssId": "",
+      "cssStyle": "",
+      "label": "Main section",
+      "name": "dnd_area",
+      "params": {},
+      "rowMetaData": [
+        {
+          "cssClass": "dnd-section",
+          "styles": {
+            "breakpointStyles": {
+              "default": {
+                "hidden": true
+              }
+            }
+          }
+        },
+        {
+          "cssClass": "dnd-section",
+          "styles": {
+            "breakpointStyles": {
+              "default": {
+                "hidden": true
+              }
+            }
+          }
+        },
+        {
+          "cssClass": "dnd-section",
+          "styles": {
+            "breakpointStyles": {
+              "default": {
+                "padding": {
+                  "left": {
+                    "units": "%",
+                    "value": 30
+                  },
+                  "right": {
+                    "units": "%",
+                    "value": 30
+                  }
+                }
+              },
+              "mobile": {
+                "hidden": false,
+                "padding": {
+                  "bottom": {
+                    "units": "%",
+                    "value": 0
+                  },
+                  "left": {
+                    "units": "%",
+                    "value": 0
+                  },
+                  "right": {
+                    "units": "%",
+                    "value": 0
+                  },
+                  "top": {
+                    "units": "%",
+                    "value": 0
+                  }
+                }
+              }
+            },
+            "maxWidthSectionCentering": 1000
+          }
+        },
+        {
+          "cssClass": "dnd-section",
+          "styles": {
+            "breakpointStyles": {
+              "default": {
+                "hidden": true
+              }
+            }
+          }
+        },
+        {
+          "cssClass": "dnd-section",
+          "styles": {
+            "breakpointStyles": {
+              "default": {
+                "hidden": true
+              }
+            }
+          }
+        },
+        {
+          "cssClass": "dnd-section",
+          "styles": {
+            "breakpointStyles": {
+              "default": {
+                "hidden": true
+              }
+            }
+          }
+        }
+      ],
+      "rows": [
+        {
+          "0": {
+            "cells": [],
+            "cssClass": "",
+            "cssId": "",
+            "cssStyle": "",
+            "name": "cell_17452541147112",
+            "params": {
+              "css_class": "dnd-column"
+            },
+            "rowMetaData": [
+              {
+                "cssClass": "dnd-row"
+              }
+            ],
+            "rows": [
+              {
+                "0": {
+                  "cells": [],
+                  "cssClass": "",
+                  "cssId": "",
+                  "cssStyle": "",
+                  "label": "Rich text",
+                  "name": "widget_1745254113596",
+                  "params": {
+                    "css_class": "dnd-module",
+                    "isJsModule": true,
+                    "module_id": 175126572720,
+                    "path": "@hubspot/elevate/components/modules/rich_text",
+                    "richTextContentHTML": "<div class=\"custom-form-wrapper\">&nbsp;</div>",
+                    "schema_version": 2
+                  },
+                  "rowMetaData": [],
+                  "rows": [],
+                  "type": "custom_widget",
+                  "w": 12,
+                  "x": 0
+                }
+              }
+            ],
+            "type": "cell",
+            "w": 12,
+            "x": 0
+          }
+        },
+        {
+          "0": {
+            "cells": [],
+            "cssClass": "",
+            "cssId": "",
+            "cssStyle": "",
+            "name": "cell_1745255768026",
+            "params": {
+              "css_class": "dnd-column"
+            },
+            "rowMetaData": [
+              {
+                "cssClass": "dnd-row"
+              }
+            ],
+            "rows": [
+              {
+                "0": {
+                  "cells": [],
+                  "cssClass": "",
+                  "cssId": "",
+                  "cssStyle": "",
+                  "label": "Rich text",
+                  "name": "widget_1745255776476",
+                  "params": {
+                    "css_class": "dnd-module",
+                    "isJsModule": true,
+                    "module_id": 175126572720,
+                    "path": "@hubspot/elevate/components/modules/rich_text",
+                    "richTextContentHTML": "<div class=\"custom-form-wrapper\">&nbsp;</div>",
+                    "schema_version": 2
+                  },
+                  "rowMetaData": [],
+                  "rows": [],
+                  "type": "custom_widget",
+                  "w": 12,
+                  "x": 0
+                }
+              }
+            ],
+            "type": "cell",
+            "w": 12,
+            "x": 0
+          }
+        },
+        {
+          "0": {
+            "cells": [],
+            "cssClass": "",
+            "cssId": "",
+            "cssStyle": "",
+            "name": "cell_17452559502004",
+            "params": {
+              "css_class": "dnd-column"
+            },
+            "rowMetaData": [
+              {
+                "cssClass": "dnd-row"
+              }
+            ],
+            "rows": [
+              {
+                "0": {
+                  "cells": [],
+                  "cssClass": "",
+                  "cssId": "",
+                  "cssStyle": "",
+                  "label": "Form",
+                  "name": "widget_1745253208703",
+                  "params": {
+                    "css": {
+                      "background-color": "#ffffff"
+                    },
+                    "css_class": "dnd-module",
+                    "form": {
+                      "form_id": "ed2a220e-0d3b-4d8d-a84f-13b870540258",
+                      "form_type": "HUBSPOT",
+                      "message": "Thanks for submitting the form.",
+                      "redirect_url": "http://www.google.com",
+                      "response_type": "redirect"
+                    },
+                    "module_id": 1155238,
+                    "schema_version": 2,
+                    "title": ""
+                  },
+                  "rowMetaData": [],
+                  "rows": [],
+                  "styles": {
+                    "breakpointStyles": {
+                      "default": {
+                        "hidden": false
+                      },
+                      "mobile": {
+                        "padding": {
+                          "bottom": {
+                            "units": "%",
+                            "value": 5
+                          },
+                          "top": {
+                            "units": "%",
+                            "value": 5
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "type": "custom_widget",
+                  "w": 12,
+                  "x": 0
+                }
+              }
+            ],
+            "type": "cell",
+            "w": 12,
+            "x": 0
+          }
+        },
+        {
+          "0": {
+            "cells": [],
+            "cssClass": "",
+            "cssId": "",
+            "cssStyle": "",
+            "name": "cell_17452558003833",
+            "params": {
+              "css_class": "dnd-column"
+            },
+            "rowMetaData": [
+              {
+                "cssClass": "dnd-row"
+              }
+            ],
+            "rows": [
+              {
+                "0": {
+                  "cells": [],
+                  "cssClass": "",
+                  "cssId": "",
+                  "cssStyle": "",
+                  "label": "Rich text",
+                  "name": "widget_1745255805864",
+                  "params": {
+                    "css_class": "dnd-module",
+                    "isJsModule": true,
+                    "module_id": 175126572720,
+                    "path": "@hubspot/elevate/components/modules/rich_text",
+                    "richTextContentHTML": "",
+                    "schema_version": 2
+                  },
+                  "rowMetaData": [],
+                  "rows": [],
+                  "type": "custom_widget",
+                  "w": 12,
+                  "x": 0
+                }
+              }
+            ],
+            "type": "cell",
+            "w": 12,
+            "x": 0
+          }
+        },
+        {
+          "0": {
+            "cells": [],
+            "cssClass": "",
+            "cssId": "",
+            "cssStyle": "",
+            "name": "cell_17452541612622",
+            "params": {
+              "css_class": "dnd-column"
+            },
+            "rowMetaData": [
+              {
+                "cssClass": "dnd-row"
+              }
+            ],
+            "rows": [
+              {
+                "0": {
+                  "cells": [],
+                  "cssClass": "",
+                  "cssId": "",
+                  "cssStyle": "",
+                  "label": "Rich text",
+                  "name": "widget_1745254160831",
+                  "params": {
+                    "css_class": "dnd-module",
+                    "isJsModule": true,
+                    "module_id": 175126572720,
+                    "path": "@hubspot/elevate/components/modules/rich_text",
+                    "richTextContentHTML": "",
+                    "schema_version": 2
+                  },
+                  "rowMetaData": [],
+                  "rows": [],
+                  "type": "custom_widget",
+                  "w": 12,
+                  "x": 0
+                }
+              }
+            ],
+            "type": "cell",
+            "w": 12,
+            "x": 0
+          }
+        },
+        {
+          "0": {
+            "cells": [],
+            "cssClass": "",
+            "cssId": "",
+            "cssStyle": "",
+            "name": "cell_17452550709462",
+            "params": {
+              "css_class": "dnd-column"
+            },
+            "rowMetaData": [
+              {
+                "cssClass": "dnd-row"
+              }
+            ],
+            "rows": [
+              {
+                "0": {
+                  "cells": [],
+                  "cssClass": "",
+                  "cssId": "",
+                  "cssStyle": "",
+                  "label": "Rich text",
+                  "name": "widget_1745255070582",
+                  "params": {
+                    "css_class": "dnd-module",
+                    "isJsModule": true,
+                    "module_id": 175126572720,
+                    "path": "@hubspot/elevate/components/modules/rich_text",
+                    "richTextContentHTML": "",
+                    "schema_version": 2
+                  },
+                  "rowMetaData": [],
+                  "rows": [],
+                  "type": "custom_widget",
+                  "w": 12,
+                  "x": 0
+                }
+              }
+            ],
+            "type": "cell",
+            "w": 12,
+            "x": 0
+          }
+        }
+      ],
+      "type": "cell",
+      "w": 12,
+      "x": 0
+    }
+  },
+  "linkRelCanonicalUrl": "",
+  "name": "Landing Registros Eventos Finaer",
+  "pageExpiryEnabled": false,
+  "pageRedirected": false,
+  "publicAccessRules": [],
+  "publicAccessRulesEnabled": false,
+  "publishDate": "2026-02-20T16:12:55Z",
+  "publishImmediately": true,
+  "published": true,
+  "slug": "landing-registros-eventos-finaer",
+  "state": "PUBLISHED_OR_SCHEDULED",
+  "subcategory": "landing_page",
+  "templatePath": "@hubspot/elevate/templates/blank.hubl.html",
+  "translations": {},
+  "updatedAt": "2026-02-20T16:12:55.116Z",
+  "updatedById": "31930706",
+  "url": "https://landing.finaersa.com.ar/landing-registros-eventos-finaer",
+  "useFeaturedImage": false,
+  "widgetContainers": {},
+  "widgets": {}
+}

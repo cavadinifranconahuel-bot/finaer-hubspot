@@ -1,0 +1,1033 @@
+<!-- ════════════════════════════════════════════════════════════════════
+     FORMULARIO STICKERS ESPECIALES — HubSpot Landing
+     BLOQUE 1 → Encabezado personalizado (headHtml)
+     ════════════════════════════════════════════════════════════════════ -->
+<script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Kumbh+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── Variables ─────────────────────────────────────────────────────── */
+:root {
+  --fi-rojo:      #e30613;
+  --fi-rojo-dk:   #c0050f;
+  --fi-texto:     #2f3743;
+  --fi-gris:      #6b7280;
+  --fi-borde:     #d1d5db;
+  --fi-fondo:     #f4f5f7;
+  --fi-blanco:    #ffffff;
+  --fi-sombra:    0 2px 16px rgba(0,0,0,.11);
+}
+
+/* ─── Reset base ────────────────────────────────────────────────────── */
+.fi-wrap *, .fi-wrap *::before, .fi-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Contenedor principal ──────────────────────────────────────────── */
+.fi-wrap {
+  font-family: 'Kumbh Sans', sans-serif;
+  color: var(--fi-texto);
+  background: var(--fi-fondo);
+  min-height: 100vh;
+  padding: 32px 16px 64px;
+}
+
+/* ─── Card central ──────────────────────────────────────────────────── */
+.fi-card {
+  background: var(--fi-blanco);
+  border-radius: 12px;
+  box-shadow: var(--fi-sombra);
+  max-width: 680px;
+  margin: 0 auto 24px;
+  padding: 36px 40px;
+}
+
+/* ─── Header ────────────────────────────────────────────────────────── */
+.fi-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.fi-header img { height: 52px; }
+.fi-header h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  color: var(--fi-rojo);
+  margin-top: 14px;
+}
+.fi-header p {
+  font-size: 13px;
+  color: var(--fi-gris);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ─── Indicador de pasos ────────────────────────────────────────────── */
+.fi-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 28px;
+}
+.fi-step-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #9ca3af;
+  font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background .2s, color .2s;
+}
+.fi-step-dot.activo  { background: var(--fi-rojo); color: #fff; }
+.fi-step-dot.hecho   { background: #374151; color: #fff; }
+.fi-step-line {
+  flex: 1; height: 2px;
+  background: #e5e7eb;
+  max-width: 60px;
+  transition: background .2s;
+}
+.fi-step-line.hecho  { background: #374151; }
+
+/* ─── Título de sección ─────────────────────────────────────────────── */
+.fi-seccion-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--fi-texto);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #fadadb;
+}
+
+/* ─── Campos ────────────────────────────────────────────────────────── */
+.fi-campo { margin-bottom: 18px; }
+.fi-label {
+  display: block;
+  font-size: 13px; font-weight: 600;
+  color: var(--fi-texto);
+  margin-bottom: 6px;
+}
+.fi-label .fi-req { color: var(--fi-rojo); margin-left: 2px; }
+.fi-nota {
+  font-size: 12px; color: var(--fi-gris);
+  margin-top: 4px; line-height: 1.4;
+}
+.fi-input, .fi-select, .fi-textarea {
+  width: 100%;
+  border: 2px solid var(--fi-borde);
+  border-radius: 50px;
+  padding: 11px 18px;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 14px;
+  color: var(--fi-texto);
+  background: var(--fi-blanco);
+  outline: none;
+  transition: border-color .2s;
+  appearance: none;
+}
+.fi-textarea { border-radius: 14px; resize: vertical; min-height: 80px; }
+.fi-input:focus, .fi-select:focus, .fi-textarea:focus { border-color: var(--fi-rojo); }
+.fi-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%236b7280' d='M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; padding-right: 40px; }
+
+/* ─── Radios / Checkboxes custom ────────────────────────────────────── */
+.fi-opciones { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+.fi-opciones.horizontal { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+.fi-opcion-label {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px 16px;
+  border: 2px solid var(--fi-borde);
+  border-radius: 50px;
+  font-size: 14px;
+  transition: border-color .2s, background .2s;
+  user-select: none;
+}
+.fi-opcion-label:hover { border-color: var(--fi-rojo); background: #fff5f5; }
+.fi-opcion-label.seleccionado { border-color: var(--fi-rojo); background: #fff5f5; }
+.fi-opcion-label input[type="radio"],
+.fi-opcion-label input[type="checkbox"] {
+  position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+}
+.fi-opcion-check {
+  width: 18px; height: 18px; flex-shrink: 0;
+  border: 2px solid var(--fi-borde); border-radius: 50%;
+  background: #fff;
+  transition: border-color .2s, background .2s;
+}
+.fi-opcion-label.seleccionado .fi-opcion-check { border-color: var(--fi-rojo); background: var(--fi-rojo); }
+
+/* ─── Imagen de pieza ───────────────────────────────────────────────── */
+.fi-pieza-img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--fi-borde);
+  display: block;
+}
+.fi-pieza-placeholder {
+  width: 100%; height: 140px;
+  background: #f3f4f6;
+  border: 2px dashed var(--fi-borde);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--fi-gris); font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ─── Alerta informativa ────────────────────────────────────────────── */
+.fi-alerta {
+  background: #fdf0f0;
+  border-left: 3px solid var(--fi-rojo);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--fi-texto);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* ─── Subsección condicional ────────────────────────────────────────── */
+.fi-subseccion {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 14px;
+  border: 1px solid #e5e7eb;
+}
+.fi-subseccion-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--fi-gris);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 14px;
+}
+
+/* ─── Botones ───────────────────────────────────────────────────────── */
+.fi-btn-grupo {
+  display: flex; gap: 12px; justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 2px solid #fadadb;
+}
+.fi-btn {
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+.fi-btn:active { transform: scale(.97); }
+.fi-btn-primary  { background: var(--fi-rojo); color: #fff; }
+.fi-btn-primary:hover  { background: var(--fi-rojo-dk); }
+.fi-btn-secondary { background: #e5e7eb; color: var(--fi-texto); }
+.fi-btn-secondary:hover { background: #d1d5db; }
+.fi-btn-full { width: 100%; }
+
+/* ─── Errores ───────────────────────────────────────────────────────── */
+.fi-error-msg {
+  color: var(--fi-rojo); font-size: 12px; margin-top: 4px; display: none;
+}
+.fi-campo.con-error .fi-input,
+.fi-campo.con-error .fi-select,
+.fi-campo.con-error .fi-textarea { border-color: var(--fi-rojo); }
+.fi-campo.con-error .fi-error-msg { display: block; }
+
+/* ─── Éxito ─────────────────────────────────────────────────────────── */
+.fi-exito {
+  text-align: center; padding: 48px 24px;
+}
+.fi-exito-icono { font-size: 56px; margin-bottom: 16px; }
+.fi-exito h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px; color: var(--fi-rojo); margin-bottom: 10px;
+}
+.fi-exito p { color: var(--fi-gris); font-size: 15px; line-height: 1.6; }
+
+/* ─── Form nativo HubSpot — override de estilos ─────────────────────── */
+#hs-form-wrap .hs-form-field { margin-bottom: 18px; }
+#hs-form-wrap .hs-form-field label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--fi-texto); margin-bottom: 6px;
+}
+#hs-form-wrap .hs-input {
+  width: 100% !important;
+  border: 2px solid var(--fi-borde) !important;
+  border-radius: 50px !important;
+  padding: 11px 18px !important;
+  font-family: 'Kumbh Sans', sans-serif !important;
+  font-size: 14px !important;
+  color: var(--fi-texto) !important;
+  outline: none !important;
+}
+#hs-form-wrap textarea.hs-input { border-radius: 14px !important; min-height: 80px !important; }
+#hs-form-wrap .hs-input:focus { border-color: var(--fi-rojo) !important; }
+#hs-form-wrap .hs-button {
+  width: 100% !important;
+  padding: 14px 28px !important;
+  border-radius: 50px !important;
+  background: var(--fi-rojo) !important;
+  color: #fff !important;
+  font-family: 'Kumbh Sans', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  cursor: pointer !important;
+  margin-top: 10px !important;
+}
+#hs-form-wrap .hs-button:hover { background: var(--fi-rojo-dk) !important; }
+#hs-form-wrap .hs-error-msgs { list-style: none; }
+#hs-form-wrap .hs-error-msgs li { color: var(--fi-rojo); font-size: 12px; margin-top: 4px; }
+#hs-form-wrap .inputs-list { list-style: none; }
+#hs-form-wrap .inputs-list label {
+  display: flex !important; flex-direction: row !important; align-items: center !important;
+  gap: 8px; cursor: pointer; padding: 10px 16px;
+  border: 2px solid var(--fi-borde); border-radius: 50px;
+  margin-bottom: 8px; font-size: 14px; font-weight: 400 !important;
+}
+#hs-form-wrap .submitted-message {
+  text-align: center; padding: 24px;
+  font-size: 16px; color: var(--fi-texto);
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .fi-card { padding: 24px 20px; }
+  .fi-opciones.horizontal { flex-direction: column; }
+  .fi-btn-grupo { flex-direction: column-reverse; }
+  .fi-btn { width: 100%; text-align: center; }
+}
+</style>
+
+
+<!-- ════════════════════════════════════════════════════════════════════
+     BLOQUE 2 → Pie de página personalizado (footerHtml)
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="fi-wrap">
+
+  <!-- Header -->
+  <div class="fi-card fi-header">
+    <img src="https://finaersa.com.ar/newsletter/firma2024/img/logoF.jpg" alt="FINAER">
+    <h1>Stickers Especiales</h1>
+    <p>Completá este formulario para registrar los espacios y piezas negociadas.<br>
+       El pedido se procesará al cierre de la tanda correspondiente.</p>
+  </div>
+
+  <!-- Indicador de pasos -->
+  <div class="fi-card" style="padding: 20px 40px;">
+    <div class="fi-steps" id="fi-steps">
+      <div class="fi-step-dot activo" id="dot-1">1</div>
+      <div class="fi-step-line" id="line-1"></div>
+      <div class="fi-step-dot" id="dot-2">2</div>
+      <div class="fi-step-line" id="line-2"></div>
+      <div class="fi-step-dot" id="dot-3">3</div>
+      <div class="fi-step-line" id="line-3"></div>
+      <div class="fi-step-dot" id="dot-4">4</div>
+      <div class="fi-step-line" id="line-4"></div>
+      <div class="fi-step-dot" id="dot-5">5</div>
+    </div>
+  </div>
+
+  <!-- ══ PASO 1 — Datos de la visita ══════════════════════════════════ -->
+  <div class="fi-card" id="paso-1">
+    <div class="fi-seccion-titulo">Datos de la visita</div>
+
+    <div class="fi-campo" id="c-email">
+      <label class="fi-label">Tu correo corporativo <span class="fi-req">*</span></label>
+      <input type="email" class="fi-input" id="f-email" placeholder="nombre@finaersa.com.ar">
+      <div class="fi-error-msg">Ingresá un email válido.</div>
+    </div>
+
+    <div class="fi-campo" id="c-oc">
+      <label class="fi-label">Oficina Comercial (OC) <span class="fi-req">*</span></label>
+      <select class="fi-select" id="f-oc">
+        <option value="">Seleccioná la OC</option>
+        <option value="belgrano">Belgrano</option>
+        <option value="centro">Centro</option>
+        <option value="flores">Flores</option>
+        <option value="palermo">Palermo</option>
+        <option value="la_plata">La Plata</option>
+        <option value="lanus">Lanús</option>
+        <option value="lomas_de_zamora">Lomas de Zamora</option>
+        <option value="moron">Morón</option>
+        <option value="pilar">Pilar</option>
+        <option value="quilmes">Quilmes</option>
+        <option value="san_martin">San Martín</option>
+        <option value="san_miguel">San Miguel</option>
+        <option value="zona_norte">Zona Norte</option>
+        <option value="otra">Otra</option>
+      </select>
+      <div class="fi-error-msg">Seleccioná la Oficina Comercial.</div>
+    </div>
+
+    <div class="fi-campo" id="c-edc">
+      <label class="fi-label">EDC <span class="fi-req">*</span></label>
+      <select class="fi-select" id="f-edc">
+        <option value="">Seleccioná el EDC</option>
+        <option value="adorna_claudio">ADORNA CLAUDIO</option>
+        <option value="apolo_diego">APOLO DIEGO</option>
+        <option value="avendano_bernardo">AVENDAÑO BERNARDO</option>
+        <option value="bagnera_santiago">BAGNERA SANTIAGO</option>
+        <option value="camba_valeria">CAMBA VALERIA</option>
+        <option value="cammisa_silva_jorge">CAMMISA SILVA JORGE</option>
+        <option value="capitani_horacio">CAPITANI HORACIO</option>
+        <option value="colmenares_alfonzo">COLMENARES ALFONZO</option>
+        <option value="correa_pereira_jinee">CORREA PEREIRA JINEE</option>
+        <option value="curutchet_analia">CURUTCHET ANALIA</option>
+        <option value="gallardo_garcia_daphne">GALLARDO GARCIA DAPHNE</option>
+        <option value="giani_diego">GIANI DIEGO</option>
+        <option value="guanipa_negrette_gerardo">GUANIPA NEGRETTE GERARDO</option>
+        <option value="insua_camila">INSUA CAMILA</option>
+        <option value="jeagnina_marly_vara">JEAGNINA MARLY VARA</option>
+        <option value="lopez_benitez_anairi">LOPEZ BENITEZ ANAIRI</option>
+        <option value="martinelli_guido">MARTINELLI GUIDO</option>
+        <option value="merayo_baltazar">MERAYO BALTAZAR</option>
+        <option value="moldes_vanesa_yanina">MOLDES VANESA YANINA</option>
+        <option value="morales_emanuel">MORALES EMANUEL</option>
+        <option value="morgante_salvador">MORGANTE SALVADOR</option>
+        <option value="nemina_rozencwaig_aldana">NEMIÑA ROZENCWAIG ALDANA</option>
+        <option value="nunez_vanesa_soledad">NUÑEZ VANESA SOLEDAD</option>
+        <option value="pereyra_moine_gonzalo">PEREYRA MOINE GONZALO</option>
+        <option value="russo_emiliano">RUSSO EMILIANO</option>
+        <option value="testi_ignacio_martin">TESTI IGNACIO MARTIN</option>
+        <option value="vera_montero_rodrigo">VERA MONTERO RODRIGO</option>
+        <option value="villavicencio_thiago">VILLAVICENCIO THIAGO</option>
+        <option value="zarate_ruiz_diaz_gustavo">ZARATE RUIZ DIAZ GUSTAVO</option>
+        <option value="otro">Otro no listado</option>
+      </select>
+      <div class="fi-error-msg">Seleccioná el EDC.</div>
+    </div>
+
+    <div class="fi-campo" id="c-inmo">
+      <label class="fi-label">Inmobiliaria <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-inmo" placeholder="Nombre de la inmobiliaria">
+      <div class="fi-error-msg">Ingresá el nombre de la inmobiliaria.</div>
+    </div>
+
+    <div class="fi-campo" id="c-dir">
+      <label class="fi-label">Dirección exacta <span class="fi-req">*</span></label>
+      <textarea class="fi-textarea" id="f-dir" placeholder="Calle, número, piso, local..."></textarea>
+      <div class="fi-error-msg">Ingresá la dirección exacta.</div>
+    </div>
+
+    <div class="fi-campo" id="c-loc">
+      <label class="fi-label">Localidad <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-loc" placeholder="Localidad">
+      <div class="fi-error-msg">Ingresá la localidad.</div>
+    </div>
+
+    <div class="fi-campo" id="c-horario">
+      <label class="fi-label">Rango horario en que la inmo está abierta <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-horario" placeholder="Ej: 9:00 a 18:00 hs">
+      <div class="fi-error-msg">Ingresá el horario de atención.</div>
+    </div>
+
+    <div class="fi-campo" id="c-contacto">
+      <label class="fi-label">Persona de contacto en la inmo <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-contacto" placeholder="Nombre y apellido">
+      <div class="fi-error-msg">Ingresá el nombre del contacto.</div>
+    </div>
+
+    <div class="fi-campo" id="c-celular">
+      <label class="fi-label">Celular del contacto <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-celular" placeholder="Ej: 11 1234-5678">
+      <div class="fi-error-msg">Ingresá el celular del contacto.</div>
+    </div>
+
+    <div class="fi-btn-grupo" style="justify-content: flex-end;">
+      <button class="fi-btn fi-btn-primary" onclick="siguiente()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- ══ PASO 2 — Poster A4 ════════════════════════════════════════════ -->
+  <div class="fi-card" id="paso-2" style="display:none">
+    <div class="fi-seccion-titulo">Poster A4</div>
+
+    <!-- REEMPLAZAR src con la URL real de la imagen del Poster A4 -->
+    <div class="fi-pieza-placeholder">Imagen de referencia: Poster A4</div>
+
+    <div class="fi-campo" id="c-a4-solicita">
+      <label class="fi-label">¿Solicitás esta pieza? <span class="fi-req">*</span></label>
+      <div class="fi-opciones horizontal" id="opts-a4-solicita"></div>
+      <div class="fi-error-msg">Seleccioná una opción.</div>
+    </div>
+
+    <div id="sub-a4" style="display:none">
+      <div class="fi-subseccion">
+        <div class="fi-subseccion-titulo">Detalle del Poster A4</div>
+
+        <div class="fi-campo" id="c-a4-sentido">
+          <label class="fi-label">Sentido <span class="fi-req">*</span></label>
+          <div class="fi-opciones horizontal" id="opts-a4-sentido"></div>
+          <div class="fi-error-msg">Seleccioná el sentido.</div>
+        </div>
+
+        <div class="fi-campo" id="c-a4-material">
+          <label class="fi-label">Material <span class="fi-req">*</span></label>
+          <div class="fi-opciones" id="opts-a4-material"></div>
+          <div class="fi-error-msg">Seleccioná el material.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fi-btn-grupo">
+      <button class="fi-btn fi-btn-secondary" onclick="volver()">← Volver</button>
+      <button class="fi-btn fi-btn-primary" onclick="siguiente()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- ══ PASO 3 — Faja ════════════════════════════════════════════════ -->
+  <div class="fi-card" id="paso-3" style="display:none">
+    <div class="fi-seccion-titulo">Faja</div>
+
+    <!-- REEMPLAZAR src con la URL real de la imagen de la Faja -->
+    <div class="fi-pieza-placeholder">Imagen de referencia: Faja</div>
+
+    <div class="fi-campo" id="c-faja-solicita">
+      <label class="fi-label">¿Solicitás esta pieza? <span class="fi-req">*</span></label>
+      <div class="fi-opciones horizontal" id="opts-faja-solicita"></div>
+      <div class="fi-error-msg">Seleccioná una opción.</div>
+    </div>
+
+    <div id="sub-faja" style="display:none">
+      <div class="fi-subseccion">
+        <div class="fi-subseccion-titulo">Detalle de la Faja</div>
+
+        <div class="fi-campo" id="c-faja-ancho">
+          <label class="fi-label">Ancho en centímetros <span class="fi-req">*</span></label>
+          <input type="number" class="fi-input" id="f-faja-ancho" placeholder="Ej: 120" min="1">
+          <div class="fi-nota">La altura es siempre 30 cm.</div>
+          <div class="fi-error-msg">Ingresá el ancho en centímetros.</div>
+        </div>
+
+        <div class="fi-campo" id="c-faja-material">
+          <label class="fi-label">Tipo de material <span class="fi-req">*</span></label>
+          <div class="fi-opciones" id="opts-faja-material"></div>
+          <div class="fi-error-msg">Seleccioná el material.</div>
+        </div>
+
+        <div class="fi-campo" id="c-faja-rejas">
+          <label class="fi-label">¿La vidriera tiene rejas? <span class="fi-req">*</span></label>
+          <div class="fi-opciones" id="opts-faja-rejas"></div>
+          <div class="fi-nota">Importante para los perforadores.</div>
+          <div class="fi-error-msg">Seleccioná una opción.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fi-btn-grupo">
+      <button class="fi-btn fi-btn-secondary" onclick="volver()">← Volver</button>
+      <button class="fi-btn fi-btn-primary" onclick="siguiente()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- ══ PASO 4 — Grandes Formatos ════════════════════════════════════ -->
+  <div class="fi-card" id="paso-4" style="display:none">
+    <div class="fi-seccion-titulo">Grandes Formatos</div>
+
+    <div class="fi-alerta">
+      Para puertas o superficies de tamaño mayor. Este tipo de pieza permite personalizar el tamaño.<br>
+      Si incluye datos de la inmobiliaria, al menos el 50% de la superficie debe estar dedicada a FINAER.
+    </div>
+
+    <div class="fi-campo" id="c-gf-solicita">
+      <label class="fi-label">¿Solicitás esta pieza? <span class="fi-req">*</span></label>
+      <div class="fi-opciones horizontal" id="opts-gf-solicita"></div>
+      <div class="fi-error-msg">Seleccioná una opción.</div>
+    </div>
+
+    <div id="sub-gf" style="display:none">
+      <div class="fi-subseccion">
+        <div class="fi-subseccion-titulo">Detalle — Grandes Formatos</div>
+
+        <div class="fi-campo" id="c-gf-superficie">
+          <label class="fi-label">¿La superficie está libre o tiene elementos? <span class="fi-req">*</span></label>
+          <div class="fi-opciones" id="opts-gf-superficie"></div>
+          <div class="fi-error-msg">Seleccioná una opción.</div>
+        </div>
+
+        <div id="sub-gf-elementos" style="display:none">
+          <div class="fi-campo" id="c-gf-elementos-tipo">
+            <label class="fi-label">¿Qué elementos tiene? <span class="fi-req">*</span></label>
+            <div class="fi-opciones" id="opts-gf-elementos"></div>
+            <div class="fi-error-msg">Seleccioná al menos un elemento.</div>
+          </div>
+
+          <div id="sub-gf-manija" style="display:none">
+            <div class="fi-campo" id="c-gf-manija-medida">
+              <label class="fi-label">Manija — Distancia del borde y altura desde la parte inferior del vidrio (cm) <span class="fi-req">*</span></label>
+              <input type="text" class="fi-input" id="f-gf-manija-medida" placeholder="Ej: 5 cm del borde, 90 cm de altura">
+              <div class="fi-error-msg">Ingresá la medida de la manija.</div>
+            </div>
+          </div>
+
+          <div id="sub-gf-reja" style="display:none">
+            <div class="fi-campo" id="c-gf-reja-ubicacion">
+              <label class="fi-label">¿Dónde se ubica la reja? <span class="fi-req">*</span></label>
+              <div class="fi-opciones" id="opts-gf-reja"></div>
+              <div class="fi-error-msg">Seleccioná la ubicación de la reja.</div>
+            </div>
+          </div>
+
+          <div id="sub-gf-division" style="display:none">
+            <div class="fi-campo" id="c-gf-division-medida">
+              <label class="fi-label">División de paño — Medida en cm <span class="fi-req">*</span></label>
+              <input type="text" class="fi-input" id="f-gf-division-medida" placeholder="Medida de la división">
+              <div class="fi-nota">Recordá cargar en el pedido cada uno de los paños individualmente.</div>
+              <div class="fi-error-msg">Ingresá la medida de la división.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fi-campo" id="c-gf-ancho">
+          <label class="fi-label">Ancho en cm <span class="fi-req">*</span></label>
+          <input type="number" class="fi-input" id="f-gf-ancho" placeholder="Ancho" min="1">
+          <div class="fi-error-msg">Ingresá el ancho.</div>
+        </div>
+
+        <div class="fi-campo" id="c-gf-alto">
+          <label class="fi-label">Alto en cm <span class="fi-req">*</span></label>
+          <input type="number" class="fi-input" id="f-gf-alto" placeholder="Alto" min="1">
+          <div class="fi-error-msg">Ingresá el alto.</div>
+        </div>
+
+        <div class="fi-campo" id="c-gf-material">
+          <label class="fi-label">Material <span class="fi-req">*</span></label>
+          <div class="fi-opciones" id="opts-gf-material"></div>
+          <div class="fi-error-msg">Seleccioná el material.</div>
+        </div>
+
+        <div class="fi-campo" id="c-gf-datos-inmo">
+          <label class="fi-label">¿La pieza incluye datos de la inmobiliaria? <span class="fi-req">*</span></label>
+          <div class="fi-opciones horizontal" id="opts-gf-datos-inmo"></div>
+          <div class="fi-error-msg">Seleccioná una opción.</div>
+        </div>
+
+        <div id="sub-gf-datos-texto" style="display:none">
+          <div class="fi-campo" id="c-gf-datos-texto">
+            <label class="fi-label">Datos a incluir (en el orden en que deben aparecer) <span class="fi-req">*</span></label>
+            <textarea class="fi-textarea" id="f-gf-datos-texto" placeholder="Se imprimirán tal cual los escribas."></textarea>
+            <div class="fi-error-msg">Ingresá los datos a incluir.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fi-btn-grupo">
+      <button class="fi-btn fi-btn-secondary" onclick="volver()">← Volver</button>
+      <button class="fi-btn fi-btn-primary" onclick="siguiente()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- ══ PASO 5 — Foto y Observaciones (form nativo HubSpot) ═══════════ -->
+  <div class="fi-card" id="paso-5" style="display:none">
+    <div class="fi-seccion-titulo">Foto y observaciones</div>
+
+    <div class="fi-alerta" id="alerta-foto-obligatoria" style="display:none">
+      <strong>Foto obligatoria:</strong> Como solicitás una Faja o Gran Formato, es necesario adjuntar la foto de la vidriera antes de enviar.
+    </div>
+
+    <div id="hs-form-wrap">
+      <!-- El form nativo de HubSpot se carga aquí -->
+    </div>
+
+    <div class="fi-btn-grupo" style="justify-content: flex-start; border-top: none; padding-top: 0; margin-top: 0;">
+      <button class="fi-btn fi-btn-secondary" onclick="volver()">← Volver</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var wrap = document.querySelector('.fi-wrap');
+  var foot = document.querySelector('footer');
+  if (wrap && foot && foot.parentNode) foot.parentNode.insertBefore(wrap, foot);
+})();
+
+/* ─── Estado del wizard ─────────────────────────────────────────────── */
+var paso = 1;
+var totalPasos = 5;
+var datos = {};
+var formCargado = false;
+
+/* ─── Opciones de radio/checkbox ────────────────────────────────────── */
+var OPTS = {
+  siNo:            [{v:'si',l:'Sí'},{v:'no',l:'No'}],
+  a4Material:      [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}],
+  a4Sentido:       [{v:'vertical',l:'Vertical'},{v:'horizontal',l:'Horizontal'}],
+  fajaRejas:       [{v:'no',l:'No, no tiene'},{v:'externo',l:'Por el lado externo del local'},{v:'interno',l:'Por el lado interno del local'}],
+  gfSuperficie:    [{v:'libre',l:'100% Libre'},{v:'elementos',l:'Tiene elementos'}],
+  gfElementos:     [{v:'manija',l:'Manija'},{v:'reja',l:'Reja'},{v:'division',l:'División de paño de vidrio'},{v:'otro',l:'Otro'}],
+  gfReja:          [{v:'externo',l:'Por el lado externo del local'},{v:'interno',l:'Por el lado interno del local'}],
+  gfMaterial:      [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}]
+};
+
+/* ─── Renderizar radios ─────────────────────────────────────────────── */
+function renderRadios(containerId, opciones, name) {
+  var c = document.getElementById(containerId);
+  if (!c || c.children.length > 0) return;
+  opciones.forEach(function(op) {
+    var lbl = document.createElement('label');
+    lbl.className = 'fi-opcion-label';
+    lbl.innerHTML =
+      '<input type="radio" name="' + name + '" value="' + op.v + '">' +
+      '<span class="fi-opcion-check"></span>' +
+      '<span>' + op.l + '</span>';
+    lbl.querySelector('input').addEventListener('change', function() {
+      c.querySelectorAll('.fi-opcion-label').forEach(function(l) { l.classList.remove('seleccionado'); });
+      lbl.classList.add('seleccionado');
+      lbl.nextElementSibling; // trigger visual
+      handleChange(name, op.v);
+    });
+    c.appendChild(lbl);
+  });
+}
+
+/* ─── Renderizar checkboxes ─────────────────────────────────────────── */
+function renderChecks(containerId, opciones, name) {
+  var c = document.getElementById(containerId);
+  if (!c || c.children.length > 0) return;
+  opciones.forEach(function(op) {
+    var lbl = document.createElement('label');
+    lbl.className = 'fi-opcion-label';
+    lbl.innerHTML =
+      '<input type="checkbox" name="' + name + '" value="' + op.v + '">' +
+      '<span class="fi-opcion-check" style="border-radius:4px"></span>' +
+      '<span>' + op.l + '</span>';
+    lbl.querySelector('input').addEventListener('change', function() {
+      lbl.classList.toggle('seleccionado', this.checked);
+      handleChange(name, null);
+    });
+    c.appendChild(lbl);
+  });
+}
+
+/* ─── Inicializar opciones ──────────────────────────────────────────── */
+function initOpciones() {
+  renderRadios('opts-a4-solicita',   OPTS.siNo,       'a4-solicita');
+  renderRadios('opts-a4-sentido',    OPTS.a4Sentido,  'a4-sentido');
+  renderRadios('opts-a4-material',   OPTS.a4Material, 'a4-material');
+  renderRadios('opts-faja-solicita', OPTS.siNo,       'faja-solicita');
+  renderRadios('opts-faja-material', OPTS.a4Material, 'faja-material');
+  renderRadios('opts-faja-rejas',    OPTS.fajaRejas,  'faja-rejas');
+  renderRadios('opts-gf-solicita',   OPTS.siNo,       'gf-solicita');
+  renderRadios('opts-gf-superficie', OPTS.gfSuperficie,'gf-superficie');
+  renderChecks('opts-gf-elementos',  OPTS.gfElementos, 'gf-elementos');
+  renderRadios('opts-gf-reja',       OPTS.gfReja,     'gf-reja');
+  renderRadios('opts-gf-material',   OPTS.gfMaterial, 'gf-material');
+  renderRadios('opts-gf-datos-inmo', OPTS.siNo,       'gf-datos-inmo');
+}
+initOpciones();
+
+/* ─── Manejador de cambios condicionales ────────────────────────────── */
+function handleChange(name, val) {
+  if (name === 'a4-solicita')    show('sub-a4',          val === 'si');
+  if (name === 'faja-solicita')  show('sub-faja',        val === 'si');
+  if (name === 'gf-solicita')    show('sub-gf',          val === 'si');
+  if (name === 'gf-superficie')  show('sub-gf-elementos',val === 'elementos');
+  if (name === 'gf-datos-inmo')  show('sub-gf-datos-texto', val === 'si');
+  if (name === 'gf-elementos') {
+    var checks = getChecks('gf-elementos');
+    show('sub-gf-manija',   checks.indexOf('manija')   >= 0);
+    show('sub-gf-reja',     checks.indexOf('reja')     >= 0);
+    show('sub-gf-division', checks.indexOf('division') >= 0);
+  }
+}
+
+function show(id, visible) {
+  var el = document.getElementById(id);
+  if (el) el.style.display = visible ? 'block' : 'none';
+}
+
+/* ─── Leer valores ──────────────────────────────────────────────────── */
+function getRadio(name) {
+  var el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? el.value : '';
+}
+function getChecks(name) {
+  var vals = [];
+  document.querySelectorAll('input[name="' + name + '"]:checked').forEach(function(el) {
+    vals.push(el.value);
+  });
+  return vals;
+}
+function getRadioLabel(name) {
+  var el = document.querySelector('input[name="' + name + '"]:checked');
+  if (!el) return '';
+  var lbl = el.closest('.fi-opcion-label');
+  return lbl ? lbl.querySelector('span:last-child').textContent : el.value;
+}
+function getChecksLabels(name) {
+  var labs = [];
+  document.querySelectorAll('input[name="' + name + '"]:checked').forEach(function(el) {
+    var lbl = el.closest('.fi-opcion-label');
+    labs.push(lbl ? lbl.querySelector('span:last-child').textContent : el.value);
+  });
+  return labs.join(', ');
+}
+
+/* ─── Validación por paso ───────────────────────────────────────────── */
+function limpiarError(id) {
+  var c = document.getElementById(id);
+  if (c) c.classList.remove('con-error');
+}
+function marcarError(id) {
+  var c = document.getElementById(id);
+  if (c) c.classList.add('con-error');
+  return false;
+}
+function valReq(val, campoId) {
+  if (!val || val.trim() === '') return marcarError(campoId);
+  limpiarError(campoId); return true;
+}
+
+function validarPaso(n) {
+  var ok = true;
+
+  if (n === 1) {
+    var email = document.getElementById('f-email').value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { marcarError('c-email'); ok = false; } else limpiarError('c-email');
+    if (!valReq(document.getElementById('f-oc').value,       'c-oc'))      ok = false;
+    if (!valReq(document.getElementById('f-edc').value,      'c-edc'))     ok = false;
+    if (!valReq(document.getElementById('f-inmo').value,     'c-inmo'))    ok = false;
+    if (!valReq(document.getElementById('f-dir').value,      'c-dir'))     ok = false;
+    if (!valReq(document.getElementById('f-loc').value,      'c-loc'))     ok = false;
+    if (!valReq(document.getElementById('f-horario').value,  'c-horario')) ok = false;
+    if (!valReq(document.getElementById('f-contacto').value, 'c-contacto'))ok = false;
+    if (!valReq(document.getElementById('f-celular').value,  'c-celular')) ok = false;
+  }
+
+  if (n === 2) {
+    var a4s = getRadio('a4-solicita');
+    if (!a4s) { marcarError('c-a4-solicita'); ok = false; } else limpiarError('c-a4-solicita');
+    if (a4s === 'si') {
+      if (!getRadio('a4-sentido'))  { marcarError('c-a4-sentido');  ok = false; } else limpiarError('c-a4-sentido');
+      if (!getRadio('a4-material')) { marcarError('c-a4-material'); ok = false; } else limpiarError('c-a4-material');
+    }
+  }
+
+  if (n === 3) {
+    var fajas = getRadio('faja-solicita');
+    if (!fajas) { marcarError('c-faja-solicita'); ok = false; } else limpiarError('c-faja-solicita');
+    if (fajas === 'si') {
+      var ancho = document.getElementById('f-faja-ancho').value;
+      if (!ancho || parseInt(ancho) < 1) { marcarError('c-faja-ancho'); ok = false; } else limpiarError('c-faja-ancho');
+      if (!getRadio('faja-material')) { marcarError('c-faja-material'); ok = false; } else limpiarError('c-faja-material');
+      if (!getRadio('faja-rejas'))    { marcarError('c-faja-rejas');    ok = false; } else limpiarError('c-faja-rejas');
+    }
+  }
+
+  if (n === 4) {
+    var gfs = getRadio('gf-solicita');
+    if (!gfs) { marcarError('c-gf-solicita'); ok = false; } else limpiarError('c-gf-solicita');
+    if (gfs === 'si') {
+      var sup = getRadio('gf-superficie');
+      if (!sup) { marcarError('c-gf-superficie'); ok = false; } else limpiarError('c-gf-superficie');
+      if (sup === 'elementos') {
+        var elems = getChecks('gf-elementos');
+        if (!elems.length) { marcarError('c-gf-elementos-tipo'); ok = false; } else limpiarError('c-gf-elementos-tipo');
+        if (elems.indexOf('manija')   >= 0 && !valReq(document.getElementById('f-gf-manija-medida').value, 'c-gf-manija-medida')) ok = false;
+        if (elems.indexOf('reja')     >= 0 && !getRadio('gf-reja'))    { marcarError('c-gf-reja-ubicacion'); ok = false; } else if (elems.indexOf('reja') >= 0) limpiarError('c-gf-reja-ubicacion');
+        if (elems.indexOf('division') >= 0 && !valReq(document.getElementById('f-gf-division-medida').value, 'c-gf-division-medida')) ok = false;
+      }
+      if (!valReq(document.getElementById('f-gf-ancho').value, 'c-gf-ancho')) ok = false;
+      if (!valReq(document.getElementById('f-gf-alto').value,  'c-gf-alto'))  ok = false;
+      if (!getRadio('gf-material')) { marcarError('c-gf-material'); ok = false; } else limpiarError('c-gf-material');
+      var datosInmo = getRadio('gf-datos-inmo');
+      if (!datosInmo) { marcarError('c-gf-datos-inmo'); ok = false; } else limpiarError('c-gf-datos-inmo');
+      if (datosInmo === 'si' && !valReq(document.getElementById('f-gf-datos-texto').value, 'c-gf-datos-texto')) ok = false;
+    }
+  }
+
+  return ok;
+}
+
+/* ─── Guardar datos del paso ────────────────────────────────────────── */
+function guardarDatos(n) {
+  if (n === 1) {
+    datos.email    = document.getElementById('f-email').value.trim();
+    datos.oc       = document.getElementById('f-oc').value;
+    datos.ocLabel  = document.getElementById('f-oc').options[document.getElementById('f-oc').selectedIndex].text;
+    datos.edc      = document.getElementById('f-edc').value;
+    datos.edcLabel = document.getElementById('f-edc').options[document.getElementById('f-edc').selectedIndex].text;
+    datos.inmo     = document.getElementById('f-inmo').value.trim();
+    datos.dir      = document.getElementById('f-dir').value.trim();
+    datos.loc      = document.getElementById('f-loc').value.trim();
+    datos.horario  = document.getElementById('f-horario').value.trim();
+    datos.contacto = document.getElementById('f-contacto').value.trim();
+    datos.celular  = document.getElementById('f-celular').value.trim();
+  }
+  if (n === 2) {
+    datos.a4 = {
+      solicita: getRadio('a4-solicita') === 'si',
+      sentido:  getRadioLabel('a4-sentido'),
+      material: getRadioLabel('a4-material')
+    };
+  }
+  if (n === 3) {
+    datos.faja = {
+      solicita: getRadio('faja-solicita') === 'si',
+      ancho:    document.getElementById('f-faja-ancho').value,
+      material: getRadioLabel('faja-material'),
+      rejas:    getRadioLabel('faja-rejas')
+    };
+  }
+  if (n === 4) {
+    var gfSolicita = getRadio('gf-solicita') === 'si';
+    datos.gf = {
+      solicita:    gfSolicita,
+      superficie:  getRadioLabel('gf-superficie'),
+      elementos:   getChecksLabels('gf-elementos'),
+      manijaMediada: document.getElementById('f-gf-manija-medida').value,
+      rejaUbicacion: getRadioLabel('gf-reja'),
+      divisionMediada: document.getElementById('f-gf-division-medida').value,
+      ancho:       document.getElementById('f-gf-ancho').value,
+      alto:        document.getElementById('f-gf-alto').value,
+      material:    getRadioLabel('gf-material'),
+      datosInmo:   getRadio('gf-datos-inmo') === 'si',
+      datosTxt:    document.getElementById('f-gf-datos-texto').value
+    };
+  }
+}
+
+/* ─── Generar resumen del pedido ────────────────────────────────────── */
+function generarDetalle() {
+  var lineas = ['=== PEDIDO STICKERS ESPECIALES ===', ''];
+
+  if (datos.a4) {
+    lineas.push('POSTER A4: ' + (datos.a4.solicita ? 'SI' : 'NO'));
+    if (datos.a4.solicita) {
+      lineas.push('  Sentido: ' + datos.a4.sentido);
+      lineas.push('  Material: ' + datos.a4.material);
+    }
+    lineas.push('');
+  }
+
+  if (datos.faja) {
+    lineas.push('FAJA: ' + (datos.faja.solicita ? 'SI' : 'NO'));
+    if (datos.faja.solicita) {
+      lineas.push('  Ancho: ' + datos.faja.ancho + ' cm (altura fija: 30 cm)');
+      lineas.push('  Material: ' + datos.faja.material);
+      lineas.push('  Rejas: ' + datos.faja.rejas);
+    }
+    lineas.push('');
+  }
+
+  if (datos.gf) {
+    lineas.push('GRANDES FORMATOS: ' + (datos.gf.solicita ? 'SI' : 'NO'));
+    if (datos.gf.solicita) {
+      lineas.push('  Superficie: ' + datos.gf.superficie);
+      if (datos.gf.elementos) {
+        lineas.push('  Elementos: ' + datos.gf.elementos);
+        if (datos.gf.manijaMediada) lineas.push('  Manija: ' + datos.gf.manijaMediada);
+        if (datos.gf.rejaUbicacion) lineas.push('  Reja: ' + datos.gf.rejaUbicacion);
+        if (datos.gf.divisionMediada) lineas.push('  Division paño: ' + datos.gf.divisionMediada);
+      }
+      lineas.push('  Medidas: ' + datos.gf.ancho + ' x ' + datos.gf.alto + ' cm');
+      lineas.push('  Material: ' + datos.gf.material);
+      if (datos.gf.datosInmo) lineas.push('  Datos inmo: ' + datos.gf.datosTxt);
+    }
+    lineas.push('');
+  }
+
+  lineas.push('=== FIN DEL PEDIDO ===');
+  return lineas.join('\n');
+}
+
+/* ─── ¿La foto es obligatoria? ──────────────────────────────────────── */
+function fotoObligatoria() {
+  return (datos.faja && datos.faja.solicita) || (datos.gf && datos.gf.solicita);
+}
+
+/* ─── Cargar form nativo HubSpot ────────────────────────────────────── */
+function cargarFormHS() {
+  if (formCargado) return;
+  formCargado = true;
+
+  var obligatoria = fotoObligatoria();
+  show('alerta-foto-obligatoria', obligatoria);
+
+  hbspt.forms.create({
+    region:   'eu1',
+    portalId: '145725856',
+    formId:   '2b527eac-0b46-4908-9c70-8047d3bf9f46',
+    target:   '#hs-form-wrap',
+    onFormReady: function($form) {
+      // Pre-llenar email
+      $form.find('[name="email"]').val(datos.email).trigger('change');
+
+      // Ajustar obligatoriedad de la foto
+      if (!obligatoria) {
+        var fotoInput = $form.find('[name="sticker_foto"]');
+        fotoInput.removeAttr('required');
+        var fotoField = fotoInput.closest('.hs-form-field');
+        fotoField.find('label .hs-form-required').hide();
+      }
+    },
+    onBeforeFormSubmit: function($form, submitData) {
+      submitData.push(
+        {name: 'sticker_oc',               value: datos.oc},
+        {name: 'sticker_edc',              value: datos.edc},
+        {name: 'sticker_inmobiliaria',     value: datos.inmo},
+        {name: 'sticker_direccion',        value: datos.dir},
+        {name: 'sticker_localidad',        value: datos.loc},
+        {name: 'sticker_horario',          value: datos.horario},
+        {name: 'sticker_contacto_inmo',    value: datos.contacto},
+        {name: 'sticker_celular_contacto', value: datos.celular},
+        {name: 'sticker_detalle_pedido',   value: generarDetalle()}
+      );
+    },
+    onFormSubmitted: function() {
+      document.getElementById('paso-5').innerHTML =
+        '<div class="fi-exito">' +
+        '<div class="fi-exito-icono">✅</div>' +
+        '<h2>¡Pedido registrado!</h2>' +
+        '<p>Tu solicitud de Stickers Especiales fue enviada correctamente.<br>' +
+        'El equipo de Marketing procesará el pedido al cierre de la tanda correspondiente.<br><br>' +
+        'Ante cualquier consulta: <strong>marketingl@finaersa.com.ar</strong></p>' +
+        '</div>';
+      document.getElementById('fi-steps').style.display = 'none';
+    }
+  });
+}
+
+/* ─── Actualizar indicador de pasos ─────────────────────────────────── */
+function actualizarIndicador() {
+  for (var i = 1; i <= totalPasos; i++) {
+    var dot  = document.getElementById('dot-' + i);
+    var line = document.getElementById('line-' + i);
+    if (dot) {
+      dot.className = 'fi-step-dot' +
+        (i === paso ? ' activo' : (i < paso ? ' hecho' : ''));
+    }
+    if (line) {
+      line.className = 'fi-step-line' + (i < paso ? ' hecho' : '');
+    }
+  }
+}
+
+/* ─── Navegación ────────────────────────────────────────────────────── */
+function irAPaso(n) {
+  document.getElementById('paso-' + paso).style.display = 'none';
+  paso = n;
+  document.getElementById('paso-' + paso).style.display = 'block';
+  actualizarIndicador();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function siguiente() {
+  if (!validarPaso(paso)) return;
+  guardarDatos(paso);
+  if (paso === totalPasos - 1) cargarFormHS();
+  irAPaso(paso + 1);
+}
+
+function volver() {
+  irAPaso(paso - 1);
+}
+</script>
