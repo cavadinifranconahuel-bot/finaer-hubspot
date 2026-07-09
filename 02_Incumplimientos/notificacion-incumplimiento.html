@@ -353,8 +353,9 @@ async function buscarDNI() {
   if (!dni || dni.length < 7) { err.textContent = 'Ingresá un DNI válido (mínimo 7 dígitos).'; err.style.display = 'block'; return; }
   btn.disabled = true; btn.textContent = 'Buscando...';
 
-  const hs = (method, path, body) => fetch('https://api.hubapi.com' + path, {
-    method, headers: { 'Authorization': 'Bearer ' + HS_TOKEN, 'Content-Type': 'application/json' },
+  const HS_BASE = location.hostname === 'localhost' ? 'http://localhost:3001/hs' : 'https://api.hubapi.com';
+  const hs = (method, path, body) => fetch(HS_BASE + path, {
+    method, headers: { 'Content-Type': 'application/json' },
     ...(body ? { body: JSON.stringify(body) } : {})
   }).then(r => r.json());
 

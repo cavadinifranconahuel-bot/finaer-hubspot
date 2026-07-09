@@ -1,11 +1,16 @@
 const https = require('https');
 
-// Stages activas del pipeline de garantías (excluye Finalizada, Rechazada, Baja)
 const STAGES_ACTIVAS = new Set([
-  'closedlost',   // Contrato de fianza firmado
-  '1934076144',   // Contrato de locación firmado
-  '1934076145',   // Legajo Completo
+  'closedlost',
+  '1934076144',
+  '1934076145',
 ]);
+
+const CORS = {
+  'Access-Control-Allow-Origin':  '*',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type'
+};
 
 function hsGet(path, token) {
   return new Promise((resolve, reject) => {
@@ -29,8 +34,8 @@ function hsPost(path, body, token) {
     const req = https.request({
       hostname: 'api.hubapi.com', path, method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json',
+        'Authorization':  'Bearer ' + token,
+        'Content-Type':   'application/json',
         'Content-Length': Buffer.byteLength(data)
       }
     }, res => {
@@ -46,97 +51,85 @@ function hsPost(path, body, token) {
   });
 }
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type'
-};
-
 exports.main = async (context, sendResponse) => {
-  const TOKEN = process.env.HUBSPOT_TOKEN;
-  const dni = (context.params.dni || '').trim();
+  if (context.method === 'OPTIONS') {
+    return sendResponse({ statusCode: 200, headers: CORS, body: '' });
+  }
 
-  if (!dni) {
-    return sendResponse({ statusCode: 400, headers: CORS, body: { error: 'DNI requerido' } });
+  const TOKEN = process.env.HUBSPOT_TOKEN;
+  const dni   = (context.params.dni || '').trim().replace(/\D/g, '');
+
+  if (!dni || dni.length < 7) {
+    return sendResponse({
+      statusCode: 400, headers: CORS,
+      body: { error: 'DNI inválido.' }
+    });
   }
 
   try {
-    // 1. Buscar contacto por nro_documento_txt
-    const search = await hsPost('/crm/v3/objects/contacts/search', {
-      filterGroups: [{
-        filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }]
-      }],
-      properties: ['firstname', 'lastname', 'nro_documento_txt'],
+    // FLUJO 1: buscar ticket existente por dni_inquilino
+    const ticketSearch = await hsPost('/crm/v3/objects/tickets/search', {
+      filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
+      properties: [
+        'subject', 'tipo_de_incumplimiento', 'monto_total_de_la_deuda_acumulada',
+        'direccion_del_inmueble', 'nombre_inmobiliaria', 'nombre_y_apellido_del_inquilino'
+      ],
+      sorts:  [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
+      limit:  1
+    }, TOKEN);
+
+    if (ticketSearch.results && ticketSearch.results.length > 0) {
+      const p = ticketSearch.results[0].properties;
+      return sendResponse({
+        statusCode: 200, headers: CORS,
+        body: {
+          flujo:       'existente',
+          nombre:      p.nombre_y_apellido_del_inquilino || '—',
+          dni,
+          subject:     p.subject                          || '—',
+          tipos:       p.tipo_de_incumplimiento           || '',
+          monto_total: p.monto_total_de_la_deuda_acumulada || null,
+          direccion:   p.direccion_del_inmueble            || null,
+          inmobiliaria: p.nombre_inmobiliaria              || null
+        }
+      });
+    }
+
+    // FLUJO 2: no hay ticket — buscar contacto por nro_documento_txt (incumplimiento nuevo)
+    const contactSearch = await hsPost('/crm/v3/objects/contacts/search', {
+      filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
+      properties: ['firstname', 'lastname'],
       limit: 1
     }, TOKEN);
 
-    if (!search.results || search.results.length === 0) {
+    if (!contactSearch.results || contactSearch.results.length === 0) {
       return sendResponse({
         statusCode: 404, headers: CORS,
-        body: { error: 'No se encontró ningún inquilino con ese DNI.' }
+        body: { error: 'No encontramos ningún inquilino con ese DNI en nuestro sistema.' }
       });
     }
 
-    const contact = search.results[0];
-    const nombre = ((contact.properties.firstname || '') + ' ' + (contact.properties.lastname || '')).trim();
+    const contact = contactSearch.results[0];
+    const nombre  = [contact.properties.firstname, contact.properties.lastname]
+                      .filter(Boolean).join(' ');
 
-    // 2. Obtener deals asociados al contacto
-    const assoc = await hsGet(
-      `/crm/v3/objects/contacts/${contact.id}/associations/deals`, TOKEN
-    );
+    // Buscar deal activo (número de garantía)
+    const assoc   = await hsGet(`/crm/v3/objects/contacts/${contact.id}/associations/deals`, TOKEN);
     const dealIds = (assoc.results || []).map(r => r.id);
+    let garantia  = null;
 
-    if (!dealIds.length) {
-      return sendResponse({
-        statusCode: 404, headers: CORS,
-        body: { error: 'El inquilino no tiene garantías activas.' }
-      });
+    if (dealIds.length) {
+      const batch   = await hsPost('/crm/v3/objects/deals/batch/read', {
+        inputs:     dealIds.map(id => ({ id })),
+        properties: ['dealname', 'dealstage']
+      }, TOKEN);
+      const activos = (batch.results || []).filter(d => STAGES_ACTIVAS.has(d.properties.dealstage));
+      if (activos.length) garantia = activos[0].properties.dealname || null;
     }
 
-    // 3. Leer propiedades de todos los deals en batch
-    const batch = await hsPost('/crm/v3/objects/deals/batch/read', {
-      inputs: dealIds.map(id => ({ id })),
-      properties: ['dealname', 'dealstage', 'domicilio_del_inmueble']
-    }, TOKEN);
-
-    // 4. Filtrar deals en etapas activas
-    const activos = (batch.results || []).filter(d =>
-      STAGES_ACTIVAS.has(d.properties.dealstage)
-    );
-
-    if (!activos.length) {
-      return sendResponse({
-        statusCode: 404, headers: CORS,
-        body: { error: 'El inquilino no tiene garantías activas.' }
-      });
-    }
-
-    // 5. Para cada deal activo, obtener la inmobiliaria asociada
-    const garantias = await Promise.all(activos.map(async deal => {
-      let inmobiliaria = null;
-      try {
-        const compAssoc = await hsGet(
-          `/crm/v3/objects/deals/${deal.id}/associations/companies`, TOKEN
-        );
-        const compIds = (compAssoc.results || []).map(r => r.id);
-        if (compIds.length) {
-          const comp = await hsGet(
-            `/crm/v3/objects/companies/${compIds[0]}?properties=name`, TOKEN
-          );
-          inmobiliaria = comp.properties?.name || null;
-        }
-      } catch (_) {}
-
-      return {
-        garantia:     deal.properties.dealname || deal.id,
-        domicilio:    deal.properties.domicilio_del_inmueble || null,
-        inmobiliaria: inmobiliaria
-      };
-    }));
-
-    sendResponse({
+    return sendResponse({
       statusCode: 200, headers: CORS,
-      body: { nombre, dni, garantias }
+      body: { flujo: 'nuevo', nombre, dni, garantia }
     });
 
   } catch (e) {
