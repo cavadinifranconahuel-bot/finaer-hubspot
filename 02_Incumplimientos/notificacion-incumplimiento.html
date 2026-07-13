@@ -360,7 +360,32 @@ async function buscarDNI() {
   }).then(r => r.json());
 
   try {
-    // Call 1: buscar contacto por DNI
+    // FLUJO 1: buscar ticket por dni_inquilino (incumplimiento existente)
+    const ticketSearch = await hs('POST', '/crm/v3/objects/tickets/search', {
+      filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
+      properties: ['subject', 'tipo_de_incumplimiento', 'monto_total_de_la_deuda_acumulada', 'nombre_y_apellido_del_inquilino'],
+      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
+      limit: 1
+    });
+
+    if (ticketSearch.results && ticketSearch.results.length > 0) {
+      const p = ticketSearch.results[0].properties;
+      datosInquilino = {
+        flujo:        'existente',
+        dni,
+        nombre:       p.nombre_y_apellido_del_inquilino || '—',
+        subject:      p.subject || '—',
+        tipos:        p.tipo_de_incumplimiento || '',
+        monto_total:  p.monto_total_de_la_deuda_acumulada || null,
+        garantia:     null,
+        inmobiliaria: null
+      };
+      mostrarDatosInquilino(datosInquilino);
+      irA(2);
+      return;
+    }
+
+    // FLUJO 2: buscar contacto por nro_documento_txt (caso nuevo)
     const contactData = await hs('POST', '/crm/v3/objects/contacts/search', {
       filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
       properties: ['firstname', 'lastname'],
@@ -375,7 +400,7 @@ async function buscarDNI() {
     const contactId = contact.id;
     const nombre = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') || '—';
 
-    // Call 2: buscar deal activo en pipeline de ventas (etapas con garantía vigente)
+    // Buscar deal activo en pipeline de ventas
     const dealData = await hs('POST', '/crm/v3/objects/deals/search', {
       filterGroups: [{ filters: [
         { propertyName: 'associations.contact', operator: 'EQ', value: contactId },
@@ -394,17 +419,14 @@ async function buscarDNI() {
       const deal = dealData.results[0];
       garantia = deal.properties.dealname || '—';
 
-      // Call 3: companies asociadas al deal
       const assocData = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
-
       if (assocData.results && assocData.results.length > 0) {
-        // Call 4: nombre de la inmobiliaria
         const companyData = await hs('GET', `/crm/v3/objects/companies/${assocData.results[0].id}?properties=name`);
         inmobiliaria = companyData.properties?.name || '—';
       }
     }
 
-    datosInquilino = { dni, nombre, garantia, domicilio: null, inmobiliaria };
+    datosInquilino = { flujo: 'nuevo', dni, nombre, garantia, inmobiliaria, subject: null, tipos: '', monto_total: null };
     mostrarDatosInquilino(datosInquilino);
     irA(2);
 
@@ -418,13 +440,25 @@ async function buscarDNI() {
 }
 
 function mostrarDatosInquilino(d) {
+  let filas = '';
+  if (d.flujo === 'existente') {
+    const tiposFormateados = d.tipos ? d.tipos.split(';').join(', ') : '—';
+    const monto = d.monto_total ? '$' + Number(d.monto_total).toLocaleString('es-AR') : '—';
+    filas = `
+      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
+      <div class="inq-fila"><span class="lbl">Incumplimiento registrado</span><span class="val">${d.subject}</span></div>
+      <div class="inq-fila"><span class="lbl">Conceptos adeudados</span><span class="val">${tiposFormateados}</span></div>
+      <div class="inq-fila"><span class="lbl">Deuda acumulada</span><span class="val">${monto}</span></div>`;
+  } else {
+    filas = `
+      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
+      <div class="inq-fila"><span class="lbl">Número de garantía</span><span class="val">${d.garantia}</span></div>
+      <div class="inq-fila"><span class="lbl">Inmobiliaria</span><span class="val">${d.inmobiliaria}</span></div>`;
+  }
   document.getElementById('inq-content').innerHTML = `
     <div class="inq-card">
       <div class="inq-nombre">${d.nombre}</div>
-      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
-      <div class="inq-fila"><span class="lbl">Número de garantía</span><span class="val">${d.garantia}</span></div>
-      <div class="inq-fila"><span class="lbl">Domicilio del inmueble</span><span class="val ${!d.domicilio ? 'inq-vacio' : ''}">${d.domicilio || 'Sin datos'}</span></div>
-      <div class="inq-fila"><span class="lbl">Inmobiliaria</span><span class="val">${d.inmobiliaria}</span></div>
+      ${filas}
     </div>
     <p style="font-size:13px;color:#666;">¿Estos son los datos de tu inquilino? Confirmá para continuar.</p>`;
   document.getElementById('btn2').style.display = '';
