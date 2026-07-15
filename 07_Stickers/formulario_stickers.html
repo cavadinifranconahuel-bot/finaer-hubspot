@@ -409,27 +409,49 @@
     </div>
 
     <div class="fi-campo" id="c-dir">
-      <label class="fi-label">Dirección exacta <span class="fi-req">*</span></label>
+      <label class="fi-label">Dirección exacta</label>
       <textarea class="fi-textarea" id="f-dir" placeholder="Calle, número, piso, local..."></textarea>
-      <div class="fi-error-msg">Ingresá la dirección exacta.</div>
     </div>
 
     <div class="fi-campo" id="c-loc">
       <label class="fi-label">Localidad <span class="fi-req">*</span></label>
-      <input type="text" class="fi-input" id="f-loc" placeholder="Localidad">
-      <div class="fi-error-msg">Ingresá la localidad.</div>
+      <select class="fi-select" id="f-loc">
+        <option value="">Seleccioná la localidad</option>
+        <option value="Belgrano">Belgrano</option>
+        <option value="Centro">Centro</option>
+        <option value="Flores">Flores</option>
+        <option value="Palermo">Palermo</option>
+        <option value="La Plata">La Plata</option>
+        <option value="Lanús">Lanús</option>
+        <option value="Lomas de Zamora">Lomas de Zamora</option>
+        <option value="Morón">Morón</option>
+        <option value="Pilar">Pilar</option>
+        <option value="Quilmes">Quilmes</option>
+        <option value="San Martín">San Martín</option>
+        <option value="San Miguel">San Miguel</option>
+        <option value="Zona Norte">Zona Norte</option>
+        <option value="Otra">Otra</option>
+      </select>
+      <div class="fi-error-msg">Seleccioná la localidad.</div>
     </div>
 
-    <div class="fi-campo" id="c-horario">
-      <label class="fi-label">Rango horario en que la inmo está abierta <span class="fi-req">*</span></label>
-      <input type="text" class="fi-input" id="f-horario" placeholder="Ej: 9:00 a 18:00 hs">
-      <div class="fi-error-msg">Ingresá el horario de atención.</div>
-    </div>
 
-    <div class="fi-campo" id="c-contacto">
-      <label class="fi-label">Persona de contacto en la inmo <span class="fi-req">*</span></label>
-      <input type="text" class="fi-input" id="f-contacto" placeholder="Nombre y apellido">
+<div class="fi-campo" id="c-contacto-nombre">
+      <label class="fi-label">Nombre del contacto en la inmo <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-contacto-nombre" placeholder="Nombre">
       <div class="fi-error-msg">Ingresá el nombre del contacto.</div>
+    </div>
+
+    <div class="fi-campo" id="c-contacto-apellido">
+      <label class="fi-label">Apellido del contacto <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-contacto-apellido" placeholder="Apellido">
+      <div class="fi-error-msg">Ingresá el apellido del contacto.</div>
+    </div>
+
+    <div class="fi-campo" id="c-contacto-rol">
+      <label class="fi-label">Rol en la inmobiliaria <span class="fi-req">*</span></label>
+      <input type="text" class="fi-input" id="f-contacto-rol" placeholder="Ej: Administrativo, Encargado, Dueño...">
+      <div class="fi-error-msg">Ingresá el rol del contacto.</div>
     </div>
 
     <div class="fi-campo" id="c-celular">
@@ -500,8 +522,13 @@
         <div class="fi-campo" id="c-faja-ancho">
           <label class="fi-label">Ancho en centímetros <span class="fi-req">*</span></label>
           <input type="number" class="fi-input" id="f-faja-ancho" placeholder="Ej: 120" min="1">
-          <div class="fi-nota">La altura es siempre 30 cm.</div>
           <div class="fi-error-msg">Ingresá el ancho en centímetros.</div>
+        </div>
+
+        <div class="fi-campo">
+          <label class="fi-label">Alto en centímetros</label>
+          <input type="text" class="fi-input" value="30 cm" readonly style="background:#f3f4f6;color:var(--fi-gris);cursor:default;">
+          <div class="fi-nota">La altura de la faja siempre es 30 cm, no es modificable.</div>
         </div>
 
         <div class="fi-campo" id="c-faja-material">
@@ -797,52 +824,13 @@ function validarPaso(n) {
     if (!valReq(document.getElementById('f-inmo').value,     'c-inmo'))    ok = false;
     if (!valReq(document.getElementById('f-dir').value,      'c-dir'))     ok = false;
     if (!valReq(document.getElementById('f-loc').value,      'c-loc'))     ok = false;
-    if (!valReq(document.getElementById('f-horario').value,  'c-horario')) ok = false;
-    if (!valReq(document.getElementById('f-contacto').value, 'c-contacto'))ok = false;
+    if (!valReq(document.getElementById('f-contacto-nombre').value,   'c-contacto-nombre'))   ok = false;
+    if (!valReq(document.getElementById('f-contacto-apellido').value, 'c-contacto-apellido')) ok = false;
+    if (!valReq(document.getElementById('f-contacto-rol').value,      'c-contacto-rol'))      ok = false;
     if (!valReq(document.getElementById('f-celular').value,  'c-celular')) ok = false;
   }
 
-  if (n === 2) {
-    var a4s = getRadio('a4-solicita');
-    if (!a4s) { marcarError('c-a4-solicita'); ok = false; } else limpiarError('c-a4-solicita');
-    if (a4s === 'si') {
-      if (!getRadio('a4-sentido'))  { marcarError('c-a4-sentido');  ok = false; } else limpiarError('c-a4-sentido');
-      if (!getRadio('a4-material')) { marcarError('c-a4-material'); ok = false; } else limpiarError('c-a4-material');
-    }
-  }
-
-  if (n === 3) {
-    var fajas = getRadio('faja-solicita');
-    if (!fajas) { marcarError('c-faja-solicita'); ok = false; } else limpiarError('c-faja-solicita');
-    if (fajas === 'si') {
-      var ancho = document.getElementById('f-faja-ancho').value;
-      if (!ancho || parseInt(ancho) < 1) { marcarError('c-faja-ancho'); ok = false; } else limpiarError('c-faja-ancho');
-      if (!getRadio('faja-material')) { marcarError('c-faja-material'); ok = false; } else limpiarError('c-faja-material');
-      if (!getRadio('faja-rejas'))    { marcarError('c-faja-rejas');    ok = false; } else limpiarError('c-faja-rejas');
-    }
-  }
-
-  if (n === 4) {
-    var gfs = getRadio('gf-solicita');
-    if (!gfs) { marcarError('c-gf-solicita'); ok = false; } else limpiarError('c-gf-solicita');
-    if (gfs === 'si') {
-      var sup = getRadio('gf-superficie');
-      if (!sup) { marcarError('c-gf-superficie'); ok = false; } else limpiarError('c-gf-superficie');
-      if (sup === 'elementos') {
-        var elems = getChecks('gf-elementos');
-        if (!elems.length) { marcarError('c-gf-elementos-tipo'); ok = false; } else limpiarError('c-gf-elementos-tipo');
-        if (elems.indexOf('manija')   >= 0 && !valReq(document.getElementById('f-gf-manija-medida').value, 'c-gf-manija-medida')) ok = false;
-        if (elems.indexOf('reja')     >= 0 && !getRadio('gf-reja'))    { marcarError('c-gf-reja-ubicacion'); ok = false; } else if (elems.indexOf('reja') >= 0) limpiarError('c-gf-reja-ubicacion');
-        if (elems.indexOf('division') >= 0 && !valReq(document.getElementById('f-gf-division-medida').value, 'c-gf-division-medida')) ok = false;
-      }
-      if (!valReq(document.getElementById('f-gf-ancho').value, 'c-gf-ancho')) ok = false;
-      if (!valReq(document.getElementById('f-gf-alto').value,  'c-gf-alto'))  ok = false;
-      if (!getRadio('gf-material')) { marcarError('c-gf-material'); ok = false; } else limpiarError('c-gf-material');
-      var datosInmo = getRadio('gf-datos-inmo');
-      if (!datosInmo) { marcarError('c-gf-datos-inmo'); ok = false; } else limpiarError('c-gf-datos-inmo');
-      if (datosInmo === 'si' && !valReq(document.getElementById('f-gf-datos-texto').value, 'c-gf-datos-texto')) ok = false;
-    }
-  }
+  // Pasos 2, 3 y 4: todos los campos son opcionales hasta definir con el área
 
   return ok;
 }
@@ -857,9 +845,12 @@ function guardarDatos(n) {
     datos.edcLabel = document.getElementById('f-edc').options[document.getElementById('f-edc').selectedIndex].text;
     datos.inmo     = document.getElementById('f-inmo').value.trim();
     datos.dir      = document.getElementById('f-dir').value.trim();
-    datos.loc      = document.getElementById('f-loc').value.trim();
-    datos.horario  = document.getElementById('f-horario').value.trim();
-    datos.contacto = document.getElementById('f-contacto').value.trim();
+    var locSel = document.getElementById('f-loc');
+    datos.loc  = locSel.options[locSel.selectedIndex] ? locSel.options[locSel.selectedIndex].text : '';
+    datos.contactoNombre   = document.getElementById('f-contacto-nombre').value.trim();
+    datos.contactoApellido = document.getElementById('f-contacto-apellido').value.trim();
+    datos.contactoRol      = document.getElementById('f-contacto-rol').value.trim();
+    datos.contacto         = datos.contactoNombre + ' ' + datos.contactoApellido;
     datos.celular  = document.getElementById('f-celular').value.trim();
   }
   if (n === 2) {
@@ -976,8 +967,8 @@ function cargarFormHS() {
         {name: 'sticker_inmobiliaria',     value: datos.inmo},
         {name: 'sticker_direccion',        value: datos.dir},
         {name: 'sticker_localidad',        value: datos.loc},
-        {name: 'sticker_horario',          value: datos.horario},
         {name: 'sticker_contacto_inmo',    value: datos.contacto},
+        {name: 'sticker_contacto_rol',     value: datos.contactoRol},
         {name: 'sticker_celular_contacto', value: datos.celular},
         {name: 'sticker_detalle_pedido',   value: generarDetalle()}
       );
