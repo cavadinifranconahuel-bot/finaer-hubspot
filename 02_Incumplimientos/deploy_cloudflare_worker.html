@@ -1,0 +1,272 @@
+<title>Deploy — Wizard Incumplimientos · FINAER</title>
+<style>
+:root {
+  --accent:     #e30613;
+  --accent-dim: #2a0608;
+  --bg:         #f6f7fb;
+  --bg-alt:     #ffffff;
+  --surface:    #ffffff;
+  --border:     #e2e4ee;
+  --text-1:     #18181f;
+  --text-2:     #5e5e78;
+  --code-bg:    #1c1c26;
+  --code-fg:    #ededf5;
+  --code-cmt:   #6a6a8a;
+  --code-str:   #7dd3a8;
+  --code-key:   #e07070;
+  --step-num:   #e30613;
+  --badge-bg:   #fff8e1;
+  --badge-fg:   #7a5200;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:      #13131a;
+    --bg-alt:  #1c1c26;
+    --surface: #1c1c26;
+    --border:  #26263a;
+    --text-1:  #ededf5;
+    --text-2:  #9090aa;
+    --badge-bg: #2d2200;
+    --badge-fg: #f0c040;
+  }
+}
+:root[data-theme="dark"]  { --bg:#13131a;--bg-alt:#1c1c26;--surface:#1c1c26;--border:#26263a;--text-1:#ededf5;--text-2:#9090aa;--badge-bg:#2d2200;--badge-fg:#f0c040; }
+:root[data-theme="light"] { --bg:#f6f7fb;--bg-alt:#ffffff;--surface:#ffffff;--border:#e2e4ee;--text-1:#18181f;--text-2:#5e5e78;--badge-bg:#fff8e1;--badge-fg:#7a5200; }
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text-1);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+.wrap{max-width:740px;margin:0 auto;padding:0 24px 80px}
+
+/* ── Header ── */
+.hdr{background:var(--accent);padding:28px 24px 22px;margin:0 -24px 40px}
+.hdr-label{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px}
+.hdr-title{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.25;text-wrap:balance}
+.hdr-sub{margin-top:5px;font-size:13px;color:rgba(255,255,255,.6)}
+
+/* ── Contexto ── */
+.context{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:8px;padding:18px 20px;margin-bottom:36px}
+.context p{font-size:13.5px;color:var(--text-2);line-height:1.7}
+.context p+p{margin-top:8px}
+.context strong{color:var(--text-1)}
+
+/* ── Steps ── */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{border-top:1px solid var(--border);padding:28px 0}
+.step:last-of-type{border-bottom:1px solid var(--border)}
+.step-header{display:grid;grid-template-columns:36px 1fr;gap:0 16px;align-items:start;margin-bottom:16px}
+.step-n{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-title{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-.015em;line-height:1.3;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.step-body{padding-left:52px}
+
+.badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:var(--badge-bg);color:var(--badge-fg)}
+
+.lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-2);margin-bottom:4px;margin-top:14px}
+.lbl:first-child{margin-top:0}
+p.txt{font-size:13.5px;color:var(--text-2);line-height:1.7}
+p.txt+p.txt{margin-top:6px}
+p.txt strong{color:var(--text-1)}
+
+/* ── Code blocks ── */
+.code-wrap{position:relative;margin:10px 0}
+pre{background:var(--code-bg);color:var(--code-fg);font-family:'Consolas','Monaco','Courier New',monospace;font-size:12.5px;line-height:1.65;border-radius:8px;padding:16px 18px;overflow-x:auto;tab-size:2}
+.code-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--code-cmt);margin-bottom:-2px;display:block;padding:0 2px}
+.hl{color:var(--code-str)}
+.kw{color:var(--code-key)}
+.cm{color:var(--code-cmt)}
+
+/* ── Change callout ── */
+.change{background:var(--accent-dim);border:1px solid rgba(227,6,19,.25);border-radius:8px;padding:14px 16px;margin:10px 0}
+.change .change-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.change pre{background:transparent;padding:0;border-radius:0;font-size:12.5px;color:var(--code-fg)}
+
+/* ── Verify block ── */
+.verify{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin:10px 0}
+.verify-row{display:flex;align-items:baseline;gap:10px;font-size:13px;padding:5px 0;border-bottom:1px solid var(--border)}
+.verify-row:last-child{border-bottom:none}
+.verify-key{color:var(--text-2);min-width:110px;flex-shrink:0}
+.verify-val{color:var(--text-1);font-weight:600}
+
+/* ── Security note ── */
+.security{margin-top:36px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.security-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-2);margin-bottom:8px}
+.security ul{padding-left:18px;color:var(--text-2);font-size:13px;line-height:1.9}
+.security li strong{color:var(--text-1)}
+
+/* ── Footer ── */
+.footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-2)}
+</style>
+
+<div class="wrap">
+
+  <header class="hdr">
+    <div class="hdr-label">FINAER · Incumplimientos — Wizard DNI Lookup</div>
+    <div class="hdr-title">Guía de deploy — Cloudflare Worker</div>
+    <div class="hdr-sub">Para Tech Lead · Julio 2026</div>
+  </header>
+
+  <div class="context">
+    <p>El wizard de Notificación de Incumplimientos consulta la base de datos de HubSpot en tiempo real para verificar el DNI del inquilino antes de que el notificante complete el formulario. Esta consulta requiere el token de la Private App de HubSpot.</p>
+    <p>La API de HubSpot bloquea llamadas directas desde el browser (política CORS) y el token no puede quedar expuesto en el código del frontend. <strong>Cloudflare Workers actúa de proxy server-side</strong>: el browser llama al Worker (sin token), el Worker llama a HubSpot (con token), el token nunca llega al browser.</p>
+  </div>
+
+  <div class="steps">
+
+    <!-- PASO 1 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-n">1</div>
+        <div class="step-title">Crear cuenta en Cloudflare <span class="badge">Si no existe</span></div>
+      </div>
+      <div class="step-body">
+        <p class="txt">Entrar a <strong>cloudflare.com</strong> y crear una cuenta gratuita. El plan Free incluye <strong>100.000 requests diarios</strong>, más que suficiente para este uso.</p>
+      </div>
+    </div>
+
+    <!-- PASO 2 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-n">2</div>
+        <div class="step-title">Crear el Worker</div>
+      </div>
+      <div class="step-body">
+        <div class="lbl">En el dashboard de Cloudflare</div>
+        <p class="txt">Ir a <strong>Workers &amp; Pages → Create → Create Worker</strong>. Asignar el nombre <code>buscar-inquilino</code>. La URL del Worker quedará como:<br><code>https://buscar-inquilino.TU-CUENTA.workers.dev</code></p>
+      </div>
+    </div>
+
+    <!-- PASO 3 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-n">3</div>
+        <div class="step-title">Pegar el código del Worker</div>
+      </div>
+      <div class="step-body">
+        <p class="txt">En el editor que abre Cloudflare, reemplazar todo el contenido con el siguiente código:</p>
+        <div class="code-wrap">
+          <span class="code-label">worker.js — código completo</span>
+<pre><span class="kw">export default</span> {
+  <span class="kw">async</span> fetch(request, env) {
+
+    <span class="cm">// CORS preflight</span>
+    <span class="kw">if</span> (request.method === <span class="hl">'OPTIONS'</span>) {
+      <span class="kw">return new</span> Response(<span class="kw">null</span>, { headers: cors() });
+    }
+
+    <span class="kw">const</span> url = <span class="kw">new</span> URL(request.url);
+    <span class="kw">const</span> hsPath = url.pathname.replace(<span class="hl">/^\/hs/</span>, <span class="hl">''</span>) + url.search;
+    <span class="kw">const</span> hsUrl  = <span class="hl">'https://api.hubapi.com'</span> + hsPath;
+
+    <span class="kw">const</span> body = request.method !== <span class="hl">'GET'</span>
+      ? <span class="kw">await</span> request.text()
+      : <span class="kw">undefined</span>;
+
+    <span class="kw">const</span> hsResponse = <span class="kw">await</span> fetch(hsUrl, {
+      method:  request.method,
+      headers: {
+        <span class="hl">'Authorization'</span>: <span class="hl">`Bearer ${</span>env.HUBSPOT_TOKEN<span class="hl">}`</span>,
+        <span class="hl">'Content-Type'</span>:  <span class="hl">'application/json'</span>
+      },
+      body
+    });
+
+    <span class="kw">const</span> data = <span class="kw">await</span> hsResponse.text();
+
+    <span class="kw">return new</span> Response(data, {
+      status:  hsResponse.status,
+      headers: { ...cors(), <span class="hl">'Content-Type'</span>: <span class="hl">'application/json'</span> }
+    });
+  }
+};
+
+<span class="kw">function</span> cors() {
+  <span class="kw">return</span> {
+    <span class="hl">'Access-Control-Allow-Origin'</span>:  <span class="hl">'*'</span>,
+    <span class="hl">'Access-Control-Allow-Methods'</span>: <span class="hl">'GET, POST, OPTIONS'</span>,
+    <span class="hl">'Access-Control-Allow-Headers'</span>: <span class="hl">'Content-Type'</span>
+  };
+}</pre>
+        </div>
+        <p class="txt">Hacer clic en <strong>Save and Deploy</strong>.</p>
+      </div>
+    </div>
+
+    <!-- PASO 4 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-n">4</div>
+        <div class="step-title">Registrar el secreto HUBSPOT_TOKEN</div>
+      </div>
+      <div class="step-body">
+        <p class="txt">El Worker lee el token desde una variable de entorno secreta. Esto evita que el token quede expuesto en el código.</p>
+        <div class="lbl">Desde el dashboard del Worker</div>
+        <p class="txt">Ir a <strong>Settings → Variables and Secrets → Add variable</strong>.</p>
+        <div class="verify">
+          <div class="verify-row"><span class="verify-key">Tipo</span><span class="verify-val">Secret</span></div>
+          <div class="verify-row"><span class="verify-key">Nombre</span><span class="verify-val">HUBSPOT_TOKEN</span></div>
+          <div class="verify-row"><span class="verify-key">Valor</span><span class="verify-val">Token de la Private App "Claude Code - FINAER"</span></div>
+        </div>
+        <p class="txt" style="margin-top:10px">Hacer clic en <strong>Save</strong>. El valor queda encriptado y nunca es visible nuevamente.</p>
+      </div>
+    </div>
+
+    <!-- PASO 5 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-n">5</div>
+        <div class="step-title">Actualizar la URL en el wizard</div>
+      </div>
+      <div class="step-body">
+        <p class="txt">En el archivo <strong>02_Incumplimientos/notificacion-incumplimiento.html</strong>, hay una sola línea que define el endpoint según el entorno. Reemplazar la URL de producción con la del Worker:</p>
+        <div class="change">
+          <div class="change-label">Antes</div>
+          <pre>const HS_BASE = location.hostname === 'localhost'
+  ? 'http://localhost:3001/hs'
+  : 'https://api.hubapi.com';</pre>
+        </div>
+        <div class="change">
+          <div class="change-label">Después — reemplazar con la URL real del Worker</div>
+          <pre>const HS_BASE = location.hostname === 'localhost'
+  ? 'http://localhost:3001/hs'
+  : 'https://buscar-inquilino.TU-CUENTA.workers.dev/hs';</pre>
+        </div>
+        <p class="txt">Reemplazar <strong>TU-CUENTA</strong> con el subdominio asignado al crear la cuenta en Cloudflare.</p>
+      </div>
+    </div>
+
+    <!-- PASO 6 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-n">6</div>
+        <div class="step-title">Verificar que funciona</div>
+      </div>
+      <div class="step-body">
+        <p class="txt">Abrir el wizard publicado en la landing de HubSpot e ingresar un DNI de prueba:</p>
+        <div class="verify">
+          <div class="verify-row"><span class="verify-key">DNI de prueba</span><span class="verify-val">33284321</span></div>
+          <div class="verify-row"><span class="verify-key">Nombre esperado</span><span class="verify-val">Fabricio Natanael Varela</span></div>
+          <div class="verify-row"><span class="verify-key">Ticket esperado</span><span class="verify-val">Incumplimiento - Fabricio Natanael Varela - 14134</span></div>
+          <div class="verify-row"><span class="verify-key">Conceptos</span><span class="verify-val">Alquiler, Expensas, Luz, Gas, ABL</span></div>
+          <div class="verify-row"><span class="verify-key">Monto</span><span class="verify-val">$782.251</span></div>
+        </div>
+        <p class="txt" style="margin-top:10px">Si los datos aparecen correctamente, el deploy está completo.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="security">
+    <div class="security-title">Notas de seguridad</div>
+    <ul>
+      <li><strong>El token nunca llega al browser.</strong> Vive encriptado en Cloudflare y solo el Worker tiene acceso en tiempo de ejecución.</li>
+      <li><strong>CORS abierto (<code>*</code>).</strong> Cualquiera que conozca la URL del Worker puede hacer llamadas. Para mayor restricción, se puede limitar el origen al dominio de la landing (<code>landing.finaersa.com.ar</code>) una vez en producción estable.</li>
+      <li><strong>Rate limiting.</strong> Cloudflare Free incluye protección básica. Para uso intensivo, activar Rate Limiting desde el dashboard.</li>
+      <li><strong>El token usado</strong> es el de la Private App "Claude Code - FINAER" (portal EU1 · 145725856). Rotar el token si se sospecha exposición.</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Preparado por Franco Cavadini · FINAER · Julio 2026
+  </div>
+
+</div>
