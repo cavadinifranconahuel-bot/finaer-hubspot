@@ -99,7 +99,7 @@ async function reemplazarPlaceholders(token, docId, fields) {
   const montoNumero = fmt(montoTotal > 0 ? montoTotal : (parseFloat(fields.monto_total_de_la_deuda) || 0));
   const detalleDeudas = Object.entries(conceptos)
     .filter(([, v]) => v > 0)
-    .map(([label, v]) => `${label}: $${fmt(v)}`)
+    .map(([label, v]) => `-${label} $${fmt(v)}.-`)
     .join('\n');
 
   const reemplazos = {

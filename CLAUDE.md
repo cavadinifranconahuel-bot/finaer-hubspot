@@ -1,6 +1,6 @@
 # FINAER — HubSpot Operations
 # Franco Cavadini | Arquitecto de Operaciones CRM
-# Versión 2.0 | Abril 2026
+# Versión 3.0 | Julio 2026
 
 ================================================================================
 ROL DE CLAUDE EN ESTE PROYECTO
@@ -46,8 +46,9 @@ en workflows SÍ están disponibles. Re-testear en Visitas Comerciales.
 
 Módulos sin uso claro para el modelo de negocio actual:
 - Content Hub Professional (~EUR 290/mes): sin uso documentado
-- Transactional Email Add-on (~EUR 425/mes): sin uso documentado
-No se pueden dar de baja hasta enero 2027. Buscar forma de darles uso.
+- Transactional Email Add-on (~EUR 425/mes): EN USO desde julio 2026 vía SMTP
+  custom code (carta de pago adjunta en Incumplimientos). smtp.hubapi.com:587.
+No se pueden dar de baja hasta enero 2027.
 
 Acceso MCP (Claude Code → HubSpot):
 - Lectura + escritura: Contact, Company, Deal, Ticket, Note, Call,
@@ -96,41 +97,40 @@ Backlog:
 
 ── 02_INCUMPLIMIENTOS ✅ Operativo ──────────────────────────────────────────
 Ruta: Desktop/HubSpot/02_Incumplimientos/
-Capacitación con el área completa: 27/04/2026
+Capacitaciones: Mora 1 (27/04/2026) | Mora 2 completa (21/07/2026)
 
-Lógica de negocio:
-- Ticket = incumplimiento operativo (resolver el impago del cliente)
-- Deal = seguimiento económico interno (gestión de fondos de FINAER)
-- Origen: formulario → mesa de ayuda → asignación rotativa al equipo
-  prejudicial
+Lógica de negocio — 3 niveles:
+- Ticket = fuente de verdad. Registra el impago. Pipeline: 3353793749
+- Deal PERÍODO (pipeline 3403406575) = 1 por mes por expediente. SAI los
+  crea vía API directa; el WF los nutre al cerrar ticket.
+- Deal MAESTRO (pipeline 3920555199) = 1 por expediente. Acumula totales.
 
-Workflows:
-- WF4 (ID: 3654117624): Ticket "Pago en proceso" → crea Deal automático
+Workflows operativos clave:
+- WF4 (ID: 3654117624): Ticket "Pago en proceso" → crea Deal (Mora 1)
 - WF2 (ID: 3962960072): copia 16 propiedades Ticket → Deal
-- Pedidos automáticos: monto_desembolso → pérdida | monto_recupero → recupero
+- WF 4504390847: formulario → crea/nutre ticket por período
+- WF 4465972431: ticket Cerrado (pago FINAER) → CASO SÍ / CASO NO en deal período
+- WF 4465889492: deal período con nro_expediente IS_KNOWN → actualiza maestro
+- WF 4128732405: monto_recupero > 0 → crea Pedido Recupero (DESACTIVADO)
+- WF 4128739569: monto_desembolso > 0 → crea Pedido Desembolso (DESACTIVADO)
+  NOTA: activar Pedidos recién después de limpiar monto_recupero en 367 deals
 
-Pipelines:
-- Tickets: ID 3353793749 | Deals: ID 3403406575
+Carta de pago (WF 4377587939 — DESACTIVADO, pendiente activación):
+- Custom code: 02_Incumplimientos/custom_code_carta_pago.js
+- Flujo: Google Docs template → reemplaza placeholders → PDF → Drive → SMTP
+- Usa: GOOGLE_KEY_1/2, GOOGLE_SA_EMAIL, HS_SMTP_USER, HS_SMTP_PASS
+- Template Doc ID: 1LWhpPEsJEOcUT7RGnuBnH8VTW4z6wusUynjCuWz3IKY
 
-Estado al 26/04/2026:
-- Sistema completamente operativo
-- Reporte "Pedidos de Fondos" activo (reemplaza Excel estático a Tesorería)
-- Vista del Deal para el gestor: pendiente
-- Limpieza propiedades Nahuel Martiñan: planificada
+Wizard notificación (notificacion-incumplimiento.html):
+- Proxy Cloudflare pendiente (ticket JIRA CM-261) — hoy token expuesto en frontend
+- Landing ID: 430264653040 | Form ID: 16350864-6359-4241-9d44-d8639a7af726
 
-Agente Prejudicial (Breeze AI) — en configuración, NO activado:
-- Nombre: Asistente Finaer
-- Conocimiento: agente_prejudicial_conocimiento.txt (cargado)
-- 5 categorías: Incumplimiento nuevo | Seguimiento sin respuesta |
-  Escalada legal | Reclamo | Aviso/Documentación
-- Transferencia a humanos: pendiente de configurar
-- Test: pendiente
-- Activación: decisión pendiente
+Tokens: los WFs de Mora 2 usan proceso.env.token = mismo private app que SAI
+("Finaer CRM Argentina Integration") — deals creados por WF son indistinguibles
+de deals de SAI en logs de HubSpot.
 
-Backlog:
-- Formulario con campos condicionales por tipo de deuda (factibilidad alta)
-- Chatbot como alternativa al formulario (factibilidad alta, Service Hub Pro)
-- Breeze Customer Agent para correos (en configuración)
+Agente Prejudicial (Breeze AI) — NO activado. No activar sin test completo
+y configuración de transferencia a humanos.
 
 ── 03_CONTRATOS 📋 En validación ────────────────────────────────────────────
 Ruta: Desktop/HubSpot/03_Contratos/
@@ -145,6 +145,36 @@ Diseño:
 Ruta: Desktop/HubSpot/04_Sinor/
 Scripts conservados. Reactivar solo si se confirma continuidad.
 
+── 05_TABLEROS COMERCIALES ✅ Operativo (parcial) ───────────────────────────
+Ruta: Desktop/HubSpot/05_Tableros-Comerciales/
+
+- WF tracking de cambio de estado (ID: 4274339056): activo desde 19/05/2026
+- Snapshot cartera semanal: script corre lunes 10am via Task Scheduler
+- Pipeline Métricas de Cartera: ID 3765616829
+- Dashboard "Tableros Comerciales": 3 reportes activos (cartera por estado,
+  movimientos semanales, últimos cambios)
+- Dataset [TEST]: 16 empresas ficticias, sacar filtro "observaciones contiene
+  testing" para ver datos reales
+- Pendiente: reportes de operaciones, visitas, propiedad `grupos` (desde admin)
+
+── 06_RRHH-CAPACITACION-HUMAND ✅ Operativo ─────────────────────────────────
+Ruta: Desktop/HubSpot/06_RRHH-Capacitacion-Humand/
+Landing: landing.finaersa.com.ar/es/capacitacion-humand
+
+- Formulario de inscripción: líderes inscriben recursos a 4 turnos de capacitación
+- Control de cupos: custom code suma recursos por turno, alerta vía Task
+- Operativo al 16/06/2026
+- CSV de reportes en carpeta con fechas (22/06, 26/06, 29/06, 03/07)
+
+── 07_STICKERS ⏳ Pendiente publicar landing ─────────────────────────────────
+Ruta: Desktop/HubSpot/07_Stickers/
+
+- Wizard 5 pasos: EDC/ODC registran solicitudes de piezas de marketing
+- Código completo: formulario_stickers.html
+- Form nativo HubSpot GUID: 2b527eac-0b46-4908-9c70-8047d3bf9f46
+- 13 propiedades Contact creadas (sticker_*)
+- Pendiente: crear landing HubSpot y publicar URL al equipo
+
 ================================================================================
 CAPACIDADES HUBSPOT DE FRANCO (probadas en producción)
 ================================================================================
@@ -154,6 +184,7 @@ Objetos y modelado de datos:
   en Contacts, Companies, Deals, Tickets
 - Relaciones entre objetos (asociaciones)
 - Lógica de objetos según representación de negocio
+- Objetos HubSpot: Orders/Pedidos (0-123), Associations v4
 
 Automatización:
 - Workflows multi-paso con ramificaciones condicionales
@@ -161,11 +192,31 @@ Automatización:
 - Re-enrollment con lógica específica
 - Copy de propiedades entre objetos (Contact→Deal, Company→Deal, Ticket→Deal)
 - Asignación rotativa de propietarios | Notificaciones automáticas
+- Custom code actions (Node.js) en workflows — búsquedas, batch updates,
+  creación de objetos, notas, asociaciones
 
 API y operaciones técnicas (vía Claude Code):
-- HubSpot Automation API v4 (GET/PUT/POST workflows)
+- HubSpot Automation API v4 (GET/PUT/POST/paginar workflows)
+  CRÍTICO: PUT requiere el flow completo. PowerShell corrompe sourceCode grande
+  con ConvertTo-Json → usar curl + sed para ediciones quirúrgicas de WFs.
 - CRM Properties API v3 (creación/edición/sincronización)
-- Batch updates de objetos (contacts, deals)
+- CRM Search API (filtros complejos, paginación)
+- Batch updates de objetos (contacts, deals, tickets)
+- HubSpot Forms API v3 (submit desde código)
+- SMTP vía smtp.hubapi.com:587 (Transactional Email Add-on) — raw TCP/TLS
+  con net + tls de Node.js (Single Send API no soporta adjuntos binarios)
+- Google Docs API v1 (replaceAllText via batchUpdate)
+- Google Drive API v3 (copy, export PDF, multipart upload, delete)
+  Nota: siempre usar supportsAllDrives=true en shared drives
+- Google Service Account JWT (RS256) — crypto.createPrivateKey PKCS8
+  en Node.js 20/OpenSSL 3.x (NO usar createSign().sign() con PEM directo)
+- Windows Task Scheduler para scripts Node.js locales (snapshot cartera)
+- Cloudflare Workers como proxy para CRM API (token server-side)
+
+Landings HubSpot:
+- headHtml/footerHtml pattern para wizards y formularios custom
+- HubSpot Forms embed (hbspt.forms.create) con onBeforeFormSubmit
+- Multiselect con Choices.js | Formularios multi-paso en HTML puro
 
 Principio rector: Nativo primero. El código es el último recurso.
 Toda solución debe ser mantenible sin dependencia técnica permanente.

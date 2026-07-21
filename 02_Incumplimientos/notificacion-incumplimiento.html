@@ -76,6 +76,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .no-encontrado .icon { font-size: 36px; margin-bottom: 12px; }
 .no-encontrado p { color: #666; font-size: 14px; line-height: 1.6; }
 
+/* Navegación entre incumplimientos */
+.ticket-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1.5px solid #fadadb; }
+.ticket-nav span { font-size: 11px; font-weight: 700; color: #e30613; text-transform: uppercase; letter-spacing: .5px; }
+.ticket-nav button { background: none; border: 1.5px solid #e30613; color: #e30613; border-radius: 6px; padding: 4px 14px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; line-height: 1; }
+.ticket-nav button:hover:not(:disabled) { background: #e30613; color: #fff; }
+.ticket-nav button:disabled { border-color: #ddd; color: #bbb; cursor: default; }
+
+/* Separador de conceptos dentro de la card */
+.concepto-sep { font-size: 10px; font-weight: 700; color: #e30613; letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 2px; }
+
+/* Fila de total resaltada */
+.inq-total { border-top: 1.5px solid #e30613 !important; margin-top: 6px; padding-top: 10px !important; }
+.inq-total .lbl { font-weight: 700; color: #2f3743; }
+.inq-total .val { color: #e30613 !important; font-size: 15px; }
+
 .success-panel { text-align: center; padding: 12px 0; }
 .success-panel .icon { font-size: 48px; margin-bottom: 16px; }
 .success-panel h2 { font-size: 20px; color: #2f3743; margin-bottom: 8px; }
@@ -292,6 +307,19 @@ const HS_TOKEN  = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8'; // temporal �
 const PORTAL_ID = '145725856';
 const FORM_ID   = '4bab489a-1156-4a4e-9924-d9ce7c241985'; // form Contacto → workflow crea el ticket
 let datosInquilino = null;
+let ticketsEncontrados = [];
+let ticketActual = 0;
+
+const CONCEPTOS_TICKET = [
+  { campo: 'deuda_alquiler',             label: 'Alquiler'          },
+  { campo: 'deuda_expensas',             label: 'Expensas'          },
+  { campo: 'deuda_luz',                  label: 'Luz'               },
+  { campo: 'deuda_gas',                  label: 'Gas'               },
+  { campo: 'deuda_abl',                  label: 'ABL'               },
+  { campo: 'deuda_aysa',                 label: 'AYSA / Agua'       },
+  { campo: 'deuda_por_entrega_de_llaves',label: 'Entrega de llaves' },
+  { campo: 'punitorio_alquiler',         label: 'Punitorio alquiler'},
+];
 
 const TIPO_CAMPO = {
   'Alquiler': 'deuda_alquiler',
@@ -360,35 +388,36 @@ async function buscarDNI() {
   }).then(r => r.json());
 
   try {
-    // FLUJO 1: buscar ticket por dni_inquilino (incumplimiento existente)
+    // FLUJO 1: buscar todos los tickets del DNI (puede haber más de uno)
     const ticketSearch = await hs('POST', '/crm/v3/objects/tickets/search', {
       filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
-      properties: ['subject', 'tipo_de_incumplimiento', 'monto_total_de_la_deuda_acumulada', 'nombre_y_apellido_del_inquilino'],
+      properties: [
+        'subject', 'nombre_y_apellido_del_inquilino', 'periodo_de_deuda', 'mes_de_deuda', 'createdate',
+        'monto_total_de_la_deuda_acumulada',
+        'deuda_alquiler', 'deuda_expensas', 'deuda_luz', 'deuda_gas',
+        'deuda_abl', 'deuda_aysa', 'deuda_por_entrega_de_llaves', 'punitorio_alquiler'
+      ],
       sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
-      limit: 1
+      limit: 10
     });
 
     if (ticketSearch.results && ticketSearch.results.length > 0) {
-      const p = ticketSearch.results[0].properties;
+      ticketsEncontrados = ticketSearch.results;
+      ticketActual = 0;
       datosInquilino = {
-        flujo:        'existente',
+        flujo:  'existente',
         dni,
-        nombre:       p.nombre_y_apellido_del_inquilino || '—',
-        subject:      p.subject || '—',
-        tipos:        p.tipo_de_incumplimiento || '',
-        monto_total:  p.monto_total_de_la_deuda_acumulada || null,
-        garantia:     null,
-        inmobiliaria: null
+        nombre: ticketSearch.results[0].properties.nombre_y_apellido_del_inquilino || '—'
       };
-      mostrarDatosInquilino(datosInquilino);
+      mostrarTicketActual();
       irA(2);
       return;
     }
 
-    // FLUJO 2: buscar contacto por nro_documento_txt (caso nuevo)
+    // FLUJO 2: buscar contacto por nro_documento_txt (sin incumplimiento registrado)
     const contactData = await hs('POST', '/crm/v3/objects/contacts/search', {
       filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
-      properties: ['firstname', 'lastname'],
+      properties: ['firstname', 'lastname', 'email'],
       limit: 1
     });
 
@@ -399,34 +428,52 @@ async function buscarDNI() {
     const contact = contactData.results[0];
     const contactId = contact.id;
     const nombre = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') || '—';
+    const emailContacto = contact.properties.email || '—';
 
-    // Buscar deal activo en pipeline de ventas
+    // Buscar deal más reciente asociado al contacto (pipeline de ventas / solicitudes)
     const dealData = await hs('POST', '/crm/v3/objects/deals/search', {
       filterGroups: [{ filters: [
-        { propertyName: 'associations.contact', operator: 'EQ', value: contactId },
-        { propertyName: 'hs_pipeline', operator: 'EQ', value: 'default' },
-        { propertyName: 'dealstage', operator: 'IN', values: ['closedlost', '1934076144', '1934076145'] }
+        { propertyName: 'associations.contact', operator: 'EQ', value: contactId }
       ]}],
-      properties: ['dealname'],
+      properties: ['dealname', 'nombre_y_apellido_del_inquilino', 'solicitante', 'nombre_y_apellido_del_solicitante'],
       sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
       limit: 1
     });
 
-    let garantia = '—';
-    let inmobiliaria = '—';
+    let nroSolicitud = '—', inmobiliaria = '—', inquilino = nombre, solicitante = '—', cogarante = null;
 
     if (dealData.results && dealData.results.length > 0) {
       const deal = dealData.results[0];
-      garantia = deal.properties.dealname || '—';
+      const dp = deal.properties;
+      nroSolicitud = dp.dealname || '—';
+      inquilino    = dp.nombre_y_apellido_del_inquilino || nombre;
+      solicitante  = dp.nombre_y_apellido_del_solicitante || dp.solicitante || '—';
 
-      const assocData = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
-      if (assocData.results && assocData.results.length > 0) {
-        const companyData = await hs('GET', `/crm/v3/objects/companies/${assocData.results[0].id}?properties=name`);
-        inmobiliaria = companyData.properties?.name || '—';
+      // Inmobiliaria (empresa asociada al deal)
+      const assocEmpresas = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
+      if (assocEmpresas.results && assocEmpresas.results.length > 0) {
+        const empresa = await hs('GET', `/crm/v3/objects/companies/${assocEmpresas.results[0].id}?properties=name`);
+        inmobiliaria = empresa.properties?.name || '—';
+      }
+
+      // Co-garante: contactos asociados al deal con label de cosolicitante/garante
+      const assocContactos = await hs('GET', `/crm/v4/objects/deals/${deal.id}/associations/contacts`);
+      if (assocContactos.results) {
+        for (const assoc of assocContactos.results) {
+          if (String(assoc.toObjectId) === String(contactId)) continue;
+          const labels = (assoc.associationTypes || []).map(t => (t.label || '').toLowerCase());
+          if (labels.some(l => l.includes('cosolicit') || l.includes('co-solicit') || l.includes('garante') || l.includes('co garante'))) {
+            const cg = await hs('GET', `/crm/v3/objects/contacts/${assoc.toObjectId}?properties=firstname,lastname`);
+            if (cg.properties) {
+              cogarante = [cg.properties.firstname, cg.properties.lastname].filter(Boolean).join(' ') || null;
+            }
+            break;
+          }
+        }
       }
     }
 
-    datosInquilino = { flujo: 'nuevo', dni, nombre, garantia, inmobiliaria, subject: null, tipos: '', monto_total: null };
+    datosInquilino = { flujo: 'nuevo', dni, nombre, email: emailContacto, nroSolicitud, inmobiliaria, inquilino, solicitante, cogarante };
     mostrarDatosInquilino(datosInquilino);
     irA(2);
 
@@ -439,28 +486,70 @@ async function buscarDNI() {
   }
 }
 
-function mostrarDatosInquilino(d) {
-  let filas = '';
-  if (d.flujo === 'existente') {
-    const tiposFormateados = d.tipos ? d.tipos.split(';').join(', ') : '—';
-    const monto = d.monto_total ? '$' + Number(d.monto_total).toLocaleString('es-AR') : '—';
-    filas = `
-      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
-      <div class="inq-fila"><span class="lbl">Incumplimiento registrado</span><span class="val">${d.subject}</span></div>
-      <div class="inq-fila"><span class="lbl">Conceptos adeudados</span><span class="val">${tiposFormateados}</span></div>
-      <div class="inq-fila"><span class="lbl">Deuda acumulada</span><span class="val">${monto}</span></div>`;
-  } else {
-    filas = `
-      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
-      <div class="inq-fila"><span class="lbl">Número de garantía</span><span class="val">${d.garantia}</span></div>
-      <div class="inq-fila"><span class="lbl">Inmobiliaria</span><span class="val">${d.inmobiliaria}</span></div>`;
+function mostrarTicketActual() {
+  if (!ticketsEncontrados.length) return;
+  const ticket = ticketsEncontrados[ticketActual];
+  const p = ticket.properties;
+  const total = ticketsEncontrados.length;
+  const fmt = v => (v && parseFloat(v) > 0) ? '$ ' + Number(v).toLocaleString('es-AR') : null;
+
+  let conceptosHtml = '';
+  for (const c of CONCEPTOS_TICKET) {
+    const val = fmt(p[c.campo]);
+    if (val) conceptosHtml += `<div class="inq-fila"><span class="lbl">${c.label}</span><span class="val">${val}</span></div>`;
   }
+
+  const navHtml = total > 1 ? `
+    <div class="ticket-nav">
+      <button onclick="anteriorTicket()" ${ticketActual === 0 ? 'disabled' : ''}>←</button>
+      <span>Incumplimiento ${ticketActual + 1} de ${total}</span>
+      <button onclick="siguienteTicket()" ${ticketActual === total - 1 ? 'disabled' : ''}>→</button>
+    </div>` : '';
+
+  const MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const periodoDesdeCreacion = p.createdate ? (() => { const f = new Date(p.createdate); return MESES_ES[f.getUTCMonth()] + ' - ' + f.getUTCFullYear(); })() : null;
+  const periodoVal = p.periodo_de_deuda || p.mes_de_deuda || periodoDesdeCreacion || null;
+  const periodo  = periodoVal ? `<div class="inq-fila"><span class="lbl">Período</span><span class="val">${periodoVal}</span></div>` : '';
+  const totalMonto = fmt(p.monto_total_de_la_deuda_acumulada) || '—';
+
+  document.getElementById('inq-content').innerHTML = `
+    <div class="inq-card">
+      ${navHtml}
+      <div class="inq-nombre">${datosInquilino.nombre}</div>
+      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${datosInquilino.dni}</span></div>
+      <div class="inq-fila"><span class="lbl">Carpeta</span><span class="val">${p.subject || '—'}</span></div>
+      ${periodo}
+      ${conceptosHtml ? '<div class="concepto-sep">Detalle de deuda</div>' + conceptosHtml : ''}
+      <div class="inq-fila inq-total"><span class="lbl">Total adeudado</span><span class="val">${totalMonto}</span></div>
+    </div>
+    <p style="font-size:13px;color:#666;margin-top:12px;">¿Estos son los datos del inquilino? Confirmá para continuar.</p>`;
+  document.getElementById('btn2').style.display = '';
+  document.getElementById('warn2').style.display = 'none';
+}
+
+function anteriorTicket() { if (ticketActual > 0) { ticketActual--; mostrarTicketActual(); } }
+function siguienteTicket() { if (ticketActual < ticketsEncontrados.length - 1) { ticketActual++; mostrarTicketActual(); } }
+
+function mostrarDatosInquilino(d) {
+  // Flujo existente ya lo maneja mostrarTicketActual()
+  if (d.flujo === 'existente') return;
+
+  // Flujo nuevo: sin incumplimiento, mostrar datos del deal de solicitud
+  const cogaranteHtml = d.cogarante
+    ? `<div class="inq-fila"><span class="lbl">Co-garante</span><span class="val">${d.cogarante}</span></div>` : '';
+
   document.getElementById('inq-content').innerHTML = `
     <div class="inq-card">
       <div class="inq-nombre">${d.nombre}</div>
-      ${filas}
+      <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
+      <div class="inq-fila"><span class="lbl">Número de solicitud</span><span class="val">${d.nroSolicitud}</span></div>
+      <div class="inq-fila"><span class="lbl">Email</span><span class="val">${d.email}</span></div>
+      <div class="inq-fila"><span class="lbl">Inquilino</span><span class="val">${d.inquilino}</span></div>
+      <div class="inq-fila"><span class="lbl">Solicitante</span><span class="val">${d.solicitante}</span></div>
+      ${cogaranteHtml}
+      <div class="inq-fila"><span class="lbl">Inmobiliaria</span><span class="val">${d.inmobiliaria}</span></div>
     </div>
-    <p style="font-size:13px;color:#666;">¿Estos son los datos de tu inquilino? Confirmá para continuar.</p>`;
+    <p style="font-size:13px;color:#666;margin-top:12px;">Este inquilino no tiene incumplimientos registrados. Podés continuar con la notificación.</p>`;
   document.getElementById('btn2').style.display = '';
   document.getElementById('warn2').style.display = 'none';
 }
@@ -469,7 +558,7 @@ function mostrarNoEncontrado() {
   document.getElementById('inq-content').innerHTML = `
     <div class="no-encontrado">
       <div class="icon">🔍</div>
-      <p>No encontramos ningún inquilino con ese DNI en nuestro sistema.<br><br>Verificá el número ingresado o contactate con FINAER al <strong>0800-666-3400</strong>.</p>
+      <p>No encontramos ningún inquilino con ese DNI en nuestro sistema.<br><br>Verificá el número ingresado o contactate con FINAER al <strong>6842-5100</strong>.</p>
     </div>`;
   document.getElementById('btn2').style.display = 'none';
   document.getElementById('warn2').style.display = 'none';
