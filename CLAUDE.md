@@ -132,6 +132,22 @@ de deals de SAI en logs de HubSpot.
 Agente Prejudicial (Breeze AI) — NO activado. No activar sin test completo
 y configuración de transferencia a humanos.
 
+Deuda técnica conocida — lógica de negocio:
+- DOBLE MOTOR DE PUNITORIOS: coexisten WF 4172304610 (sobre Deal, trigger:
+  tasa_punitorio + fecha_desembolso + fecha_negociacion) y WF 4231647440
+  (sobre Ticket, trigger: fecha_de_inicio_de_mora + fecha_negociacion). Usan
+  fechas de origen distintas y pueden generar valores contradictorios entre
+  Ticket y Deal sin error visible. Corrección pendiente: unificar en un solo
+  motor. No tocar estos WFs sin entender cuál de los dos domina en cada caso.
+- WF PLACEHOLDER VACÍO: WF 4205935816 "Recálculo Diario Punitorios (08:00 AM)"
+  está DESACTIVADO y sin acciones desde mayo 2026 — nunca se completó.
+  No activar ni eliminar sin definir la lógica de recálculo diario.
+- MONTO_RECUPERO STALE: 367 deals en pipeline 3403406575 tienen monto_recupero
+  cargado con datos pre-producción. Limpiar en batch ANTES de activar WF 4128732405
+  (Pedido Recupero) para evitar crear 367 Pedidos de golpe.
+- TOTAL_RECUPERADO A ESCALA DUDOSA: 368 deals tienen valores que parecen divididos
+  por 1000 (ej: 1.428,86 en vez de 1.428.860). Sin investigar causa raíz.
+
 ── 03_CONTRATOS 📋 En validación ────────────────────────────────────────────
 Ruta: Desktop/HubSpot/03_Contratos/
 Propuesta presentada a FINAER, esperando aprobación para implementar.
