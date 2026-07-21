@@ -89,6 +89,16 @@ Restricciones activas:
   con Data Hub Pro disponible)
 - Sin Operations Hub al momento de construcción (ahora es Data Hub Pro)
 
+Restricciones de implementación:
+- Formularios v2 BLOQUEADOS: hay 4 inputs de negocio que debe confirmar gerencia
+  comercial antes de tocar los 5 formularios (NUEVA/ACTIVA/PASIVA/INACTIVA/PERDIDA):
+  lista de competidores, lista de productos de merch, motivos de pasividad
+  definitivos, reemplazo de "Problemas de servicio" en PERDIDAS.
+  No implementar cambios de v2 sin estas 4 listas confirmadas.
+- Serverless function buscar-inquilino: existe en repo en
+  01_Visitas-Comerciales/serverless/buscar-inquilino/ — estado de despliegue
+  SIN CONFIRMAR. Validar antes de asumir que el bloqueo de serverless sigue vigente.
+
 Backlog:
 - Dashboard de actividad comercial (visitas por ejecutivo, estado, zona)
 - Alertas por falta de visita según estado de la empresa
@@ -124,6 +134,16 @@ Carta de pago (WF 4377587939 — DESACTIVADO, pendiente activación):
 Wizard notificación (notificacion-incumplimiento.html):
 - Proxy Cloudflare pendiente (ticket JIRA CM-261) — hoy token expuesto en frontend
 - Landing ID: 430264653040 | Form ID: 16350864-6359-4241-9d44-d8639a7af726
+
+Restricciones críticas WF 4504390847 (formulario → ticket):
+- Re-enrollment DEBE estar activo. Sin re-enrollment el mismo contacto solo dispara
+  el WF una vez — envíos subsiguientes del mismo notificante no crean ticket.
+- Secretos en custom code: acceder como process.env.token (NO event.secrets —
+  esa sintaxis era Node.js 18.x y falla en 20.x).
+- Notas en tickets: usar engagements v1 (POST /engagements/v1/engagements con
+  ticketIds en associations). CRM v3 (POST /crm/v3/objects/notes con
+  associationTypeId: 218) devuelve 201 pero la nota no aparece — falla
+  silenciosamente.
 
 Tokens: los WFs de Mora 2 usan proceso.env.token = mismo private app que SAI
 ("Finaer CRM Argentina Integration") — deals creados por WF son indistinguibles
@@ -173,6 +193,12 @@ Ruta: Desktop/HubSpot/05_Tableros-Comerciales/
   testing" para ver datos reales
 - Pendiente: reportes de operaciones, visitas, propiedad `grupos` (desde admin)
 
+Restricciones operativas:
+- WFs viejos desactivados (IDs 2527675600 y 2539720942) — de una persona que ya
+  no está, con código, sin documentación. NO eliminar sin revisar qué hacían.
+- Snapshot cartera corre en Windows Task Scheduler de la PC local de Franco
+  (lunes 10am). Si la PC está apagada ese día, no hay snapshot semanal.
+
 ── 06_RRHH-CAPACITACION-HUMAND ✅ Operativo ─────────────────────────────────
 Ruta: Desktop/HubSpot/06_RRHH-Capacitacion-Humand/
 Landing: landing.finaersa.com.ar/es/capacitacion-humand
@@ -190,6 +216,17 @@ Ruta: Desktop/HubSpot/07_Stickers/
 - Form nativo HubSpot GUID: 2b527eac-0b46-4908-9c70-8047d3bf9f46
 - 13 propiedades Contact creadas (sticker_*)
 - Pendiente: crear landing HubSpot y publicar URL al equipo
+
+── 08_ALUMNI-RUGBY 🏉 Operativo ─────────────────────────────────────────────
+Ruta: Desktop/HubSpot/temp_alumni/ (sin carpeta definitiva aún)
+Campaña de marketing. Landing + formulario de adhesión/sorteo vía Instagram.
+
+- Landing: landing.finaersa.com.ar/alumni-rugby-finaer (ID: 418423524581)
+- Form ID: 5f289291-4310-4385-8302-bf1a2944df63
+- Propiedades Contact creadas: usuario_en_ig (texto), perfil_inquilino_alumni
+  (enum: propietario/inquilino_actual/futuro_propietario/futuro_inquilino/ninguna)
+- Estado: publicada desde 09/06/2026
+- Scripts de construcción en temp_alumni/ — candidatos a archivar
 
 ================================================================================
 CAPACIDADES HUBSPOT DE FRANCO (probadas en producción)
