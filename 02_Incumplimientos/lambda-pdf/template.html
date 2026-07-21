@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #000;
+    padding: 60px 70px;
+    line-height: 1.7;
+  }
+  .fecha { text-align: right; margin-bottom: 28px; }
+  .cuerpo { text-align: justify; margin-bottom: 32px; }
+  .rubros { margin: 24px 0; padding-left: 16px; }
+  .rubro-fila { display: flex; justify-content: space-between; border-bottom: 1px dotted #999; padding: 4px 0; }
+  .rubro-fila.total { border-bottom: 2px solid #000; font-weight: bold; margin-top: 8px; }
+  .firma-bloque {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .firma-campo { flex: 1; border-top: 1px solid #000; padding-top: 6px; font-size: 12px; }
+  .separador { color: #000; }
+</style>
+</head>
+<body>
+
+<div class="fecha">En la Ciudad de Buenos Aires, {{fecha_actual}}.-</div>
+
+<div class="cuerpo">
+  Recibí de <strong>SISTEMA FINAER S.A.</strong> (CUIT 30-71528749-4) la suma de
+  <strong>${{monto_numerico}}.-</strong> (Pesos: <strong>{{monto_letras}}</strong>)
+  mediante transferencia bancaria, sirviendo el presente de suficiente recibo y carta de pago,
+  en mi carácter de {{caracter_locador}} y en cumplimiento del Contrato de Garantía relativo
+  al Contrato de Locación celebrado con fecha de inicio a partir del {{fecha_inicio_contrato}}
+  respecto del inmueble sito en la calle <strong>{{direccion_inmueble}}</strong>,
+  siendo el/la Sr./Sra. <strong>{{nombre_inquilino}}</strong> DNI <strong>{{dni_inquilino}}</strong>
+  locatario/a del mismo.
+</div>
+
+<div class="cuerpo">
+  Por lo expuesto, SISTEMA FINAER S.A. responde afianzando los siguientes conceptos:
+</div>
+
+<div class="rubros">
+  {{#rubros}}
+  <div class="rubro-fila">
+    <span>{{concepto}}</span>
+    <span>${{monto}}</span>
+  </div>
+  {{/rubros}}
+  <div class="rubro-fila total">
+    <span>TOTAL SUMA AFIANZADA</span>
+    <span>${{monto_numerico}}.-</span>
+  </div>
+</div>
+
+<div class="firma-bloque">
+  <div class="firma-campo">Firma ___________________________</div>
+  <div class="firma-campo">Aclaración ______________________</div>
+  <div class="firma-campo">DNI _____________________________</div>
+</div>
+
+</body>
+</html>

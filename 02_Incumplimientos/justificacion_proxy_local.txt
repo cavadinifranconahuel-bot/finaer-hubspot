@@ -1,0 +1,55 @@
+Wizard de Notificación de Incumplimientos — Justificación técnica del proxy local
+Franco Cavadini · Julio 2026
+
+────────────────────────────────────────────────────────────────
+
+CONTEXTO
+
+El wizard de Notificación de Incumplimientos permite que propietarios e inmobiliarias reporten una deuda de inquilino sin acceso al CRM. En el Paso 1, el notificante ingresa el DNI del inquilino y el sistema verifica en tiempo real si existe un incumplimiento abierto en HubSpot, mostrando los datos del caso antes de que complete el formulario.
+
+────────────────────────────────────────────────────────────────
+
+EL PROBLEMA TÉCNICO
+
+HubSpot tiene dos APIs con comportamientos distintos:
+
+La Forms API es pública por diseño. Cualquier sitio web puede enviarle datos sin autenticación. Así funcionan todos los formularios de HubSpot embebidos en páginas externas. El envío final del wizard usa esta API y no requiere ninguna configuración especial.
+
+La CRM API es privada. Requiere un token de autenticación y, por política de seguridad de HubSpot (CORS), bloquea cualquier consulta que provenga directamente de un browser. Esta es la API que necesitamos usar para buscar el DNI del inquilino en la base de datos.
+
+El resultado: si el wizard intenta consultar el DNI directamente desde el browser, HubSpot rechaza la llamada antes de que llegue a procesarse.
+
+────────────────────────────────────────────────────────────────
+
+POR QUÉ EL TOKEN NO PUEDE ESTAR EN EL FRONTEND
+
+La solución obvia sería incluir el token de autenticación en el código del wizard para que el browser lo use directamente. El problema es que cualquier persona que abra las herramientas de desarrollo del browser puede ver ese token en texto plano y usarlo para leer o modificar cualquier dato del CRM de FINAER.
+
+────────────────────────────────────────────────────────────────
+
+LA SOLUCIÓN: PROXY LOCAL
+
+Se implementó un servidor intermediario que corre en la máquina del operador (proxy-test.js). El mecanismo es el siguiente:
+
+1. El browser consulta al proxy en localhost:3001
+2. El proxy recibe la consulta, agrega el token de autenticación y la reenvía a HubSpot
+3. HubSpot responde al proxy
+4. El proxy devuelve los datos al browser
+
+El browser nunca ve el token. HubSpot recibe la consulta desde el servidor, no desde el browser, por lo que no aplica el bloqueo de CORS.
+
+Esta solución fue validada con datos reales del portal. El lookup de DNI trae correctamente nombre del inquilino, incumplimiento registrado, conceptos adeudados y monto total de deuda.
+
+────────────────────────────────────────────────────────────────
+
+LIMITACIÓN ACTUAL
+
+El proxy corre en la máquina local del operador. Esto significa que solo funciona desde esa computadora y no puede compartirse con otros usuarios ni publicarse como landing page accesible externamente.
+
+────────────────────────────────────────────────────────────────
+
+CAMINO A PRODUCCIÓN
+
+La solución para producción es Cloudflare Workers: un servicio en la nube que replica exactamente el mismo mecanismo del proxy local, pero accesible desde cualquier dispositivo. El token vive como variable secreta encriptada en Cloudflare y nunca es visible. El wizard en producción apuntaría a la URL del Worker en lugar de al proxy local.
+
+El código del Worker y los pasos de configuración fueron documentados y entregados al Tech Lead para su implementación.

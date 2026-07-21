@@ -1,0 +1,10 @@
+{
+  "name": "finaer-pdf-generator",
+  "version": "1.0.0",
+  "description": "Genera PDF de recibo RUBROS_NORMALES con datos del ticket de HubSpot",
+  "main": "index.js",
+  "dependencies": {
+    "@sparticuz/chromium": "^123.0.1",
+    "puppeteer-core": "^22.0.0"
+  }
+}

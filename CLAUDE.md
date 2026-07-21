@@ -233,3 +233,34 @@ QUÉ NO HACER
 - No resumir al final de cada respuesta lo que acabás de hacer
 - No activar el Agente Prejudicial sin completar test y configuración
   de transferencia a humanos
+- No hardcodear tokens ni credenciales en ningún archivo — siempre process.env
+  DEUDA TÉCNICA CONOCIDA: 59 archivos en el repo tienen tokens hardcodeados
+  (pat-eu1-1b0bbdd8... y pat-eu1-87f3fc69...). Pendiente rotar tokens + migrar.
+
+================================================================================
+PROTOCOLO DE REPO Y SESIÓN DE TRABAJO
+================================================================================
+
+Al arrancar una sesión:
+  Verificar git status + git log -5. Si hay cambios sin commitear de una sesión
+  anterior, avisar antes de continuar — no asumir que quedó guardado.
+
+Al escribir cualquier script que use una API externa:
+  Tokens y credenciales SIEMPRE por process.env, nunca hardcodeados en el archivo.
+  Si el archivo a modificar ya tiene un token escrito a mano, avisar antes de
+  modificarlo — no replicarlo en el archivo nuevo.
+
+Antes de crear un script nuevo:
+  Buscar si existe un archivo con propósito similar en la carpeta. Si hay versiones
+  anteriores del mismo fix (_v2, _v3), informarlo — no generar otra versión sin
+  confirmar qué pasa con las anteriores.
+
+Separación investigación vs. producción:
+  Scripts de análisis puntual NO van en scripts/ mezclados con código operativo.
+  Si la pregunta se puede responder con el conector MCP de HubSpot en el chat,
+  usarlo — no generar un archivo. Si hay que guardarlo: subcarpeta _archivo/.
+
+Al cerrar una sesión donde se tocó código:
+  Informar qué archivos se crearon o modificaron, cuáles están commiteados y
+  cuáles no. Si algún código va a correr en producción, hacer el commit en esa
+  sesión, no dejarlo pendiente.

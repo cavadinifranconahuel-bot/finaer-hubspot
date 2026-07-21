@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recibo de Pago — FINAER</title>
+<style>
+  body { margin: 0; padding: 0; background: #f4f4f4; font-family: Arial, sans-serif; }
+  .wrapper { max-width: 620px; margin: 32px auto; background: #ffffff; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .header { background: #e30613; padding: 28px 40px; }
+  .header img { height: 36px; }
+  .header-title { color: #fff; font-size: 20px; font-weight: bold; margin-top: 12px; }
+  .body { padding: 36px 40px; color: #222; font-size: 14px; line-height: 1.75; }
+  .fecha { text-align: right; margin-bottom: 24px; color: #555; font-size: 13px; }
+  .recibo-body { text-align: justify; margin-bottom: 28px; }
+  .rubros-tabla { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+  .rubros-tabla td { padding: 8px 12px; border-bottom: 1px dotted #ddd; }
+  .rubros-tabla td:last-child { text-align: right; font-weight: 600; }
+  .rubros-tabla tr.total td { border-top: 2px solid #222; border-bottom: none; font-weight: bold; font-size: 14px; }
+  .aviso-firma { background: #fff8e1; border-left: 4px solid #f4c430; padding: 14px 18px; border-radius: 4px; font-size: 13px; color: #5a4a00; margin: 24px 0; }
+  .footer { background: #f9f9f9; border-top: 1px solid #eee; padding: 20px 40px; font-size: 12px; color: #888; text-align: center; line-height: 1.6; }
+  .footer strong { color: #555; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-0.5px;">FINAER</div>
+    <div class="header-title">Recibo de Pago — Garantía de Alquiler</div>
+  </div>
+
+  <div class="body">
+
+    <div class="fecha">Ciudad de Buenos Aires, {{ customProperties.fecha_actual }}</div>
+
+    <p class="recibo-body">
+      Estimado/a <strong>{{ customProperties.nombre_propietario }}</strong>,<br><br>
+      Por medio del presente le informamos que <strong>SISTEMA FINAER S.A.</strong> (CUIT 30-71528749-4)
+      ha realizado una transferencia bancaria por la suma de
+      <strong>${{ customProperties.monto }}</strong>
+      (<em>{{ customProperties.monto_letras }}</em>),
+      en carácter de Locador/a y en cumplimiento del Contrato de Garantía relativo al Contrato de Locación
+      respecto del inmueble sito en <strong>{{ customProperties.direccion_inmueble }}</strong>,
+      siendo el/la Sr./Sra. <strong>{{ customProperties.nombre_inquilino }}</strong>
+      DNI <strong>{{ customProperties.dni_inquilino }}</strong> locatario/a del mismo.
+    </p>
+
+    <p style="margin-bottom:8px;font-weight:600;font-size:13px;color:#444;">Detalle de conceptos afianzados:</p>
+    <table class="rubros-tabla">
+      {{ customProperties.rubros_html }}
+      <tr class="total">
+        <td>TOTAL SUMA AFIANZADA</td>
+        <td>${{ customProperties.monto }}</td>
+      </tr>
+    </table>
+
+    <div class="aviso-firma">
+      📎 Adjunto encontrará este recibo en formato PDF.<br>
+      Le solicitamos que lo <strong>imprima, firme y nos lo devuelva</strong> respondiendo este correo o enviándolo a
+      <a href="mailto:incumplimientos@finaersa.com.ar" style="color:#8a6d00;">incumplimientos@finaersa.com.ar</a>.
+    </div>
+
+    <p style="font-size:13px;color:#555;">
+      Ante cualquier consulta podés comunicarte con el gestor
+      <strong>{{ owner.firstName }} {{ owner.lastName }}</strong>
+      o al equipo de legales al <strong>6842-5100 opción 4</strong>.
+    </p>
+
+  </div>
+
+  <div class="footer">
+    <strong>SISTEMA FINAER S.A.</strong> · CUIT 30-71528749-4<br>
+    Este correo es un mensaje operativo automatizado, por favor no respondas directamente.<br>
+    Para consultas escribí a <a href="mailto:incumplimientos@finaersa.com.ar" style="color:#888;">incumplimientos@finaersa.com.ar</a>
+  </div>
+
+</div>
+</body>
+</html>
