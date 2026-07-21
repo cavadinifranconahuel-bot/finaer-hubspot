@@ -99,7 +99,6 @@ async function reemplazarPlaceholders(token, docId, fields) {
   const montoNumero = fmt(montoTotal > 0 ? montoTotal : (parseFloat(fields.monto_total_de_la_deuda_acumulada) || 0));
   const periodo = fields.periodo_de_deuda || '';
   const detalleDeudas = Object.entries(conceptos)
-    .filter(([, v]) => v > 0)
     .map(([label, v]) => `-${label}${periodo ? ` [${periodo}]` : ''} $${fmt(v)}.-`)
     .join('\n');
 
