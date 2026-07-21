@@ -171,7 +171,7 @@ async function enviarEmailSmtp(pdfBase64, fields) {
   if (!smtpUser || !smtpPass) throw new Error('HS_SMTP_USER o HS_SMTP_PASS no configurados');
 
   const boundary = 'FINAER_' + Date.now().toString(36);
-  const fileName = `Carta_Pago_${fields.nro_expediente || 'FINAER'}.pdf`;
+  const fileName = `${fields.nombre_y_apellido_del_inquilino || 'Inquilino'} - ${fields.nro_expediente || ''} - ${fields.periodo_de_deuda || ''}.pdf`;
   const toEmail = fields.correo_del_propietario;
 
   const htmlBody = '<p>Estimado/a,</p>'
@@ -297,7 +297,7 @@ exports.main = async (event, callback) => {
     docId = await copiarTemplate(gToken, titulo);
     await reemplazarPlaceholders(gToken, docId, fields);
     const pdfBase64 = await exportarPdf(gToken, docId);
-    const nombrePdf = `Carta de Pago - ${fields.nombre_y_apellido_del_inquilino || fields.nro_expediente} - ${new Date().toLocaleDateString('es-AR', { timeZone: 'America/Buenos_Aires' }).replace(/\//g, '-')}`;
+    const nombrePdf = `${fields.nombre_y_apellido_del_inquilino || 'Inquilino'} - ${fields.nro_expediente || ''} - ${fields.periodo_de_deuda || ''}`;
     await guardarPdfEnDrive(gToken, pdfBase64, nombrePdf);
     await eliminarArchivo(gToken, docId);
     docId = null;
