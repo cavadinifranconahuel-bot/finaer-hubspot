@@ -202,7 +202,7 @@ async function enviarEmailSmtp(pdfBase64, fields) {
     '',
     `--${boundary}`,
     'Content-Type: application/pdf',
-    `Content-Disposition: attachment; filename="${fileName}"`,
+    `Content-Disposition: attachment; filename*=UTF-8''${encodeURIComponent(fileName)}`,
     'Content-Transfer-Encoding: base64',
     '',
     pdfChunked,
