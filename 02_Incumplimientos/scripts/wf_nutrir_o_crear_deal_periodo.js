@@ -65,7 +65,7 @@ exports.main = async (event, callback) => {
       ...(existente || '').split(/[,;]/).map(t => t.trim()).filter(Boolean),
       ...(nuevo     || '').split(/[,;]/).map(t => t.trim()).filter(Boolean)
     ]);
-    return [...set].join(', ');
+    return [...set].join(';');
   }
 
   // ── Helper: buscar o crear deal maestro y asociar el deal de período ───
