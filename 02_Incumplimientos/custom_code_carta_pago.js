@@ -96,10 +96,11 @@ async function reemplazarPlaceholders(token, docId, fields) {
   };
   const fmt = (n) => n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const montoTotal = Object.values(conceptos).reduce((s, v) => s + v, 0);
-  const montoNumero = fmt(montoTotal > 0 ? montoTotal : (parseFloat(fields.monto_total_de_la_deuda) || 0));
+  const montoNumero = fmt(montoTotal > 0 ? montoTotal : (parseFloat(fields.monto_total_de_la_deuda_acumulada) || 0));
+  const periodo = fields.periodo_de_deuda || '';
   const detalleDeudas = Object.entries(conceptos)
     .filter(([, v]) => v > 0)
-    .map(([label, v]) => `-${label} $${fmt(v)}.-`)
+    .map(([label, v]) => `-${label}${periodo ? ` [${periodo}]` : ''} $${fmt(v)}.-`)
     .join('\n');
 
   const reemplazos = {
@@ -175,13 +176,13 @@ async function enviarEmailSmtp(pdfBase64, fields) {
   const toEmail = fields.correo_del_propietario;
 
   const htmlBody = '<p>Estimado/a,</p>'
-    + '<p>Por medio de la presente, <strong>FINAER S.A.</strong> le informa que se ha realizado '
+    + '<p>Por medio de la presente, <strong>SISTEMA FINAER S.A.</strong> le informa que se ha realizado '
     + 'la transferencia bancaria correspondiente al incumplimiento de pago.</p>'
     + '<p>Encontrara adjunta la <strong>Carta de Pago</strong> con el detalle de la operacion: '
     + 'expediente, monto, periodo y datos del inquilino.</p>'
     + '<p>Le solicitamos que <strong>firme la carta adjunta y nos la remita a la brevedad</strong>. '
     + 'Hasta tanto no recibamos su conformidad firmada, no podremos proceder con nuevas transferencias.</p>'
-    + '<p>Atentamente,<br><strong>Equipo de Incumplimientos - FINAER S.A.</strong>'
+    + '<p>Atentamente,<br><strong>Equipo de Incumplimientos - SISTEMA FINAER S.A.</strong>'
     + '<br>incumplimientos@finaersa.com.ar</p>';
 
   const htmlB64 = Buffer.from(htmlBody, 'utf8').toString('base64').match(/.{1,76}/g).join('\r\n');
