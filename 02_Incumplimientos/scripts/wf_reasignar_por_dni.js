@@ -34,21 +34,25 @@ exports.main = async (event, callback) => {
   const ticketId = String(event.object.objectId);
 
   try {
-    const dni = event.inputFields['dni_inquilino'];
+    const nroExp = event.inputFields['nro_expediente'];
+    const dni    = event.inputFields['dni_inquilino'];
+    const nombre = event.inputFields['nombre_y_apellido_del_inquilino'];
 
-    if (!dni) {
-      console.log('DNI vacío — sin acción');
+    if (!nroExp || !dni || !nombre) {
+      console.log('Faltan campos (nro_expediente / dni_inquilino / nombre) — sin acción');
       return callback({ outputFields: {} });
     }
 
-    console.log(\`Buscando tickets previos con DNI \${dni}\`);
+    console.log(\`Buscando tickets previos: exp \${nroExp} | DNI \${dni} | \${nombre}\`);
 
     const search = await client.crm.tickets.searchApi.doSearch({
       filterGroups: [{
         filters: [
-          { propertyName: 'dni_inquilino', operator: 'EQ', value: dni },
-          { propertyName: 'hs_pipeline', operator: 'EQ', value: '3353793749' },
-          { propertyName: 'hs_object_id', operator: 'NEQ', value: ticketId }
+          { propertyName: 'nro_expediente',                  operator: 'EQ',  value: nroExp   },
+          { propertyName: 'dni_inquilino',                   operator: 'EQ',  value: dni      },
+          { propertyName: 'nombre_y_apellido_del_inquilino', operator: 'EQ',  value: nombre   },
+          { propertyName: 'hs_pipeline',                     operator: 'EQ',  value: '3353793749' },
+          { propertyName: 'hs_object_id',                    operator: 'NEQ', value: ticketId }
         ]
       }],
       properties: ['hubspot_owner_id', 'createdate'],
@@ -57,19 +61,19 @@ exports.main = async (event, callback) => {
     });
 
     if (!search.results || search.results.length === 0) {
-      console.log('No hay tickets previos con este DNI — se mantiene asignación rotativa');
+      console.log('No hay tickets previos con estos datos — se mantiene asignación rotativa');
       return callback({ outputFields: {} });
     }
 
     const ticketPrevio = search.results[0];
-    const propietario = ticketPrevio.properties?.hubspot_owner_id;
+    const propietario  = ticketPrevio.properties?.hubspot_owner_id;
 
     if (!propietario) {
       console.log('Ticket previo encontrado pero sin propietario — sin acción');
       return callback({ outputFields: {} });
     }
 
-    console.log(\`Ticket previo: \${ticketPrevio.id} | Propietario: \${propietario}\`);
+    console.log(\`Primer gestión: ticket \${ticketPrevio.id} | Creado: \${ticketPrevio.properties?.createdate} | Owner: \${propietario}\`);
 
     await client.crm.tickets.basicApi.update(ticketId, {
       properties: { hubspot_owner_id: propietario }
@@ -86,7 +90,9 @@ exports.main = async (event, callback) => {
 };`.trim(),
         runtime: 'NODE20X',
         inputFields: [
-          { name: 'dni_inquilino', value: { propertyName: 'dni_inquilino', type: 'OBJECT_PROPERTY' } }
+          { name: 'nro_expediente',                  value: { propertyName: 'nro_expediente',                  type: 'OBJECT_PROPERTY' } },
+          { name: 'dni_inquilino',                   value: { propertyName: 'dni_inquilino',                   type: 'OBJECT_PROPERTY' } },
+          { name: 'nombre_y_apellido_del_inquilino', value: { propertyName: 'nombre_y_apellido_del_inquilino', type: 'OBJECT_PROPERTY' } }
         ],
         outputFields: [],
         type: 'CUSTOM_CODE'
