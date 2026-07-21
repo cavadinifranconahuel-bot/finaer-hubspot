@@ -53,7 +53,7 @@ exports.main = async (event, callback) => {
         ]
       }],
       properties: ['hubspot_owner_id', 'createdate'],
-      sorts: [{ propertyName: 'createdate', direction: 'DESCENDING' }],
+      sorts: [{ propertyName: 'createdate', direction: 'ASCENDING' }],
       limit: 1
     });
 
