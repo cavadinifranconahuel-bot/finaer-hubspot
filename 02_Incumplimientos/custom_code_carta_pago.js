@@ -4,7 +4,7 @@ const net = require('net');
 const tls = require('tls');
 
 const TEMPLATE_DOC_ID = '1LWhpPEsJEOcUT7RGnuBnH8VTW4z6wusUynjCuWz3IKY';
-const TEMP_FOLDER_ID = '1mmp59QoVvqe2PRr6dt93t1D1dLwgEN91';
+const TEMP_FOLDER_ID = '1GYupOG9Q7CeIoU1elsj_ENktC8T0QONk';
 const SMTP_HOST = 'smtp.hubapi.com';
 const SMTP_PORT = 587;
 const FROM_EMAIL = 'incumplimientos@finaersa.com.ar';
@@ -82,6 +82,40 @@ async function copiarTemplate(token, titulo) {
   return r.body.id;
 }
 
+function numeroALetras(n) {
+  if (n === 0) return 'CERO';
+  const und = ['','UNO','DOS','TRES','CUATRO','CINCO','SEIS','SIETE','OCHO','NUEVE',
+               'DIEZ','ONCE','DOCE','TRECE','CATORCE','QUINCE','DIECISÉIS','DIECISIETE','DIECIOCHO','DIECINUEVE'];
+  const dec = ['','','VEINTE','TREINTA','CUARENTA','CINCUENTA','SESENTA','SETENTA','OCHENTA','NOVENTA'];
+  const cen = ['','CIENTO','DOSCIENTOS','TRESCIENTOS','CUATROCIENTOS','QUINIENTOS',
+               'SEISCIENTOS','SETECIENTOS','OCHOCIENTOS','NOVECIENTOS'];
+  function menor1000(x) {
+    if (x === 0) return '';
+    if (x < 20) return und[x];
+    if (x < 30) return x === 20 ? 'VEINTE' : 'VEINTI' + und[x - 20];
+    if (x < 100) { const d = Math.floor(x/10), u = x%10; return dec[d] + (u ? ' Y ' + und[u] : ''); }
+    if (x === 100) return 'CIEN';
+    const c = Math.floor(x/100), r = x%100;
+    return cen[c] + (r ? ' ' + menor1000(r) : '');
+  }
+  const mill = Math.floor(n / 1000000);
+  const mil  = Math.floor((n % 1000000) / 1000);
+  const res  = n % 1000;
+  const partes = [];
+  if (mill) partes.push(mill === 1 ? 'UN MILLÓN' : menor1000(mill) + ' MILLONES');
+  if (mil)  partes.push(mil  === 1 ? 'MIL'       : menor1000(mil)  + ' MIL');
+  if (res)  partes.push(menor1000(res));
+  return partes.join(' ');
+}
+
+function montoEnLetras(monto) {
+  const entero = Math.floor(monto);
+  const cents  = Math.round((monto - entero) * 100);
+  let letras = numeroALetras(entero).toLowerCase();
+  if (cents > 0) letras += ' con ' + String(cents).padStart(2, '0') + '/100';
+  return letras;
+}
+
 async function reemplazarPlaceholders(token, docId, fields) {
   const fecha = new Date().toLocaleDateString('es-AR', {
     day: '2-digit', month: 'long', year: 'numeric', timeZone: 'America/Buenos_Aires'
@@ -96,7 +130,8 @@ async function reemplazarPlaceholders(token, docId, fields) {
   };
   const fmt = (n) => n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const montoTotal = Object.values(conceptos).reduce((s, v) => s + v, 0);
-  const montoNumero = fmt(montoTotal > 0 ? montoTotal : (parseFloat(fields.monto_total_de_la_deuda_acumulada) || 0));
+  const montoTotalNum = montoTotal > 0 ? montoTotal : (parseFloat(fields.monto_total_de_la_deuda_acumulada) || 0);
+  const montoNumero = fmt(montoTotalNum);
   const periodo = fields.periodo_de_deuda || '';
   const detalleDeudas = Object.entries(conceptos)
     .map(([label, v]) => `-${label}${periodo ? ` [${periodo}]` : ''} $${fmt(v)}.-`)
@@ -107,8 +142,8 @@ async function reemplazarPlaceholders(token, docId, fields) {
     '{{NRO_EXPEDIENTE}}': fields.nro_expediente || '',
     '{{DETALLE_DEUDAS}}': detalleDeudas,
     '{{MONTO_NUMERO}}': montoNumero,
-    '{{MONTO_LETRAS}}': fields.monto_total_deuda_letras || '',
-    '{{NOMBRE_RECEPTOR}}': [fields.firstname, fields.lastname].filter(Boolean).join(' '),
+    '{{MONTO_LETRAS}}': fields.monto_total_deuda_letras || montoEnLetras(montoTotalNum),
+    '{{NOMBRE_RECEPTOR}}': fields.nombre_y_apellido_del_propietario || '',
     '{{NOMBRE_INQUILINO}}': fields.nombre_y_apellido_del_inquilino || '',
     '{{DNI_INQUILINO}}': fields.dni_inquilino || '',
     '{{DIRECCION}}': fields.direccion_del_inmueble || '',
@@ -174,11 +209,14 @@ async function enviarEmailSmtp(pdfBase64, fields) {
   const fileName = `${fields.nombre_y_apellido_del_inquilino || 'Inquilino'} - ${fields.nro_expediente || ''} - ${fields.periodo_de_deuda || ''}.pdf`;
   const toEmail = fields.correo_del_propietario;
 
+  const nombreInquilino = fields.nombre_y_apellido_del_inquilino || '';
+  const dniInquilino = fields.dni_inquilino || '';
   const htmlBody = '<p>Estimado/a,</p>'
     + '<p>Por medio de la presente, <strong>SISTEMA FINAER S.A.</strong> le informa que se ha realizado '
-    + 'la transferencia bancaria correspondiente al incumplimiento de pago.</p>'
+    + 'la transferencia bancaria correspondiente al incumplimiento de pago del/la inquilino/a '
+    + `<strong>${nombreInquilino}</strong>, DNI <strong>${dniInquilino}</strong>.</p>`
     + '<p>Encontrara adjunta la <strong>Carta de Pago</strong> con el detalle de la operacion: '
-    + 'expediente, monto, periodo y datos del inquilino.</p>'
+    + 'expediente, monto y periodo.</p>'
     + '<p>Le solicitamos que <strong>firme la carta adjunta y nos la remita a la brevedad</strong>. '
     + 'Hasta tanto no recibamos su conformidad firmada, no podremos proceder con nuevas transferencias.</p>'
     + '<p>Atentamente,<br><strong>Equipo de Incumplimientos - SISTEMA FINAER S.A.</strong>'
