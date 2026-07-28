@@ -1,0 +1,6 @@
+name               = "finaer-hs-proxy"
+main               = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Token: wrangler secret put HS_TOKEN
+# Nunca hardcodear el token en este archivo
