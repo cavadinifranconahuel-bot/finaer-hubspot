@@ -303,7 +303,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 </div>
 
 <script>
-const HS_TOKEN  = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8'; // temporal — TL ocultará via proxy
 const PORTAL_ID = '145725856';
 const FORM_ID   = '4bab489a-1156-4a4e-9924-d9ce7c241985'; // form Contacto → workflow crea el ticket
 let datosInquilino = null;
@@ -381,7 +380,7 @@ async function buscarDNI() {
   if (!dni || dni.length < 7) { err.textContent = 'Ingresá un DNI válido (mínimo 7 dígitos).'; err.style.display = 'block'; return; }
   btn.disabled = true; btn.textContent = 'Buscando...';
 
-  const HS_BASE = location.hostname === 'localhost' ? 'http://localhost:3001/hs' : 'https://api.hubapi.com';
+  const HS_BASE = location.hostname === 'localhost' ? 'http://localhost:3001/hs' : 'https://finaer-hs-proxy.ovargas-ec2.workers.dev';
   const hs = (method, path, body) => fetch(HS_BASE + path, {
     method, headers: { 'Content-Type': 'application/json' },
     ...(body ? { body: JSON.stringify(body) } : {})
