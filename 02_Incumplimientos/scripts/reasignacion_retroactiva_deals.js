@@ -2,7 +2,7 @@
 // Para cada grupo (nro_expediente + DNI + nombre): asigna a todos el owner del deal más antiguo
 // Usar SOLO una vez, antes de activar WF 4454895830
 
-const TOKEN    = 'pat-eu1-6d07a36d-80ad-4eea-9e42-6b8763bfadf5';
+const TOKEN    = process.env.HUBSPOT_TOKEN;
 const BASE     = 'https://api.hubapi.com';
 const PIPELINE = '3403406575';
 const DELAY_MS = 120;
