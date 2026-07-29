@@ -1,6 +1,6 @@
-// Clone existing form and update fields
+﻿// Clone existing form and update fields
 const https = require('https');
-const TOKEN = 'pat-eu1-87f3fc69-9f28-409b-9046-db09ef4e6d31';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 function apiRequest(method, apiPath, body) {
   return new Promise((resolve, reject) => {

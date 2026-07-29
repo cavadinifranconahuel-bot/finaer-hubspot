@@ -1,10 +1,10 @@
-// actualizar_landing_eventos.js
+﻿// actualizar_landing_eventos.js
 // Cambios en landing-registros-eventos-finaer:
 //   1. Activa el rich text oculto (row 1) con el nuevo texto de Mendoza
 //   2. Cambia el form a "Formulario Evento Test" (a94e2078)
 // Guarda como DRAFT — no publica. Franco publica desde la UI.
 
-const TOKEN       = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN       = process.env.HUBSPOT_TOKEN;
 const LP_ID       = '366631027916';
 const FORM_NUEVO  = 'a94e2078-7d39-42e6-a6ca-5a487bb0578b';
 

@@ -1,5 +1,5 @@
-const https = require('https');
-const TOKEN = 'pat-eu1-87f3fc69-9f28-409b-9046-db09ef4e6d31';
+﻿const https = require('https');
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const FORM_ID = '90322fde-d53b-4850-8764-da9009db2c59';
 const BANNER_URL = 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/eventos/sinor-2026/Banner%201200%20x%20600.jpg';
 const LOGO_URL   = 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/eventos/sinor-2026/Logo%20Tag%20Line.png';

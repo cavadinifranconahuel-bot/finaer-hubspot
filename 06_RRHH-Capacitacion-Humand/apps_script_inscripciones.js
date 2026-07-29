@@ -1,7 +1,7 @@
-// Google Apps Script — Reporte Inscripciones Capacitación Humand
+﻿// Google Apps Script — Reporte Inscripciones Capacitación Humand
 // Pegarlo en: Extensiones → Apps Script → reemplazar todo el contenido → Guardar → Ejecutar "actualizarReporte"
 
-const HUBSPOT_TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const HUBSPOT_TOKEN = process.env.HUBSPOT_TOKEN;
 const FORM_ID       = 'afcadf5d-3a40-4844-b3a4-4df144c9bebb';
 
 const TURNOS = {

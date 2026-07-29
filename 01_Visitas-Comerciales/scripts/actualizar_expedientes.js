@@ -1,7 +1,7 @@
-const https = require('https');
+﻿const https = require('https');
 const fs = require('fs');
 
-const TOKEN = 'pat-eu1-87f3fc69-9f28-409b-9046-db09ef4e6d31';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const PIPELINE_ID = '3353793749';
 
 // Lista limpia y deduplicada. Omitidos: "PIZZA" (nombre incompleto), "Pablo enrique Acosta Pereyra" (nombre incorrecto según usuario)

@@ -1,9 +1,9 @@
-// agregar_filtro_pipeline_wf_pedidos.js
+﻿// agregar_filtro_pipeline_wf_pedidos.js
 // Agrega filtro pipeline=3403406575 a los WFs de Pedido Recupero y Desembolso
 // para que no disparen en deals del pipeline maestro (3920555199)
 // node agregar_filtro_pipeline_wf_pedidos.js
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 const filtroPipeline = {
   filterType: 'PROPERTY',

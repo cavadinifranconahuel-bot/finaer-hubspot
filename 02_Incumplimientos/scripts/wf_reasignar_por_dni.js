@@ -1,8 +1,8 @@
-// WF — Reasignación por DNI Inquilino (Incumplimientos)
+﻿// WF — Reasignación por DNI Inquilino (Incumplimientos)
 // Trigger: dni_inquilino se completa en un ticket del pipeline de Incumplimientos
 // Lógica: si existe ticket previo con mismo DNI, asigna el mismo propietario
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const BASE = 'https://api.hubapi.com';
 
 async function crearWF() {

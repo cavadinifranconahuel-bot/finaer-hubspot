@@ -1,5 +1,5 @@
-// ver_form_adhesion.js
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+﻿// ver_form_adhesion.js
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const FORM_ID = 'ed2a220e-0d3b-4d8d-a84f-13b870540258';
 
 async function main() {

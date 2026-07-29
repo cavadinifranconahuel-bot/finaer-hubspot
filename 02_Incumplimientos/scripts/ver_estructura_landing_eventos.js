@@ -1,5 +1,5 @@
-// ver_estructura_landing_eventos.js
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+﻿// ver_estructura_landing_eventos.js
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const LP_ID = '366631027916';
 
 async function main() {

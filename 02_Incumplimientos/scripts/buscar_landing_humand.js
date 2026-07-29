@@ -1,5 +1,5 @@
-// buscar landing humand y propiedad turno_capacitacion_humand
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+﻿// buscar landing humand y propiedad turno_capacitacion_humand
+const TOKEN = process.env.HUBSPOT_TOKEN;
 async function main() {
   const fetch = (await import('node-fetch')).default;
   const h = { 'Authorization': `Bearer ${TOKEN}` };

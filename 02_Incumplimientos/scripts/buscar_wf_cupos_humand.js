@@ -1,5 +1,5 @@
-// buscar_wf_cupos_humand.js — busca WFs relacionados a Humand/cupos
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+﻿// buscar_wf_cupos_humand.js — busca WFs relacionados a Humand/cupos
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 async function main() {
   const fetch = (await import('node-fetch')).default;

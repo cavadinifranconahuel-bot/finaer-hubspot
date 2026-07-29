@@ -1,4 +1,4 @@
-// crear_wf_alertas_cuotas.js
+﻿// crear_wf_alertas_cuotas.js
 // Crea 4 WFs de alertas por email para cuotas y promesas de pago (Mora 2)
 // WF1: Alerta Cuota 1  (1 día antes + día de vencimiento)
 // WF2: Alerta Cuota 2  (ídem, filtro cantidad_de_cuotas >= 2)
@@ -8,7 +8,7 @@
 // node crear_wf_alertas_cuotas.js
 
 const https = require('https');
-const TOKEN = process.env.HUBSPOT_TOKEN || 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN || process.env.HUBSPOT_TOKEN;
 const PIPELINE = '3403406575';
 
 function api(method, path, body) {

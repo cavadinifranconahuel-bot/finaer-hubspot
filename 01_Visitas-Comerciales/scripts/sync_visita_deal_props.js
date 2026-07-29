@@ -1,8 +1,8 @@
-const https = require('https');
+﻿const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const TOKEN = 'pat-eu1-87f3fc69-9f28-409b-9046-db09ef4e6d31';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const WORKFLOW_B_ID = '4092196041';
 
 // ── XLSX parsing (without npm — read binary, find strings) ──────────────────

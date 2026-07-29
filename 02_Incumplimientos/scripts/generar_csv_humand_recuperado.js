@@ -1,11 +1,11 @@
-// generar_csv_humand_recuperado.js
+﻿// generar_csv_humand_recuperado.js
 // Genera CSV desde recursos_acumulados_humand en HubSpot
 // Correr desde 02_Incumplimientos/scripts (tiene node_modules)
 
 const fs   = require('fs');
 const path = require('path');
 
-const TOKEN  = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN  = process.env.HUBSPOT_TOKEN;
 const OUTPUT = path.join(__dirname, '..', '..', '06_RRHH-Capacitacion-Humand', 'inscripciones_humand_29jun_recuperado.csv');
 
 const TURNO_LABEL = {

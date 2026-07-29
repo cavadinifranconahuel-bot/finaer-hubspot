@@ -1,8 +1,8 @@
-// borrar_deals_periodo_sin_datos.js
+﻿// borrar_deals_periodo_sin_datos.js
 // Borra deals del pipeline de período (3403406575) que no tienen ningún monto de deuda
 // node borrar_deals_periodo_sin_datos.js
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const PROPS = ['monto_total_de_la_deuda_acumulada','alquiler','luz','gas','abl','deuda_expensas','deuda_aysa','deuda_por_entrega_de_llaves'];
 
 async function main() {

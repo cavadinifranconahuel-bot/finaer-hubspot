@@ -1,4 +1,4 @@
-# Visitas Comerciales — Documentación Completa
+﻿# Visitas Comerciales — Documentación Completa
 **Proyecto:** Gestión de Visitas Comerciales — FINAER  
 **Fecha:** Abril 2026  
 **Estado:** Propiedades creadas ✅ | Código generado ✅ | Deploy pendiente ⏳
@@ -233,7 +233,7 @@ Antes del deploy, configurar el secret en el portal:
 
 ```bash
 hs secrets add PRIVATE_APP_ACCESS_TOKEN
-# Ingresar: pat-eu1-87f3fc69-9f28-409b-9046-db09ef4e6d31
+# Ingresar: [TOKEN_REDACTADO]
 ```
 
 ---

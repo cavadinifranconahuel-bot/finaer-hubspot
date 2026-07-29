@@ -1,9 +1,9 @@
-// WF — Reasignación por DNI Inquilino (Deals — Seguimiento de Deuda)
+﻿// WF — Reasignación por DNI Inquilino (Deals — Seguimiento de Deuda)
 // Lógica idéntica al WF de Tickets pero sobre el pipeline de Deals (3403406575)
 // Trigger: dni_inquilino se conoce en un Deal del pipeline
 // Si existe un Deal previo con el mismo DNI → reasigna al mismo propietario
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const BASE  = 'https://api.hubapi.com';
 
 async function crearWF() {

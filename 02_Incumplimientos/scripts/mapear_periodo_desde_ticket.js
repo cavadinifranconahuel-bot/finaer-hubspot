@@ -1,9 +1,9 @@
-// mapear_periodo_desde_ticket.js
+﻿// mapear_periodo_desde_ticket.js
 // Asigna periodo_de_deuda a deals del pipeline de período sin ese valor,
 // usando la fecha de creación del ticket asociado (o la del deal como fallback)
 // node mapear_periodo_desde_ticket.js
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 const MESES = {
   1: 'Enero', 2: 'Febrero', 3: 'Marzo',     4: 'Abril',

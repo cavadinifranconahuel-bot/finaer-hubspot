@@ -1,8 +1,8 @@
-const https = require('https');
+﻿const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const FUNCTION_DIR = path.join(__dirname, 'buscar-inquilino', 'buscar-inquilino.functions');
 
 function simpleGet(urlPath) {

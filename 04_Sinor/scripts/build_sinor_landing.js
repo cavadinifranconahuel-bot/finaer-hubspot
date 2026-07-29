@@ -1,10 +1,10 @@
-const https = require('https');
+﻿const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { Readable } = require('stream');
 
-const TOKEN = 'pat-eu1-87f3fc69-9f28-409b-9046-db09ef4e6d31';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 // ─── HTTP helpers ──────────────────────────────────────────────────────────────
 

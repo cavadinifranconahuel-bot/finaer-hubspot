@@ -1,11 +1,11 @@
-// actualizar_wf_mora2_periodo.js
+﻿// actualizar_wf_mora2_periodo.js
 // Actualiza WF 4465972431 "Mora 2 — Nutrir o Crear Deal Período" via Automation API v4
 // node actualizar_wf_mora2_periodo.js
 
 const fs   = require('fs');
 const path = require('path');
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const WF_ID = '4465972431';
 
 const sourceCode = fs.readFileSync(

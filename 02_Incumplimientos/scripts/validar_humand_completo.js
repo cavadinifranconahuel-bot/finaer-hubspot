@@ -1,7 +1,7 @@
-// validar_humand_completo.js — doble check exhaustivo antes de mandar a RRHH
+﻿// validar_humand_completo.js — doble check exhaustivo antes de mandar a RRHH
 // node validar_humand_completo.js
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 async function search(fetch, after = null) {
   const body = {

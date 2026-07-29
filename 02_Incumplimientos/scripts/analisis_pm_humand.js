@@ -1,6 +1,6 @@
-// analisis_pm_humand.js — responde los 4 puntos de la PM
+﻿// analisis_pm_humand.js — responde los 4 puntos de la PM
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 async function search(fetch, after = null) {
   const body = {

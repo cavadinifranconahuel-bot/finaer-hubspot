@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Crea el WF que asocia automáticamente el inquilino al ticket de incumplimiento.
  *
  * Trigger: Ticket creado en pipeline Incumplimientos (3353793749)
@@ -7,7 +7,7 @@
  */
 
 const https = require('https');
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 function api(method, path, body) {
   return new Promise((resolve, reject) => {

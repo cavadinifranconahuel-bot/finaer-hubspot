@@ -1,7 +1,7 @@
-// detalle_landing_eventos.js
+﻿// detalle_landing_eventos.js
 // Muestra el contenido completo de la landing y los campos del form actual y del pedido
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const LP_ID = '366631027916';
 
 // Form "Adhesión Eventos" — el que parece estar en la landing actualmente

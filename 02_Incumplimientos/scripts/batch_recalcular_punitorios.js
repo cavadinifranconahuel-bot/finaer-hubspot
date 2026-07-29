@@ -1,4 +1,4 @@
-// batch_recalcular_punitorios.js
+﻿// batch_recalcular_punitorios.js
 // Aplica Math.ceil a los campos de punitorios que tienen decimales.
 // NO recalcula desde las fechas — solo redondea el valor que ya está guardado.
 // Si el campo ya es entero, no lo toca.
@@ -11,7 +11,7 @@
 
 const hubspot = require('@hubspot/api-client');
 
-const TOKEN   = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN   = process.env.HUBSPOT_TOKEN;
 const DRY_RUN = process.argv.includes('--dry-run');
 
 const client = new hubspot.Client({ accessToken: TOKEN });

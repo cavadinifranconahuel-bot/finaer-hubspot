@@ -1,4 +1,4 @@
-$TOKEN   = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8'
+﻿$TOKEN   = $env:HUBSPOT_TOKEN
 $headers = @{ 'Authorization' = "Bearer $TOKEN"; 'Content-Type' = 'application/json' }
 
 function New-Prop($body) {

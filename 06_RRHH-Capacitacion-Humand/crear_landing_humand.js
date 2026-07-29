@@ -1,5 +1,5 @@
-const https = require('https');
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+﻿const https = require('https');
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 function api(method, path, body) {
   return new Promise((resolve) => {

@@ -2,13 +2,26 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Notificación de Incumplimiento — FINAER</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f5; padding: 32px 16px; }
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Kumbh+Sans:wght@400;600;700&display=swap');
 
-.progress { display: flex; align-items: center; justify-content: center; max-width: 600px; margin: 0 auto 28px; }
+/* ── Layout: encabezado → wizard → pie global ── */
+body { display: flex !important; flex-direction: column !important; min-height: 100vh !important; }
+body > footer,
+body > [id*="footer"],
+body > [class*="footer"],
+body > [id*="Footer"],
+body > [class*="Footer"] { order: 4 !important; }
+#wizard-root { order: 3 !important; flex-shrink: 0; }
+
+/* ── Reset scoped ── */
+#wizard-root, #wizard-root * { box-sizing: border-box; }
+#wizard-root { font-family: 'Kumbh Sans', -apple-system, sans-serif; background: #f0f2f5; padding: 32px 16px; }
+
+/* ── Progress bar ── */
+.progress { display: flex; align-items: center; justify-content: center; max-width: 700px; margin: 0 auto 28px; }
 .step-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; background: #e0e0e0; color: #999; transition: all .3s; flex-shrink: 0; }
 .step-dot.active { background: #e30613; color: #fff; }
 .step-dot.done { background: #4a4a49; color: #fff; }
@@ -17,113 +30,154 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .step-label { font-size: 10px; color: #999; text-align: center; margin-top: 4px; white-space: nowrap; }
 .progress-wrap { display: flex; flex-direction: column; align-items: center; }
 
-.card { background: #fff; border-radius: 10px; box-shadow: 0 2px 16px rgba(0,0,0,.12); padding: 40px; max-width: 600px; margin: 0 auto 40px; width: 100%; }
+/* ── Card ── */
+.fi-card { background: #fff; border-radius: 10px; box-shadow: 0 2px 16px rgba(0,0,0,.11); padding: 40px; max-width: 700px; margin: 0 auto 40px; width: 100%; }
+.fi-card h2 { font-size: 19px; font-weight: 700; color: #2f3743; margin-bottom: 6px; font-family: 'Montserrat', sans-serif; }
+.fi-sub { color: #777; font-size: 13px; margin-bottom: 24px; line-height: 1.5; }
 
+/* ── Panels ── */
 .panel { display: none; }
 .panel.active { display: block; }
 
-.panel-title { font-size: 17px; font-weight: 700; color: #2f3743; margin-bottom: 6px; }
-.panel-sub { font-size: 13px; color: #777; margin-bottom: 24px; line-height: 1.5; }
+/* ── Sección ── */
+.fi-seccion { margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #fadadb; }
+.fi-seccion span { font-size: 11px; font-weight: 700; color: #e30613; letter-spacing: 1.2px; text-transform: uppercase; }
 
-.campo { margin-bottom: 16px; }
-.campo label { display: block; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
-.campo input, .campo select, .campo textarea {
-  width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 8px;
-  font-size: 14px; outline: none; transition: border .2s; background: #fafafa;
+/* ── Campos ── */
+.fi-campo { margin-bottom: 18px; }
+.fi-campo label { display: block; font-size: 12px; font-weight: 700; color: #444; margin-bottom: 7px; letter-spacing: .4px; }
+.fi-campo .nota { font-size: 11px; color: #999; font-weight: 400; margin-left: 4px; }
+.fi-campo input[type=text],
+.fi-campo input[type=number],
+.fi-campo input[type=email],
+.fi-campo input[type=tel],
+.fi-campo select,
+.fi-campo textarea {
+  width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 50px;
+  font-size: 14px; background: #fafafa; outline: none; transition: border .2s;
+  font-family: 'Kumbh Sans', sans-serif;
 }
-.campo input:focus, .campo select:focus, .campo textarea:focus { border-color: #e30613; background: #fff; }
-.campo textarea { resize: vertical; min-height: 80px; }
-.campo-req label::after { content: ' *'; color: #e30613; }
+.fi-campo textarea { border-radius: 16px; resize: vertical; min-height: 80px; }
+.fi-campo input[type=file] {
+  width: 100%; padding: 8px 10px; border: 1.5px dashed #ccc; border-radius: 50px;
+  font-size: 13px; background: #fafafa; cursor: pointer; color: #666; font-family: 'Kumbh Sans', sans-serif;
+}
+.fi-campo input:focus, .fi-campo select:focus, .fi-campo textarea:focus { border-color: #e30613; background: #fff; }
+.fi-campo-req label::after { content: ' *'; color: #e30613; }
+.fi-dos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fi-dos .fi-campo { margin-bottom: 0; }
 
-.seccion-titulo { font-size: 11px; font-weight: 700; color: #e30613; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 12px; padding-bottom: 6px; border-bottom: 1.5px solid #fadadb; }
-.seccion-titulo:first-child { margin-top: 0; }
+/* ── Alertas ── */
+.fi-alert { padding: 12px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; display: none; }
+.fi-alert.error { background: #fdecea; border: 1px solid #f5c6c6; color: #c62828; }
+.fi-alert.warn { background: #fff8e1; border: 1px solid #ffe082; color: #8a6d00; }
 
-/* Tipos checkboxes */
-.tipos-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
-.tipo-check { display: flex; align-items: center; gap: 7px; font-size: 14px; color: #444; cursor: pointer; padding: 9px 14px; border: 1.5px solid #ddd; border-radius: 8px; background: #fafafa; transition: all .2s; user-select: none; }
-.tipo-check input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: #e30613; flex-shrink: 0; }
-.tipo-check.checked { background: #fff5f5; border-color: #e30613; color: #c0050f; font-weight: 600; }
-
-/* Montos dinámicos */
-.monto-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
-.monto-row .campo { margin-bottom: 0; }
-
-/* Card inquilino */
-.inq-card { background: #f5f5f5; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 20px; margin-bottom: 24px; }
-.inq-nombre { font-size: 18px; font-weight: 700; color: #2f3743; margin-bottom: 14px; }
-.inq-fila { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e8e8e8; font-size: 13px; }
+/* ── Card inquilino (paso 2) ── */
+.inq-card { background: #f5f5f5; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+.inq-nombre { font-size: 18px; font-weight: 700; color: #2f3743; margin-bottom: 14px; font-family: 'Montserrat', sans-serif; }
+.inq-fila { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #e8e8e8; font-size: 13px; }
 .inq-fila:last-child { border-bottom: none; }
 .inq-fila .lbl { color: #888; }
 .inq-fila .val { font-weight: 600; color: #2f3743; text-align: right; max-width: 55%; }
-.inq-vacio { color: #bbb; font-style: italic; font-weight: 400; }
-
-.dos-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.dos-col .campo { margin-bottom: 0; }
-
-.btns { display: flex; gap: 12px; margin-top: 24px; }
-.btn-back { flex: 1; padding: 12px; background: #fff; color: #e30613; border: 1.5px solid #e30613; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
-.btn-back:hover { background: #fff5f5; }
-.btn-next { flex: 2; padding: 12px; background: #e30613; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; }
-.btn-next:hover { background: #c0050f; }
-.btn-next:disabled { background: #aaa; cursor: default; }
-.btn-next.full { flex: 1; }
-
-.alert { padding: 12px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; display: none; }
-.alert.error { background: #fdecea; border: 1px solid #f5c6c6; color: #c62828; }
-.alert.warn { background: #fff8e1; border: 1px solid #ffe082; color: #8a6d00; }
-
-.no-encontrado { text-align: center; padding: 20px 0; }
-.no-encontrado .icon { font-size: 36px; margin-bottom: 12px; }
-.no-encontrado p { color: #666; font-size: 14px; line-height: 1.6; }
-
-/* Navegación entre incumplimientos */
+.inq-total { border-top: 1.5px solid #e30613 !important; margin-top: 6px; padding-top: 10px !important; }
+.inq-total .lbl { font-weight: 700; color: #2f3743; }
+.inq-total .val { color: #e30613 !important; font-size: 15px; }
+.concepto-sep { font-size: 10px; font-weight: 700; color: #e30613; letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 2px; }
 .ticket-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1.5px solid #fadadb; }
 .ticket-nav span { font-size: 11px; font-weight: 700; color: #e30613; text-transform: uppercase; letter-spacing: .5px; }
 .ticket-nav button { background: none; border: 1.5px solid #e30613; color: #e30613; border-radius: 6px; padding: 4px 14px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; line-height: 1; }
 .ticket-nav button:hover:not(:disabled) { background: #e30613; color: #fff; }
 .ticket-nav button:disabled { border-color: #ddd; color: #bbb; cursor: default; }
+.no-encontrado { padding: 12px 0 8px; }
+.no-encontrado p { color: #666; font-size: 14px; line-height: 1.6; }
 
-/* Separador de conceptos dentro de la card */
-.concepto-sep { font-size: 10px; font-weight: 700; color: #e30613; letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 2px; }
+/* ── Períodos (paso 3) ── */
+.fi-periodo-header { display: flex; align-items: flex-end; justify-content: space-between; margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #fadadb; }
+.fi-ptitulo { font-size: 11px; font-weight: 700; color: #e30613; letter-spacing: 1.2px; text-transform: uppercase; }
+.fi-btn-eliminar { background: none; border: 1.5px solid #e30613; color: #e30613; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s; white-space: nowrap; margin-left: 16px; font-family: 'Kumbh Sans', sans-serif; }
+.fi-btn-eliminar:hover { background: #e30613; color: #fff; }
 
-/* Fila de total resaltada */
-.inq-total { border-top: 1.5px solid #e30613 !important; margin-top: 6px; padding-top: 10px !important; }
-.inq-total .lbl { font-weight: 700; color: #2f3743; }
-.inq-total .val { color: #e30613 !important; font-size: 15px; }
+/* Multiselect conceptos */
+.fi-multiselect { position: relative; }
+.fi-ms-trigger { width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 50px; font-size: 14px; background: #fafafa; outline: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Kumbh Sans', sans-serif; color: #444; text-align: left; transition: border .2s; }
+.fi-ms-trigger.abierto { border-color: #e30613; background: #fff; }
+.fi-ms-dropdown { display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1.5px solid #ddd; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,.1); z-index: 100; overflow: hidden; }
+.fi-ms-dropdown.visible { display: block; }
+.fi-ms-option { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 10px; padding: 9px 14px; cursor: pointer; font-size: 13px; color: #444; font-family: 'Kumbh Sans', sans-serif; transition: background .15s; user-select: none; line-height: 1.2; }
+.fi-ms-option:hover { background: #fdf0f0; }
+.fi-ms-option:has(input:checked) { background: #fff5f5; }
+.fi-ms-option input[type=checkbox] { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.fi-ms-check { width: 17px !important; height: 17px !important; min-width: 17px; border: 1.5px solid #ccc; border-radius: 4px; flex-shrink: 0; display: inline-flex !important; align-items: center !important; justify-content: center !important; transition: all .15s; background: #fff; }
+.fi-ms-check.marcado { background: #e30613 !important; border-color: #e30613; }
+.fi-ms-check.marcado::after { content: ''; width: 4px; height: 8px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); display: block; }
+.fi-ms-arrow { font-size: 10px; color: #999; transition: transform .2s; }
+.fi-ms-trigger.abierto .fi-ms-arrow { transform: rotate(180deg); }
 
-.success-panel { text-align: center; padding: 12px 0; }
+/* Detalle por concepto */
+.fi-detalles { margin-top: 12px; }
+.fi-detalle-fila { display: grid; grid-template-columns: 130px 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 10px; padding: 14px 16px; background: #fafafa; border: 1.5px solid #eee; border-radius: 8px; }
+.fi-detalle-nombre { font-size: 13px; font-weight: 600; color: #444; font-family: 'Kumbh Sans', sans-serif; align-self: center; }
+.fi-detalle-fila .fi-campo { margin: 0; }
+
+/* Banco buscable */
+.fi-banco-search { width: 100%; padding: 9px 14px; border: none; border-bottom: 1px solid #eee; font-size: 13px; font-family: 'Kumbh Sans', sans-serif; outline: none; background: #fafafa; display: block; }
+.fi-banco-search:focus { background: #fff; }
+.fi-banco-lista { max-height: 220px; overflow-y: auto; }
+.fi-banco-opt { padding: 9px 14px; font-size: 13px; color: #444; font-family: 'Kumbh Sans', sans-serif; cursor: pointer; transition: background .15s; }
+.fi-banco-opt:hover { background: #fdf0f0; }
+.fi-banco-opt.seleccionado { background: #fff5f5; color: #e30613; font-weight: 600; }
+.fi-banco-opt.oculto { display: none; }
+
+/* Botón agregar período */
+.fi-btn-agregar { width: 100%; padding: 11px; background: #fff; color: #e30613; border: 2px dashed #e30613; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; margin: 4px 0 8px; font-family: 'Kumbh Sans', sans-serif; }
+.fi-btn-agregar:hover:not(:disabled) { background: #fff5f5; }
+.fi-btn-agregar:disabled { color: #bbb; border-color: #ddd; cursor: default; background: #fafafa; }
+
+/* Botones de navegación */
+.btns { display: flex; gap: 12px; margin-top: 24px; }
+.btn-back { flex: 1; padding: 12px; background: #fff; color: #e30613; border: 1.5px solid #e30613; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; font-family: 'Kumbh Sans', sans-serif; }
+.btn-back:hover { background: #fff5f5; }
+.btn-next { flex: 2; padding: 12px; background: #e30613; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; font-family: 'Kumbh Sans', sans-serif; }
+.btn-next:hover { background: #c0050f; }
+.btn-next:disabled { background: #aaa; cursor: default; }
+.btn-next.full { flex: 1; }
+
+/* Éxito */
+.success-panel { text-align: center; padding: 20px 0; }
 .success-panel .icon { font-size: 48px; margin-bottom: 16px; }
-.success-panel h2 { font-size: 20px; color: #2f3743; margin-bottom: 8px; }
+.success-panel h2 { font-size: 20px; color: #2f3743; margin-bottom: 8px; font-family: 'Montserrat', sans-serif; }
 .success-panel p { color: #666; font-size: 14px; line-height: 1.6; }
 
-@media (max-width: 480px) {
-  .card { padding: 24px 18px; }
+@media (max-width: 600px) {
+  .fi-card { padding: 28px 18px; }
+  .fi-dos { grid-template-columns: 1fr; }
+  .fi-detalle-fila { grid-template-columns: 1fr; gap: 8px; }
   .step-line { width: 28px; }
-  .monto-row { grid-template-columns: 1fr; }
-  .dos-col { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+
+<div id="wizard-root">
 
 <div class="progress" id="progress">
   <div class="progress-wrap"><div class="step-dot active" id="dot1">1</div><div class="step-label">Inquilino</div></div>
   <div class="step-line" id="line1"></div>
   <div class="progress-wrap"><div class="step-dot" id="dot2">2</div><div class="step-label">Confirmación</div></div>
   <div class="step-line" id="line2"></div>
-  <div class="progress-wrap"><div class="step-dot" id="dot3">3</div><div class="step-label">Incumplimiento</div></div>
+  <div class="progress-wrap"><div class="step-dot" id="dot3">3</div><div class="step-label">Períodos</div></div>
   <div class="step-line" id="line3"></div>
   <div class="progress-wrap"><div class="step-dot" id="dot4">4</div><div class="step-label">Tus datos</div></div>
 </div>
 
-<div class="card">
+<div class="fi-card">
 
   <!-- PASO 1: DNI -->
   <div class="panel active" id="panel1">
-    <div class="panel-title">DNI del inquilino</div>
-    <div class="panel-sub">Ingresá el número de DNI del inquilino para verificar sus datos antes de continuar.</div>
-    <div class="alert error" id="err1"></div>
-    <div class="campo campo-req">
+    <h2>DNI del inquilino</h2>
+    <p class="fi-sub">Ingresá el DNI del inquilino para verificar sus datos antes de continuar.</p>
+    <div class="fi-alert error" id="err1"></div>
+    <div class="fi-campo fi-campo-req">
       <label>Número de DNI</label>
       <input type="text" id="dni-input" placeholder="Ej: 30123456" maxlength="12" inputmode="numeric">
     </div>
@@ -132,11 +186,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     </div>
   </div>
 
-  <!-- PASO 2: Confirmación del inquilino -->
+  <!-- PASO 2: Confirmación -->
   <div class="panel" id="panel2">
-    <div class="panel-title">Confirmá los datos del inquilino</div>
-    <div class="panel-sub">Verificá que estos sean los datos del inquilino sobre el cual querés notificar el incumplimiento.</div>
-    <div class="alert warn" id="warn2"></div>
+    <h2>Confirmá los datos del inquilino</h2>
+    <p class="fi-sub">Verificá que estos sean los datos del inquilino antes de continuar con la notificación.</p>
+    <div class="fi-alert warn" id="warn2"></div>
     <div id="inq-content"></div>
     <div class="btns">
       <button class="btn-back" onclick="irA(1)">← Atrás</button>
@@ -144,150 +198,67 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     </div>
   </div>
 
-  <!-- PASO 3: Datos del incumplimiento -->
+  <!-- PASO 3: Períodos -->
   <div class="panel" id="panel3">
-    <div class="panel-title">Datos del incumplimiento</div>
-    <div class="panel-sub">Seleccioná los tipos de deuda y completá los montos y la fecha correspondiente.</div>
-    <div class="alert error" id="err3"></div>
-
-    <div class="campo campo-req">
-      <label>Tipo de incumplimiento</label>
-      <div class="tipos-grid">
-        <label class="tipo-check" id="lbl-Alquiler"><input type="checkbox" value="Alquiler" name="tipo" onchange="toggleMonto(this)"> Alquiler</label>
-        <label class="tipo-check" id="lbl-Expensas"><input type="checkbox" value="Expensas" name="tipo" onchange="toggleMonto(this)"> Expensas</label>
-        <label class="tipo-check" id="lbl-Luz"><input type="checkbox" value="Luz" name="tipo" onchange="toggleMonto(this)"> Luz</label>
-        <label class="tipo-check" id="lbl-Gas"><input type="checkbox" value="Gas" name="tipo" onchange="toggleMonto(this)"> Gas</label>
-        <label class="tipo-check" id="lbl-ABL"><input type="checkbox" value="ABL" name="tipo" onchange="toggleMonto(this)"> ABL</label>
-        <label class="tipo-check" id="lbl-Aysa"><input type="checkbox" value="Aysa" name="tipo" onchange="toggleMonto(this)"> AYSA</label>
-      </div>
-    </div>
-
-    <div class="campo campo-req" style="margin-top:20px;">
-      <label>Fecha desde que se adeuda</label>
-      <input type="date" id="fecha-desde" max="">
-    </div>
-
-    <div id="montos-container"></div>
-
-    <div class="campo" style="margin-top:16px;">
-      <label>Observaciones (opcional)</label>
-      <textarea id="descripcion" placeholder="Cualquier información adicional relevante..."></textarea>
-    </div>
-
-    <div class="btns">
+    <h2>Períodos de deuda</h2>
+    <p class="fi-sub">Podés informar hasta 4 períodos de deuda distintos. Cada período genera un expediente separado en FINAER.</p>
+    <div class="fi-alert error" id="err3"></div>
+    <div id="fi-periodos"></div>
+    <button type="button" class="fi-btn-agregar" id="fi-agregar">+ Agregar otro período</button>
+    <div class="btns" style="margin-top:16px;">
       <button class="btn-back" onclick="irA(2)">← Atrás</button>
-      <button class="btn-next" onclick="validarPaso3()">Siguiente →</button>
+      <button class="btn-next" onclick="validarPeriodos()">Siguiente →</button>
     </div>
   </div>
 
-  <!-- PASO 4: Datos del notificante + bancarios -->
+  <!-- PASO 4: Tus datos -->
   <div class="panel" id="panel4">
-    <div class="panel-title">Tus datos</div>
-    <div class="panel-sub">Completá tus datos de contacto y los bancarios para recibir el reembolso en caso de resolución.</div>
-    <div class="alert error" id="err4"></div>
+    <h2>Tus datos</h2>
+    <p class="fi-sub">Completá tus datos de contacto y los bancarios para recibir el reembolso en caso de resolución.</p>
+    <div class="fi-alert error" id="err4"></div>
 
-    <div class="seccion-titulo">Quién notifica</div>
-    <div class="dos-col" style="margin-bottom:16px;">
-      <div class="campo campo-req"><label>Nombre</label><input type="text" id="notificante-nombre" placeholder="Tu nombre"></div>
-      <div class="campo campo-req"><label>Apellido</label><input type="text" id="notificante-apellido" placeholder="Tu apellido"></div>
+    <div class="fi-seccion"><span>Quién notifica</span></div>
+    <div class="fi-dos" style="margin-bottom:16px;">
+      <div class="fi-campo fi-campo-req"><label>Nombre</label><input type="text" id="firstname" placeholder="Tu nombre"></div>
+      <div class="fi-campo fi-campo-req"><label>Apellido</label><input type="text" id="lastname" placeholder="Tu apellido"></div>
     </div>
-    <div class="dos-col" style="margin-bottom:16px;">
-      <div class="campo campo-req"><label>Email</label><input type="email" id="notificante-email" placeholder="correo@ejemplo.com"></div>
-      <div class="campo campo-req"><label>Teléfono</label><input type="tel" id="notificante-telefono" placeholder="Ej: 1155556666" inputmode="numeric"></div>
+    <div class="fi-dos" style="margin-bottom:16px;">
+      <div class="fi-campo fi-campo-req"><label>Email</label><input type="email" id="email" placeholder="correo@ejemplo.com"></div>
+      <div class="fi-campo fi-campo-req"><label>Teléfono</label><input type="tel" id="phone" placeholder="Ej: 1155556666" inputmode="numeric"></div>
     </div>
 
-    <div class="seccion-titulo">Datos bancarios (opcional)</div>
-    <div class="campo">
-      <label>CBU / Alias</label>
-      <input type="text" id="cbu" placeholder="22 dígitos o alias">
-    </div>
-    <div class="dos-col" style="margin-bottom:16px;">
-      <div class="campo">
+    <div class="fi-seccion"><span>Datos bancarios para el pago</span></div>
+    <div class="fi-dos" style="margin-bottom:16px;">
+      <div class="fi-campo"><label>CBU o alias</label><input type="text" id="alias_cbu_impagos" placeholder="CBU o alias de la cuenta"></div>
+      <div class="fi-campo">
         <label>Banco</label>
-        <select id="banco">
-          <option value="">— Seleccioná un banco —</option>
-          <option>BANCO DE GALICIA Y BUENOS AIRES S.A.</option>
-          <option>BANCO DE LA NACION ARGENTINA</option>
-          <option>BANCO DE LA PROVINCIA DE BUENOS AIRES</option>
-          <option>BANCO SANTANDER ARGENTINA S.A.</option>
-          <option>BANCO BBVA ARGENTINA S.A.</option>
-          <option>BANCO MACRO S.A.</option>
-          <option>BANCO SUPERVIELLE S.A.</option>
-          <option>BANCO CREDICOOP COOPERATIVO LIMITADO</option>
-          <option>BANCO DE LA CIUDAD DE BUENOS AIRES</option>
-          <option>BANCO HIPOTECARIO S.A.</option>
-          <option>BANCO PATAGONIA S.A.</option>
-          <option>BANCO COMAFI SOCIEDAD ANONIMA</option>
-          <option>BANCO INDUSTRIAL S.A.</option>
-          <option>BANCO PIANO S.A.</option>
-          <option>BANCO COLUMBIA S.A.</option>
-          <option>BANCO COINAG S.A.</option>
-          <option>BRUBANK S.A.U.</option>
-          <option>UALA BANK S.A.U.</option>
-          <option>BIBANK S.A.</option>
-          <option>NARANJA DIGITAL COMPANIA FINANCIERA S.A.</option>
-          <option>INDUSTRIAL AND COMMERCIAL BANK OF CHINA</option>
-          <option>CITIBANK N.A.</option>
-          <option>JPMORGAN CHASE BANK, NATIONAL ASSOCIATION</option>
-          <option>BNP PARIBAS</option>
-          <option>BANK OF CHINA LIMITED SUCURSAL BUENOS AIRES</option>
-          <option>BANCO DE LA PROVINCIA DE CORDOBA S.A.</option>
-          <option>BANCO DE SAN JUAN S.A.</option>
-          <option>BANCO MUNICIPAL DE ROSARIO</option>
-          <option>BANCO DEL CHUBUT S.A.</option>
-          <option>BANCO DE SANTA CRUZ S.A.</option>
-          <option>BANCO DE LA PAMPA S.A.</option>
-          <option>BANCO DE CORRIENTES S.A.</option>
-          <option>BANCO PROVINCIA DEL NEUQUEN SOCIEDAD ANONIMA</option>
-          <option>BANCO PROVINCIA DE TIERRA DEL FUEGO</option>
-          <option>BANCO DE SAN JUAN S.A.</option>
-          <option>BANCO DE SANTIAGO DEL ESTERO S.A.</option>
-          <option>BANCO DE FORMOSA S.A.</option>
-          <option>BANCO RIOJA SOCIEDAD ANONIMA UNIPERSONAL</option>
-          <option>BANCO DEL SOL S.A.</option>
-          <option>NUEVO BANCO DEL CHACO S.A.</option>
-          <option>NUEVO BANCO DE SANTA FE SOCIEDAD ANONIMA</option>
-          <option>NUEVO BANCO DE ENTRE RIOS S.A.</option>
-          <option>BANCO DE INVERSION Y COMERCIO EXTERIOR S.A.</option>
-          <option>BANCO DE VALORES S.A.</option>
-          <option>BANCO ROELA S.A.</option>
-          <option>BANCO MARIVA S.A.</option>
-          <option>BANCO JULIO SOCIEDAD ANONIMA</option>
-          <option>BANCO CMF S.A.</option>
-          <option>BANCO MASVENTAS S.A.</option>
-          <option>BANCO SAENZ S.A.</option>
-          <option>BANCO MERIDIAN S.A.</option>
-          <option>BANCO VOII S.A.</option>
-          <option>BANCO BICA S.A.</option>
-          <option>BANCO SUCREDITO REGIONAL S.A.U.</option>
-          <option>BANCO DINO S.A.</option>
-          <option>BANCO DE SERVICIOS FINANCIEROS S.A.</option>
-          <option>BANCO DE SERVICIOS Y TRANSACCIONES SAU</option>
-          <option>BANCO CETELEM ARGENTINA S.A.</option>
-          <option>BANCO DE COMERCIO S.A.</option>
-          <option>BANCO DE LA REPUBLICA ORIENTAL DEL URUGUAY</option>
-          <option>BACS BANCO DE CREDITO Y SECURITIZACION S.A.</option>
-          <option>RCI BANQUE S.A.</option>
-          <option>COMPANIA FINANCIERA ARGENTINA S.A.</option>
-          <option>VOLKSWAGEN FINANCIAL SERVICES COMPANIA FINANCIERA S.A.</option>
-          <option>FCA COMPANIA FINANCIERA S.A.</option>
-          <option>GPAT COMPANIA FINANCIERA S.A.U.</option>
-          <option>MERCEDES-BENZ COMPANIA FINANCIERA ARGENTINA</option>
-          <option>ROMBO COMPANIA FINANCIERA S.A.</option>
-          <option>JOHN DEERE CREDIT COMPANIA FINANCIERA S.A.</option>
-          <option>PSA FINANCE ARGENTINA COMPANIA FINANCIERA</option>
-          <option>TOYOTA COMPANIA FINANCIERA DE ARGENTINA</option>
-          <option>MONTEMAR COMPANIA FINANCIERA S.A.</option>
-          <option>REBA COMPANIA FINANCIERA S.A.</option>
-          <option>CREDITO REGIONAL COMPANIA FINANCIERA S.A.</option>
-        </select>
+        <div class="fi-multiselect" id="banco-wrap">
+          <button type="button" class="fi-ms-trigger" onclick="toggleBanco()">
+            <span id="banco-label">Seleccioná el banco</span>
+            <span class="fi-ms-arrow">▼</span>
+          </button>
+          <div class="fi-ms-dropdown" id="banco-dropdown">
+            <input type="text" class="fi-banco-search" id="banco-search" placeholder="Buscar banco..." oninput="filtrarBancos()">
+            <div class="fi-banco-lista" id="banco-lista"></div>
+          </div>
+          <input type="hidden" id="banco" value="">
+        </div>
       </div>
-      <div class="campo"><label>Titular de la cuenta</label><input type="text" id="titular" placeholder="Nombre y apellido"></div>
+    </div>
+    <div class="fi-dos" style="margin-bottom:16px;">
+      <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular"></div>
+      <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="20-12345678-9"></div>
+    </div>
+
+    <div class="fi-seccion"><span>Información adicional</span></div>
+    <div class="fi-campo">
+      <label>Observaciones <span class="nota">(opcional)</span></label>
+      <textarea id="observaciones_incumplimiento" placeholder="Detallá cualquier información adicional relevante..."></textarea>
     </div>
 
     <div class="btns">
       <button class="btn-back" onclick="irA(3)">← Atrás</button>
-      <button class="btn-next" id="btn-enviar" onclick="enviar()">Enviar Incumplimiento ✓</button>
+      <button class="btn-next" id="btn-enviar" onclick="enviar()">Enviar notificación ✓</button>
     </div>
   </div>
 
@@ -295,40 +266,51 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   <div class="panel" id="panel5">
     <div class="success-panel">
       <div class="icon">✅</div>
-      <h2>Incumplimiento enviado</h2>
-      <p>Recibimos la notificación de incumplimiento.<br>El equipo de FINAER se pondrá en contacto a la brevedad.</p>
+      <h2>Notificación enviada</h2>
+      <p>Recibimos tu notificación de incumplimiento.<br>El equipo de FINAER se va a comunicar a la brevedad.</p>
     </div>
   </div>
 
 </div>
+</div><!-- #wizard-root -->
 
 <script>
 const PORTAL_ID = '145725856';
-const FORM_ID   = '4bab489a-1156-4a4e-9924-d9ce7c241985'; // form Contacto → workflow crea el ticket
-let datosInquilino = null;
-let ticketsEncontrados = [];
-let ticketActual = 0;
+const FORM_ID   = '16350864-6359-4241-9d44-d8639a7af726';
+const MAX_PERIODOS = 4;
 
-const CONCEPTOS_TICKET = [
-  { campo: 'deuda_alquiler',             label: 'Alquiler'          },
-  { campo: 'deuda_expensas',             label: 'Expensas'          },
-  { campo: 'deuda_luz',                  label: 'Luz'               },
-  { campo: 'deuda_gas',                  label: 'Gas'               },
-  { campo: 'deuda_abl',                  label: 'ABL'               },
-  { campo: 'deuda_aysa',                 label: 'AYSA / Agua'       },
-  { campo: 'deuda_por_entrega_de_llaves',label: 'Entrega de llaves' },
-  { campo: 'punitorio_alquiler',         label: 'Punitorio alquiler'},
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+const CONCEPTOS = [
+  { id:'alquiler', label:'Alquiler',             campo:'deuda_alquiler' },
+  { id:'expensas', label:'Expensas',             campo:'deuda_expensas' },
+  { id:'luz',      label:'Luz',                  campo:'deuda_luz'      },
+  { id:'gas',      label:'Gas',                  campo:'deuda_gas'      },
+  { id:'abl',      label:'ABL',                  campo:'deuda_abl'      },
+  { id:'aysa',     label:'AYSA',                 campo:'deuda_aysa'     },
+  { id:'inmueble', label:'No devolvió inmueble', campo:null             }
 ];
 
-const TIPO_CAMPO = {
-  'Alquiler': 'deuda_alquiler',
-  'Expensas': 'deuda_expensas',
-  'Luz':      'deuda_luz',
-  'Gas':      'deuda_gas',
-  'ABL':      'deuda_abl',
-  'Aysa':     'deuda_aysa'
-};
+const CAMPOS_MONTO = ['deuda_alquiler','deuda_expensas','deuda_luz','deuda_gas','deuda_abl','deuda_aysa'];
 
+const CONCEPTOS_TICKET = [
+  { campo:'deuda_alquiler',              label:'Alquiler'           },
+  { campo:'deuda_expensas',              label:'Expensas'           },
+  { campo:'deuda_luz',                   label:'Luz'                },
+  { campo:'deuda_gas',                   label:'Gas'                },
+  { campo:'deuda_abl',                   label:'ABL'                },
+  { campo:'deuda_aysa',                  label:'AYSA / Agua'        },
+  { campo:'deuda_por_entrega_de_llaves', label:'Entrega de llaves'  },
+  { campo:'punitorio_alquiler',          label:'Punitorio alquiler' },
+];
+
+let datosInquilino   = null;
+let ticketsEncontrados = [];
+let ticketActual     = 0;
+let periodoCount     = 0;
+let periodosActivos  = [];
+
+// ── Navegación ────────────────────────────────────────────────────────────────
 function irA(paso) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel' + paso).classList.add('active');
@@ -346,32 +328,7 @@ function actualizarProgress(paso) {
   }
 }
 
-function toggleMonto(checkbox) {
-  const tipo  = checkbox.value;
-  const lbl   = document.getElementById('lbl-' + tipo);
-  const cont  = document.getElementById('montos-container');
-  const divId = 'monto-bloque-' + tipo;
-
-  if (checkbox.checked) {
-    lbl.classList.add('checked');
-    if (!document.getElementById(divId)) {
-      const div = document.createElement('div');
-      div.id = divId;
-      div.innerHTML = `
-        <div class="seccion-titulo" style="margin-top:20px;">${tipo}</div>
-        <div class="campo campo-req">
-          <label>Monto adeudado — ${tipo}</label>
-          <input type="text" id="monto-${tipo}" inputmode="decimal" placeholder="Ej: 150000">
-        </div>`;
-      cont.appendChild(div);
-    }
-  } else {
-    lbl.classList.remove('checked');
-    const el = document.getElementById(divId);
-    if (el) el.remove();
-  }
-}
-
+// ── Lookup DNI ────────────────────────────────────────────────────────────────
 async function buscarDNI() {
   const dni = document.getElementById('dni-input').value.trim().replace(/\D/g, '');
   const err = document.getElementById('err1');
@@ -387,14 +344,13 @@ async function buscarDNI() {
   }).then(r => r.json());
 
   try {
-    // FLUJO 1: buscar todos los tickets del DNI (puede haber más de uno)
     const ticketSearch = await hs('POST', '/crm/v3/objects/tickets/search', {
       filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
       properties: [
-        'subject', 'nombre_y_apellido_del_inquilino', 'periodo_de_deuda', 'mes_de_deuda', 'createdate',
+        'subject','nombre_y_apellido_del_inquilino','periodo_de_deuda','mes_de_deuda','createdate',
         'monto_total_de_la_deuda_acumulada',
-        'deuda_alquiler', 'deuda_expensas', 'deuda_luz', 'deuda_gas',
-        'deuda_abl', 'deuda_aysa', 'deuda_por_entrega_de_llaves', 'punitorio_alquiler'
+        'deuda_alquiler','deuda_expensas','deuda_luz','deuda_gas',
+        'deuda_abl','deuda_aysa','deuda_por_entrega_de_llaves','punitorio_alquiler'
       ],
       sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
       limit: 10
@@ -403,76 +359,62 @@ async function buscarDNI() {
     if (ticketSearch.results && ticketSearch.results.length > 0) {
       ticketsEncontrados = ticketSearch.results;
       ticketActual = 0;
-      datosInquilino = {
-        flujo:  'existente',
-        dni,
-        nombre: ticketSearch.results[0].properties.nombre_y_apellido_del_inquilino || '—'
-      };
+      datosInquilino = { flujo: 'existente', dni, nombre: ticketSearch.results[0].properties.nombre_y_apellido_del_inquilino || '—' };
       mostrarTicketActual();
-      irA(2);
-      return;
+      irA(2); return;
     }
 
-    // FLUJO 2: buscar contacto por nro_documento_txt (sin incumplimiento registrado)
     const contactData = await hs('POST', '/crm/v3/objects/contacts/search', {
       filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
-      properties: ['firstname', 'lastname', 'email'],
-      limit: 1
+      properties: ['firstname','lastname','email'], limit: 1
     });
 
     if (!contactData.results || contactData.results.length === 0) {
-      mostrarNoEncontrado(); irA(2); return;
+      datosInquilino = { flujo: 'manual', dni, nombre: '' };
+      mostrarNoEncontrado(dni);
+      irA(2); return;
     }
 
-    const contact = contactData.results[0];
+    const contact   = contactData.results[0];
     const contactId = contact.id;
-    const nombre = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') || '—';
-    const emailContacto = contact.properties.email || '—';
+    const nombre    = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') || '—';
 
-    // Buscar deal más reciente asociado al contacto (pipeline de ventas / solicitudes)
     const dealData = await hs('POST', '/crm/v3/objects/deals/search', {
-      filterGroups: [{ filters: [
-        { propertyName: 'associations.contact', operator: 'EQ', value: contactId }
-      ]}],
-      properties: ['dealname', 'nombre_y_apellido_del_inquilino', 'solicitante', 'nombre_y_apellido_del_solicitante'],
-      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
-      limit: 1
+      filterGroups: [{ filters: [{ propertyName: 'associations.contact', operator: 'EQ', value: contactId }] }],
+      properties: ['dealname','nombre_y_apellido_del_inquilino','solicitante','nombre_y_apellido_del_solicitante'],
+      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }], limit: 1
     });
 
     let nroSolicitud = '—', inmobiliaria = '—', inquilino = nombre, solicitante = '—', cogarante = null;
 
     if (dealData.results && dealData.results.length > 0) {
       const deal = dealData.results[0];
-      const dp = deal.properties;
+      const dp   = deal.properties;
       nroSolicitud = dp.dealname || '—';
       inquilino    = dp.nombre_y_apellido_del_inquilino || nombre;
       solicitante  = dp.nombre_y_apellido_del_solicitante || dp.solicitante || '—';
 
-      // Inmobiliaria (empresa asociada al deal)
       const assocEmpresas = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
       if (assocEmpresas.results && assocEmpresas.results.length > 0) {
         const empresa = await hs('GET', `/crm/v3/objects/companies/${assocEmpresas.results[0].id}?properties=name`);
         inmobiliaria = empresa.properties?.name || '—';
       }
 
-      // Co-garante: contactos asociados al deal con label de cosolicitante/garante
       const assocContactos = await hs('GET', `/crm/v4/objects/deals/${deal.id}/associations/contacts`);
       if (assocContactos.results) {
         for (const assoc of assocContactos.results) {
           if (String(assoc.toObjectId) === String(contactId)) continue;
           const labels = (assoc.associationTypes || []).map(t => (t.label || '').toLowerCase());
-          if (labels.some(l => l.includes('cosolicit') || l.includes('co-solicit') || l.includes('garante') || l.includes('co garante'))) {
+          if (labels.some(l => l.includes('cosolicit') || l.includes('co-solicit') || l.includes('garante'))) {
             const cg = await hs('GET', `/crm/v3/objects/contacts/${assoc.toObjectId}?properties=firstname,lastname`);
-            if (cg.properties) {
-              cogarante = [cg.properties.firstname, cg.properties.lastname].filter(Boolean).join(' ') || null;
-            }
+            if (cg.properties) cogarante = [cg.properties.firstname, cg.properties.lastname].filter(Boolean).join(' ') || null;
             break;
           }
         }
       }
     }
 
-    datosInquilino = { flujo: 'nuevo', dni, nombre, email: emailContacto, nroSolicitud, inmobiliaria, inquilino, solicitante, cogarante };
+    datosInquilino = { flujo: 'nuevo', dni, nombre: inquilino, nroSolicitud, inmobiliaria, solicitante, cogarante };
     mostrarDatosInquilino(datosInquilino);
     irA(2);
 
@@ -480,37 +422,31 @@ async function buscarDNI() {
     err.textContent = 'Error al buscar el DNI. Intentá nuevamente.';
     err.style.display = 'block';
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'Siguiente →';
+    btn.disabled = false; btn.textContent = 'Siguiente →';
   }
 }
 
 function mostrarTicketActual() {
-  if (!ticketsEncontrados.length) return;
   const ticket = ticketsEncontrados[ticketActual];
-  const p = ticket.properties;
-  const total = ticketsEncontrados.length;
-  const fmt = v => (v && parseFloat(v) > 0) ? '$ ' + Number(v).toLocaleString('es-AR') : null;
-
+  const p      = ticket.properties;
+  const total  = ticketsEncontrados.length;
+  const fmt    = v => (v && parseFloat(v) > 0) ? '$ ' + Number(v).toLocaleString('es-AR') : null;
   let conceptosHtml = '';
   for (const c of CONCEPTOS_TICKET) {
     const val = fmt(p[c.campo]);
     if (val) conceptosHtml += `<div class="inq-fila"><span class="lbl">${c.label}</span><span class="val">${val}</span></div>`;
   }
-
   const navHtml = total > 1 ? `
     <div class="ticket-nav">
       <button onclick="anteriorTicket()" ${ticketActual === 0 ? 'disabled' : ''}>←</button>
       <span>Incumplimiento ${ticketActual + 1} de ${total}</span>
       <button onclick="siguienteTicket()" ${ticketActual === total - 1 ? 'disabled' : ''}>→</button>
     </div>` : '';
-
   const MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   const periodoDesdeCreacion = p.createdate ? (() => { const f = new Date(p.createdate); return MESES_ES[f.getUTCMonth()] + ' - ' + f.getUTCFullYear(); })() : null;
-  const periodoVal = p.periodo_de_deuda || p.mes_de_deuda || periodoDesdeCreacion || null;
-  const periodo  = periodoVal ? `<div class="inq-fila"><span class="lbl">Período</span><span class="val">${periodoVal}</span></div>` : '';
-  const totalMonto = fmt(p.monto_total_de_la_deuda_acumulada) || '—';
-
+  const periodoVal  = p.periodo_de_deuda || p.mes_de_deuda || periodoDesdeCreacion || null;
+  const periodo     = periodoVal ? `<div class="inq-fila"><span class="lbl">Período</span><span class="val">${periodoVal}</span></div>` : '';
+  const totalMonto  = fmt(p.monto_total_de_la_deuda_acumulada) || '—';
   document.getElementById('inq-content').innerHTML = `
     <div class="inq-card">
       ${navHtml}
@@ -518,10 +454,10 @@ function mostrarTicketActual() {
       <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${datosInquilino.dni}</span></div>
       <div class="inq-fila"><span class="lbl">Carpeta</span><span class="val">${p.subject || '—'}</span></div>
       ${periodo}
-      ${conceptosHtml ? '<div class="concepto-sep">Detalle de deuda</div>' + conceptosHtml : ''}
+      ${conceptosHtml ? '<div class="concepto-sep">Deuda registrada</div>' + conceptosHtml : ''}
       <div class="inq-fila inq-total"><span class="lbl">Total adeudado</span><span class="val">${totalMonto}</span></div>
     </div>
-    <p style="font-size:13px;color:#666;margin-top:12px;">¿Estos son los datos del inquilino? Confirmá para continuar.</p>`;
+    <p style="font-size:13px;color:#666;margin-top:12px;">¿Estos son los datos del inquilino? Confirmá para continuar con la nueva notificación.</p>`;
   document.getElementById('btn2').style.display = '';
   document.getElementById('warn2').style.display = 'none';
 }
@@ -530,20 +466,12 @@ function anteriorTicket() { if (ticketActual > 0) { ticketActual--; mostrarTicke
 function siguienteTicket() { if (ticketActual < ticketsEncontrados.length - 1) { ticketActual++; mostrarTicketActual(); } }
 
 function mostrarDatosInquilino(d) {
-  // Flujo existente ya lo maneja mostrarTicketActual()
-  if (d.flujo === 'existente') return;
-
-  // Flujo nuevo: sin incumplimiento, mostrar datos del deal de solicitud
-  const cogaranteHtml = d.cogarante
-    ? `<div class="inq-fila"><span class="lbl">Co-garante</span><span class="val">${d.cogarante}</span></div>` : '';
-
+  const cogaranteHtml = d.cogarante ? `<div class="inq-fila"><span class="lbl">Co-garante</span><span class="val">${d.cogarante}</span></div>` : '';
   document.getElementById('inq-content').innerHTML = `
     <div class="inq-card">
       <div class="inq-nombre">${d.nombre}</div>
       <div class="inq-fila"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
       <div class="inq-fila"><span class="lbl">Número de solicitud</span><span class="val">${d.nroSolicitud}</span></div>
-      <div class="inq-fila"><span class="lbl">Email</span><span class="val">${d.email}</span></div>
-      <div class="inq-fila"><span class="lbl">Inquilino</span><span class="val">${d.inquilino}</span></div>
       <div class="inq-fila"><span class="lbl">Solicitante</span><span class="val">${d.solicitante}</span></div>
       ${cogaranteHtml}
       <div class="inq-fila"><span class="lbl">Inmobiliaria</span><span class="val">${d.inmobiliaria}</span></div>
@@ -553,114 +481,341 @@ function mostrarDatosInquilino(d) {
   document.getElementById('warn2').style.display = 'none';
 }
 
-function mostrarNoEncontrado() {
+function mostrarNoEncontrado(dni) {
   document.getElementById('inq-content').innerHTML = `
     <div class="no-encontrado">
-      <div class="icon">🔍</div>
-      <p>No encontramos ningún inquilino con ese DNI en nuestro sistema.<br><br>Verificá el número ingresado o contactate con FINAER al <strong>6842-5100</strong>.</p>
+      <p>No encontramos ningún inquilino con DNI <strong>${dni}</strong> en nuestro sistema.</p>
+      <p style="font-size:13px;color:#999;margin-top:6px;">Podés ingresar el nombre manualmente y continuar de todas formas.</p>
+    </div>
+    <div class="fi-campo fi-campo-req" style="margin-top:16px;">
+      <label>Nombre y apellido del inquilino</label>
+      <input type="text" id="nombre-manual" placeholder="Nombre y apellido">
     </div>`;
-  document.getElementById('btn2').style.display = 'none';
+  document.getElementById('btn2').style.display = '';
   document.getElementById('warn2').style.display = 'none';
 }
 
-function confirmarInquilino() { if (!datosInquilino) return; irA(3); }
-
-function validarPaso3() {
-  const err   = document.getElementById('err3');
-  const tipos = [...document.querySelectorAll('input[name="tipo"]:checked')].map(c => c.value);
-  const fecha = document.getElementById('fecha-desde').value;
-
-  if (!tipos.length) { err.textContent = 'Seleccioná al menos un tipo de incumplimiento.'; err.style.display = 'block'; return; }
-  if (!fecha)        { err.textContent = 'Ingresá la fecha desde que se adeuda.'; err.style.display = 'block'; return; }
-
-  for (const tipo of tipos) {
-    const el  = document.getElementById('monto-' + tipo);
-    const val = parseFloat((el ? el.value : '').replace(',', '.')) || 0;
-    if (val <= 0) { err.textContent = `Ingresá el monto para "${tipo}" (debe ser mayor a $0).`; err.style.display = 'block'; return; }
+function confirmarInquilino() {
+  if (!datosInquilino) return;
+  if (datosInquilino.flujo === 'manual') {
+    const nombre = (document.getElementById('nombre-manual')?.value || '').trim();
+    if (!nombre) {
+      document.getElementById('warn2').textContent = 'Ingresá el nombre del inquilino para continuar.';
+      document.getElementById('warn2').style.display = 'block';
+      return;
+    }
+    datosInquilino.nombre = nombre;
   }
+  irA(3);
+}
 
+// ── Períodos ──────────────────────────────────────────────────────────────────
+function generarMeses() {
+  const añoActual = new Date().getFullYear();
+  let opts = '<option value="">Seleccioná el mes</option>';
+  for (let y = añoActual - 2; y <= añoActual + 1; y++) {
+    for (let m = 0; m < 12; m++) opts += `<option>${MESES[m]} - ${y}</option>`;
+  }
+  return opts;
+}
+
+function crearPeriodo() {
+  if (periodosActivos.length >= MAX_PERIODOS) return;
+  periodoCount++;
+  const n = periodoCount;
+  periodosActivos.push(n);
+
+  const opcionesMs = CONCEPTOS.map(c => `
+    <label class="fi-ms-option">
+      <input type="checkbox" class="tipo-p${n}" value="${c.label}"
+             data-campo="${c.campo || ''}" data-cid="${c.id}"
+             onchange="onConcepto(this,${n});updateMsLabel('ms-${n}')">
+      <span class="fi-ms-check"></span>
+      <span>${c.label}</span>
+    </label>`).join('');
+
+  const div = document.createElement('div');
+  div.className = 'fi-periodo';
+  div.id = `pb-${n}`;
+  div.innerHTML = `
+    <div class="fi-periodo-header">
+      <span class="fi-ptitulo" id="titulo-p${n}">Período de deuda</span>
+      ${n > 1 ? `<button type="button" class="fi-btn-eliminar" onclick="eliminarPeriodo(${n})">✕ Eliminar período</button>` : ''}
+    </div>
+    <div class="fi-campo fi-campo-req">
+      <label>Mes al que corresponde la deuda</label>
+      <select id="periodo_${n}">${generarMeses()}</select>
+    </div>
+    <div class="fi-campo fi-campo-req">
+      <label>Concepto/s adeudado/s</label>
+      <div class="fi-multiselect" id="ms-${n}">
+        <button type="button" class="fi-ms-trigger" onclick="toggleMs('ms-${n}')">
+          <span class="fi-ms-label">Seleccioná los conceptos</span>
+          <span class="fi-ms-arrow">▼</span>
+        </button>
+        <div class="fi-ms-dropdown">${opcionesMs}</div>
+      </div>
+    </div>
+    <div class="fi-detalles" id="detalles-${n}"></div>`;
+
+  document.getElementById('fi-periodos').appendChild(div);
+  actualizarUI();
+}
+
+function eliminarPeriodo(n) {
+  document.getElementById(`pb-${n}`)?.remove();
+  periodosActivos = periodosActivos.filter(x => x !== n);
+  actualizarUI();
+}
+
+function actualizarUI() {
+  periodosActivos.forEach((n, i) => {
+    const t = document.getElementById(`titulo-p${n}`);
+    if (t) t.textContent = i === 0 ? 'Período de deuda' : `Período ${i + 1}`;
+  });
+  const btn   = document.getElementById('fi-agregar');
+  const lleno = periodosActivos.length >= MAX_PERIODOS;
+  btn.disabled    = lleno;
+  btn.textContent = lleno ? 'Máximo de períodos alcanzado (4)' : '+ Agregar otro período';
+}
+
+function onConcepto(cb, n) {
+  const campo  = cb.dataset.campo;
+  const cid    = cb.dataset.cid;
+  const filaId = `df-${cid}-${n}`;
+  const cont   = document.getElementById(`detalles-${n}`);
+  const check  = cb.nextElementSibling;
+  if (check && check.classList.contains('fi-ms-check')) check.classList.toggle('marcado', cb.checked);
+
+  if (cb.checked && campo) {
+    const fila = document.createElement('div');
+    fila.className = 'fi-detalle-fila';
+    fila.id = filaId;
+    fila.innerHTML = `
+      <div class="fi-detalle-nombre">${cb.value}</div>
+      <div class="fi-campo">
+        <label>Monto <span class="nota">(ARS)</span></label>
+        <input type="number" id="${campo}_${n}" min="0" placeholder="0">
+      </div>
+      <div class="fi-campo">
+        <label>Comprobante <span class="nota">(opcional)</span></label>
+        <input type="file" id="archivo_${cid}_${n}" accept=".pdf,.jpg,.jpeg,.png">
+      </div>`;
+    cont.appendChild(fila);
+  } else {
+    document.getElementById(filaId)?.remove();
+    const inp = document.getElementById(`${campo}_${n}`);
+    if (inp) inp.value = '';
+  }
+}
+
+// ── Multiselect conceptos ─────────────────────────────────────────────────────
+function toggleMs(id) {
+  const ms       = document.getElementById(id);
+  const dropdown = ms.querySelector('.fi-ms-dropdown');
+  const trigger  = ms.querySelector('.fi-ms-trigger');
+  const isOpen   = dropdown.classList.contains('visible');
+  document.querySelectorAll('.fi-ms-dropdown.visible').forEach(d => {
+    d.classList.remove('visible');
+    d.closest('.fi-multiselect').querySelector('.fi-ms-trigger').classList.remove('abierto');
+  });
+  if (!isOpen) { dropdown.classList.add('visible'); trigger.classList.add('abierto'); }
+}
+
+function updateMsLabel(id) {
+  const ms      = document.getElementById(id);
+  const checked = [...ms.querySelectorAll('input[type=checkbox]:checked')].map(cb => cb.value);
+  ms.querySelector('.fi-ms-label').textContent =
+    checked.length === 0 ? 'Seleccioná los conceptos'
+    : checked.length <= 2 ? checked.join(', ')
+    : `${checked.length} conceptos seleccionados`;
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.fi-multiselect')) {
+    document.querySelectorAll('.fi-ms-dropdown.visible').forEach(d => {
+      d.classList.remove('visible');
+      d.closest('.fi-multiselect').querySelector('.fi-ms-trigger').classList.remove('abierto');
+    });
+  }
+});
+
+// ── Banco buscable ────────────────────────────────────────────────────────────
+const BANCOS = [
+  'BANCO DE GALICIA Y BUENOS AIRES S.A.','BANCO DE LA NACION ARGENTINA',
+  'BANCO DE LA PROVINCIA DE BUENOS AIRES','BANCO BBVA ARGENTINA S.A.',
+  'BANCO SANTANDER ARGENTINA S.A.','BANCO MACRO S.A.',
+  'BANCO CREDICOOP COOPERATIVO LIMITADO','BANCO SUPERVIELLE S.A.',
+  'BANCO DE LA CIUDAD DE BUENOS AIRES','BANCO HIPOTECARIO S.A.',
+  'BANCO PATAGONIA S.A.','BANCO COMAFI SOCIEDAD ANONIMA',
+  'BRUBANK S.A.U.','UALA BANK S.A.U.',
+  'NARANJA DIGITAL COMPANIA FINANCIERA S.A.','BIBANK S.A.',
+  'BANCO DE LA PROVINCIA DE CORDOBA S.A.','BANCO DE SAN JUAN S.A.',
+  'BANCO MUNICIPAL DE ROSARIO','BANCO DEL CHUBUT S.A.',
+  'BANCO DE SANTA CRUZ S.A.','BANCO DE LA PAMPA S.A.',
+  'BANCO DE CORRIENTES S.A.','BANCO PROVINCIA DEL NEUQUEN SOCIEDAD ANONIMA',
+  'BANCO DE VALORES S.A.','BANCO ROELA S.A.','BANCO MARIVA S.A.',
+  'BANCO MERIDIAN S.A.','BANCO PIANO S.A.','BANCO JULIO SOCIEDAD ANONIMA',
+  'BANCO DEL SOL S.A.','NUEVO BANCO DEL CHACO S.A.','BANCO VOII S.A.',
+  'BANCO DE FORMOSA S.A.','BANCO CMF S.A.','BANCO DE SANTIAGO DEL ESTERO S.A.',
+  'BANCO INDUSTRIAL S.A.','NUEVO BANCO DE SANTA FE SOCIEDAD ANONIMA',
+  'NUEVO BANCO DE ENTRE RIOS S.A.','BANCO COLUMBIA S.A.','BANCO COINAG S.A.',
+  'BANCO DE COMERCIO S.A.','BANCO DINO S.A.','BANCO DE SERVICIOS Y TRANSACCIONES SAU',
+  'BANCO DE INVERSION Y COMERCIO EXTERIOR S.A.',
+  'BACS BANCO DE CREDITO Y SECURITIZACION S.A.',
+  'BNP PARIBAS','CITIBANK N.A.','JPMORGAN CHASE BANK, NATIONAL ASSOCIATION',
+  'INDUSTRIAL AND COMMERCIAL BANK OF CHINA',
+  'BANK OF CHINA LIMITED SUCURSAL BUENOS AIRES',
+  'BANCO DE LA REPUBLICA ORIENTAL DEL URUGUAY',
+  'COMPANIA FINANCIERA ARGENTINA S.A.',
+  'TOYOTA COMPANIA FINANCIERA DE ARGENTINA',
+  'MERCEDES-BENZ COMPANIA FINANCIERA ARGENTINA',
+  'VOLKSWAGEN FINANCIAL SERVICES COMPANIA FINANCIERA S.A.',
+  'ROMBO COMPANIA FINANCIERA S.A.','PSA FINANCE ARGENTINA COMPANIA FINANCIERA',
+  'JOHN DEERE CREDIT COMPANIA FINANCIERA S.A.','GPAT COMPANIA FINANCIERA S.A.U.',
+  'REBA COMPANIA FINANCIERA S.A.','CREDITO REGIONAL COMPANIA FINANCIERA S.A.'
+];
+
+(function initBancos() {
+  const lista = document.getElementById('banco-lista');
+  BANCOS.forEach(nombre => {
+    const div = document.createElement('div');
+    div.className = 'fi-banco-opt';
+    div.textContent = nombre;
+    div.addEventListener('click', function() { seleccionarBanco(nombre, this); });
+    lista.appendChild(div);
+  });
+})();
+
+function toggleBanco() {
+  const wrap     = document.getElementById('banco-wrap');
+  const dropdown = document.getElementById('banco-dropdown');
+  const trigger  = wrap.querySelector('.fi-ms-trigger');
+  const isOpen   = dropdown.classList.contains('visible');
+  document.querySelectorAll('.fi-ms-dropdown.visible').forEach(d => {
+    d.classList.remove('visible');
+    d.closest('.fi-multiselect').querySelector('.fi-ms-trigger').classList.remove('abierto');
+  });
+  if (!isOpen) { dropdown.classList.add('visible'); trigger.classList.add('abierto'); document.getElementById('banco-search').focus(); }
+}
+
+function filtrarBancos() {
+  const q = document.getElementById('banco-search').value.toLowerCase();
+  document.querySelectorAll('#banco-lista .fi-banco-opt').forEach(opt => {
+    opt.classList.toggle('oculto', !opt.textContent.toLowerCase().includes(q));
+  });
+}
+
+function seleccionarBanco(nombre, el) {
+  document.getElementById('banco').value = nombre;
+  document.getElementById('banco-label').textContent = nombre;
+  document.querySelectorAll('#banco-lista .fi-banco-opt').forEach(o => o.classList.remove('seleccionado'));
+  el.classList.add('seleccionado');
+  document.getElementById('banco-dropdown').classList.remove('visible');
+  document.getElementById('banco-wrap').querySelector('.fi-ms-trigger').classList.remove('abierto');
+  document.getElementById('banco-search').value = '';
+  filtrarBancos();
+}
+
+// ── Validaciones ──────────────────────────────────────────────────────────────
+const val = id => (document.getElementById(id) || {}).value?.trim() || '';
+
+function validarPeriodos() {
+  const err = document.getElementById('err3');
   err.style.display = 'none';
+  for (let i = 0; i < periodosActivos.length; i++) {
+    const n = periodosActivos[i], ord = i + 1;
+    if (!val(`periodo_${n}`)) { err.textContent = `Seleccioná el mes del período ${ord}.`; err.style.display = 'block'; return; }
+    if (![...document.querySelectorAll(`.tipo-p${n}:checked`)].length) { err.textContent = `Seleccioná al menos un concepto para el período ${ord}.`; err.style.display = 'block'; return; }
+  }
   irA(4);
 }
 
+// ── Submit ────────────────────────────────────────────────────────────────────
 async function enviar() {
   const err = document.getElementById('err4');
   const btn = document.getElementById('btn-enviar');
   err.style.display = 'none';
 
-  const firstname = document.getElementById('notificante-nombre').value.trim();
-  const lastname  = document.getElementById('notificante-apellido').value.trim();
-  const email     = document.getElementById('notificante-email').value.trim();
-  const phone     = document.getElementById('notificante-telefono').value.trim();
-  if (!firstname || !lastname || !email || !phone) {
+  if (!val('firstname') || !val('lastname') || !val('email') || !val('phone')) {
     err.textContent = 'Completá nombre, apellido, email y teléfono para continuar.';
     err.style.display = 'block'; return;
   }
 
-  const tipos   = [...document.querySelectorAll('input[name="tipo"]:checked')].map(c => c.value);
-  const fecha   = document.getElementById('fecha-desde').value;
-  const fechaMs = fecha ? new Date(fecha).getTime().toString() : '';
+  const fields = [
+    { name: 'nombre_y_apellido_del_inquilino',   value: datosInquilino.nombre },
+    { name: 'dni_inquilino',                     value: datosInquilino.dni    },
+    { name: 'firstname',                         value: val('firstname') },
+    { name: 'lastname',                          value: val('lastname') },
+    { name: 'email',                             value: val('email') },
+    { name: 'phone',                             value: val('phone') },
+    { name: 'alias_cbu_impagos',                 value: val('alias_cbu_impagos') },
+    { name: 'banco',                             value: val('banco') },
+    { name: 'nombre_y_apellido_del_propietario', value: val('nombre_y_apellido_del_propietario') },
+    { name: 'cuit_cuil',                         value: val('cuit_cuil') },
+    { name: 'observaciones_incumplimiento',      value: val('observaciones_incumplimiento') },
+  ];
 
-  const montoVal = (tipo) => {
-    const el = document.getElementById('monto-' + tipo);
-    return el ? (parseFloat(el.value.replace(',', '.')) || 0).toString() : '0';
-  };
+  periodosActivos.forEach((n, i) => {
+    const sfx  = i + 1;
+    const tipos = [...document.querySelectorAll(`.tipo-p${n}:checked`)].map(c => c.value).join(';');
+    fields.push({ name: sfx === 1 ? 'periodo_de_deuda'       : `periodo_de_deuda_${sfx}`,       value: val(`periodo_${n}`) });
+    fields.push({ name: sfx === 1 ? 'tipo_de_incumplimiento' : `tipo_de_incumplimiento_${sfx}`, value: tipos });
+    CAMPOS_MONTO.forEach(c => {
+      const v = val(`${c}_${n}`);
+      if (v) fields.push({ name: sfx === 1 ? c : `${c}_${sfx}`, value: v });
+    });
+  });
 
-  // Todos los datos del ticket serializados como JSON en un solo campo del Contacto.
-  // El workflow los lee, crea el Ticket vía CRM API y limpia este campo.
-  const ticketData = {
-    dni_inquilino:                     datosInquilino.dni,
-    nombre_y_apellido_del_inquilino:   datosInquilino.nombre,
-    numero_garantia:                   datosInquilino.garantia,
-    tipo_de_incumplimiento:            tipos.join(';'),
-    fecha_desde_que_adeuda:            fechaMs,
-    content:                           document.getElementById('descripcion').value.trim(),
-    alias_cbu_impagos:                 document.getElementById('cbu').value.trim(),
-    banco:                             document.getElementById('banco').value,
-    nombre_y_apellido_del_propietario: document.getElementById('titular').value.trim()
-  };
-  for (const tipo of tipos) {
-    const campo = TIPO_CAMPO[tipo];
-    if (campo) ticketData[campo] = montoVal(tipo);
-  }
-
-  const formPayload = {
-    fields: [
-      { objectTypeId: '0-1', name: 'email',                   value: email },
-      { objectTypeId: '0-1', name: 'firstname',               value: firstname },
-      { objectTypeId: '0-1', name: 'lastname',                value: lastname },
-      { objectTypeId: '0-1', name: 'phone',                   value: phone },
-      { objectTypeId: '0-1', name: 'payload_incumplimiento',  value: JSON.stringify(ticketData) }
-    ],
-    context: {
-      pageUri:  'landing.finaersa.com.ar/es/test-consulta-dni',
-      pageName: 'Notificacion de Incumplimiento'
-    }
-  };
+  const payload = { fields: fields.filter(f => f.value !== ''), context: { pageUri: location.href } };
 
   btn.disabled = true; btn.textContent = 'Enviando...';
   try {
     const r = await fetch(
       `https://api.hsforms.com/submissions/v3/integration/submit/${PORTAL_ID}/${FORM_ID}`,
-      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formPayload) }
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }
     );
-    const data = await r.json().catch(() => ({}));
-    if (r.ok) {
-      irA(5);
-    } else {
-      err.textContent = 'Error al enviar: ' + (data.message || JSON.stringify(data));
-      err.style.display = 'block';
-    }
+    if (r.ok) { irA(5); }
+    else { err.textContent = 'Error al enviar. Intentá nuevamente.'; err.style.display = 'block'; }
   } catch (e) {
     err.textContent = 'Error de conexión. Verificá tu internet e intentá nuevamente.';
     err.style.display = 'block';
-  } finally {
-    btn.disabled = false; btn.textContent = 'Enviar Incumplimiento ✓';
-  }
+  } finally { btn.disabled = false; btn.textContent = 'Enviar notificación ✓'; }
 }
 
-document.getElementById('fecha-desde').max = new Date().toISOString().split('T')[0];
+// ── Init ──────────────────────────────────────────────────────────────────────
+document.getElementById('fi-agregar').addEventListener('click', crearPeriodo);
+crearPeriodo();
 document.getElementById('dni-input').addEventListener('keydown', e => { if (e.key === 'Enter') buscarDNI(); });
+
+// ── Mover pie global del template debajo del wizard ───────────────────────────
+(function() {
+  function moverBarra() {
+    try {
+      var wizard = document.getElementById('wizard-root');
+      if (!wizard) return false;
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+      var nodo;
+      while (nodo = walker.nextNode()) {
+        var texto = nodo.nodeValue || '';
+        if (texto.indexOf('Av. Corrientes') !== -1 || texto.indexOf('6842-5100') !== -1 || texto.indexOf('0800-666-8400') !== -1) {
+          var el = nodo.parentElement;
+          while (el && el.parentElement && el.parentElement !== document.body && el.parentElement.tagName !== 'HEADER') {
+            el = el.parentElement;
+          }
+          if (el && el !== wizard && el !== document.body) { wizard.after(el); return true; }
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+  if (!moverBarra()) {
+    var obs = new MutationObserver(function() { if (moverBarra()) obs.disconnect(); });
+    obs.observe(document.body, { childList: true, subtree: true });
+    [300, 700, 1500, 3000].forEach(function(ms) { setTimeout(function() { if (moverBarra()) obs.disconnect(); }, ms); });
+    setTimeout(function() { obs.disconnect(); }, 8000);
+  }
+})();
 </script>
 </body>
 </html>

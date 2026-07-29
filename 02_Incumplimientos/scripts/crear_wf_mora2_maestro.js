@@ -1,11 +1,11 @@
-// crear_wf_mora2_maestro.js
+﻿// crear_wf_mora2_maestro.js
 // Crea el WF "Mora 2 — Actualizar Deal Maestro" via Automation API v4
 // node crear_wf_mora2_maestro.js
 
 const fs   = require('fs');
 const path = require('path');
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 const sourceCode = fs.readFileSync(
   path.join(__dirname, 'wf_actualizar_deal_maestro.js'),

@@ -1,11 +1,11 @@
-// actualizar_wf_mora2_maestro.js
+﻿// actualizar_wf_mora2_maestro.js
 // Actualiza WF 4465889492 "Mora 2 — Actualizar Deal Maestro" via Automation API v4
 // node actualizar_wf_mora2_maestro.js
 
 const fs   = require('fs');
 const path = require('path');
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 const WF_ID = '4465889492';
 
 const sourceCode = fs.readFileSync(

@@ -1,11 +1,11 @@
-// crear_wf_mora2_periodo.js
+﻿// crear_wf_mora2_periodo.js
 // Crea el WF "Mora 2 — Nutrir o Crear Deal Período" via Automation API v4
 // node crear_wf_mora2_periodo.js
 
 const fs   = require('fs');
 const path = require('path');
 
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 const sourceCode = fs.readFileSync(
   path.join(__dirname, 'wf_nutrir_o_crear_deal_periodo.js'),

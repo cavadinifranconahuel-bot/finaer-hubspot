@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Crea el WF de cálculo de punitorios en HubSpot
  * Pipeline: Seguimiento de Deuda (3403406575)
  * Trigger: fecha_desembolso conocida + tasa_punitorio = 0_5_diario
@@ -12,7 +12,7 @@
  */
 
 const https = require('https');
-const TOKEN = 'pat-eu1-1b0bbdd8-54c7-4a36-9201-037d5f401dc8';
+const TOKEN = process.env.HUBSPOT_TOKEN;
 
 function api(method, path, body) {
   return new Promise((resolve, reject) => {
