@@ -4,8 +4,7 @@ const net = require('net');
 const tls = require('tls');
 
 const TEMPLATE_DOC_ID = '1LWhpPEsJEOcUT7RGnuBnH8VTW4z6wusUynjCuWz3IKY';
-const TEMP_FOLDER_ID = '1GYupOG9Q7CeIoU1elsj_ENktC8T0QONk'; // carpeta de trabajo del service account (delete habilitado)
-const PDF_FOLDER_ID  = '0AMqLgchtRrX4Uk9PVA';              // Shared Drive — destino final de PDFs
+const PDF_FOLDER_ID = '0AMqLgchtRrX4Uk9PVA'; // Shared Drive — Doc temporal + PDF final (service account = Content Manager)
 const SMTP_HOST = 'smtp.hubapi.com';
 const SMTP_PORT = 587;
 const FROM_EMAIL = 'incumplimientos@finaersa.com.ar';
@@ -78,7 +77,7 @@ async function copiarTemplate(token, titulo) {
     path: `/drive/v3/files/${TEMPLATE_DOC_ID}/copy?supportsAllDrives=true`,
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }
-  }, { name: titulo, parents: [TEMP_FOLDER_ID] });
+  }, { name: titulo, parents: [PDF_FOLDER_ID] });
   if (!r.body.id) throw new Error('Error copiando template: ' + JSON.stringify(r.body));
   return r.body.id;
 }
