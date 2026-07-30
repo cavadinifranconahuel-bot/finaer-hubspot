@@ -340,6 +340,25 @@ exports.main = async (event, callback) => {
     await eliminarArchivo(gToken, docId);
     docId = null;
     await enviarEmailSmtp(pdfBase64, fields);
+
+    // Marcar carta como enviada en el ticket
+    const ticketId = event.object.objectId;
+    if (ticketId && process.env.token) {
+      const hoy = new Date();
+      hoy.setUTCHours(0, 0, 0, 0);
+      try {
+        await req({
+          hostname: 'api.hubapi.com',
+          path: `/crm/v3/objects/tickets/${ticketId}`,
+          method: 'PATCH',
+          headers: {
+            'Authorization': 'Bearer ' + process.env.token,
+            'Content-Type': 'application/json'
+          }
+        }, { properties: { carta_de_pago_enviada: hoy.getTime().toString() } });
+      } catch (_) {}
+    }
+
     callback({ outputFields: { resultado: 'ok', mensaje: 'Carta de pago enviada con adjunto' } });
   } catch (err) {
     if (docId && gToken) {
