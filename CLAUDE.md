@@ -287,8 +287,7 @@ QUÉ NO HACER
 - No activar el Agente Prejudicial sin completar test y configuración
   de transferencia a humanos
 - No hardcodear tokens ni credenciales en ningún archivo — siempre process.env
-  DEUDA TÉCNICA CONOCIDA: 59 archivos en el repo tienen tokens hardcodeados
-  (pat-eu1-1b0bbdd8... y pat-eu1-87f3fc69...). Pendiente rotar tokens + migrar.
+  ✅ RESUELTO 29/07/2026: 62 archivos migrados a process.env. Tokens rotados.
 
 ================================================================================
 PROTOCOLO DE REPO Y SESIÓN DE TRABAJO
