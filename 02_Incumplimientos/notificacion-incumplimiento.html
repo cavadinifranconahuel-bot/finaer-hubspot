@@ -14,7 +14,8 @@ body > [id*="footer"],
 body > [class*="footer"],
 body > [id*="Footer"],
 body > [class*="Footer"] { order: 4 !important; }
-#wizard-root { order: 3 !important; flex-shrink: 0; }
+#wizard-root { order: 3 !important; flex-grow: 1 !important; flex-shrink: 0; }
+body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
 
 /* ── Reset scoped ── */
 #wizard-root, #wizard-root * { box-sizing: border-box; }
@@ -788,33 +789,22 @@ document.getElementById('fi-agregar').addEventListener('click', crearPeriodo);
 crearPeriodo();
 document.getElementById('dni-input').addEventListener('keydown', e => { if (e.key === 'Enter') buscarDNI(); });
 
-// ── Mover pie global del template debajo del wizard ───────────────────────────
+// ── Posicionar footer después del wizard ──────────────────────────────────────
 (function() {
-  function moverBarra() {
-    try {
-      var wizard = document.getElementById('wizard-root');
-      if (!wizard) return false;
-      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-      var nodo;
-      while (nodo = walker.nextNode()) {
-        var texto = nodo.nodeValue || '';
-        if (texto.indexOf('Av. Corrientes') !== -1 || texto.indexOf('6842-5100') !== -1 || texto.indexOf('0800-666-8400') !== -1) {
-          var el = nodo.parentElement;
-          while (el && el.parentElement && el.parentElement !== document.body && el.parentElement.tagName !== 'HEADER') {
-            el = el.parentElement;
-          }
-          if (el && el !== wizard && el !== document.body) { wizard.after(el); return true; }
-        }
-      }
-    } catch(e) {}
-    return false;
+  function posicionar() {
+    var wizard = document.getElementById('wizard-root');
+    var foot   = document.querySelector('footer.hs-elevate-footer');
+    if (!wizard || !foot) return false;
+    if (wizard.nextElementSibling !== foot) {
+      wizard.after(foot);
+    }
+    return true;
   }
-  if (!moverBarra()) {
-    var obs = new MutationObserver(function() { if (moverBarra()) obs.disconnect(); });
-    obs.observe(document.body, { childList: true, subtree: true });
-    [300, 700, 1500, 3000].forEach(function(ms) { setTimeout(function() { if (moverBarra()) obs.disconnect(); }, ms); });
-    setTimeout(function() { obs.disconnect(); }, 8000);
-  }
+  posicionar();
+  [50, 200, 500, 1000, 2000, 3000, 5000].forEach(function(ms) { setTimeout(posicionar, ms); });
+  var obs = new MutationObserver(posicionar);
+  obs.observe(document.body, { childList: true, subtree: true });
+  setTimeout(function() { obs.disconnect(); }, 15000);
 })();
 </script>
 </body>

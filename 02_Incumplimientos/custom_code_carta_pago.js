@@ -4,7 +4,8 @@ const net = require('net');
 const tls = require('tls');
 
 const TEMPLATE_DOC_ID = '1LWhpPEsJEOcUT7RGnuBnH8VTW4z6wusUynjCuWz3IKY';
-const TEMP_FOLDER_ID = '1GYupOG9Q7CeIoU1elsj_ENktC8T0QONk';
+const TEMP_FOLDER_ID = '1GYupOG9Q7CeIoU1elsj_ENktC8T0QONk'; // carpeta de trabajo del service account (delete habilitado)
+const PDF_FOLDER_ID  = '0AMqLgchtRrX4Uk9PVA';              // Shared Drive — destino final de PDFs
 const SMTP_HOST = 'smtp.hubapi.com';
 const SMTP_PORT = 587;
 const FROM_EMAIL = 'incumplimientos@finaersa.com.ar';
@@ -175,7 +176,7 @@ async function exportarPdf(token, docId) {
 async function guardarPdfEnDrive(token, pdfBase64, nombre) {
   const pdfBuffer = Buffer.from(pdfBase64, 'base64');
   const boundary = 'PDF_' + Date.now().toString(36);
-  const meta = JSON.stringify({ name: nombre, parents: [TEMP_FOLDER_ID], mimeType: 'application/pdf' });
+  const meta = JSON.stringify({ name: nombre, parents: [PDF_FOLDER_ID], mimeType: 'application/pdf' });
   const body = Buffer.concat([
     Buffer.from(`--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n`),
     Buffer.from(`--${boundary}\r\nContent-Type: application/pdf\r\n\r\n`),
