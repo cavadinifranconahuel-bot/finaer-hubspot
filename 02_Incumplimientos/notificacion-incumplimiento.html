@@ -346,79 +346,79 @@ async function buscarDNI() {
   }).then(r => r.json());
 
   try {
-    const ticketSearch = await hs('POST', '/crm/v3/objects/tickets/search', {
+    // Buscar tickets ABIERTOS: sin resultado_del_caso = no resueltos
+    const openSearch = await hs('POST', '/crm/v3/objects/tickets/search', {
       filterGroups: [{ filters: [
         { propertyName: 'dni_inquilino', operator: 'EQ', value: dni },
-        { propertyName: 'hs_pipeline_stage', operator: 'NEQ', value: '4594251972' }
+        { propertyName: 'resultado_del_caso', operator: 'NOT_HAS_PROPERTY' }
       ]}],
       properties: ['subject','nombre_y_apellido_del_inquilino','periodo_de_deuda','mes_de_deuda','createdate'],
       sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
       limit: 10
     });
 
-    if (ticketSearch.results && ticketSearch.results.length > 0) {
-      ticketsEncontrados = ticketSearch.results;
+    const ticketsAbiertos = openSearch.results || [];
+
+    if (ticketsAbiertos.length > 0) {
+      ticketsEncontrados = ticketsAbiertos;
       ticketActual = 0;
-      datosInquilino = { flujo: 'existente', dni, nombre: ticketSearch.results[0].properties.nombre_y_apellido_del_inquilino || '—' };
+      datosInquilino = { flujo: 'existente', dni, nombre: ticketsAbiertos[0].properties.nombre_y_apellido_del_inquilino || '—' };
       mostrarTicketActual();
       irA(2); return;
     }
 
-    const contactData = await hs('POST', '/crm/v3/objects/contacts/search', {
-      filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
-      properties: ['firstname','lastname','email'], limit: 1
+    // Sin abiertos: buscar nombre en cualquier ticket (incluso cerrados)
+    const anySearch = await hs('POST', '/crm/v3/objects/tickets/search', {
+      filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
+      properties: ['nombre_y_apellido_del_inquilino'],
+      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
+      limit: 1
     });
 
-    if (!contactData.results || contactData.results.length === 0) {
-      datosInquilino = { flujo: 'bloqueado', dni, nombre: '' };
-      mostrarNoEncontrado(dni);
+    const nombreDesdeTicket = anySearch.results?.[0]?.properties?.nombre_y_apellido_del_inquilino || null;
+
+    if (nombreDesdeTicket) {
+      datosInquilino = { flujo: 'nuevo', dni, nombre: nombreDesdeTicket, nroSolicitud: '—', inmobiliaria: '—', solicitante: '—', cogarante: null };
+      mostrarDatosInquilino(datosInquilino);
       irA(2); return;
     }
 
-    const contact   = contactData.results[0];
-    const contactId = contact.id;
-    const nombre    = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') || '—';
-
+    // Sin tickets: buscar deal en Ventas directamente por dni_inquilino
     const dealData = await hs('POST', '/crm/v3/objects/deals/search', {
       filterGroups: [{ filters: [
-        { propertyName: 'associations.contact', operator: 'EQ', value: contactId },
+        { propertyName: 'dni_inquilino', operator: 'EQ', value: dni },
         { propertyName: 'pipeline', operator: 'EQ', value: 'default' }
       ]}],
       properties: ['dealname','nombre_y_apellido_del_inquilino','solicitante','nombre_y_apellido_del_solicitante'],
       sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }], limit: 1
     });
 
-    let nroSolicitud = '—', inmobiliaria = '—', inquilino = nombre, solicitante = '—', cogarante = null;
-
     if (dealData.results && dealData.results.length > 0) {
       const deal = dealData.results[0];
       const dp   = deal.properties;
-      nroSolicitud = dp.dealname || '—';
-      inquilino    = dp.nombre_y_apellido_del_inquilino || nombre;
-      solicitante  = dp.nombre_y_apellido_del_solicitante || dp.solicitante || '—';
-
-      const assocEmpresas = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
-      if (assocEmpresas.results && assocEmpresas.results.length > 0) {
-        const empresa = await hs('GET', `/crm/v3/objects/companies/${assocEmpresas.results[0].id}?properties=name`);
-        inmobiliaria = empresa.properties?.name || '—';
-      }
-
-      const assocContactos = await hs('GET', `/crm/v4/objects/deals/${deal.id}/associations/contacts`);
-      if (assocContactos.results) {
-        for (const assoc of assocContactos.results) {
-          if (String(assoc.toObjectId) === String(contactId)) continue;
-          const labels = (assoc.associationTypes || []).map(t => (t.label || '').toLowerCase());
-          if (labels.some(l => l.includes('cosolicit') || l.includes('co-solicit') || l.includes('garante'))) {
-            const cg = await hs('GET', `/crm/v3/objects/contacts/${assoc.toObjectId}?properties=firstname,lastname`);
-            if (cg.properties) cogarante = [cg.properties.firstname, cg.properties.lastname].filter(Boolean).join(' ') || null;
-            break;
-          }
+      let inmobiliaria = '—';
+      try {
+        const assocEmpresas = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
+        if (assocEmpresas.results && assocEmpresas.results.length > 0) {
+          const empresa = await hs('GET', `/crm/v3/objects/companies/${assocEmpresas.results[0].id}?properties=name`);
+          inmobiliaria = empresa.properties?.name || '—';
         }
-      }
+      } catch (_) {}
+      datosInquilino = {
+        flujo: 'nuevo', dni,
+        nombre: dp.nombre_y_apellido_del_inquilino || '—',
+        nroSolicitud: dp.dealname || '—',
+        inmobiliaria,
+        solicitante: dp.nombre_y_apellido_del_solicitante || dp.solicitante || '—',
+        cogarante: null
+      };
+      mostrarDatosInquilino(datosInquilino);
+      irA(2); return;
     }
 
-    datosInquilino = { flujo: 'nuevo', dni, nombre: inquilino, nroSolicitud, inmobiliaria, solicitante, cogarante };
-    mostrarDatosInquilino(datosInquilino);
+    // Nada encontrado
+    datosInquilino = { flujo: 'bloqueado', dni, nombre: '' };
+    mostrarNoEncontrado(dni);
     irA(2);
 
   } catch (e) {
