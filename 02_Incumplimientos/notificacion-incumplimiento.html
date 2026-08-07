@@ -7,6 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Kumbh+Sans:wght@400;600;700&display=swap');
 
+img[src*="logo-finaer"] { cursor: pointer !important; }
 /* ── Layout: encabezado → wizard → pie global ── */
 body { display: flex !important; flex-direction: column !important; min-height: 100vh !important; }
 body > footer,
@@ -64,7 +65,7 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
   font-size: 13px; background: #fafafa; cursor: pointer; color: #666; font-family: 'Kumbh Sans', sans-serif;
 }
 .fi-campo input:focus, .fi-campo select:focus, .fi-campo textarea:focus { border-color: #e30613; background: #fff; }
-.fi-campo-req label::after { content: ' *'; color: #e30613; }
+.fi-campo-req > label::after { content: ' *'; color: #e30613; }
 .fi-dos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .fi-dos .fi-campo { margin-bottom: 0; }
 
@@ -119,6 +120,14 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
 .fi-detalle-fila { display: grid; grid-template-columns: 130px 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 10px; padding: 14px 16px; background: #fafafa; border: 1.5px solid #eee; border-radius: 8px; }
 .fi-detalle-nombre { font-size: 13px; font-weight: 600; color: #444; font-family: 'Kumbh Sans', sans-serif; align-self: center; }
 .fi-detalle-fila .fi-campo { margin: 0; }
+.fi-cbu-wrap { display: flex; align-items: center; gap: 8px; }
+.fi-cbu-wrap input { flex: 1; min-width: 0; }
+.fi-adjuntar { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 1.5px solid #ddd; border-radius: 8px; cursor: pointer; font-size: 17px; background: #fafafa; flex-shrink: 0; transition: all .15s; }
+.fi-adjuntar:hover { border-color: #e30613; background: #fff5f5; }
+.fi-adjunto-nombre { font-size: 12px; color: #555; margin-top: 4px; display: block; word-break: break-all; }
+.fi-ars-wrap { position: relative; }
+.fi-ars-pre { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 700; color: #666; pointer-events: none; letter-spacing: .3px; }
+.fi-ars-wrap input { padding-left: 52px !important; }
 
 /* Banco buscable */
 .fi-banco-search { width: 100%; padding: 9px 14px; border: none; border-bottom: 1px solid #eee; font-size: 13px; font-family: 'Kumbh Sans', sans-serif; outline: none; background: #fafafa; display: block; }
@@ -128,6 +137,19 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
 .fi-banco-opt:hover { background: #fdf0f0; }
 .fi-banco-opt.seleccionado { background: #fff5f5; color: #e30613; font-weight: 600; }
 .fi-banco-opt.oculto { display: none; }
+
+/* Pills de conceptos */
+.fi-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.fi-pill { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1.5px solid #ddd; border-radius: 50px; cursor: pointer; font-size: 13px; color: #444; background: #fafafa; transition: all .15s; user-select: none; font-family: 'Kumbh Sans', sans-serif; }
+.fi-pill:hover { border-color: #e30613; background: #fff5f5; }
+.fi-pill:has(input:checked) { border-color: #e30613; background: #fff5f5; color: #e30613; font-weight: 600; }
+.fi-pill input { position: absolute; opacity: 0; width: 0; height: 0; }
+label.fi-pill::after, .fi-pills label::after { content: none !important; }
+
+/* Quitar flechas de inputs numéricos */
+input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 
 /* Botón agregar período */
 .fi-btn-agregar { width: 100%; padding: 11px; background: #fff; color: #e30613; border: 2px dashed #e30613; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; margin: 4px 0 8px; font-family: 'Kumbh Sans', sans-serif; }
@@ -156,6 +178,14 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
   .step-line { width: 28px; }
 }
 </style>
+<script>
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.matches('img[src*="logo-finaer"]')) {
+    e.preventDefault();
+    window.location.href = 'https://www.finaersa.com.ar';
+  }
+}, true);
+</script>
 </head>
 <body>
 
@@ -216,21 +246,31 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
   <div class="panel" id="panel4">
     <h2>Tus datos</h2>
     <p class="fi-sub">Completá tus datos de contacto y los bancarios para recibir el reembolso en caso de resolución.</p>
-    <div class="fi-alert error" id="err4"></div>
 
     <div class="fi-seccion"><span>Quién notifica</span></div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo fi-campo-req"><label>Nombre</label><input type="text" id="firstname" placeholder="Tu nombre"></div>
-      <div class="fi-campo fi-campo-req"><label>Apellido</label><input type="text" id="lastname" placeholder="Tu apellido"></div>
+      <div class="fi-campo fi-campo-req"><label>Nombre del Administrador, propietario o contacto</label><input type="text" id="firstname" placeholder="Tu nombre"></div>
+      <div class="fi-campo fi-campo-req"><label>Apellido/s del Administrador, propietario o contacto</label><input type="text" id="lastname" placeholder="Tu apellido"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo fi-campo-req"><label>Email</label><input type="email" id="email" placeholder="correo@ejemplo.com"></div>
-      <div class="fi-campo fi-campo-req"><label>Teléfono</label><input type="tel" id="phone" placeholder="Ej: 1155556666" inputmode="numeric"></div>
+      <div class="fi-campo fi-campo-req"><label>Correo del Administrador, propietario o contacto</label><input type="email" id="email" placeholder="correo@ejemplo.com"></div>
+      <div class="fi-campo fi-campo-req"><label>Número de teléfono del Administrador, propietario o contacto</label><input type="tel" id="phone" placeholder="Ej: 1155556666" inputmode="numeric"></div>
     </div>
 
     <div class="fi-seccion"><span>Datos bancarios para el pago</span></div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo"><label>CBU o alias</label><input type="text" id="alias_cbu_impagos" placeholder="CBU o alias de la cuenta"></div>
+      <div class="fi-campo">
+        <label>CBU</label>
+        <div class="fi-cbu-wrap">
+          <input type="text" id="cbu_impagos" placeholder="22 dígitos sin espacios" inputmode="numeric" maxlength="22">
+          <label class="fi-adjuntar" title="Adjuntar constancia de CBU">
+            <input type="file" id="constancia_cbu" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="onAdjunto(this)">
+            📎
+          </label>
+        </div>
+        <span class="fi-adjunto-nombre" id="adjunto-nombre"></span>
+      </div>
+      <div class="fi-campo"><label>Alias</label><input type="text" id="alias_impagos" placeholder="Ej: nombre.apellido.0001"></div>
       <div class="fi-campo">
         <label>Banco</label>
         <div class="fi-multiselect" id="banco-wrap">
@@ -257,6 +297,7 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
       <textarea id="observaciones_incumplimiento" placeholder="Detallá cualquier información adicional relevante..."></textarea>
     </div>
 
+    <div class="fi-alert error" id="err4"></div>
     <div class="btns">
       <button class="btn-back" onclick="irA(3)">← Atrás</button>
       <button class="btn-next" id="btn-enviar" onclick="enviar()">Enviar notificación ✓</button>
@@ -367,49 +408,71 @@ async function buscarDNI() {
       irA(2); return;
     }
 
-    // Sin abiertos: buscar nombre en cualquier ticket (incluso cerrados)
-    const anySearch = await hs('POST', '/crm/v3/objects/tickets/search', {
-      filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
-      properties: ['nombre_y_apellido_del_inquilino'],
-      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
-      limit: 1
-    });
+    // Sin abiertos: buscar nombre en cualquier ticket + deal por dni_inquilino + contacto por nro_documento_txt
+    const [anySearch, dealData, contactSearch] = await Promise.all([
+      hs('POST', '/crm/v3/objects/tickets/search', {
+        filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
+        properties: ['nombre_y_apellido_del_inquilino'],
+        sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
+        limit: 1
+      }),
+      hs('POST', '/crm/v3/objects/deals/search', {
+        filterGroups: [
+          { filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }
+        ],
+        properties: ['dealname','codigo_de_solicitud','nombre_y_apellido_del_inquilino','nombre_y_apellido_del_solicitante','pipeline'],
+        sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }], limit: 5
+      }),
+      hs('POST', '/crm/v3/objects/contacts/search', {
+        filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
+        properties: ['firstname','lastname','nombre_y_apellido_del_inquilino'],
+        limit: 1
+      })
+    ]);
 
     const nombreDesdeTicket = anySearch.results?.[0]?.properties?.nombre_y_apellido_del_inquilino || null;
+    const contact = contactSearch.results?.[0] || null;
+    let deal = (dealData.results || []).find(d => d.properties.pipeline === 'default') || null;
 
-    if (nombreDesdeTicket) {
-      datosInquilino = { flujo: 'nuevo', dni, nombre: nombreDesdeTicket, nroSolicitud: '—', inmobiliaria: '—', solicitante: '—', cogarante: null };
-      mostrarDatosInquilino(datosInquilino);
-      irA(2); return;
-    }
-
-    // Sin tickets: buscar deal en Ventas directamente por dni_inquilino
-    const dealData = await hs('POST', '/crm/v3/objects/deals/search', {
-      filterGroups: [{ filters: [
-        { propertyName: 'dni_inquilino', operator: 'EQ', value: dni },
-        { propertyName: 'pipeline', operator: 'EQ', value: 'default' }
-      ]}],
-      properties: ['dealname','nombre_y_apellido_del_inquilino','solicitante','nombre_y_apellido_del_solicitante'],
-      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }], limit: 1
-    });
-
-    if (dealData.results && dealData.results.length > 0) {
-      const deal = dealData.results[0];
-      const dp   = deal.properties;
-      let inmobiliaria = '—';
+    // Fallback: si la búsqueda por dni_inquilino no devolvió deal, buscar vía asociaciones del contacto
+    if (!deal && contact) {
       try {
-        const assocEmpresas = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
-        if (assocEmpresas.results && assocEmpresas.results.length > 0) {
-          const empresa = await hs('GET', `/crm/v3/objects/companies/${assocEmpresas.results[0].id}?properties=name`);
-          inmobiliaria = empresa.properties?.name || '—';
+        const assocDeals = await hs('GET', `/crm/v4/objects/contacts/${contact.id}/associations/deals`);
+        const dealIds = (assocDeals.results || []).map(r => r.toObjectId).slice(0, 5);
+        if (dealIds.length > 0) {
+          const detalles = await Promise.all(
+            dealIds.map(id => hs('GET',
+              `/crm/v3/objects/deals/${id}?properties=dealname,nombre_y_apellido_del_solicitante,pipeline`
+            ))
+          );
+          deal = detalles.find(d => d.properties?.pipeline === 'default') || null;
         }
       } catch (_) {}
+    }
+
+    const nombreDesdeContacto = contact
+      ? (contact.properties.nombre_y_apellido_del_inquilino ||
+         `${contact.properties.firstname || ''} ${contact.properties.lastname || ''}`.trim() || null)
+      : null;
+
+    if (nombreDesdeTicket || contact || deal) {
+      const dp = deal?.properties || {};
+      let inmobiliaria = '—';
+      if (deal) {
+        try {
+          const assocEmpresas = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
+          if (assocEmpresas.results?.length > 0) {
+            const empresa = await hs('GET', `/crm/v3/objects/companies/${assocEmpresas.results[0].id}?properties=name`);
+            inmobiliaria = empresa.properties?.name || '—';
+          }
+        } catch (_) {}
+      }
       datosInquilino = {
         flujo: 'nuevo', dni,
-        nombre: dp.nombre_y_apellido_del_inquilino || '—',
+        nombre: nombreDesdeTicket || nombreDesdeContacto || dp.nombre_y_apellido_del_inquilino || '—',
         nroSolicitud: dp.dealname || '—',
         inmobiliaria,
-        solicitante: dp.nombre_y_apellido_del_solicitante || dp.solicitante || '—',
+        solicitante: dp.nombre_y_apellido_del_solicitante || nombreDesdeContacto || '—',
         cogarante: null
       };
       mostrarDatosInquilino(datosInquilino);
@@ -480,7 +543,7 @@ function mostrarNoEncontrado(dni) {
   document.getElementById('inq-content').innerHTML = `
     <div class="fi-alert error" style="display:block;">
       No encontramos ningún inquilino con DNI <strong>${dni}</strong> en nuestro sistema.<br><br>
-      Para continuar, comunicate con FINAER al <strong>6842-5100</strong>.
+      Para continuar, comunicate con FINAER al <strong>6842-5100 interno 4</strong>.
     </div>`;
   document.getElementById('btn2').style.display = 'none';
   document.getElementById('warn2').style.display = 'none';
@@ -495,8 +558,9 @@ function confirmarInquilino() {
 function generarMeses() {
   const añoActual = new Date().getFullYear();
   let opts = '<option value="">Seleccioná el mes</option>';
-  for (let y = añoActual - 2; y <= añoActual + 1; y++) {
-    for (let m = 0; m < 12; m++) opts += `<option>${MESES[m]} - ${y}</option>`;
+  for (let y = 2025; y <= añoActual + 1; y++) {
+    const mDesde = y === 2025 ? 4 : 0; // 2025: desde Mayo (índice 4)
+    for (let m = mDesde; m < 12; m++) opts += `<option>${MESES[m]} - ${y}</option>`;
   }
   return opts;
 }
@@ -508,11 +572,10 @@ function crearPeriodo() {
   periodosActivos.push(n);
 
   const opcionesMs = CONCEPTOS.map(c => `
-    <label class="fi-ms-option">
+    <label class="fi-pill">
       <input type="checkbox" class="tipo-p${n}" value="${c.label}"
              data-campo="${c.campo || ''}" data-cid="${c.id}"
-             onchange="onConcepto(this,${n});updateMsLabel('ms-${n}')">
-      <span class="fi-ms-check"></span>
+             onchange="onConcepto(this,${n})">
       <span>${c.label}</span>
     </label>`).join('');
 
@@ -530,13 +593,7 @@ function crearPeriodo() {
     </div>
     <div class="fi-campo fi-campo-req">
       <label>Concepto/s adeudado/s</label>
-      <div class="fi-multiselect" id="ms-${n}">
-        <button type="button" class="fi-ms-trigger" onclick="toggleMs('ms-${n}')">
-          <span class="fi-ms-label">Seleccioná los conceptos</span>
-          <span class="fi-ms-arrow">▼</span>
-        </button>
-        <div class="fi-ms-dropdown">${opcionesMs}</div>
-      </div>
+      <div class="fi-pills" id="ms-${n}">${opcionesMs}</div>
     </div>
     <div class="fi-detalles" id="detalles-${n}"></div>`;
 
@@ -566,9 +623,6 @@ function onConcepto(cb, n) {
   const cid    = cb.dataset.cid;
   const filaId = `df-${cid}-${n}`;
   const cont   = document.getElementById(`detalles-${n}`);
-  const check  = cb.nextElementSibling;
-  if (check && check.classList.contains('fi-ms-check')) check.classList.toggle('marcado', cb.checked);
-
   if (cb.checked && campo) {
     const fila = document.createElement('div');
     fila.className = 'fi-detalle-fila';
@@ -576,8 +630,11 @@ function onConcepto(cb, n) {
     fila.innerHTML = `
       <div class="fi-detalle-nombre">${cb.value}</div>
       <div class="fi-campo">
-        <label>Monto <span class="nota">(ARS)</span></label>
-        <input type="number" id="${campo}_${n}" min="0" placeholder="0">
+        <label>Importe adeudado</label>
+        <div class="fi-ars-wrap">
+          <span class="fi-ars-pre">$ ARS</span>
+          <input type="number" id="${campo}_${n}" min="0" placeholder="0">
+        </div>
       </div>
       <div class="fi-campo">
         <label>Comprobante <span class="nota">(opcional)</span></label>
@@ -709,11 +766,21 @@ function validarPeriodos() {
     const n = periodosActivos[i], ord = i + 1;
     if (!val(`periodo_${n}`)) { err.textContent = `Seleccioná el mes del período ${ord}.`; err.style.display = 'block'; return; }
     if (![...document.querySelectorAll(`.tipo-p${n}:checked`)].length) { err.textContent = `Seleccioná al menos un concepto para el período ${ord}.`; err.style.display = 'block'; return; }
+    const conceptosConMonto = [...document.querySelectorAll(`.tipo-p${n}:checked`)].filter(c => c.dataset.campo);
+    for (const cb of conceptosConMonto) {
+      const v = parseFloat(document.getElementById(`${cb.dataset.campo}_${n}`)?.value || 0);
+      if (!v || v <= 0) { err.textContent = `Ingresá el importe adeudado de "${cb.value}" en el período ${ord}.`; err.style.display = 'block'; return; }
+    }
   }
   irA(4);
 }
 
 // ── Submit ────────────────────────────────────────────────────────────────────
+function onAdjunto(input) {
+  const el = document.getElementById('adjunto-nombre');
+  if (el) el.textContent = input.files[0] ? '📄 ' + input.files[0].name : '';
+}
+
 async function enviar() {
   const err = document.getElementById('err4');
   const btn = document.getElementById('btn-enviar');
@@ -723,6 +790,17 @@ async function enviar() {
     err.textContent = 'Completá nombre, apellido, email y teléfono para continuar.';
     err.style.display = 'block'; return;
   }
+  const cbu = val('cbu_impagos');
+  if (cbu) {
+    if (cbu.startsWith('000')) {
+      err.textContent = 'El CBU ingresado no es válido (no puede comenzar con 000). Verificá el número e intentá nuevamente.';
+      err.style.display = 'block'; return;
+    }
+    if (!/^\d{22}$/.test(cbu)) {
+      err.textContent = `El CBU debe tener exactamente 22 dígitos numéricos (ingresaste ${cbu.length}).`;
+      err.style.display = 'block'; return;
+    }
+  }
 
   const fields = [
     { name: 'nombre_y_apellido_del_inquilino',   value: datosInquilino.nombre },
@@ -731,7 +809,8 @@ async function enviar() {
     { name: 'lastname',                          value: val('lastname') },
     { name: 'email',                             value: val('email') },
     { name: 'phone',                             value: val('phone') },
-    { name: 'alias_cbu_impagos',                 value: val('alias_cbu_impagos') },
+    { name: 'cbu_impagos',                        value: val('cbu_impagos') },
+    { name: 'alias_impagos',                      value: val('alias_impagos') },
     { name: 'banco',                             value: val('banco') },
     { name: 'nombre_y_apellido_del_propietario', value: val('nombre_y_apellido_del_propietario') },
     { name: 'cuit_cuil',                         value: val('cuit_cuil') },
