@@ -65,9 +65,10 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
   font-size: 13px; background: #fafafa; cursor: pointer; color: #666; font-family: 'Kumbh Sans', sans-serif;
 }
 .fi-campo input:focus, .fi-campo select:focus, .fi-campo textarea:focus { border-color: #e30613; background: #fff; }
-.fi-campo-req > label::after { content: ' *'; color: #e30613; }
+
 .fi-dos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.fi-dos .fi-campo { margin-bottom: 0; }
+.fi-dos .fi-campo { margin-bottom: 0; display: flex; flex-direction: column; }
+.fi-dos .fi-campo input, .fi-dos .fi-campo select { margin-top: auto; }
 
 /* ── Alertas ── */
 .fi-alert { padding: 12px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; display: none; }
@@ -122,8 +123,8 @@ body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
 .fi-detalle-fila .fi-campo { margin: 0; }
 .fi-cbu-wrap { display: flex; align-items: center; gap: 8px; }
 .fi-cbu-wrap input { flex: 1; min-width: 0; }
-.fi-adjuntar { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 1.5px solid #ddd; border-radius: 8px; cursor: pointer; font-size: 17px; background: #fafafa; flex-shrink: 0; transition: all .15s; }
-.fi-adjuntar:hover { border-color: #e30613; background: #fff5f5; }
+.fi-adjuntar-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #e30613; cursor: pointer; margin-top: 6px; }
+.fi-adjuntar-link:hover { text-decoration: underline; }
 .fi-adjunto-nombre { font-size: 12px; color: #555; margin-top: 4px; display: block; word-break: break-all; }
 .fi-ars-wrap { position: relative; }
 .fi-ars-pre { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 700; color: #666; pointer-events: none; letter-spacing: .3px; }
@@ -232,7 +233,7 @@ document.addEventListener('click', function(e) {
   <!-- PASO 3: Períodos -->
   <div class="panel" id="panel3">
     <h2>Períodos de deuda</h2>
-    <p class="fi-sub">Podés informar hasta 4 períodos de deuda distintos. Cada período genera un expediente separado en FINAER.</p>
+    <p class="fi-sub">Completá los datos de cada período de deuda que querés notificar.</p>
     <div class="fi-alert error" id="err3"></div>
     <div id="fi-periodos"></div>
     <button type="button" class="fi-btn-agregar" id="fi-agregar">+ Agregar otro período</button>
@@ -261,16 +262,16 @@ document.addEventListener('click', function(e) {
     <div class="fi-dos" style="margin-bottom:16px;">
       <div class="fi-campo">
         <label>CBU</label>
-        <div class="fi-cbu-wrap">
-          <input type="text" id="cbu_impagos" placeholder="22 dígitos sin espacios" inputmode="numeric" maxlength="22">
-          <label class="fi-adjuntar" title="Adjuntar constancia de CBU">
-            <input type="file" id="constancia_cbu" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="onAdjunto(this)">
-            📎
-          </label>
-        </div>
+        <input type="text" id="cbu_impagos" placeholder="22 dígitos sin espacios" inputmode="numeric" maxlength="22">
+        <label class="fi-adjuntar-link" for="constancia_cbu">
+          <input type="file" id="constancia_cbu" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="onAdjunto(this)">
+          📎 Adjuntar constancia de CBU
+        </label>
         <span class="fi-adjunto-nombre" id="adjunto-nombre"></span>
       </div>
       <div class="fi-campo"><label>Alias</label><input type="text" id="alias_impagos" placeholder="Ej: nombre.apellido.0001"></div>
+    </div>
+    <div class="fi-dos" style="margin-bottom:16px;">
       <div class="fi-campo">
         <label>Banco</label>
         <div class="fi-multiselect" id="banco-wrap">
@@ -285,10 +286,11 @@ document.addEventListener('click', function(e) {
           <input type="hidden" id="banco" value="">
         </div>
       </div>
+      <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular"></div>
       <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="20-12345678-9"></div>
+      <div class="fi-campo"></div>
     </div>
 
     <div class="fi-seccion"><span>Información adicional</span></div>
@@ -310,7 +312,6 @@ document.addEventListener('click', function(e) {
       <div class="icon">✅</div>
       <h2>Notificación enviada</h2>
       <p>Recibimos tu notificación de incumplimiento.<br>El equipo de FINAER se va a comunicar a la brevedad.</p>
-      <p id="redirect-msg" style="margin-top:20px;font-size:13px;color:#aaa;">Serás redirigido en <strong id="countdown">5</strong> segundos...</p>
     </div>
   </div>
 
@@ -451,13 +452,13 @@ async function buscarDNI() {
     }
 
     const nombreDesdeContacto = contact
-      ? (contact.properties.nombre_y_apellido_del_inquilino ||
-         `${contact.properties.firstname || ''} ${contact.properties.lastname || ''}`.trim() || null)
+      ? (`${contact.properties.firstname || ''} ${contact.properties.lastname || ''}`.trim() || null)
       : null;
 
     if (nombreDesdeTicket || contact || deal) {
       const dp = deal?.properties || {};
       let inmobiliaria = '—';
+      let solicitanteNombre = dp.nombre_y_apellido_del_solicitante || '—';
       if (deal) {
         try {
           const assocEmpresas = await hs('GET', `/crm/v3/objects/deals/${deal.id}/associations/companies`);
@@ -466,13 +467,25 @@ async function buscarDNI() {
             inmobiliaria = empresa.properties?.name || '—';
           }
         } catch (_) {}
+        try {
+          const assocContacts = await hs('GET', `/crm/v4/objects/deals/${deal.id}/associations/contacts`);
+          const solAssoc = (assocContacts.results || []).find(c =>
+            c.associationTypes?.some(t => t.label?.toLowerCase() === 'solicitante')
+          );
+          if (solAssoc) {
+            const sc = await hs('GET', `/crm/v3/objects/contacts/${solAssoc.toObjectId}?properties=firstname,lastname`);
+            const fn = sc.properties?.firstname || '';
+            const ln = sc.properties?.lastname || '';
+            if (fn || ln) solicitanteNombre = [fn, ln].filter(Boolean).join(' ');
+          }
+        } catch (_) {}
       }
       datosInquilino = {
         flujo: 'nuevo', dni,
         nombre: nombreDesdeTicket || nombreDesdeContacto || dp.nombre_y_apellido_del_inquilino || '—',
         nroSolicitud: dp.dealname || '—',
         inmobiliaria,
-        solicitante: dp.nombre_y_apellido_del_solicitante || nombreDesdeContacto || '—',
+        solicitante: solicitanteNombre,
         cogarante: null
       };
       mostrarDatosInquilino(datosInquilino);
@@ -543,7 +556,7 @@ function mostrarNoEncontrado(dni) {
   document.getElementById('inq-content').innerHTML = `
     <div class="fi-alert error" style="display:block;">
       No encontramos ningún inquilino con DNI <strong>${dni}</strong> en nuestro sistema.<br><br>
-      Para continuar, comunicate con FINAER al <strong>6842-5100 interno 4</strong>.
+      Para continuar, comunicate con FINAER al <strong>011 6842-5100 opción 4</strong>.
     </div>`;
   document.getElementById('btn2').style.display = 'none';
   document.getElementById('warn2').style.display = 'none';
@@ -556,12 +569,8 @@ function confirmarInquilino() {
 
 // ── Períodos ──────────────────────────────────────────────────────────────────
 function generarMeses() {
-  const añoActual = new Date().getFullYear();
   let opts = '<option value="">Seleccioná el mes</option>';
-  for (let y = 2025; y <= añoActual + 1; y++) {
-    const mDesde = y === 2025 ? 4 : 0; // 2025: desde Mayo (índice 4)
-    for (let m = mDesde; m < 12; m++) opts += `<option>${MESES[m]} - ${y}</option>`;
-  }
+  for (let m = 0; m < 12; m++) opts += `<option>${MESES[m]} - 2026</option>`;
   return opts;
 }
 
@@ -801,6 +810,11 @@ async function enviar() {
       err.style.display = 'block'; return;
     }
   }
+  const cuit = val('cuit_cuil');
+  if (cuit && !/^\d{2}-\d{8}-\d{1}$/.test(cuit)) {
+    err.textContent = 'El CUIT/CUIL debe tener el formato XX-XXXXXXXX-X (11 dígitos con guiones).';
+    err.style.display = 'block'; return;
+  }
 
   const fields = [
     { name: 'nombre_y_apellido_del_inquilino',   value: datosInquilino.nombre },
@@ -838,13 +852,6 @@ async function enviar() {
     );
     if (r.ok) {
       irA(5);
-      let seg = 5;
-      const cdEl = document.getElementById('countdown');
-      const iv = setInterval(() => {
-        seg--;
-        if (cdEl) cdEl.textContent = seg;
-        if (seg <= 0) { clearInterval(iv); window.location.href = 'https://sai.finaersa.com.ar/es/auth/signin'; }
-      }, 1000);
     }
     else { err.textContent = 'Error al enviar. Intentá nuevamente.'; err.style.display = 'block'; }
   } catch (e) {
