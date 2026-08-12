@@ -126,7 +126,8 @@ async function reemplazarPlaceholders(token, docId, fields) {
     'Luz':                   parseFloat(fields.deuda_luz) || 0,
     'AYSA':                  parseFloat(fields.deuda_aysa) || 0,
     'Gas':                   parseFloat(fields.deuda_gas) || 0,
-    'ABL':                   parseFloat(fields.deuda_abl) || 0
+    'ABL':                   parseFloat(fields.deuda_abl) || 0,
+    'Punitorios Alquiler':   parseFloat(fields.punitorio_alquiler) || 0
   };
   const fmt = (n) => n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const montoTotal = Object.values(conceptos).reduce((s, v) => s + v, 0);
@@ -134,6 +135,7 @@ async function reemplazarPlaceholders(token, docId, fields) {
   const montoNumero = fmt(montoTotalNum);
   const periodo = fields.periodo_de_deuda || '';
   const detalleDeudas = Object.entries(conceptos)
+    .filter(([, v]) => v > 0)
     .map(([label, v]) => `-${label}${periodo ? ` [${periodo}]` : ''} $${fmt(v)}.-`)
     .join('\n');
 
