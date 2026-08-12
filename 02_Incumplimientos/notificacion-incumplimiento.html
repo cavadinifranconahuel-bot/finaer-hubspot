@@ -269,7 +269,7 @@ document.addEventListener('click', function(e) {
         </label>
         <span class="fi-adjunto-nombre" id="adjunto-nombre"></span>
       </div>
-      <div class="fi-campo"><label>Alias</label><input type="text" id="alias_impagos" placeholder="Ej: nombre.apellido.0001"></div>
+      <div class="fi-campo"><label>Alias</label><input type="text" id="alias_impagos" placeholder="Ej: nombre.apellido.0001" style="margin-top:0"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
       <div class="fi-campo">
@@ -843,6 +843,19 @@ async function enviar() {
   });
 
   const payload = { fields: fields.filter(f => f.value !== ''), context: { pageUri: location.href } };
+
+  // Pisar propiedades de períodos no usados (o conceptos no marcados en los usados) para
+  // que HubSpot las limpie del contacto y el WF no procese datos de submissions anteriores.
+  const TODAS_PERIOD_PROPS = [];
+  for (let s = 1; s <= MAX_PERIODOS; s++) {
+    TODAS_PERIOD_PROPS.push(s === 1 ? 'periodo_de_deuda'       : `periodo_de_deuda_${s}`);
+    TODAS_PERIOD_PROPS.push(s === 1 ? 'tipo_de_incumplimiento' : `tipo_de_incumplimiento_${s}`);
+    CAMPOS_MONTO.forEach(c => TODAS_PERIOD_PROPS.push(s === 1 ? c : `${c}_${s}`));
+  }
+  const yaEnPayload = new Set(payload.fields.map(f => f.name));
+  TODAS_PERIOD_PROPS.forEach(prop => {
+    if (!yaEnPayload.has(prop)) payload.fields.push({ name: prop, value: '' });
+  });
 
   btn.disabled = true; btn.textContent = 'Enviando...';
   try {
