@@ -842,20 +842,11 @@ async function enviar() {
     });
   });
 
-  const payload = { fields: fields.filter(f => f.value !== ''), context: { pageUri: location.href } };
+  // Decirle al WF exactamente cuántos períodos procesar — evita que lea datos
+  // stale de submissions anteriores que hayan quedado en las propiedades del contacto.
+  fields.push({ name: 'num_periodos_incumplimiento', value: String(periodosActivos.length) });
 
-  // Pisar propiedades de períodos no usados (o conceptos no marcados en los usados) para
-  // que HubSpot las limpie del contacto y el WF no procese datos de submissions anteriores.
-  const TODAS_PERIOD_PROPS = [];
-  for (let s = 1; s <= MAX_PERIODOS; s++) {
-    TODAS_PERIOD_PROPS.push(s === 1 ? 'periodo_de_deuda'       : `periodo_de_deuda_${s}`);
-    TODAS_PERIOD_PROPS.push(s === 1 ? 'tipo_de_incumplimiento' : `tipo_de_incumplimiento_${s}`);
-    CAMPOS_MONTO.forEach(c => TODAS_PERIOD_PROPS.push(s === 1 ? c : `${c}_${s}`));
-  }
-  const yaEnPayload = new Set(payload.fields.map(f => f.name));
-  TODAS_PERIOD_PROPS.forEach(prop => {
-    if (!yaEnPayload.has(prop)) payload.fields.push({ name: prop, value: '' });
-  });
+  const payload = { fields: fields.filter(f => f.value !== ''), context: { pageUri: location.href } };
 
   btn.disabled = true; btn.textContent = 'Enviando...';
   try {
