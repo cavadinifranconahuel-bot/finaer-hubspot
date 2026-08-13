@@ -124,9 +124,9 @@ async function reemplazarPlaceholders(token, docId, fields) {
     'Alquiler':              parseFloat(fields.deuda_alquiler) || 0,
     'Expensas':              parseFloat(fields.deuda_expensas) || 0,
     'Luz':                   parseFloat(fields.deuda_luz) || 0,
-    'AYSA':                  parseFloat(fields.deuda_aysa) || 0,
+    'Agua':                  parseFloat(fields.deuda_aysa) || 0,
     'Gas':                   parseFloat(fields.deuda_gas) || 0,
-    'ABL':                   parseFloat(fields.deuda_abl) || 0,
+    'Impuestos':             parseFloat(fields.deuda_abl) || 0,
     'Punitorios Alquiler':   parseFloat(fields.punitorio_alquiler) || 0
   };
   const fmt = (n) => n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -199,6 +199,44 @@ async function eliminarArchivo(token, docId) {
     path: `/drive/v3/files/${docId}?supportsAllDrives=true`,
     method: 'DELETE',
     headers: { 'Authorization': 'Bearer ' + token }
+  });
+}
+
+async function subirPdfAHubSpot(pdfBase64, nombreArchivo, hsToken) {
+  const pdfBuffer = Buffer.from(pdfBase64, 'base64');
+  const boundary  = 'HS_PDF_' + Date.now().toString(36);
+  const options   = JSON.stringify({ access: 'PRIVATE', overwrite: false, duplicateValidationStrategy: 'NONE' });
+  const body = Buffer.concat([
+    Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${nombreArchivo}"\r\nContent-Type: application/pdf\r\n\r\n`),
+    pdfBuffer,
+    Buffer.from(`\r\n--${boundary}\r\nContent-Disposition: form-data; name="folderPath"\r\n\r\n/cartas-de-pago\r\n`),
+    Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="options"\r\n\r\n${options}\r\n`),
+    Buffer.from(`--${boundary}--`)
+  ]);
+  const r = await req({
+    hostname: 'api.hubapi.com',
+    path: '/files/v3/files',
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + hsToken,
+      'Content-Type': `multipart/form-data; boundary="${boundary}"`
+    }
+  }, body);
+  if (!r.body.id) throw new Error('Error subiendo PDF a HubSpot Files: ' + JSON.stringify(r.body));
+  return String(r.body.id);
+}
+
+async function crearNotaConPdf(ticketId, fileId, hsToken) {
+  await req({
+    hostname: 'api.hubapi.com',
+    path: '/engagements/v1/engagements',
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + hsToken, 'Content-Type': 'application/json' }
+  }, {
+    engagement:   { active: true, type: 'NOTE', timestamp: Date.now() },
+    associations: { contactIds: [], companyIds: [], dealIds: [], ticketIds: [parseInt(ticketId, 10)] },
+    metadata:     { body: 'Carta de pago enviada al propietario.' },
+    attachments:  [{ id: fileId }]
   });
 }
 
@@ -343,20 +381,22 @@ exports.main = async (event, callback) => {
     docId = null;
     await enviarEmailSmtp(pdfBase64, fields);
 
-    // Marcar carta como enviada en el ticket
+    // Subir PDF como adjunto + marcar carta enviada en el ticket
     const ticketId = event.object.objectId;
     if (ticketId && process.env.token) {
-      const hoy = new Date();
-      hoy.setUTCHours(0, 0, 0, 0);
       try {
+        const nombrePdfArchivo = `${fields.nombre_y_apellido_del_inquilino || 'Inquilino'} - ${fields.nro_expediente || ''} - ${fields.periodo_de_deuda || ''}.pdf`;
+        const fileId = await subirPdfAHubSpot(pdfBase64, nombrePdfArchivo, process.env.token);
+        await crearNotaConPdf(ticketId, fileId, process.env.token);
+      } catch (_) {}
+      try {
+        const hoy = new Date();
+        hoy.setUTCHours(0, 0, 0, 0);
         await req({
           hostname: 'api.hubapi.com',
           path: `/crm/v3/objects/tickets/${ticketId}`,
           method: 'PATCH',
-          headers: {
-            'Authorization': 'Bearer ' + process.env.token,
-            'Content-Type': 'application/json'
-          }
+          headers: { 'Authorization': 'Bearer ' + process.env.token, 'Content-Type': 'application/json' }
         }, { properties: { carta_de_pago_enviada: hoy.getTime().toString() } });
       } catch (_) {}
     }

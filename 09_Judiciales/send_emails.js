@@ -198,6 +198,9 @@ async function main() {
   const tipo     = args[args.indexOf('--template') + 1]?.toLowerCase();
   const filePath = args[args.indexOf('--file') + 1];
   const dryRun   = args.includes('--dry-run');
+  const preview  = args.includes('--preview');
+  const toIdx    = args.indexOf('--to');
+  const testTo   = toIdx !== -1 ? args[toIdx + 1] : null;
 
   if (!tipo || !['ejecucion', 'desalojo'].includes(tipo)) {
     console.error('Error: --template debe ser "ejecucion" o "desalojo"');
@@ -215,23 +218,48 @@ async function main() {
     process.exit(1);
   }
 
-  const templateHtml = fs.readFileSync(templatePath, 'utf8');
-  const destinatarios = leerDestinatarios(filePath, tipo);
+  const templateHtml  = fs.readFileSync(templatePath, 'utf8');
+  const todosLosDestinatarios = leerDestinatarios(filePath, tipo);
+
+  // ── Modo preview: abre el HTML renderizado en el navegador ───────────────
+  if (preview) {
+    const primero = todosLosDestinatarios[0];
+    if (!primero) { console.error('No hay destinatarios válidos en el archivo.'); process.exit(1); }
+    const html = templateHtml.replace(/\[\[ref\]\]/g, primero.ref);
+    const previewPath = path.join(__dirname, `preview_${tipo}.html`);
+    fs.writeFileSync(previewPath, html, 'utf8');
+    console.log(`\nPreview generado: ${previewPath}`);
+    console.log(`Referencia de muestra: ${primero.ref}`);
+    const { exec } = require('child_process');
+    exec(`start "" "${previewPath}"`);
+    console.log('Abriendo en el navegador...');
+    return;
+  }
+
+  // En modo --to: toma el primero del Excel y lo redirige a la dirección de test
+  const destinatarios = testTo
+    ? [{ ...todosLosDestinatarios[0], email: testTo }]
+    : todosLosDestinatarios;
 
   console.log(`\nTemplate:      ${tipo.toUpperCase()}`);
   console.log(`Archivo:       ${filePath}`);
-  console.log(`Destinatarios: ${destinatarios.length} emails válidos`);
-  if (dryRun) console.log(`Modo:          DRY-RUN (no se envía nada)\n`);
-  else        console.log(`Modo:          ENVÍO REAL\n`);
+  if (testTo) {
+    console.log(`Modo:          TEST → redirigiendo a ${testTo}`);
+    console.log(`Ref de muestra: ${destinatarios[0]?.ref || '(sin datos)'}\n`);
+  } else {
+    console.log(`Destinatarios: ${destinatarios.length} emails válidos`);
+    if (dryRun) console.log(`Modo:          DRY-RUN (no se envía nada)\n`);
+    else        console.log(`Modo:          ENVÍO REAL\n`);
 
-  // Vista previa de los primeros 5
-  destinatarios.slice(0, 5).forEach((d, i) =>
-    console.log(`  ${i + 1}. ${d.email} — ${d.nombre} — ref: ${d.ref.slice(0, 60)}`)
-  );
-  if (destinatarios.length > 5) console.log(`  ... y ${destinatarios.length - 5} más`);
-  console.log('');
+    // Vista previa de los primeros 5
+    destinatarios.slice(0, 5).forEach((d, i) =>
+      console.log(`  ${i + 1}. ${d.email} — ${d.nombre} — ref: ${d.ref.slice(0, 60)}`)
+    );
+    if (destinatarios.length > 5) console.log(`  ... y ${destinatarios.length - 5} más`);
+    console.log('');
+  }
 
-  if (dryRun) {
+  if (dryRun && !testTo) {
     console.log('Dry-run finalizado. Revisá la lista y corré sin --dry-run para enviar.');
     return;
   }
