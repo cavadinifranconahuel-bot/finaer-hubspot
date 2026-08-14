@@ -18,6 +18,16 @@ const fs    = require('fs');
 const path  = require('path');
 const net   = require('net');
 const tls   = require('tls');
+const https = require('https');
+
+// Cargar variables del .env del proyecto
+try {
+  const envPath = path.join(__dirname, '..', '.env');
+  fs.readFileSync(envPath, 'utf8').split('\n').forEach(line => {
+    const m = line.match(/^([^=\s]+)=(.+)$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
+  });
+} catch (_) {}
 
 // ── Configuración ────────────────────────────────────────────────────────────
 
@@ -44,6 +54,10 @@ const EMAILS_INVALIDOS = new Set([
 ]);
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
+
+function encodeHeader(str) {
+  return `=?UTF-8?B?${Buffer.from(str, 'utf8').toString('base64')}?=`;
+}
 
 function emailValido(email) {
   if (!email || typeof email !== 'string') return false;
@@ -93,6 +107,55 @@ function leerDestinatarios(filePath, tipo) {
   return lista;
 }
 
+// ── HubSpot API ───────────────────────────────────────────────────────────────
+
+function hsApi(method, apiPath, body, token) {
+  return new Promise((resolve, reject) => {
+    const data = body ? JSON.stringify(body) : null;
+    const req = https.request({
+      hostname: 'api.hubapi.com', path: apiPath, method,
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        ...(data ? { 'Content-Length': Buffer.byteLength(data) } : {})
+      }
+    }, res => {
+      const chunks = [];
+      res.on('data', d => chunks.push(d));
+      res.on('end', () => {
+        try { resolve({ s: res.statusCode, b: JSON.parse(Buffer.concat(chunks).toString()) }); }
+        catch(e) { resolve({ s: res.statusCode, b: Buffer.concat(chunks).toString() }); }
+      });
+    });
+    req.on('error', reject);
+    if (data) req.write(data);
+    req.end();
+  });
+}
+
+async function buscarContactoHubSpot(email, token) {
+  const r = await hsApi('POST', '/crm/v3/objects/contacts/search', {
+    filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
+    properties: ['email'],
+    limit: 1
+  }, token);
+  if (r.s === 200 && r.b.results?.length > 0) return r.b.results[0].id;
+  return null;
+}
+
+async function registrarEmailEnHS(contactId, toEmail, htmlBody, token) {
+  await hsApi('POST', '/engagements/v1/engagements', {
+    engagement:   { active: true, type: 'EMAIL', timestamp: Date.now() },
+    associations: { contactIds: [parseInt(contactId, 10)], companyIds: [], dealIds: [], ticketIds: [] },
+    metadata: {
+      from:    { email: FROM_EMAIL },
+      to:      [{ email: toEmail }],
+      subject: SUBJECT,
+      html:    htmlBody
+    }
+  }, token);
+}
+
 // ── Envío SMTP ────────────────────────────────────────────────────────────────
 
 function enviarSMTP(toEmail, htmlBody) {
@@ -105,9 +168,9 @@ function enviarSMTP(toEmail, htmlBody) {
 
   const mime = [
     'MIME-Version: 1.0',
-    `From: ${FROM_NAME} <${FROM_EMAIL}>`,
+    `From: ${encodeHeader(FROM_NAME)} <${FROM_EMAIL}>`,
     `To: ${toEmail}`,
-    `Subject: ${SUBJECT}`,
+    `Subject: ${encodeHeader(SUBJECT)}`,
     `Content-Type: multipart/alternative; boundary="${boundary}"`,
     '',
     `--${boundary}`,
@@ -264,30 +327,55 @@ async function main() {
     return;
   }
 
-  let enviados = 0, fallidos = 0;
-  const errores = [];
+  let enviados = 0, fallidos = 0, enCrm = 0;
+  const logRows = [];
+  const hsToken = process.env.HUBSPOT_TOKEN;
 
   for (const d of destinatarios) {
     const html = templateHtml.replace(/\[\[ref\]\]/g, d.ref);
+    const fila = { fecha: new Date().toISOString(), template: tipo, email: d.email, nombre: d.nombre, ref: d.ref, estado: '', en_crm: 'no', error: '' };
+
     try {
       await enviarSMTP(d.email, html);
-      console.log(`✅ ${d.email} (${d.solicitud || d.ref.slice(0, 30)})`);
+      fila.estado = 'enviado';
       enviados++;
+
+      if (!testTo && hsToken) {
+        try {
+          const contactId = await buscarContactoHubSpot(d.email, hsToken);
+          if (contactId) {
+            await registrarEmailEnHS(contactId, d.email, html, hsToken);
+            fila.en_crm = 'si';
+            enCrm++;
+          }
+        } catch (_) {}
+      }
+
+      console.log(`✅ ${d.email} (${d.solicitud || d.ref.slice(0, 30)})${fila.en_crm === 'si' ? ' [CRM ✓]' : ''}`);
     } catch (err) {
+      fila.estado = 'fallido';
+      fila.error = err.message;
       console.error(`❌ ${d.email}: ${err.message}`);
-      errores.push({ email: d.email, ref: d.ref, error: err.message });
       fallidos++;
     }
+
+    logRows.push(fila);
     if (enviados + fallidos < destinatarios.length) await sleep(DELAY_MS);
   }
 
   console.log(`\n─────────────────────────────────`);
-  console.log(`Enviados: ${enviados} | Fallidos: ${fallidos}`);
+  console.log(`Enviados: ${enviados} | Fallidos: ${fallidos} | Registrados en CRM: ${enCrm}`);
 
-  if (errores.length > 0) {
-    const logPath = path.join(__dirname, `errores_${tipo}_${Date.now()}.json`);
-    fs.writeFileSync(logPath, JSON.stringify(errores, null, 2));
-    console.log(`Log de errores: ${logPath}`);
+  if (!testTo && logRows.length > 0) {
+    const csvPath = path.join(__dirname, `log_${tipo}_${Date.now()}.csv`);
+    const header  = 'fecha,template,email,nombre,ref,estado,en_crm,error\n';
+    const body    = logRows.map(r =>
+      [r.fecha, r.template, r.email, r.nombre,
+       `"${r.ref.replace(/"/g, '""')}"`, r.estado, r.en_crm,
+       `"${r.error.replace(/"/g, '""')}"`].join(',')
+    ).join('\n');
+    fs.writeFileSync(csvPath, header + body, 'utf8');
+    console.log(`Log: ${csvPath}`);
   }
 }
 
