@@ -1,6 +1,6 @@
 # FINAER — HubSpot Operations
 # Franco Cavadini | Arquitecto de Operaciones CRM
-# Versión 3.0 | Julio 2026
+# Versión 3.1 | Agosto 2026
 
 ================================================================================
 ROL DE CLAUDE EN ESTE PROYECTO
@@ -14,6 +14,8 @@ Idioma: siempre español. Sin excepciones.
 
 Para el proyecto de la consultora personal de Franco, ver:
 Desktop/Franco Cavadini/CLAUDE.md
+Nectia: Emanuel Baez (@emanuelbaez1996) se sumó como co-fundador en agosto 2026.
+Perfil: arquitecto de bases de datos (Fabric, Clicksense). Repo compartido: cavadinifranconahuel-bot/consultora.
 
 ================================================================================
 CONTEXTO DE FINAER
@@ -47,7 +49,8 @@ en workflows SÍ están disponibles. Re-testear en Visitas Comerciales.
 Módulos sin uso claro para el modelo de negocio actual:
 - Content Hub Professional (~EUR 290/mes): sin uso documentado
 - Transactional Email Add-on (~EUR 425/mes): EN USO desde julio 2026 vía SMTP
-  custom code (carta de pago adjunta en Incumplimientos). smtp.hubapi.com:587.
+  custom code. Dos usos activos: carta de pago (Incumplimientos) y envío masivo
+  judiciales (09_Judiciales/send_emails.js). smtp.hubapi.com:587.
 No se pueden dar de baja hasta enero 2027.
 
 Acceso MCP (Claude Code → HubSpot):
@@ -128,8 +131,12 @@ Workflows operativos clave:
 Carta de pago (WF 4377587939 — DESACTIVADO, pendiente activación):
 - Custom code: 02_Incumplimientos/custom_code_carta_pago.js
 - Flujo: Google Docs template → reemplaza placeholders → PDF → Drive → SMTP
+- PDF también sube a HubSpot Files v3 (/cartas-de-pago/) y se adjunta como
+  nota en el ticket vía engagements v1
 - Usa: GOOGLE_KEY_1/2, GOOGLE_SA_EMAIL, HS_SMTP_USER, HS_SMTP_PASS
 - Template Doc ID: 1LWhpPEsJEOcUT7RGnuBnH8VTW4z6wusUynjCuWz3IKY
+- Pendiente antes de activar: actualizar nombres de conceptos en template Drive
+  + confirmar campo punitorio_alquiler como input del WF
 
 Wizard notificación (notificacion-incumplimiento.html):
 - Proxy Cloudflare pendiente (ticket JIRA CM-261) — hoy token expuesto en frontend
@@ -216,6 +223,18 @@ Ruta: Desktop/HubSpot/07_Stickers/
 - Form nativo HubSpot GUID: 2b527eac-0b46-4908-9c70-8047d3bf9f46
 - 13 propiedades Contact creadas (sticker_*)
 - Pendiente: crear landing HubSpot y publicar URL al equipo
+
+── 09_JUDICIALES ⏳ Listo — pendiente aprobación abogada ────────────────────
+Ruta: Desktop/HubSpot/09_Judiciales/
+
+Envío masivo de emails a deudores judicializados (ejecución y desalojo).
+- Script: send_emails.js — lee Excel, filtra placeholders, envía por SMTP raw
+- FROM: judiciales@finaersa.com.ar | SMTP token: HS_SMTP_USER/PASS en .env
+- Templates HTML en templates/ (aprobados por abogada en reunión 13/08/2026)
+- Destinatarios válidos: 65 ejecución | 621 desalojo (base 23/07/2026)
+- Por cada envío: busca contacto en HubSpot → crea engagement EMAIL si existe
+- Genera CSV log por corrida (fecha, estado, en_crm)
+- CRÍTICO: nunca enviar sin aprobación explícita de Franco
 
 ── 08_ALUMNI-RUGBY 🏉 Operativo ─────────────────────────────────────────────
 Ruta: Desktop/HubSpot/temp_alumni/ (sin carpeta definitiva aún)
