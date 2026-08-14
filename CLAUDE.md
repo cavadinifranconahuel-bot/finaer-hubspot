@@ -128,15 +128,14 @@ Workflows operativos clave:
 - WF 4128739569: monto_desembolso > 0 → crea Pedido Desembolso (DESACTIVADO)
   NOTA: activar Pedidos recién después de limpiar monto_recupero en 367 deals
 
-Carta de pago (WF 4377587939 — DESACTIVADO, pendiente activación):
+Carta de pago (WF 4377587939 — ✅ ACTIVO desde 14/08/2026):
 - Custom code: 02_Incumplimientos/custom_code_carta_pago.js
 - Flujo: Google Docs template → reemplaza placeholders → PDF → Drive → SMTP
 - PDF también sube a HubSpot Files v3 (/cartas-de-pago/) y se adjunta como
   nota en el ticket vía engagements v1
 - Usa: GOOGLE_KEY_1/2, GOOGLE_SA_EMAIL, HS_SMTP_USER, HS_SMTP_PASS
 - Template Doc ID: 1LWhpPEsJEOcUT7RGnuBnH8VTW4z6wusUynjCuWz3IKY
-- Pendiente antes de activar: actualizar nombres de conceptos en template Drive
-  + confirmar campo punitorio_alquiler como input del WF
+- Placeholder único en template: {{DETALLE_DEUDAS}} (bloque dinámico con conceptos > $0)
 
 Wizard notificación (notificacion-incumplimiento.html):
 - Proxy Cloudflare pendiente (ticket JIRA CM-261) — hoy token expuesto en frontend
