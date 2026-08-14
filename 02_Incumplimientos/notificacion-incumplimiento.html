@@ -799,7 +799,12 @@ async function enviar() {
     err.textContent = 'Completá nombre, apellido, email y teléfono para continuar.';
     err.style.display = 'block'; return;
   }
-  const cbu = val('cbu_impagos');
+  const cbu   = val('cbu_impagos');
+  const alias = val('alias_impagos');
+  if (!cbu && !alias) {
+    err.textContent = 'Completá el CBU o el Alias para continuar.';
+    err.style.display = 'block'; return;
+  }
   if (cbu) {
     if (cbu.startsWith('000')) {
       err.textContent = 'El CBU ingresado no es válido (no puede comenzar con 000). Verificá el número e intentá nuevamente.';
