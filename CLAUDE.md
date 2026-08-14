@@ -138,7 +138,7 @@ Carta de pago (WF 4377587939 — ✅ ACTIVO desde 14/08/2026):
 - Placeholder único en template: {{DETALLE_DEUDAS}} (bloque dinámico con conceptos > $0)
 
 Wizard notificación (notificacion-incumplimiento.html):
-- Proxy Cloudflare pendiente (ticket JIRA CM-261) — hoy token expuesto en frontend
+- Proxy Cloudflare ✅ operativo: https://finaer-hs-proxy.ovargas-ec2.workers.dev (CM-261 cerrado)
 - Landing ID: 430264653040 | Form ID: 16350864-6359-4241-9d44-d8639a7af726
 
 Restricciones críticas WF 4504390847 (formulario → ticket):
