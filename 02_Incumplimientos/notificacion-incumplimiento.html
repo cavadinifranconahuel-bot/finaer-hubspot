@@ -475,8 +475,8 @@ async function buscarDNI() {
       irA(2); return;
     }
 
-    // Sin abiertos: buscar nombre en cualquier ticket + deal por dni_inquilino + contacto (dos props en paralelo)
-    const [anySearch, dealData, contactByTxt, contactByNum] = await Promise.all([
+    // Sin abiertos: buscar nombre en cualquier ticket + deal + contacto por nro_documento_txt
+    const [anySearch, dealData, contactSearch] = await Promise.all([
       hs('POST', '/crm/v3/objects/tickets/search', {
         filterGroups: [{ filters: [{ propertyName: 'dni_inquilino', operator: 'EQ', value: dni }] }],
         properties: ['nombre_y_apellido_del_inquilino'],
@@ -492,16 +492,11 @@ async function buscarDNI() {
         filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
         properties: ['firstname','lastname','nombre_y_apellido_del_inquilino'],
         limit: 1
-      }),
-      hs('POST', '/crm/v3/objects/contacts/search', {
-        filterGroups: [{ filters: [{ propertyName: 'numero_de_documento', operator: 'EQ', value: dni }] }],
-        properties: ['firstname','lastname','nombre_y_apellido_del_inquilino'],
-        limit: 1
       })
     ]);
 
     const nombreDesdeTicket = anySearch.results?.[0]?.properties?.nombre_y_apellido_del_inquilino || null;
-    const contact = contactByTxt.results?.[0] || contactByNum.results?.[0] || null;
+    const contact = contactSearch.results?.[0] || null;
     let deal = (dealData.results || []).find(d => d.properties.pipeline === 'default') || null;
 
     // Fallback: si la búsqueda por dni_inquilino no devolvió deal, buscar vía asociaciones del contacto
