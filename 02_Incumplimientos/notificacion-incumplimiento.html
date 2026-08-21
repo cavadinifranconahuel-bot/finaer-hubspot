@@ -192,7 +192,7 @@ document.addEventListener('click', function(e) {
 
 <div id="wizard-root">
 
-<div class="progress" id="progress">
+<div class="progress" id="progress" style="display:none">
   <div class="progress-wrap"><div class="step-dot active" id="dot1">1</div><div class="step-label">Inquilino</div></div>
   <div class="step-line" id="line1"></div>
   <div class="progress-wrap"><div class="step-dot" id="dot2">2</div><div class="step-label">Confirmación</div></div>
@@ -204,15 +204,63 @@ document.addEventListener('click', function(e) {
 
 <div class="fi-card">
 
+  <!-- PASO 0: Información previa -->
+  <div class="panel active" id="panel0">
+    <h2>Antes de comenzar</h2>
+    <p class="fi-sub">Para completar la notificación vas a necesitar tener a mano la siguiente documentación. Revisala antes de continuar.</p>
+    <div class="fi-seccion"><span>Documentación requerida</span></div>
+    <ul style="list-style:none;padding:0;margin:0 0 28px;">
+      <li style="display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0;">
+        <span style="flex-shrink:0;width:22px;height:22px;background:#e30613;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#2f3743;">Contrato de locación</div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">Copia del contrato vigente del inmueble.</div>
+        </div>
+      </li>
+      <li style="display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0;">
+        <span style="flex-shrink:0;width:22px;height:22px;background:#e30613;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#2f3743;">Facturas adeudadas</div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">Facturas impagas de alquiler u otros conceptos.</div>
+        </div>
+      </li>
+      <li style="display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0;">
+        <span style="flex-shrink:0;width:22px;height:22px;background:#e30613;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#2f3743;">Liquidación de expensas <span style="font-weight:400;color:#aaa;">(si hay deuda de expensas)</span></div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">Detalle de expensas adeudadas emitido por la administración.</div>
+        </div>
+      </li>
+      <li style="display:flex;align-items:flex-start;gap:12px;padding:12px 0;">
+        <span style="flex-shrink:0;width:22px;height:22px;background:#e30613;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#2f3743;">Información bancaria <span style="font-weight:400;color:#aaa;">(si corresponde)</span></div>
+          <div style="font-size:12px;color:#888;margin-top:2px;">CBU o alias para informar datos de pago al inquilino.</div>
+        </div>
+      </li>
+    </ul>
+    <div class="btns">
+      <button class="btn-next full" onclick="irA(1)">Comenzar →</button>
+    </div>
+  </div>
+
   <!-- PASO 1: DNI -->
-  <div class="panel active" id="panel1">
+  <div class="panel" id="panel1">
     <h2>DNI del inquilino</h2>
     <p class="fi-sub">Ingresá el DNI del inquilino para verificar sus datos antes de continuar.</p>
-    <div class="fi-alert error" id="err1"></div>
     <div class="fi-campo fi-campo-req">
       <label>Número de DNI</label>
       <input type="text" id="dni-input" placeholder="Ej: 30123456" maxlength="12" inputmode="numeric">
     </div>
+    <div class="fi-alert error" id="err1"></div>
     <div class="btns">
       <button class="btn-next full" id="btn1" onclick="buscarDNI()">Siguiente →</button>
     </div>
@@ -234,9 +282,20 @@ document.addEventListener('click', function(e) {
   <div class="panel" id="panel3">
     <h2>Períodos de deuda</h2>
     <p class="fi-sub">Completá los datos de cada período de deuda que querés notificar.</p>
-    <div class="fi-alert error" id="err3"></div>
+
+    <div class="fi-seccion"><span>Contrato de locación</span></div>
+    <div class="fi-campo" style="margin-bottom:28px;">
+      <label>Para agilizar la gestión de tu reclamo, adjuntá el contrato de locación <span class="nota">(opcional)</span></label>
+      <label class="fi-adjuntar-link" for="contrato_locacion">
+        <input type="file" id="contrato_locacion" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="onAdjuntoContrato(this)">
+        📎 Adjuntar contrato de locación
+      </label>
+      <span class="fi-adjunto-nombre" id="contrato-nombre"></span>
+    </div>
+
     <div id="fi-periodos"></div>
     <button type="button" class="fi-btn-agregar" id="fi-agregar">+ Agregar otro período</button>
+    <div class="fi-alert error" id="err3"></div>
     <div class="btns" style="margin-top:16px;">
       <button class="btn-back" onclick="irA(2)">← Atrás</button>
       <button class="btn-next" onclick="validarPeriodos()">Siguiente →</button>
@@ -289,7 +348,7 @@ document.addEventListener('click', function(e) {
       <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="20-12345678-9"></div>
+      <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="Ej: 20123456789"></div>
       <div class="fi-campo"></div>
     </div>
 
@@ -330,9 +389,8 @@ const CONCEPTOS = [
   { id:'expensas', label:'Expensas',             campo:'deuda_expensas' },
   { id:'luz',      label:'Luz',                  campo:'deuda_luz'      },
   { id:'gas',      label:'Gas',                  campo:'deuda_gas'      },
-  { id:'abl',      label:'Impuestos',             campo:'deuda_abl'      },
+  { id:'abl',      label:'Impuestos',            campo:'deuda_abl'      },
   { id:'aysa',     label:'Agua',                 campo:'deuda_aysa'     },
-  { id:'inmueble', label:'No devolvió inmueble', campo:null             }
 ];
 
 const CAMPOS_MONTO = ['deuda_alquiler','deuda_expensas','deuda_luz','deuda_gas','deuda_abl','deuda_aysa'];
@@ -353,11 +411,13 @@ let ticketsEncontrados = [];
 let ticketActual     = 0;
 let periodoCount     = 0;
 let periodosActivos  = [];
+let archivosSubidos  = [];
 
 // ── Navegación ────────────────────────────────────────────────────────────────
 function irA(paso) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel' + paso).classList.add('active');
+  document.getElementById('progress').style.display = paso >= 1 ? 'flex' : 'none';
   actualizarProgress(paso);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -784,10 +844,86 @@ function validarPeriodos() {
   irA(4);
 }
 
+// ── Upload de archivos ────────────────────────────────────────────────────────
+async function subirArchivo(file) {
+  const base = location.hostname === 'localhost'
+    ? 'http://localhost:3001'
+    : 'https://finaer-hs-proxy.ovargas-ec2.workers.dev';
+  const fd = new FormData();
+  fd.append('file', file);
+  const r = await fetch(base + '/upload-file', { method: 'POST', body: fd });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+async function adjuntarArchivosAlTicket(dni, desde) {
+  if (!archivosSubidos.length) return;
+  const base = location.hostname === 'localhost'
+    ? 'http://localhost:3001'
+    : 'https://finaer-hs-proxy.ovargas-ec2.workers.dev';
+  const hs = (method, path, body) => fetch(base + path, {
+    method, headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined
+  }).then(r => r.json());
+
+  for (let i = 0; i < 6; i++) {
+    await new Promise(r => setTimeout(r, 4000));
+    try {
+      const res = await hs('POST', '/crm/v3/objects/tickets/search', {
+        filterGroups: [{ filters: [
+          { propertyName: 'dni_inquilino', operator: 'EQ',  value: dni         },
+          { propertyName: 'createdate',   operator: 'GTE', value: String(desde) }
+        ]}],
+        sorts: [{ propertyName: 'createdate', direction: 'DESCENDING' }],
+        limit: 1
+      });
+      const ticket = res.results?.[0];
+      if (!ticket) continue;
+      await hs('POST', '/engagements/v1/engagements', {
+        engagement:   { active: true, type: 'NOTE', timestamp: Date.now() },
+        associations: { contactIds: [], companyIds: [], dealIds: [], ticketIds: [parseInt(ticket.id, 10)] },
+        metadata:     { body: 'Archivos adjuntos del formulario:\n' + archivosSubidos.map(a => '• ' + a.nombre).join('\n') },
+        attachments:  archivosSubidos.map(a => ({ id: a.fileId }))
+      });
+      return;
+    } catch(_) {}
+  }
+}
+
 // ── Submit ────────────────────────────────────────────────────────────────────
-function onAdjunto(input) {
+function quitarArchivo(fileId, el, inputId) {
+  archivosSubidos = archivosSubidos.filter(a => a.fileId !== fileId);
+  if (el) el.textContent = '';
+  const inp = document.getElementById(inputId);
+  if (inp) inp.value = '';
+}
+
+async function onAdjuntoContrato(input) {
+  const el   = document.getElementById('contrato-nombre');
+  const file = input.files[0];
+  if (!file) { if (el) el.textContent = ''; return; }
+  if (el) el.textContent = '⏳ Subiendo...';
+  try {
+    const { id, url } = await subirArchivo(file);
+    archivosSubidos.push({ fileId: String(id), fileUrl: url, nombre: file.name });
+    if (el) el.innerHTML = '✅ ' + file.name + ' <span style="cursor:pointer;color:#c00;font-weight:bold;margin-left:6px;" onclick="quitarArchivo(\'' + String(id) + '\',this.parentElement,\'contrato_locacion\')">✕</span>';
+  } catch(e) {
+    if (el) el.textContent = '❌ No se pudo subir. Intentá de nuevo.';
+  }
+}
+
+async function onAdjunto(input) {
   const el = document.getElementById('adjunto-nombre');
-  if (el) el.textContent = input.files[0] ? '📄 ' + input.files[0].name : '';
+  const file = input.files[0];
+  if (!file) { if (el) el.textContent = ''; return; }
+  if (el) el.textContent = '⏳ Subiendo...';
+  try {
+    const { id, url } = await subirArchivo(file);
+    archivosSubidos.push({ fileId: String(id), fileUrl: url, nombre: file.name });
+    if (el) el.innerHTML = '✅ ' + file.name + ' <span style="cursor:pointer;color:#c00;font-weight:bold;margin-left:6px;" onclick="quitarArchivo(\'' + String(id) + '\',this.parentElement,\'constancia_cbu\')">✕</span>';
+  } catch(e) {
+    if (el) el.textContent = '❌ No se pudo subir. Intentá de nuevo.';
+  }
 }
 
 async function enviar() {
@@ -815,9 +951,9 @@ async function enviar() {
       err.style.display = 'block'; return;
     }
   }
-  const cuit = val('cuit_cuil');
-  if (cuit && !/^\d{2}-\d{8}-\d{1}$/.test(cuit)) {
-    err.textContent = 'El CUIT/CUIL debe tener el formato XX-XXXXXXXX-X (11 dígitos con guiones).';
+  const cuit = val('cuit_cuil').replace(/-/g, '');
+  if (cuit && !/^\d{11}$/.test(cuit)) {
+    err.textContent = 'El CUIT/CUIL debe tener 11 dígitos numéricos (con o sin guiones).';
     err.style.display = 'block'; return;
   }
 
@@ -832,7 +968,7 @@ async function enviar() {
     { name: 'alias_impagos',                      value: val('alias_impagos') },
     { name: 'banco',                             value: val('banco') },
     { name: 'nombre_y_apellido_del_propietario', value: val('nombre_y_apellido_del_propietario') },
-    { name: 'cuit_cuil',                         value: val('cuit_cuil') },
+    { name: 'cuit_cuil',                         value: val('cuit_cuil').replace(/-/g, '') },
     { name: 'observaciones_incumplimiento',      value: val('observaciones_incumplimiento') },
   ];
 
@@ -860,7 +996,9 @@ async function enviar() {
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }
     );
     if (r.ok) {
+      const desde = Date.now() - 5000;
       irA(5);
+      adjuntarArchivosAlTicket(datosInquilino.dni, desde);
     }
     else { err.textContent = 'Error al enviar. Intentá nuevamente.'; err.style.display = 'block'; }
   } catch (e) {
@@ -873,6 +1011,28 @@ async function enviar() {
 document.getElementById('fi-agregar').addEventListener('click', crearPeriodo);
 crearPeriodo();
 document.getElementById('dni-input').addEventListener('keydown', e => { if (e.key === 'Enter') buscarDNI(); });
+
+document.getElementById('fi-periodos').addEventListener('change', async function(e) {
+  const input = e.target;
+  if (input.type !== 'file' || !input.id.startsWith('archivo_')) return;
+  const file = input.files[0];
+  if (!file) return;
+  let fb = input.parentElement.querySelector('.fi-upload-fb');
+  if (!fb) {
+    fb = document.createElement('span');
+    fb.className = 'fi-upload-fb';
+    fb.style.cssText = 'font-size:12px;color:#555;display:block;margin-top:4px;';
+    input.after(fb);
+  }
+  fb.textContent = '⏳ Subiendo...';
+  try {
+    const { id, url } = await subirArchivo(file);
+    archivosSubidos.push({ fileId: String(id), fileUrl: url, nombre: file.name });
+    fb.innerHTML = '✅ ' + file.name + ' <span style="cursor:pointer;color:#c00;font-weight:bold;margin-left:6px;" onclick="quitarArchivo(\'' + String(id) + '\',this.parentElement,\'' + input.id + '\')">✕</span>';
+  } catch(e) {
+    fb.textContent = '❌ No se pudo subir. Intentá de nuevo.';
+  }
+});
 
 // ── Posicionar footer después del wizard ──────────────────────────────────────
 (function() {
