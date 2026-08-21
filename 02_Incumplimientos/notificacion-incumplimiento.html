@@ -453,18 +453,19 @@ async function buscarDNI() {
   }).then(r => r.json());
 
   try {
-    // Buscar tickets ABIERTOS: sin resultado_del_caso = no resueltos
-    const openSearch = await hs('POST', '/crm/v3/objects/tickets/search', {
-      filterGroups: [{ filters: [
-        { propertyName: 'dni_inquilino', operator: 'EQ', value: dni },
-        { propertyName: 'resultado_del_caso', operator: 'NOT_HAS_PROPERTY' }
-      ]}],
-      properties: ['subject','nombre_y_apellido_del_inquilino','periodo_de_deuda','mes_de_deuda','createdate'],
-      sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
-      limit: 10
-    });
-
-    const ticketsAbiertos = openSearch.results || [];
+    // Buscar tickets del DNI y filtrar los no resueltos en JS (resultado_del_caso no indexado)
+    let ticketsAbiertos = [];
+    try {
+      const openSearch = await hs('POST', '/crm/v3/objects/tickets/search', {
+        filterGroups: [{ filters: [
+          { propertyName: 'dni_inquilino', operator: 'EQ', value: dni }
+        ]}],
+        properties: ['subject','nombre_y_apellido_del_inquilino','periodo_de_deuda','mes_de_deuda','createdate','resultado_del_caso'],
+        sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }],
+        limit: 10
+      });
+      ticketsAbiertos = (openSearch.results || []).filter(t => !t.properties.resultado_del_caso);
+    } catch(_) {}
 
     if (ticketsAbiertos.length > 0) {
       ticketsEncontrados = ticketsAbiertos;
