@@ -353,7 +353,7 @@ document.addEventListener('click', function(e) {
       <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="Ej: 20123456789"></div>
+      <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="Ej: 20123456789" maxlength="14"></div>
       <div class="fi-campo"></div>
     </div>
 
@@ -957,8 +957,8 @@ async function enviar() {
     }
   }
   const cuit = val('cuit_cuil').replace(/-/g, '');
-  if (cuit && !/^\d{11}$/.test(cuit)) {
-    err.textContent = 'El CUIT/CUIL debe tener 11 dígitos numéricos (con o sin guiones).';
+  if (cuit && !/^\d{11,12}$/.test(cuit)) {
+    err.textContent = 'El CUIT/CUIL debe tener 11 o 12 dígitos numéricos (con o sin guiones).';
     err.style.display = 'block'; return;
   }
 
