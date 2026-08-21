@@ -490,7 +490,10 @@ async function buscarDNI() {
         sorts: [{ propertyName: 'hs_lastmodifieddate', direction: 'DESCENDING' }], limit: 5
       }),
       hs('POST', '/crm/v3/objects/contacts/search', {
-        filterGroups: [{ filters: [{ propertyName: 'nro_documento_txt', operator: 'EQ', value: dni }] }],
+        filterGroups: [
+          { filters: [{ propertyName: 'nro_documento_txt',    operator: 'EQ', value: dni }] },
+          { filters: [{ propertyName: 'numero_de_documento', operator: 'EQ', value: dni }] }
+        ],
         properties: ['firstname','lastname','nombre_y_apellido_del_inquilino'],
         limit: 1
       })
