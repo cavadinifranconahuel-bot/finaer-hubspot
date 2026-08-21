@@ -971,6 +971,7 @@ async function enviar() {
     { name: 'phone',                             value: val('phone') },
     { name: 'cbu_impagos',                        value: val('cbu_impagos') },
     { name: 'alias_impagos',                      value: val('alias_impagos') },
+    { name: 'alias_cbu_impagos',                  value: val('alias_impagos') || val('cbu_impagos') },
     { name: 'banco',                             value: val('banco') },
     { name: 'nombre_y_apellido_del_propietario', value: val('nombre_y_apellido_del_propietario') },
     { name: 'cuit_cuil',                         value: val('cuit_cuil').replace(/-/g, '') },
