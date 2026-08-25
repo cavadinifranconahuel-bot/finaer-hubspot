@@ -314,12 +314,12 @@ document.addEventListener('click', function(e) {
 
     <div class="fi-seccion"><span>Quién notifica</span></div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo fi-campo-req"><label>Nombre del Administrador, propietario o contacto</label><input type="text" id="firstname" placeholder="Tu nombre"></div>
-      <div class="fi-campo fi-campo-req"><label>Apellido/s del Administrador, propietario o contacto</label><input type="text" id="lastname" placeholder="Tu apellido"></div>
+      <div class="fi-campo fi-campo-req"><label>Nombre del Administrador, propietario o contacto</label><input type="text" id="firstname" placeholder="Tu nombre" maxlength="100"></div>
+      <div class="fi-campo fi-campo-req"><label>Apellido/s del Administrador, propietario o contacto</label><input type="text" id="lastname" placeholder="Tu apellido" maxlength="100"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
-      <div class="fi-campo fi-campo-req"><label>Correo del Administrador, propietario o contacto</label><input type="email" id="email" placeholder="correo@ejemplo.com"></div>
-      <div class="fi-campo fi-campo-req"><label>Número de teléfono del Administrador, propietario o contacto</label><input type="tel" id="phone" placeholder="Ej: 1155556666" inputmode="numeric"></div>
+      <div class="fi-campo fi-campo-req"><label>Correo del Administrador, propietario o contacto</label><input type="email" id="email" placeholder="correo@ejemplo.com" maxlength="254"></div>
+      <div class="fi-campo fi-campo-req"><label>Número de teléfono del Administrador, propietario o contacto</label><input type="tel" id="phone" placeholder="Ej: 1155556666" inputmode="numeric" maxlength="20"></div>
     </div>
 
     <div class="fi-seccion"><span>Datos bancarios para el pago</span></div>
@@ -333,7 +333,7 @@ document.addEventListener('click', function(e) {
         </label>
         <span class="fi-adjunto-nombre" id="adjunto-nombre"></span>
       </div>
-      <div class="fi-campo"><label>Alias</label><input type="text" id="alias_impagos" placeholder="Ej: nombre.apellido.0001" style="margin-top:0"></div>
+      <div class="fi-campo"><label>Alias</label><input type="text" id="alias_impagos" placeholder="Ej: nombre.apellido.0001" maxlength="20" style="margin-top:0"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
       <div class="fi-campo">
@@ -350,7 +350,7 @@ document.addEventListener('click', function(e) {
           <input type="hidden" id="banco" value="">
         </div>
       </div>
-      <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular"></div>
+      <div class="fi-campo"><label>Titular de la cuenta</label><input type="text" id="nombre_y_apellido_del_propietario" placeholder="Nombre y apellido del titular" maxlength="100"></div>
     </div>
     <div class="fi-dos" style="margin-bottom:16px;">
       <div class="fi-campo"><label>CUIT / CUIL</label><input type="text" id="cuit_cuil" placeholder="Ej: 20123456789" maxlength="14"></div>
@@ -706,7 +706,7 @@ function onConcepto(cb, n) {
         <label>Importe adeudado</label>
         <div class="fi-ars-wrap">
           <span class="fi-ars-pre">$ ARS</span>
-          <input type="number" id="${campo}_${n}" min="0" placeholder="0">
+          <input type="number" id="${campo}_${n}" min="0" max="99999999" placeholder="0" oninput="if(this.value.length>8)this.value=this.value.slice(0,8)">
         </div>
       </div>
       <div class="fi-campo">
