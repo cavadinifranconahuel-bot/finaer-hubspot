@@ -407,9 +407,31 @@
       <div class="fi-error-msg">Ingresá el nombre de la inmobiliaria.</div>
     </div>
 
+    <div class="fi-campo" id="c-retira">
+      <label class="fi-label">¿Quién retira el material?</label>
+      <div class="fi-opciones horizontal" id="opts-retira"></div>
+    </div>
+
     <div class="fi-campo" id="c-dir">
       <label class="fi-label">Dirección exacta</label>
       <textarea class="fi-textarea" id="f-dir" placeholder="Calle, número, piso, local..."></textarea>
+    </div>
+
+    <div class="fi-campo" id="c-vidriera-pano">
+      <label class="fi-label">¿La vidriera tiene paños?</label>
+      <div class="fi-opciones horizontal" id="opts-vidriera-pano"></div>
+    </div>
+    <div id="sub-vidriera-pano" style="display:none">
+      <div class="fi-subseccion">
+        <div class="fi-campo">
+          <label class="fi-label">¿Cuántos paños tiene?</label>
+          <input type="number" class="fi-input" id="f-vidriera-cantidad" min="1" placeholder="Ej: 2">
+        </div>
+        <div class="fi-campo">
+          <label class="fi-label">Medidas de cada paño (ancho × alto en cm)</label>
+          <textarea class="fi-textarea" id="f-vidriera-medidas" placeholder="Ej: Paño 1: 80 × 120 cm  |  Paño 2: 60 × 120 cm"></textarea>
+        </div>
+      </div>
     </div>
 
     <div class="fi-campo" id="c-loc">
@@ -449,8 +471,11 @@
 
     <div class="fi-campo" id="c-contacto-rol">
       <label class="fi-label">Rol en la inmobiliaria</label>
-      <input type="text" class="fi-input" id="f-contacto-rol" placeholder="Ej: Administrativo, Encargado, Dueño...">
-      <div class="fi-error-msg">Ingresá el rol del contacto.</div>
+      <div class="fi-opciones" id="opts-contacto-rol"></div>
+      <div id="sub-rol-otro" style="display:none">
+        <input type="text" class="fi-input" id="f-contacto-rol-otro" placeholder="Especificá el rol" style="margin-top:8px">
+      </div>
+      <div class="fi-error-msg">Seleccioná el rol del contacto.</div>
     </div>
 
     <div class="fi-campo" id="c-celular">
@@ -539,7 +564,7 @@
         <div class="fi-campo" id="c-faja-rejas">
           <label class="fi-label">¿La vidriera tiene rejas?</label>
           <div class="fi-opciones" id="opts-faja-rejas"></div>
-          <div class="fi-nota">Importante para los perforadores.</div>
+          <div class="fi-nota">Importante para los colocadores.</div>
           <div class="fi-error-msg">Seleccioná una opción.</div>
         </div>
       </div>
@@ -601,10 +626,18 @@
 
           <div id="sub-gf-division" style="display:none">
             <div class="fi-campo" id="c-gf-division-medida">
-              <label class="fi-label">División de paño — Medida en cm</label>
+              <label class="fi-label">División de paño (Ploter) — Medida en cm</label>
               <input type="text" class="fi-input" id="f-gf-division-medida" placeholder="Medida de la división">
               <div class="fi-nota">Recordá cargar en el pedido cada uno de los paños individualmente.</div>
               <div class="fi-error-msg">Ingresá la medida de la división.</div>
+            </div>
+          </div>
+
+          <div id="sub-gf-otro" style="display:none">
+            <div class="fi-campo" id="c-gf-otro-detalle">
+              <label class="fi-label">Otro elemento — detalle</label>
+              <input type="text" class="fi-input" id="f-gf-otro-detalle" placeholder="Describí el elemento">
+              <div class="fi-error-msg">Ingresá el detalle.</div>
             </div>
           </div>
         </div>
@@ -634,10 +667,15 @@
         </div>
 
         <div id="sub-gf-datos-texto" style="display:none">
-          <div class="fi-campo" id="c-gf-datos-texto">
-            <label class="fi-label">Datos a incluir (en el orden en que deben aparecer)</label>
-            <textarea class="fi-textarea" id="f-gf-datos-texto" placeholder="Se imprimirán tal cual los escribas."></textarea>
-            <div class="fi-error-msg">Ingresá los datos a incluir.</div>
+          <div class="fi-campo" id="c-gf-datos-items">
+            <label class="fi-label">Datos a incluir (marcá los que apliquen)</label>
+            <div class="fi-opciones" id="opts-gf-datos-items"></div>
+          </div>
+          <div id="sub-gf-datos-otro-txt" style="display:none">
+            <div class="fi-campo">
+              <label class="fi-label">Otro — especificá</label>
+              <input type="text" class="fi-input" id="f-gf-datos-otro-txt" placeholder="Describí el dato a incluir">
+            </div>
           </div>
         </div>
       </div>
@@ -654,7 +692,7 @@
     <div class="fi-seccion-titulo">Foto y observaciones</div>
 
     <div class="fi-alerta" id="alerta-foto-obligatoria" style="display:none">
-      <strong>Foto obligatoria:</strong> Como solicitás una Faja o Gran Formato, es necesario adjuntar la foto de la vidriera antes de enviar.
+      <strong>Foto obligatoria:</strong> Como solicitás un Poster A4, Faja o Gran Formato, es necesario adjuntar la foto de la vidriera antes de enviar.
     </div>
 
     <div id="hs-form-wrap">
@@ -688,9 +726,13 @@ var OPTS = {
   a4Sentido:       [{v:'vertical',l:'Vertical'},{v:'horizontal',l:'Horizontal'}],
   fajaRejas:       [{v:'no',l:'No, no tiene'},{v:'externo',l:'Por el lado externo del local'},{v:'interno',l:'Por el lado interno del local'}],
   gfSuperficie:    [{v:'libre',l:'100% Libre'},{v:'elementos',l:'Tiene elementos'}],
-  gfElementos:     [{v:'manija',l:'Manija'},{v:'reja',l:'Reja'},{v:'division',l:'División de paño de vidrio'},{v:'otro',l:'Otro'}],
-  gfReja:          [{v:'externo',l:'Por el lado externo del local'},{v:'interno',l:'Por el lado interno del local'}],
-  gfMaterial:      [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}]
+  gfElementos:     [{v:'manija',l:'Manija'},{v:'reja',l:'Reja'},{v:'division',l:'División de paño (Ploter)'},{v:'otro',l:'Otro'}],
+  gfReja:          [{v:'interior',l:'Interior'},{v:'exterior',l:'Exterior'}],
+  gfMaterial:      [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}],
+  contactoRol:     [{v:'vendedor',l:'Vendedor'},{v:'administrativo',l:'Administrativo'},{v:'responsable',l:'Responsable'},{v:'dueno',l:'Dueño'},{v:'otro',l:'Otro'}],
+  retira:          [{v:'inmobiliaria',l:'La inmobiliaria'},{v:'propietario',l:'El propietario / dueño'}],
+  vidrieraPano:    [{v:'si',l:'Sí, tiene paños'},{v:'no',l:'No tiene'}],
+  gfDatosItems:    [{v:'whatsapp',l:'WhatsApp / Teléfono'},{v:'correo',l:'Correo'},{v:'web',l:'Página Web'},{v:'honorarios',l:'Honorarios'},{v:'redes',l:'Redes Sociales'},{v:'logo',l:'Logo'},{v:'otro',l:'Otro'}]
 };
 
 /* ─── Renderizar radios ─────────────────────────────────────────────── */
@@ -735,33 +777,46 @@ function renderChecks(containerId, opciones, name) {
 
 /* ─── Inicializar opciones ──────────────────────────────────────────── */
 function initOpciones() {
-  renderRadios('opts-a4-solicita',   OPTS.siNo,       'a4-solicita');
-  renderRadios('opts-a4-sentido',    OPTS.a4Sentido,  'a4-sentido');
-  renderRadios('opts-a4-material',   OPTS.a4Material, 'a4-material');
-  renderRadios('opts-faja-solicita', OPTS.siNo,       'faja-solicita');
-  renderRadios('opts-faja-material', OPTS.a4Material, 'faja-material');
-  renderRadios('opts-faja-rejas',    OPTS.fajaRejas,  'faja-rejas');
-  renderRadios('opts-gf-solicita',   OPTS.siNo,       'gf-solicita');
+  renderRadios('opts-contacto-rol',  OPTS.contactoRol, 'contacto-rol');
+  renderRadios('opts-retira',        OPTS.retira,      'retira');
+  renderRadios('opts-vidriera-pano', OPTS.vidrieraPano,'vidriera-pano');
+  renderRadios('opts-a4-solicita',   OPTS.siNo,        'a4-solicita');
+  renderRadios('opts-a4-sentido',    OPTS.a4Sentido,   'a4-sentido');
+  renderRadios('opts-a4-material',   OPTS.a4Material,  'a4-material');
+  renderRadios('opts-faja-solicita', OPTS.siNo,        'faja-solicita');
+  renderRadios('opts-faja-material', OPTS.a4Material,  'faja-material');
+  renderRadios('opts-faja-rejas',    OPTS.fajaRejas,   'faja-rejas');
+  renderRadios('opts-gf-solicita',   OPTS.siNo,        'gf-solicita');
   renderRadios('opts-gf-superficie', OPTS.gfSuperficie,'gf-superficie');
   renderChecks('opts-gf-elementos',  OPTS.gfElementos, 'gf-elementos');
-  renderRadios('opts-gf-reja',       OPTS.gfReja,     'gf-reja');
-  renderRadios('opts-gf-material',   OPTS.gfMaterial, 'gf-material');
-  renderRadios('opts-gf-datos-inmo', OPTS.siNo,       'gf-datos-inmo');
+  renderRadios('opts-gf-reja',       OPTS.gfReja,      'gf-reja');
+  renderRadios('opts-gf-material',   OPTS.gfMaterial,  'gf-material');
+  renderRadios('opts-gf-datos-inmo', OPTS.siNo,        'gf-datos-inmo');
+  renderChecks('opts-gf-datos-items',OPTS.gfDatosItems,'gf-datos-items');
 }
 initOpciones();
 
 /* ─── Manejador de cambios condicionales ────────────────────────────── */
 function handleChange(name, val) {
-  if (name === 'a4-solicita')    show('sub-a4',          val === 'si');
-  if (name === 'faja-solicita')  show('sub-faja',        val === 'si');
-  if (name === 'gf-solicita')    show('sub-gf',          val === 'si');
-  if (name === 'gf-superficie')  show('sub-gf-elementos',val === 'elementos');
+  if (name === 'contacto-rol')   {
+    show('sub-rol-otro', val === 'otro');
+  }
+  if (name === 'vidriera-pano')  show('sub-vidriera-pano', val === 'si');
+  if (name === 'a4-solicita')    show('sub-a4',            val === 'si');
+  if (name === 'faja-solicita')  show('sub-faja',          val === 'si');
+  if (name === 'gf-solicita')    show('sub-gf',            val === 'si');
+  if (name === 'gf-superficie')  show('sub-gf-elementos',  val === 'elementos');
   if (name === 'gf-datos-inmo')  show('sub-gf-datos-texto', val === 'si');
   if (name === 'gf-elementos') {
     var checks = getChecks('gf-elementos');
     show('sub-gf-manija',   checks.indexOf('manija')   >= 0);
     show('sub-gf-reja',     checks.indexOf('reja')     >= 0);
     show('sub-gf-division', checks.indexOf('division') >= 0);
+    show('sub-gf-otro',     checks.indexOf('otro')     >= 0);
+  }
+  if (name === 'gf-datos-items') {
+    var dChecks = getChecks('gf-datos-items');
+    show('sub-gf-datos-otro-txt', dChecks.indexOf('otro') >= 0);
   }
 }
 
@@ -825,12 +880,22 @@ function guardarDatos(n) {
     datos.edc      = document.getElementById('f-edc').value;
     datos.edcLabel = document.getElementById('f-edc').options[document.getElementById('f-edc').selectedIndex].text;
     datos.inmo     = document.getElementById('f-inmo').value.trim();
+    datos.retira   = getRadioLabel('retira');
     datos.dir      = document.getElementById('f-dir').value.trim();
+    var vidrieraPanoVal = getRadio('vidriera-pano');
+    datos.vidriera = {
+      pano:     vidrieraPanoVal === 'si',
+      cantidad: vidrieraPanoVal === 'si' ? document.getElementById('f-vidriera-cantidad').value : '',
+      medidas:  vidrieraPanoVal === 'si' ? document.getElementById('f-vidriera-medidas').value.trim() : ''
+    };
     var locSel = document.getElementById('f-loc');
     datos.loc  = locSel.options[locSel.selectedIndex] ? locSel.options[locSel.selectedIndex].text : '';
     datos.contactoNombre   = document.getElementById('f-contacto-nombre').value.trim();
     datos.contactoApellido = document.getElementById('f-contacto-apellido').value.trim();
-    datos.contactoRol      = document.getElementById('f-contacto-rol').value.trim();
+    var rolVal = getRadio('contacto-rol');
+    datos.contactoRol = rolVal === 'otro'
+      ? document.getElementById('f-contacto-rol-otro').value.trim()
+      : getRadioLabel('contacto-rol');
     datos.contacto         = datos.contactoNombre + ' ' + datos.contactoApellido;
     datos.celular  = document.getElementById('f-celular').value.trim();
   }
@@ -851,18 +916,21 @@ function guardarDatos(n) {
   }
   if (n === 4) {
     var gfSolicita = getRadio('gf-solicita') === 'si';
+    var datosOtroEl = document.getElementById('f-gf-datos-otro-txt');
     datos.gf = {
-      solicita:    gfSolicita,
-      superficie:  getRadioLabel('gf-superficie'),
-      elementos:   getChecksLabels('gf-elementos'),
-      manijaMediada: document.getElementById('f-gf-manija-medida').value,
-      rejaUbicacion: getRadioLabel('gf-reja'),
-      divisionMediada: document.getElementById('f-gf-division-medida').value,
-      ancho:       document.getElementById('f-gf-ancho').value,
-      alto:        document.getElementById('f-gf-alto').value,
-      material:    getRadioLabel('gf-material'),
-      datosInmo:   getRadio('gf-datos-inmo') === 'si',
-      datosTxt:    document.getElementById('f-gf-datos-texto').value
+      solicita:       gfSolicita,
+      superficie:     getRadioLabel('gf-superficie'),
+      elementos:      getChecksLabels('gf-elementos'),
+      manijaMediada:  document.getElementById('f-gf-manija-medida').value,
+      rejaUbicacion:  getRadioLabel('gf-reja'),
+      divisionMediada:document.getElementById('f-gf-division-medida').value,
+      otroDetalle:    document.getElementById('f-gf-otro-detalle').value,
+      ancho:          document.getElementById('f-gf-ancho').value,
+      alto:           document.getElementById('f-gf-alto').value,
+      material:       getRadioLabel('gf-material'),
+      datosInmo:      getRadio('gf-datos-inmo') === 'si',
+      datosItems:     getChecksLabels('gf-datos-items'),
+      datosTxt:       datosOtroEl ? datosOtroEl.value : ''
     };
   }
 }
@@ -896,13 +964,17 @@ function generarDetalle() {
       lineas.push('  Superficie: ' + datos.gf.superficie);
       if (datos.gf.elementos) {
         lineas.push('  Elementos: ' + datos.gf.elementos);
-        if (datos.gf.manijaMediada) lineas.push('  Manija: ' + datos.gf.manijaMediada);
-        if (datos.gf.rejaUbicacion) lineas.push('  Reja: ' + datos.gf.rejaUbicacion);
-        if (datos.gf.divisionMediada) lineas.push('  Division paño: ' + datos.gf.divisionMediada);
+        if (datos.gf.manijaMediada)   lineas.push('  Manija: ' + datos.gf.manijaMediada);
+        if (datos.gf.rejaUbicacion)   lineas.push('  Reja: ' + datos.gf.rejaUbicacion);
+        if (datos.gf.divisionMediada) lineas.push('  Division de paño (Ploter): ' + datos.gf.divisionMediada);
+        if (datos.gf.otroDetalle)     lineas.push('  Otro elemento: ' + datos.gf.otroDetalle);
       }
       lineas.push('  Medidas: ' + datos.gf.ancho + ' x ' + datos.gf.alto + ' cm');
       lineas.push('  Material: ' + datos.gf.material);
-      if (datos.gf.datosInmo) lineas.push('  Datos inmo: ' + datos.gf.datosTxt);
+      if (datos.gf.datosInmo) {
+        lineas.push('  Datos inmo: ' + datos.gf.datosItems);
+        if (datos.gf.datosTxt) lineas.push('  Dato adicional: ' + datos.gf.datosTxt);
+      }
     }
     lineas.push('');
   }
@@ -913,7 +985,7 @@ function generarDetalle() {
 
 /* ─── ¿La foto es obligatoria? ──────────────────────────────────────── */
 function fotoObligatoria() {
-  return (datos.faja && datos.faja.solicita) || (datos.gf && datos.gf.solicita);
+  return (datos.a4 && datos.a4.solicita) || (datos.faja && datos.faja.solicita) || (datos.gf && datos.gf.solicita);
 }
 
 /* ─── Cargar form nativo HubSpot ────────────────────────────────────── */
