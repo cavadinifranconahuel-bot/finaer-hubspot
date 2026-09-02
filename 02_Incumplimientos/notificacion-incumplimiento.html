@@ -706,7 +706,7 @@ function onConcepto(cb, n) {
         <label>Importe adeudado</label>
         <div class="fi-ars-wrap">
           <span class="fi-ars-pre">$ ARS</span>
-          <input type="number" id="${campo}_${n}" min="0" max="99999999" placeholder="0" oninput="if(this.value.length>8)this.value=this.value.slice(0,8)">
+          <input type="number" id="${campo}_${n}" min="0" max="99999999" placeholder="0" oninput="this.value=this.value.replace(/[.,]/g,'');if(this.value.length>8)this.value=this.value.slice(0,8);">
         </div>
       </div>
       <div class="fi-campo">
@@ -841,7 +841,9 @@ function validarPeriodos() {
     if (![...document.querySelectorAll(`.tipo-p${n}:checked`)].length) { err.textContent = `Seleccioná al menos un concepto para el período ${ord}.`; err.style.display = 'block'; return; }
     const conceptosConMonto = [...document.querySelectorAll(`.tipo-p${n}:checked`)].filter(c => c.dataset.campo);
     for (const cb of conceptosConMonto) {
-      const v = parseFloat(document.getElementById(`${cb.dataset.campo}_${n}`)?.value || 0);
+      const rawVal = document.getElementById(`${cb.dataset.campo}_${n}`)?.value || '';
+      if (/[.,]/.test(rawVal)) { err.textContent = `No uses punto ni coma en los montos. Ingresá solo números enteros (Ej: 150000).`; err.style.display = 'block'; return; }
+      const v = parseFloat(rawVal || 0);
       if (!v || v <= 0) { err.textContent = `Ingresá el importe adeudado de "${cb.value}" en el período ${ord}.`; err.style.display = 'block'; return; }
     }
   }
