@@ -112,6 +112,10 @@
   font-size: 12px; color: var(--fi-gris);
   margin-top: 4px; line-height: 1.4;
 }
+.fi-nota-alerta {
+  font-size: 12px; color: var(--fi-rojo);
+  margin-top: 4px; line-height: 1.4; font-weight: 600;
+}
 .fi-input, .fi-select, .fi-textarea {
   width: 100%;
   border: 2px solid var(--fi-borde);
@@ -166,6 +170,36 @@
   margin-bottom: 20px;
   border: 1px solid var(--fi-borde);
   display: block;
+  max-height: 180px;
+  object-fit: contain;
+}
+.fi-pieza-img--sm {
+  max-height: 120px;
+}
+.fi-pieza-img--md {
+  max-height: 180px;
+}
+.fi-check-con-input { margin-bottom: 2px; }
+.fi-check-sub-input { margin: 4px 0 10px 36px; }
+.fi-pano-fila {
+  background: var(--fi-fondo);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.fi-pano-fila-titulo {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fi-gris);
+  margin-bottom: 8px;
+}
+.fi-pano-fila-cols { display: flex; gap: 12px; }
+.fi-pano-fila-cols > div { flex: 1; }
+.fi-pano-fila-cols label {
+  font-size: 12px;
+  color: var(--fi-gris);
+  margin-bottom: 4px;
+  display: block;
 }
 .fi-pieza-placeholder {
   width: 100%; height: 140px;
@@ -204,6 +238,25 @@
   text-transform: uppercase;
   letter-spacing: .5px;
   margin-bottom: 14px;
+}
+
+/* ─── Logo upload preview ───────────────────────────────────────────── */
+.fi-logo-preview {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.fi-logo-preview img {
+  max-height: 60px;
+  max-width: 160px;
+  border-radius: 6px;
+  border: 1px solid var(--fi-borde);
+  object-fit: contain;
+}
+.fi-logo-preview span {
+  font-size: 12px;
+  color: var(--fi-gris);
 }
 
 /* ─── Botones ───────────────────────────────────────────────────────── */
@@ -328,18 +381,14 @@
       <div class="fi-step-dot" id="dot-4">4</div>
       <div class="fi-step-line" id="line-4"></div>
       <div class="fi-step-dot" id="dot-5">5</div>
+      <div class="fi-step-line" id="line-5"></div>
+      <div class="fi-step-dot" id="dot-6">6</div>
     </div>
   </div>
 
   <!-- ══ PASO 1 — Datos de la visita ══════════════════════════════════ -->
   <div class="fi-card" id="paso-1">
     <div class="fi-seccion-titulo">Datos de la visita</div>
-
-    <div class="fi-campo" id="c-email">
-      <label class="fi-label">Tu correo corporativo</label>
-      <input type="email" class="fi-input" id="f-email" placeholder="nombre@finaersa.com.ar">
-      <div class="fi-error-msg">Ingresá un email válido.</div>
-    </div>
 
     <div class="fi-campo" id="c-oc">
       <label class="fi-label">Oficina Comercial (OC)</label>
@@ -434,8 +483,7 @@
       <div class="fi-error-msg">Seleccioná la localidad.</div>
     </div>
 
-
-<div class="fi-campo" id="c-contacto-nombre">
+    <div class="fi-campo" id="c-contacto-nombre">
       <label class="fi-label">Nombre del contacto en la inmo</label>
       <input type="text" class="fi-input" id="f-contacto-nombre" placeholder="Nombre">
       <div class="fi-error-msg">Ingresá el nombre del contacto.</div>
@@ -449,7 +497,14 @@
 
     <div class="fi-campo" id="c-contacto-rol">
       <label class="fi-label">Rol en la inmobiliaria</label>
-      <div class="fi-opciones" id="opts-contacto-rol"></div>
+      <select class="fi-select" id="f-contacto-rol" onchange="handleRolSelect(this.value)">
+        <option value="">Seleccioná el rol</option>
+        <option value="vendedor">Vendedor</option>
+        <option value="administrativo">Administrativo</option>
+        <option value="responsable">Responsable</option>
+        <option value="dueno">Dueño</option>
+        <option value="otro">Otro</option>
+      </select>
       <div id="sub-rol-otro" style="display:none">
         <input type="text" class="fi-input" id="f-contacto-rol-otro" placeholder="Especificá el rol" style="margin-top:8px">
       </div>
@@ -471,8 +526,7 @@
   <div class="fi-card" id="paso-2" style="display:none">
     <div class="fi-seccion-titulo">Poster A4</div>
 
-    <!-- REEMPLAZAR src con la URL real de la imagen del Poster A4 -->
-    <div class="fi-pieza-placeholder">Imagen de referencia: Poster A4</div>
+    <img id="img-a4" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/A4_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--sm" alt="Poster A4">
 
     <div class="fi-campo" id="c-a4-solicita">
       <label class="fi-label">¿Solicitás esta pieza?</label>
@@ -508,8 +562,7 @@
   <div class="fi-card" id="paso-3" style="display:none">
     <div class="fi-seccion-titulo">Faja</div>
 
-    <!-- REEMPLAZAR src con la URL real de la imagen de la Faja -->
-    <div class="fi-pieza-placeholder">Imagen de referencia: Faja</div>
+    <img id="img-faja" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/Fajas%20%20Bajo%20Vidrio.jpg" class="fi-pieza-img" alt="Faja">
 
     <div class="fi-campo" id="c-faja-solicita">
       <label class="fi-label">¿Solicitás esta pieza?</label>
@@ -546,29 +599,28 @@
           <div class="fi-error-msg">Seleccioná una opción.</div>
         </div>
 
-        <div class="fi-campo" id="c-faja-pano">
+        <div class="fi-campo" id="c-faja-vidriera-pano">
           <label class="fi-label">¿La vidriera tiene paños?</label>
-          <div class="fi-opciones horizontal" id="opts-faja-pano"></div>
-          <div class="fi-error-msg">Seleccioná una opción.</div>
+          <div class="fi-opciones horizontal" id="opts-faja-vidriera-pano"></div>
         </div>
-        <div id="sub-faja-pano" style="display:none">
+        <div id="sub-faja-vidriera-pano" style="display:none">
           <div class="fi-campo">
             <label class="fi-label">¿Cuántos paños tiene?</label>
-            <input type="number" class="fi-input" id="f-faja-pano-cantidad" min="1" max="20" placeholder="Ej: 2">
+            <input type="number" class="fi-input" id="f-faja-vidriera-cantidad" min="1" placeholder="Ej: 2">
           </div>
-          <div id="faja-pano-fields"></div>
+          <div id="faja-vidriera-panos-inputs"></div>
         </div>
 
-        <div class="fi-campo" id="c-faja-preexistente">
-          <label class="fi-label">¿Tiene material pre-existente?</label>
-          <div class="fi-opciones horizontal" id="opts-faja-preexistente"></div>
-          <div class="fi-error-msg">Seleccioná una opción.</div>
+        <div class="fi-campo" id="c-faja-preex">
+          <label class="fi-label">¿Hay material preexistente en la vidriera?</label>
+          <div class="fi-opciones horizontal" id="opts-faja-preex"></div>
         </div>
-
-        <div class="fi-campo" id="c-faja-retira">
-          <label class="fi-label">¿Quién retira el material?</label>
-          <div class="fi-opciones" id="opts-faja-retira"></div>
-          <div class="fi-error-msg">Seleccioná una opción.</div>
+        <div id="sub-faja-preex" style="display:none">
+          <div class="fi-campo" id="c-faja-preex-retira">
+            <label class="fi-label">¿Quién retira el material preexistente?</label>
+            <div class="fi-opciones" id="opts-faja-preex-retira"></div>
+            <div class="fi-error-msg">Seleccioná una opción.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -582,6 +634,8 @@
   <!-- ══ PASO 4 — Grandes Formatos ════════════════════════════════════ -->
   <div class="fi-card" id="paso-4" style="display:none">
     <div class="fi-seccion-titulo">Grandes Formatos</div>
+
+    <img src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/GrandesFormatos_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--md" alt="Grandes Formatos">
 
     <div class="fi-alerta">
       Para puertas o superficies de tamaño mayor. Este tipo de pieza permite personalizar el tamaño.<br>
@@ -604,6 +658,18 @@
           <div class="fi-error-msg">Seleccioná una opción.</div>
         </div>
 
+        <div class="fi-campo" id="c-gf-ancho">
+          <label class="fi-label">Ancho en cm</label>
+          <input type="number" class="fi-input" id="f-gf-ancho" placeholder="Ancho" min="1">
+          <div class="fi-error-msg">Ingresá el ancho.</div>
+        </div>
+
+        <div class="fi-campo" id="c-gf-alto">
+          <label class="fi-label">Alto en cm</label>
+          <input type="number" class="fi-input" id="f-gf-alto" placeholder="Alto" min="1">
+          <div class="fi-error-msg">Ingresá el alto.</div>
+        </div>
+
         <div id="sub-gf-elementos" style="display:none">
           <div class="fi-campo" id="c-gf-elementos-tipo">
             <label class="fi-label">¿Qué elementos tiene?</label>
@@ -612,10 +678,15 @@
           </div>
 
           <div id="sub-gf-manija" style="display:none">
-            <div class="fi-campo" id="c-gf-manija-medida">
-              <label class="fi-label">Manija — Distancia del borde y altura desde la parte inferior del vidrio (cm)</label>
-              <input type="text" class="fi-input" id="f-gf-manija-medida" placeholder="Ej: 5 cm del borde, 90 cm de altura">
-              <div class="fi-error-msg">Ingresá la medida de la manija.</div>
+            <div class="fi-campo" id="c-gf-manija-borde">
+              <label class="fi-label">Manija — Distancia del borde (cm)</label>
+              <input type="text" class="fi-input" id="f-gf-manija-borde" placeholder="Ej: 5 cm">
+              <div class="fi-error-msg">Ingresá la distancia del borde.</div>
+            </div>
+            <div class="fi-campo" id="c-gf-manija-altura">
+              <label class="fi-label">Manija — Altura desde parte inferior del vidrio (cm)</label>
+              <input type="text" class="fi-input" id="f-gf-manija-altura" placeholder="Ej: 90 cm">
+              <div class="fi-error-msg">Ingresá la altura desde la parte inferior.</div>
             </div>
           </div>
 
@@ -629,7 +700,7 @@
 
           <div id="sub-gf-division" style="display:none">
             <div class="fi-campo" id="c-gf-division-medida">
-              <label class="fi-label">División de paño (Ploter) — Medida en cm</label>
+              <label class="fi-label">División de paño (Plotter) — Medida en cm</label>
               <input type="text" class="fi-input" id="f-gf-division-medida" placeholder="Medida de la división">
               <div class="fi-nota">Recordá cargar en el pedido cada uno de los paños individualmente.</div>
               <div class="fi-error-msg">Ingresá la medida de la división.</div>
@@ -643,18 +714,6 @@
               <div class="fi-error-msg">Ingresá el detalle.</div>
             </div>
           </div>
-        </div>
-
-        <div class="fi-campo" id="c-gf-ancho">
-          <label class="fi-label">Ancho en cm</label>
-          <input type="number" class="fi-input" id="f-gf-ancho" placeholder="Ancho" min="1">
-          <div class="fi-error-msg">Ingresá el ancho.</div>
-        </div>
-
-        <div class="fi-campo" id="c-gf-alto">
-          <label class="fi-label">Alto en cm</label>
-          <input type="number" class="fi-input" id="f-gf-alto" placeholder="Alto" min="1">
-          <div class="fi-error-msg">Ingresá el alto.</div>
         </div>
 
         <div class="fi-campo" id="c-gf-material">
@@ -671,21 +730,56 @@
 
         <div id="sub-gf-datos-texto" style="display:none">
           <div class="fi-campo" id="c-gf-datos-items">
-            <label class="fi-label">Datos a incluir — seleccioná y completá cada dato tal como será impreso</label>
-            <div id="opts-gf-datos-items"></div>
+            <label class="fi-label">Datos a incluir (marcá los que apliquen)</label>
+            <div class="fi-opciones" id="opts-gf-datos-items"></div>
+          </div>
+          <div id="sub-gf-logo-upload" style="display:none;margin-top:8px;margin-left:36px;">
+            <div class="fi-nota-alerta">El logo debe ser a color completo y en alta resolución.</div>
+            <div style="margin-top:8px;">
+              <input type="file" class="fi-input" id="f-gf-logo-file" accept="image/*" style="border-radius:10px;padding:8px 14px;">
+            </div>
+            <div id="fi-logo-preview" class="fi-logo-preview" style="display:none">
+              <img id="fi-logo-preview-img" src="" alt="Vista previa del logo">
+              <span id="fi-logo-preview-name"></span>
+            </div>
           </div>
         </div>
 
-        <div class="fi-campo" id="c-gf-preexistente">
-          <label class="fi-label">¿Tiene material pre-existente?</label>
-          <div class="fi-opciones horizontal" id="opts-gf-preexistente"></div>
-          <div class="fi-error-msg">Seleccioná una opción.</div>
+      </div>
+    </div>
+
+    <div class="fi-btn-grupo">
+      <button class="fi-btn fi-btn-secondary" onclick="volver()">← Volver</button>
+      <button class="fi-btn fi-btn-primary" onclick="siguiente()">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- ══ PASO 5 — Stickers Apoyo Mutuo ════════════════════════════════ -->
+  <div class="fi-card" id="paso-5" style="display:none">
+    <div class="fi-seccion-titulo">Stickers Apoyo Mutuo</div>
+
+    <img id="img-am" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/Apoyo_Mutuo_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--sm" alt="Stickers Apoyo Mutuo">
+
+    <div class="fi-campo" id="c-am-solicita">
+      <label class="fi-label">¿Solicitás esta pieza?</label>
+      <div class="fi-opciones horizontal" id="opts-am-solicita"></div>
+      <div class="fi-error-msg">Seleccioná una opción.</div>
+    </div>
+
+    <div id="sub-am" style="display:none">
+      <div class="fi-subseccion">
+        <div class="fi-subseccion-titulo">Detalle — Sticker Apoyo Mutuo</div>
+
+        <div class="fi-campo" id="c-am-sentido">
+          <label class="fi-label">Sentido</label>
+          <div class="fi-opciones horizontal" id="opts-am-sentido"></div>
+          <div class="fi-error-msg">Seleccioná el sentido.</div>
         </div>
 
-        <div class="fi-campo" id="c-gf-retira">
-          <label class="fi-label">¿Quién retira el material?</label>
-          <div class="fi-opciones" id="opts-gf-retira"></div>
-          <div class="fi-error-msg">Seleccioná una opción.</div>
+        <div class="fi-campo" id="c-am-material">
+          <label class="fi-label">Material</label>
+          <div class="fi-opciones" id="opts-am-material"></div>
+          <div class="fi-error-msg">Seleccioná el material.</div>
         </div>
       </div>
     </div>
@@ -696,8 +790,8 @@
     </div>
   </div>
 
-  <!-- ══ PASO 5 — Foto y Observaciones (form nativo HubSpot) ═══════════ -->
-  <div class="fi-card" id="paso-5" style="display:none">
+  <!-- ══ PASO 6 — Foto y Observaciones (form nativo HubSpot) ═══════════ -->
+  <div class="fi-card" id="paso-6" style="display:none">
     <div class="fi-seccion-titulo">Foto y observaciones</div>
 
     <div class="fi-alerta" id="alerta-foto-obligatoria" style="display:none">
@@ -724,32 +818,26 @@
 
 /* ─── Estado del wizard ─────────────────────────────────────────────── */
 var paso = 1;
-var totalPasos = 5;
+var totalPasos = 6;
 var datos = {};
 var formCargado = false;
+var logoFileObj = null;
 
 /* ─── Opciones de radio/checkbox ────────────────────────────────────── */
 var OPTS = {
-  siNo:            [{v:'si',l:'Sí'},{v:'no',l:'No'}],
-  a4Material:      [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}],
-  a4Sentido:       [{v:'vertical',l:'Vertical'},{v:'horizontal',l:'Horizontal'}],
-  fajaRejas:       [{v:'no',l:'No, no tiene'},{v:'externo',l:'Por el lado externo del local'},{v:'interno',l:'Por el lado interno del local'}],
-  gfSuperficie:    [{v:'libre',l:'100% Libre'},{v:'elementos',l:'Tiene elementos'}],
-  gfElementos:     [{v:'manija',l:'Manija'},{v:'reja',l:'Reja'},{v:'division',l:'División de paño (Ploter)'},{v:'otro',l:'Otro'}],
-  gfReja:          [{v:'interior',l:'Interior'},{v:'exterior',l:'Exterior'}],
-  gfMaterial:      [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}],
-  contactoRol:     [{v:'vendedor',l:'Vendedor'},{v:'administrativo',l:'Administrativo'},{v:'responsable',l:'Responsable'},{v:'dueno',l:'Dueño'},{v:'otro',l:'Otro'}],
-  retiraFajaGF:    [{v:'inmobiliaria',l:'Inmobiliaria'},{v:'finaer',l:'Finaer (genera un costo adicional a Finaer)'}],
-  vidrieraPano:    [{v:'si',l:'Sí, tiene paños'},{v:'no',l:'No tiene'}],
-  gfDatosItems:    [
-    {v:'whatsapp',   l:'WhatsApp / Teléfono', p:'Número exacto (como se imprimirá)'},
-    {v:'correo',     l:'Correo',              p:'Email exacto (como se imprimirá)'},
-    {v:'web',        l:'Página Web',          p:'URL exacta (como se imprimirá)'},
-    {v:'honorarios', l:'Honorarios',          p:'Texto de honorarios (como se imprimirá)'},
-    {v:'redes',      l:'Redes Sociales',      p:'Redes (como se imprimirán)'},
-    {v:'logo',       l:'Logo',                p:'Aclaración sobre el logo (como se imprimirá)'},
-    {v:'otro',       l:'Otro',                p:'Especificá el dato (como se imprimirá)'}
-  ]
+  siNo:          [{v:'si',l:'Sí'},{v:'no',l:'No'}],
+  a4Material:    [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}],
+  a4Sentido:     [{v:'vertical',l:'Vertical'},{v:'horizontal',l:'Horizontal'}],
+  fajaRejas:     [{v:'no',l:'No, no tiene'},{v:'externo',l:'Por el lado externo del local'},{v:'interno',l:'Por el lado interno del local'}],
+  gfSuperficie:  [{v:'libre',l:'100% Libre'},{v:'elementos',l:'Tiene elementos'}],
+  gfElementos:   [{v:'manija',l:'Manija'},{v:'reja',l:'Reja'},{v:'division',l:'División de paño (Plotter)'},{v:'otro',l:'Otro'}],
+  gfReja:        [{v:'interior',l:'Interior'},{v:'exterior',l:'Exterior'}],
+  gfMaterial:    [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}],
+  retiraPreex:   [{v:'inmobiliaria',l:'Inmobiliaria'},{v:'finaer',l:'Finaer (genera un costo adicional a Finaer)'}],
+  vidrieraPano:  [{v:'si',l:'Sí, tiene paños'},{v:'no',l:'No tiene'}],
+  gfDatosItems:  [{v:'whatsapp',l:'WhatsApp / Teléfono'},{v:'correo',l:'Correo'},{v:'web',l:'Página Web'},{v:'horarios',l:'Horarios'},{v:'redes',l:'Redes Sociales'},{v:'logo',l:'Logo'},{v:'otro',l:'Otro'}],
+  amSentido:     [{v:'vertical',l:'Vertical'},{v:'horizontal',l:'Horizontal (excepcional)'}],
+  amMaterial:    [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'sobrevidrio',l:'Sobrevidrio'}]
 };
 
 /* ─── Renderizar radios ─────────────────────────────────────────────── */
@@ -766,7 +854,6 @@ function renderRadios(containerId, opciones, name) {
     lbl.querySelector('input').addEventListener('change', function() {
       c.querySelectorAll('.fi-opcion-label').forEach(function(l) { l.classList.remove('seleccionado'); });
       lbl.classList.add('seleccionado');
-      lbl.nextElementSibling; // trigger visual
       handleChange(name, op.v);
     });
     c.appendChild(lbl);
@@ -792,101 +879,171 @@ function renderChecks(containerId, opciones, name) {
   });
 }
 
-/* ─── Checkboxes con campo de texto por ítem ────────────────────────── */
-function renderChecksConInput(containerId, opciones, name) {
+/* ─── Checkboxes con input por item ─────────────────────────────────── */
+function renderChecksWithInputs(containerId, opciones, name, sinInput) {
   var c = document.getElementById(containerId);
   if (!c || c.children.length > 0) return;
+  sinInput = sinInput || [];
   opciones.forEach(function(op) {
     var wrapper = document.createElement('div');
-    wrapper.style.marginBottom = '8px';
-
+    wrapper.className = 'fi-check-con-input';
     var lbl = document.createElement('label');
     lbl.className = 'fi-opcion-label';
     lbl.innerHTML =
       '<input type="checkbox" name="' + name + '" value="' + op.v + '">' +
       '<span class="fi-opcion-check" style="border-radius:4px"></span>' +
       '<span>' + op.l + '</span>';
-
-    var inputWrap = document.createElement('div');
-    inputWrap.style.cssText = 'display:none;margin-top:6px;padding-left:12px';
-    inputWrap.innerHTML = '<input type="text" class="fi-input" placeholder="' +
-      (op.p || 'Indicá el dato tal como será impreso') +
-      '" data-item="' + op.v + '">';
-
+    var subInput = null;
+    if (sinInput.indexOf(op.v) === -1 && op.v !== 'logo') {
+      subInput = document.createElement('div');
+      subInput.className = 'fi-check-sub-input';
+      subInput.style.display = 'none';
+      subInput.innerHTML = '<input type="text" class="fi-input" id="f-gf-dato-' + op.v + '" placeholder="' + op.l + '">';
+    }
     lbl.querySelector('input').addEventListener('change', function() {
       lbl.classList.toggle('seleccionado', this.checked);
-      inputWrap.style.display = this.checked ? 'block' : 'none';
+      if (subInput) subInput.style.display = this.checked ? 'block' : 'none';
+      if (op.v === 'logo') {
+        show('sub-gf-logo-upload', this.checked);
+        if (!this.checked) { logoFileObj = null; show('fi-logo-preview', false); }
+      }
+      handleChange(name, null);
     });
-
     wrapper.appendChild(lbl);
-    wrapper.appendChild(inputWrap);
+    if (subInput) wrapper.appendChild(subInput);
     c.appendChild(wrapper);
   });
+
+  // Logo file input listener
+  var logoInput = document.getElementById('f-gf-logo-file');
+  if (logoInput) {
+    logoInput.addEventListener('change', function() {
+      var file = this.files[0];
+      if (!file) return;
+      logoFileObj = file;
+      var preview = document.getElementById('fi-logo-preview');
+      var previewImg = document.getElementById('fi-logo-preview-img');
+      var previewName = document.getElementById('fi-logo-preview-name');
+      previewName.textContent = file.name;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        previewImg.src = e.target.result;
+        preview.style.display = 'flex';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
 }
 
-/* ─── Campos dinámicos por paño ─────────────────────────────────────── */
-function renderPanosFields(containerId, cantidad) {
-  var c = document.getElementById(containerId);
-  if (!c) return;
-  c.innerHTML = '';
-  for (var i = 1; i <= cantidad; i++) {
-    var div = document.createElement('div');
-    div.className = 'fi-campo';
-    div.innerHTML = '<label class="fi-label">Paño ' + i + ' — Medida (ancho × alto en cm)</label>' +
-      '<input type="text" class="fi-input faja-pano-medida" placeholder="Ej: 80 × 120 cm">';
-    c.appendChild(div);
+/* ─── Inputs dinámicos de paños ─────────────────────────────────────── */
+function generarInputsPanos() {
+  var cant = parseInt(document.getElementById('f-vidriera-cantidad').value) || 0;
+  var container = document.getElementById('vidriera-panos-inputs');
+  if (!container) return;
+  container.innerHTML = '';
+  for (var i = 1; i <= cant; i++) {
+    var fila = document.createElement('div');
+    fila.className = 'fi-pano-fila';
+    fila.innerHTML =
+      '<div class="fi-pano-fila-titulo">Paño ' + i + '</div>' +
+      '<div class="fi-pano-fila-cols">' +
+        '<div><label>Ancho en cm</label><input type="number" class="fi-input" id="f-pano-ancho-' + i + '" placeholder="Ej: 80" min="1"></div>' +
+        '<div><label>Alto en cm</label><input type="number" class="fi-input" id="f-pano-alto-' + i + '" placeholder="Ej: 120" min="1"></div>' +
+      '</div>';
+    container.appendChild(fila);
   }
+}
+
+/* ─── Inputs dinámicos de paños (faja) ──────────────────────────────── */
+function generarInputsPanosFaja() {
+  var cant = parseInt(document.getElementById('f-faja-vidriera-cantidad').value) || 0;
+  var container = document.getElementById('faja-vidriera-panos-inputs');
+  if (!container) return;
+  container.innerHTML = '';
+  for (var i = 1; i <= cant; i++) {
+    var fila = document.createElement('div');
+    fila.className = 'fi-pano-fila';
+    fila.innerHTML =
+      '<div class="fi-pano-fila-titulo">Paño ' + i + '</div>' +
+      '<div class="fi-pano-fila-cols">' +
+        '<div><label>Ancho en cm</label><input type="number" class="fi-input" id="f-faja-pano-ancho-' + i + '" placeholder="Ej: 80" min="1"></div>' +
+        '<div><label>Alto en cm</label><input type="number" class="fi-input" id="f-faja-pano-alto-' + i + '" placeholder="Ej: 120" min="1"></div>' +
+      '</div>';
+    container.appendChild(fila);
+  }
+}
+
+/* ─── Manejador rol select ──────────────────────────────────────────── */
+function handleRolSelect(val) {
+  show('sub-rol-otro', val === 'otro');
 }
 
 /* ─── Inicializar opciones ──────────────────────────────────────────── */
 function initOpciones() {
-  renderRadios('opts-contacto-rol',      OPTS.contactoRol,  'contacto-rol');
-  renderRadios('opts-a4-solicita',       OPTS.siNo,         'a4-solicita');
-  renderRadios('opts-a4-sentido',        OPTS.a4Sentido,    'a4-sentido');
-  renderRadios('opts-a4-material',       OPTS.a4Material,   'a4-material');
-  renderRadios('opts-faja-solicita',     OPTS.siNo,         'faja-solicita');
-  renderRadios('opts-faja-material',     OPTS.a4Material,   'faja-material');
-  renderRadios('opts-faja-rejas',        OPTS.fajaRejas,    'faja-rejas');
-  renderRadios('opts-faja-pano',         OPTS.vidrieraPano, 'faja-pano');
-  renderRadios('opts-faja-preexistente', OPTS.siNo,         'faja-preexistente');
-  renderRadios('opts-faja-retira',       OPTS.retiraFajaGF, 'faja-retira');
-  renderRadios('opts-gf-solicita',       OPTS.siNo,         'gf-solicita');
-  renderRadios('opts-gf-superficie',     OPTS.gfSuperficie, 'gf-superficie');
-  renderChecks('opts-gf-elementos',      OPTS.gfElementos,  'gf-elementos');
-  renderRadios('opts-gf-reja',           OPTS.gfReja,       'gf-reja');
-  renderRadios('opts-gf-material',       OPTS.gfMaterial,   'gf-material');
-  renderRadios('opts-gf-datos-inmo',     OPTS.siNo,         'gf-datos-inmo');
-  renderChecksConInput('opts-gf-datos-items', OPTS.gfDatosItems, 'gf-datos-items');
-  renderRadios('opts-gf-preexistente',   OPTS.siNo,         'gf-preexistente');
-  renderRadios('opts-gf-retira',         OPTS.retiraFajaGF, 'gf-retira');
+  renderRadios('opts-a4-solicita',        OPTS.siNo,         'a4-solicita');
+  renderRadios('opts-a4-sentido',         OPTS.a4Sentido,    'a4-sentido');
+  renderRadios('opts-a4-material',        OPTS.a4Material,   'a4-material');
+  renderRadios('opts-faja-solicita',      OPTS.siNo,         'faja-solicita');
+  renderRadios('opts-faja-material',      OPTS.a4Material,   'faja-material');
+  renderRadios('opts-faja-rejas',         OPTS.fajaRejas,    'faja-rejas');
+  renderRadios('opts-faja-vidriera-pano', OPTS.vidrieraPano, 'faja-vidriera-pano');
+  renderRadios('opts-faja-preex',         OPTS.siNo,         'faja-preex');
+  renderRadios('opts-faja-preex-retira',  OPTS.retiraPreex,  'faja-preex-retira');
+  renderRadios('opts-gf-solicita',        OPTS.siNo,         'gf-solicita');
+  renderRadios('opts-gf-superficie',      OPTS.gfSuperficie, 'gf-superficie');
+  renderChecks('opts-gf-elementos',       OPTS.gfElementos,  'gf-elementos');
+  renderRadios('opts-gf-reja',            OPTS.gfReja,       'gf-reja');
+  renderRadios('opts-gf-material',        OPTS.gfMaterial,   'gf-material');
+  renderRadios('opts-gf-datos-inmo',      OPTS.siNo,         'gf-datos-inmo');
+  renderChecksWithInputs('opts-gf-datos-items', OPTS.gfDatosItems, 'gf-datos-items', []);
+  renderRadios('opts-am-solicita',        OPTS.siNo,         'am-solicita');
+  renderRadios('opts-am-sentido',         OPTS.amSentido,    'am-sentido');
+  renderRadios('opts-am-material',        OPTS.amMaterial,   'am-material');
 
-  var panosInput = document.getElementById('f-faja-pano-cantidad');
-  if (panosInput) {
-    panosInput.addEventListener('input', function() {
-      var n = parseInt(this.value, 10);
-      var container = document.getElementById('faja-pano-fields');
-      if (n > 0 && n <= 20) renderPanosFields('faja-pano-fields', n);
-      else if (container) container.innerHTML = '';
-    });
-  }
+  var cantFajaInput = document.getElementById('f-faja-vidriera-cantidad');
+  if (cantFajaInput) cantFajaInput.addEventListener('input', generarInputsPanosFaja);
 }
 initOpciones();
 
 /* ─── Manejador de cambios condicionales ────────────────────────────── */
 function handleChange(name, val) {
-  if (name === 'contacto-rol')   show('sub-rol-otro',        val === 'otro');
-  if (name === 'faja-pano')      show('sub-faja-pano',       val === 'si');
-  if (name === 'a4-solicita')    show('sub-a4',              val === 'si');
-  if (name === 'faja-solicita')  show('sub-faja',            val === 'si');
-  if (name === 'gf-solicita')    show('sub-gf',              val === 'si');
-  if (name === 'gf-superficie')  show('sub-gf-elementos',    val === 'elementos');
-  if (name === 'gf-datos-inmo')  show('sub-gf-datos-texto',  val === 'si');
+  if (name === 'vidriera-pano') {
+    show('sub-vidriera-pano', val === 'si');
+    if (val === 'si') generarInputsPanos();
+  }
+  if (name === 'a4-solicita')        show('sub-a4',               val === 'si');
+  if (name === 'faja-solicita')      show('sub-faja',             val === 'si');
+  if (name === 'faja-vidriera-pano') {
+    show('sub-faja-vidriera-pano', val === 'si');
+    if (val === 'si') generarInputsPanosFaja();
+  }
+  if (name === 'faja-preex')    show('sub-faja-preex',       val === 'si');
+  if (name === 'gf-solicita')   show('sub-gf',               val === 'si');
+  if (name === 'gf-superficie') show('sub-gf-elementos',    val === 'elementos');
+  if (name === 'gf-datos-inmo') show('sub-gf-datos-texto',  val === 'si');
+  if (name === 'am-solicita')   show('sub-am',               val === 'si');
   if (name === 'gf-elementos') {
     var checks = getChecks('gf-elementos');
     show('sub-gf-manija',   checks.indexOf('manija')   >= 0);
     show('sub-gf-reja',     checks.indexOf('reja')     >= 0);
     show('sub-gf-division', checks.indexOf('division') >= 0);
     show('sub-gf-otro',     checks.indexOf('otro')     >= 0);
+  }
+  // Imágenes dinámicas
+  if (name === 'a4-sentido') {
+    var imgA4 = document.getElementById('img-a4');
+    if (imgA4) imgA4.src = val === 'horizontal'
+      ? 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/PAM%20Horizontal.png'
+      : 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/A4_Thumbnail_Formulario.jpg';
+  }
+  if (name === 'am-sentido') {
+    // Imagen de apoyo mutuo se mantiene igual (muestra vertical y horizontal juntos)
+  }
+  if (name === 'faja-material') {
+    var imgFaja = document.getElementById('img-faja');
+    if (imgFaja) imgFaja.src = val === 'microperforado'
+      ? 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/Faja%20Microperforado.jpg'
+      : 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/Fajas%20%20Bajo%20Vidrio.jpg';
   }
 }
 
@@ -938,13 +1095,23 @@ function valReq(val, campoId) {
 }
 
 function validarPaso(n) {
+  if (n === 3) {
+    if (getRadio('faja-solicita') === 'si') {
+      var ancho = document.getElementById('f-faja-ancho').value;
+      if (!ancho || parseInt(ancho) <= 0) {
+        marcarError('c-faja-ancho');
+        document.getElementById('f-faja-ancho').focus();
+        return false;
+      }
+      limpiarError('c-faja-ancho');
+    }
+  }
   return true;
 }
 
 /* ─── Guardar datos del paso ────────────────────────────────────────── */
 function guardarDatos(n) {
   if (n === 1) {
-    datos.email    = document.getElementById('f-email').value.trim();
     datos.oc       = document.getElementById('f-oc').value;
     datos.ocLabel  = document.getElementById('f-oc').options[document.getElementById('f-oc').selectedIndex].text;
     datos.edc      = document.getElementById('f-edc').value;
@@ -955,11 +1122,12 @@ function guardarDatos(n) {
     datos.loc  = locSel.options[locSel.selectedIndex] ? locSel.options[locSel.selectedIndex].text : '';
     datos.contactoNombre   = document.getElementById('f-contacto-nombre').value.trim();
     datos.contactoApellido = document.getElementById('f-contacto-apellido').value.trim();
-    var rolVal = getRadio('contacto-rol');
+    var rolSel = document.getElementById('f-contacto-rol');
+    var rolVal = rolSel.value;
     datos.contactoRol = rolVal === 'otro'
       ? document.getElementById('f-contacto-rol-otro').value.trim()
-      : getRadioLabel('contacto-rol');
-    datos.contacto         = datos.contactoNombre + ' ' + datos.contactoApellido;
+      : rolSel.options[rolSel.selectedIndex].text;
+    datos.contacto = datos.contactoNombre + ' ' + datos.contactoApellido;
     datos.celular  = document.getElementById('f-celular').value.trim();
   }
   if (n === 2) {
@@ -970,41 +1138,44 @@ function guardarDatos(n) {
     };
   }
   if (n === 3) {
-    var fajaPanoVal = getRadio('faja-pano');
-    var panoMedidas = [];
-    if (fajaPanoVal === 'si') {
-      document.querySelectorAll('.faja-pano-medida').forEach(function(el, i) {
-        panoMedidas.push('Paño ' + (i + 1) + ': ' + el.value);
-      });
+    var fajaVidrieraPanoVal = getRadio('faja-vidriera-pano');
+    var fajaVidrieraCantidad = '';
+    var fajaVidrieraMedidas = '';
+    if (fajaVidrieraPanoVal === 'si') {
+      fajaVidrieraCantidad = document.getElementById('f-faja-vidriera-cantidad').value;
+      var panosList = [];
+      var cnt = parseInt(fajaVidrieraCantidad) || 0;
+      for (var pi = 1; pi <= cnt; pi++) {
+        var aw = document.getElementById('f-faja-pano-ancho-' + pi);
+        var ah = document.getElementById('f-faja-pano-alto-' + pi);
+        panosList.push('Paño ' + pi + ': ' + (aw ? aw.value : '') + ' × ' + (ah ? ah.value : '') + ' cm');
+      }
+      fajaVidrieraMedidas = panosList.join(' | ');
     }
     datos.faja = {
-      solicita:     getRadio('faja-solicita') === 'si',
-      ancho:        document.getElementById('f-faja-ancho').value,
-      material:     getRadioLabel('faja-material'),
-      rejas:        getRadioLabel('faja-rejas'),
-      pano:         fajaPanoVal === 'si',
-      panoCantidad: fajaPanoVal === 'si' ? document.getElementById('f-faja-pano-cantidad').value : '',
-      panoMedidas:  panoMedidas,
-      preexistente: getRadio('faja-preexistente'),
-      retira:       getRadioLabel('faja-retira')
+      solicita:    getRadio('faja-solicita') === 'si',
+      ancho:       document.getElementById('f-faja-ancho').value,
+      material:    getRadioLabel('faja-material'),
+      rejas:       getRadioLabel('faja-rejas'),
+      vidriera:    { pano: fajaVidrieraPanoVal === 'si', cantidad: fajaVidrieraCantidad, medidas: fajaVidrieraMedidas },
+      preex:       getRadio('faja-preex') === 'si',
+      preexRetira: getRadioLabel('faja-preex-retira')
     };
   }
   if (n === 4) {
-    var gfSolicita = getRadio('gf-solicita') === 'si';
-    var datosDetalle = [];
-    document.querySelectorAll('#opts-gf-datos-items input[type="checkbox"]:checked').forEach(function(el) {
-      var lbl = el.closest('label');
-      var label = lbl ? lbl.querySelector('span:last-child').textContent : el.value;
-      var wrapper = el.closest('label').parentElement;
-      var inputEl = wrapper ? wrapper.querySelector('input[type="text"]') : null;
-      var valor = inputEl ? inputEl.value.trim() : '';
-      datosDetalle.push(label + (valor ? ': ' + valor : ''));
+    var datosItemsChecked = getChecks('gf-datos-items');
+    var datosItemsDetalle = {};
+    datosItemsChecked.forEach(function(v) {
+      if (v === 'logo') { datosItemsDetalle[v] = logoFileObj ? logoFileObj.name : ''; return; }
+      var inp = document.getElementById('f-gf-dato-' + v);
+      datosItemsDetalle[v] = inp ? inp.value.trim() : '';
     });
     datos.gf = {
-      solicita:        gfSolicita,
+      solicita:        getRadio('gf-solicita') === 'si',
       superficie:      getRadioLabel('gf-superficie'),
       elementos:       getChecksLabels('gf-elementos'),
-      manijaMediada:   document.getElementById('f-gf-manija-medida').value,
+      manijaBorde:     document.getElementById('f-gf-manija-borde') ? document.getElementById('f-gf-manija-borde').value : '',
+      manijaAltura:    document.getElementById('f-gf-manija-altura') ? document.getElementById('f-gf-manija-altura').value : '',
       rejaUbicacion:   getRadioLabel('gf-reja'),
       divisionMediada: document.getElementById('f-gf-division-medida').value,
       otroDetalle:     document.getElementById('f-gf-otro-detalle').value,
@@ -1012,9 +1183,16 @@ function guardarDatos(n) {
       alto:            document.getElementById('f-gf-alto').value,
       material:        getRadioLabel('gf-material'),
       datosInmo:       getRadio('gf-datos-inmo') === 'si',
-      datosDetalle:    datosDetalle,
-      preexistente:    getRadio('gf-preexistente'),
-      retira:          getRadioLabel('gf-retira')
+      datosItemsArr:   datosItemsChecked,
+      datosItems:      getChecksLabels('gf-datos-items'),
+      datosItemsDetalle: datosItemsDetalle
+    };
+  }
+  if (n === 5) {
+    datos.am = {
+      solicita: getRadio('am-solicita') === 'si',
+      sentido:  getRadioLabel('am-sentido'),
+      material: getRadioLabel('am-material')
     };
   }
 }
@@ -1022,6 +1200,14 @@ function guardarDatos(n) {
 /* ─── Generar resumen del pedido ────────────────────────────────────── */
 function generarDetalle() {
   var lineas = ['=== PEDIDO STICKERS ESPECIALES ===', ''];
+
+  lineas.push('OC: ' + (datos.ocLabel || datos.oc));
+  lineas.push('EDC: ' + (datos.edcLabel || datos.edc));
+  lineas.push('Inmobiliaria: ' + datos.inmo);
+  lineas.push('Dirección: ' + datos.dir);
+  lineas.push('Localidad: ' + datos.loc);
+  lineas.push('Contacto: ' + datos.contacto + ' (' + datos.contactoRol + ') — ' + datos.celular);
+  lineas.push('');
 
   if (datos.a4) {
     lineas.push('POSTER A4: ' + (datos.a4.solicita ? 'SI' : 'NO'));
@@ -1038,14 +1224,11 @@ function generarDetalle() {
       lineas.push('  Ancho: ' + datos.faja.ancho + ' cm (altura fija: 30 cm)');
       lineas.push('  Material: ' + datos.faja.material);
       lineas.push('  Rejas: ' + datos.faja.rejas);
-      if (datos.faja.pano) {
-        lineas.push('  Paños: ' + datos.faja.panoCantidad);
-        datos.faja.panoMedidas.forEach(function(m) { lineas.push('    ' + m); });
-      } else {
-        lineas.push('  Paños: No');
+      if (datos.faja.vidriera && datos.faja.vidriera.pano) {
+        lineas.push('  Paños vidriera: ' + datos.faja.vidriera.cantidad);
+        lineas.push('  Medidas paños: ' + datos.faja.vidriera.medidas);
       }
-      lineas.push('  Material pre-existente: ' + (datos.faja.preexistente === 'si' ? 'Sí' : 'No'));
-      lineas.push('  Retira: ' + datos.faja.retira);
+      lineas.push('  Material preexistente: ' + (datos.faja.preex ? 'SÍ — retira: ' + datos.faja.preexRetira : 'NO'));
     }
     lineas.push('');
   }
@@ -1054,21 +1237,36 @@ function generarDetalle() {
     lineas.push('GRANDES FORMATOS: ' + (datos.gf.solicita ? 'SI' : 'NO'));
     if (datos.gf.solicita) {
       lineas.push('  Superficie: ' + datos.gf.superficie);
+      lineas.push('  Medidas: ' + datos.gf.ancho + ' x ' + datos.gf.alto + ' cm');
       if (datos.gf.elementos) {
         lineas.push('  Elementos: ' + datos.gf.elementos);
-        if (datos.gf.manijaMediada)   lineas.push('  Manija: ' + datos.gf.manijaMediada);
-        if (datos.gf.rejaUbicacion)   lineas.push('  Reja: ' + datos.gf.rejaUbicacion);
-        if (datos.gf.divisionMediada) lineas.push('  Division de paño (Ploter): ' + datos.gf.divisionMediada);
-        if (datos.gf.otroDetalle)     lineas.push('  Otro elemento: ' + datos.gf.otroDetalle);
+        if (datos.gf.manijaBorde || datos.gf.manijaAltura) {
+          lineas.push('  Manija — Distancia del borde: ' + datos.gf.manijaBorde + ' cm');
+          lineas.push('  Manija — Altura desde inf. vidrio: ' + datos.gf.manijaAltura + ' cm');
+        }
+        if (datos.gf.rejaUbicacion)    lineas.push('  Reja: ' + datos.gf.rejaUbicacion);
+        if (datos.gf.divisionMediada)  lineas.push('  División de paño (Plotter): ' + datos.gf.divisionMediada);
+        if (datos.gf.otroDetalle)      lineas.push('  Otro elemento: ' + datos.gf.otroDetalle);
       }
-      lineas.push('  Medidas: ' + datos.gf.ancho + ' x ' + datos.gf.alto + ' cm');
       lineas.push('  Material: ' + datos.gf.material);
-      if (datos.gf.datosInmo && datos.gf.datosDetalle.length > 0) {
+      if (datos.gf.datosInmo && datos.gf.datosItemsArr && datos.gf.datosItemsArr.length > 0) {
         lineas.push('  Datos inmo:');
-        datos.gf.datosDetalle.forEach(function(d) { lineas.push('    ' + d); });
+        datos.gf.datosItemsArr.forEach(function(v) {
+          var opt = OPTS.gfDatosItems.filter(function(o) { return o.v === v; })[0];
+          var label = opt ? opt.l : v;
+          var det = datos.gf.datosItemsDetalle ? datos.gf.datosItemsDetalle[v] : '';
+          lineas.push('    · ' + label + (det ? ': ' + det : ''));
+        });
       }
-      lineas.push('  Material pre-existente: ' + (datos.gf.preexistente === 'si' ? 'Sí' : 'No'));
-      lineas.push('  Retira: ' + datos.gf.retira);
+    }
+    lineas.push('');
+  }
+
+  if (datos.am) {
+    lineas.push('STICKER APOYO MUTUO: ' + (datos.am.solicita ? 'SI' : 'NO'));
+    if (datos.am.solicita) {
+      lineas.push('  Sentido: ' + datos.am.sentido);
+      lineas.push('  Material: ' + datos.am.material);
     }
     lineas.push('');
   }
@@ -1096,24 +1294,22 @@ function cargarFormHS() {
     formId:   '2b527eac-0b46-4908-9c70-8047d3bf9f46',
     target:   '#hs-form-wrap',
     onFormReady: function($form) {
-      // Pre-llenar email
-      $form.find('[name="email"]').val(datos.email).trigger('change');
-
-      // Ajustar obligatoriedad de la foto
       if (!obligatoria) {
         var fotoInput = $form.find('[name="sticker_foto"]');
         fotoInput.removeAttr('required');
-        var fotoField = fotoInput.closest('.hs-form-field');
-        fotoField.find('label .hs-form-required').hide();
+        fotoInput.closest('.hs-form-field').find('label .hs-form-required').hide();
       }
-
-      // Ocultar campo "Especifica el material" (eliminado del flujo del wizard)
-      $form.find('.hs-form-field').each(function() {
-        var labelText = $(this).find('label').text().toLowerCase();
-        if (labelText.indexOf('material') >= 0 && labelText.indexOf('especif') >= 0) {
-          $(this).hide();
+      // Intentar pasar el logo al campo nativo si existe en el form
+      if (logoFileObj) {
+        var logoField = $form.find('[name="sticker_logo"]')[0];
+        if (logoField && window.DataTransfer) {
+          try {
+            var dt = new DataTransfer();
+            dt.items.add(logoFileObj);
+            logoField.files = dt.files;
+          } catch(e) {}
         }
-      });
+      }
     },
     onBeforeFormSubmit: function($form, submitData) {
       submitData.push(
@@ -1129,13 +1325,13 @@ function cargarFormHS() {
       );
     },
     onFormSubmitted: function() {
-      document.getElementById('paso-5').innerHTML =
+      document.getElementById('paso-6').innerHTML =
         '<div class="fi-exito">' +
         '<div class="fi-exito-icono">✅</div>' +
         '<h2>¡Pedido registrado!</h2>' +
         '<p>Tu solicitud de Stickers Especiales fue enviada correctamente.<br>' +
         'El equipo de Marketing procesará el pedido al cierre de la tanda correspondiente.<br><br>' +
-        'Ante cualquier consulta: <strong>marketingl@finaersa.com.ar</strong></p>' +
+        'Ante cualquier consulta: <strong>marketing@finaersa.com.ar</strong></p>' +
         '</div>';
       document.getElementById('fi-steps').style.display = 'none';
     }
