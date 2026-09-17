@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Encuesta de Satisfacción — FINAER</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Kumbh+Sans:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Kumbh Sans', -apple-system, sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+/* ── Logo header ── */
+.fi-header {
+  background: #fff;
+  border-bottom: 3px solid #e30613;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fi-header img {
+  height: 40px;
+  width: auto;
+}
+
+/* ── Page wrapper ── */
+.fi-page {
+  padding: 36px 16px 60px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ── Hero title ── */
+.fi-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.fi-hero h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2f3743;
+  margin: 0 0 8px;
+}
+.fi-hero p {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Card ── */
+.fi-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.10);
+  padding: 36px 40px;
+  margin-bottom: 16px;
+}
+@media (max-width: 600px) {
+  .fi-card { padding: 24px 20px; }
+}
+
+/* ── Section label ── */
+.fi-seccion {
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #fadadb;
+}
+.fi-seccion span {
+  font-size: 10px;
+  font-weight: 700;
+  color: #e30613;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+/* ── Field ── */
+.fi-campo {
+  margin-bottom: 20px;
+}
+.fi-campo:last-child { margin-bottom: 0; }
+.fi-campo label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 8px;
+  letter-spacing: .3px;
+}
+.fi-campo .requerido { color: #e30613; margin-left: 2px; }
+
+.fi-campo input[type=text],
+.fi-campo input[type=email],
+.fi-campo select,
+.fi-campo textarea {
+  width: 100%;
+  padding: 11px 16px;
+  border: 1.5px solid #ddd;
+  border-radius: 50px;
+  font-size: 14px;
+  background: #fafafa;
+  outline: none;
+  transition: border .2s;
+  font-family: 'Kumbh Sans', sans-serif;
+  color: #333;
+  appearance: none;
+}
+.fi-campo textarea {
+  border-radius: 16px;
+  resize: vertical;
+  min-height: 100px;
+}
+.fi-campo input:focus,
+.fi-campo select:focus,
+.fi-campo textarea:focus {
+  border-color: #e30613;
+  background: #fff;
+}
+.fi-campo select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* ── Grid dos columnas ── */
+.fi-dos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 480px) {
+  .fi-dos { grid-template-columns: 1fr; }
+}
+
+/* ── Rating buttons (calificaciones) ── */
+.fi-rating {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+.fi-rating input[type=radio] { display: none; }
+.fi-rating label.fi-ropt {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: 1.5px solid #ddd;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all .18s;
+  user-select: none;
+  letter-spacing: .2px;
+  margin: 0;
+  background: #fff;
+}
+.fi-rating input[type=radio]:checked + label.fi-ropt {
+  background: #e30613;
+  border-color: #e30613;
+  color: #fff;
+}
+.fi-rating label.fi-ropt:hover {
+  border-color: #e30613;
+  color: #e30613;
+}
+.fi-rating input[type=radio]:checked + label.fi-ropt:hover {
+  background: #c00;
+  color: #fff;
+}
+
+/* ── NPS scale ── */
+.fi-nps-wrap {
+  margin-top: 4px;
+}
+.fi-nps-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.fi-nps {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.fi-nps input[type=radio] { display: none; }
+.fi-nps label.fi-nval {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #555;
+  cursor: pointer;
+  transition: all .18s;
+  background: #fff;
+  user-select: none;
+  flex-shrink: 0;
+}
+.fi-nps label.fi-nval:hover { border-color: #e30613; color: #e30613; }
+.fi-nps input[type=radio]:checked + label.fi-nval {
+  background: #e30613;
+  border-color: #e30613;
+  color: #fff;
+}
+@media (max-width: 480px) {
+  .fi-nps label.fi-nval { width: 38px; height: 38px; font-size: 13px; }
+}
+
+/* ── Alerta error ── */
+.fi-alert {
+  background: #fdecea;
+  border: 1px solid #f5c6c6;
+  color: #c62828;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  display: none;
+}
+.fi-alert.visible { display: block; }
+
+/* ── Botón submit ── */
+.fi-submit {
+  width: 100%;
+  padding: 14px 24px;
+  background: #e30613;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Kumbh Sans', sans-serif;
+  cursor: pointer;
+  letter-spacing: .4px;
+  transition: background .2s, transform .1s;
+  margin-top: 8px;
+}
+.fi-submit:hover { background: #c00; }
+.fi-submit:active { transform: scale(.98); }
+.fi-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+/* ── Thank you ── */
+.fi-gracias {
+  text-align: center;
+  padding: 60px 20px;
+  display: none;
+}
+.fi-gracias.visible { display: block; }
+.fi-gracias-icon {
+  width: 72px;
+  height: 72px;
+  background: #e30613;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+.fi-gracias-icon svg { width: 36px; height: 36px; }
+.fi-gracias h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2f3743;
+  margin: 0 0 12px;
+}
+.fi-gracias p {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Footer ── */
+.fi-footer {
+  text-align: center;
+  font-size: 11px;
+  color: #bbb;
+  margin-top: 32px;
+}
+</style>
+</head>
+<body>
+
+<div class="fi-header">
+  <img src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/logos/logo-finaer.png"
+       alt="FINAER Garantías"
+       onerror="this.src='https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/logos/logo-finaer.png'">
+</div>
+
+<div class="fi-page">
+
+  <div class="fi-hero">
+    <h1>Encuesta de Satisfacción</h1>
+    <p>Contanos cómo fue tu experiencia con FINAER. Tu opinión nos ayuda a seguir mejorando.</p>
+  </div>
+
+  <div class="fi-card" id="form-card">
+    <div id="fi-alert" class="fi-alert"></div>
+
+    <!-- DATOS PERSONALES -->
+    <div class="fi-seccion"><span>Tus datos</span></div>
+
+    <div class="fi-dos">
+      <div class="fi-campo">
+        <label>Nombre <span class="requerido">*</span></label>
+        <input type="text" id="firstname" placeholder="Juan">
+      </div>
+      <div class="fi-campo">
+        <label>Apellido <span class="requerido">*</span></label>
+        <input type="text" id="lastname" placeholder="García">
+      </div>
+    </div>
+
+    <div class="fi-dos">
+      <div class="fi-campo">
+        <label>Correo Electrónico <span class="requerido">*</span></label>
+        <input type="email" id="email" placeholder="juan@ejemplo.com">
+      </div>
+      <div class="fi-campo">
+        <label>Edad</label>
+        <input type="text" id="satisfaccion_edad" placeholder="Ej: 35">
+      </div>
+    </div>
+
+    <div class="fi-campo">
+      <label>Oficina Comercial <span class="requerido">*</span></label>
+      <select id="satisfaccion_oficina">
+        <option value="">— Seleccioná tu oficina —</option>
+        <option value="casa_central">Casa Central (Av. Corrientes - CABA)</option>
+        <option value="oc_belgrano">OC Belgrano</option>
+        <option value="oc_centro">OC Centro (Montserrat - CABA)</option>
+        <option value="oc_flores">OC Flores</option>
+        <option value="oc_lanus">OC Lanús</option>
+        <option value="oc_la_plata">OC La Plata</option>
+        <option value="oc_lomas_zamora">OC Lomas de Zamora</option>
+        <option value="oc_moron">OC Morón</option>
+        <option value="oc_palermo">OC Palermo</option>
+        <option value="oc_patagonia">OC Patagonia</option>
+        <option value="oc_pilar">OC Pilar</option>
+        <option value="oc_quilmes">OC Quilmes</option>
+        <option value="oc_san_martin">OC San Martín</option>
+        <option value="oc_san_miguel">OC San Miguel</option>
+        <option value="oc_zona_norte">OC Zona Norte</option>
+        <option value="oc_salta">OC Salta</option>
+      </select>
+    </div>
+
+    <!-- CALIFICACIONES -->
+    <div class="fi-seccion" style="margin-top:28px"><span>Calificaciones</span></div>
+
+    <div class="fi-campo">
+      <label>¿Cómo calificás el proceso para completar tu Solicitud de Garantía? <span class="requerido">*</span></label>
+      <div class="fi-rating">
+        <input type="radio" name="calif_solicitud" id="cs_excelente"  value="excelente"> <label class="fi-ropt" for="cs_excelente">Excelente</label>
+        <input type="radio" name="calif_solicitud" id="cs_muy_bueno"  value="muy_bueno">  <label class="fi-ropt" for="cs_muy_bueno">Muy Bueno</label>
+        <input type="radio" name="calif_solicitud" id="cs_bueno"      value="bueno">      <label class="fi-ropt" for="cs_bueno">Bueno</label>
+        <input type="radio" name="calif_solicitud" id="cs_regular"    value="regular">    <label class="fi-ropt" for="cs_regular">Regular</label>
+        <input type="radio" name="calif_solicitud" id="cs_malo"       value="malo">       <label class="fi-ropt" for="cs_malo">Malo</label>
+        <input type="radio" name="calif_solicitud" id="cs_nsnc"       value="ns_nc">      <label class="fi-ropt" for="cs_nsnc">NS/NC</label>
+      </div>
+    </div>
+
+    <div class="fi-campo">
+      <label>¿Cómo calificás el proceso para firmar electrónicamente tu Garantía? <span class="requerido">*</span></label>
+      <div class="fi-rating">
+        <input type="radio" name="calif_firma" id="cf_excelente"  value="excelente"> <label class="fi-ropt" for="cf_excelente">Excelente</label>
+        <input type="radio" name="calif_firma" id="cf_muy_bueno"  value="muy_bueno">  <label class="fi-ropt" for="cf_muy_bueno">Muy Bueno</label>
+        <input type="radio" name="calif_firma" id="cf_bueno"      value="bueno">      <label class="fi-ropt" for="cf_bueno">Bueno</label>
+        <input type="radio" name="calif_firma" id="cf_regular"    value="regular">    <label class="fi-ropt" for="cf_regular">Regular</label>
+        <input type="radio" name="calif_firma" id="cf_malo"       value="malo">       <label class="fi-ropt" for="cf_malo">Malo</label>
+        <input type="radio" name="calif_firma" id="cf_nsnc"       value="ns_nc">      <label class="fi-ropt" for="cf_nsnc">NS/NC</label>
+      </div>
+    </div>
+
+    <div class="fi-campo">
+      <label>¿Cómo calificás la atención y asesoramiento en general? <span class="requerido">*</span></label>
+      <div class="fi-rating">
+        <input type="radio" name="calif_atencion" id="ca_excelente"  value="excelente"> <label class="fi-ropt" for="ca_excelente">Excelente</label>
+        <input type="radio" name="calif_atencion" id="ca_muy_buena"  value="muy_buena">  <label class="fi-ropt" for="ca_muy_buena">Muy Buena</label>
+        <input type="radio" name="calif_atencion" id="ca_buena"      value="buena">      <label class="fi-ropt" for="ca_buena">Buena</label>
+        <input type="radio" name="calif_atencion" id="ca_regular"    value="regular">    <label class="fi-ropt" for="ca_regular">Regular</label>
+        <input type="radio" name="calif_atencion" id="ca_mala"       value="mala">       <label class="fi-ropt" for="ca_mala">Mala</label>
+        <input type="radio" name="calif_atencion" id="ca_nsnc"       value="ns_nc">      <label class="fi-ropt" for="ca_nsnc">NS/NC</label>
+      </div>
+    </div>
+
+    <!-- NPS -->
+    <div class="fi-seccion" style="margin-top:28px"><span>Recomendación</span></div>
+
+    <div class="fi-campo">
+      <label>¿Recomendarías Finaer a un conocido? <span class="requerido">*</span></label>
+      <div class="fi-nps-wrap">
+        <div class="fi-nps-labels">
+          <span>Nada probable</span>
+          <span>Extremadamente probable</span>
+        </div>
+        <div class="fi-nps">
+          <input type="radio" name="nps" id="nps1"  value="1">  <label class="fi-nval" for="nps1">1</label>
+          <input type="radio" name="nps" id="nps2"  value="2">  <label class="fi-nval" for="nps2">2</label>
+          <input type="radio" name="nps" id="nps3"  value="3">  <label class="fi-nval" for="nps3">3</label>
+          <input type="radio" name="nps" id="nps4"  value="4">  <label class="fi-nval" for="nps4">4</label>
+          <input type="radio" name="nps" id="nps5"  value="5">  <label class="fi-nval" for="nps5">5</label>
+          <input type="radio" name="nps" id="nps6"  value="6">  <label class="fi-nval" for="nps6">6</label>
+          <input type="radio" name="nps" id="nps7"  value="7">  <label class="fi-nval" for="nps7">7</label>
+          <input type="radio" name="nps" id="nps8"  value="8">  <label class="fi-nval" for="nps8">8</label>
+          <input type="radio" name="nps" id="nps9"  value="9">  <label class="fi-nval" for="nps9">9</label>
+          <input type="radio" name="nps" id="nps10" value="10"> <label class="fi-nval" for="nps10">10</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMENTARIOS -->
+    <div class="fi-seccion" style="margin-top:28px"><span>Comentarios</span></div>
+
+    <div class="fi-campo">
+      <label>¿Deseás hacernos llegar algún comentario y/o sugerencia?</label>
+      <textarea id="satisfaccion_comentario" placeholder="Escribí tu comentario acá..."></textarea>
+    </div>
+
+    <div class="fi-campo">
+      <label>¿Nos autorizás a publicar tu comentario?</label>
+      <div class="fi-rating">
+        <input type="radio" name="autoriza" id="aut_si" value="si"> <label class="fi-ropt" for="aut_si">Sí</label>
+        <input type="radio" name="autoriza" id="aut_no" value="no"> <label class="fi-ropt" for="aut_no">No</label>
+      </div>
+    </div>
+
+    <button class="fi-submit" id="btn-submit" onclick="enviarEncuesta()">Enviar encuesta</button>
+  </div>
+
+  <!-- GRACIAS -->
+  <div class="fi-card fi-gracias" id="gracias-card">
+    <div class="fi-gracias-icon">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 18l8 8 14-14" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>¡Gracias por tu respuesta!</h2>
+    <p>Tu opinión es muy valiosa para nosotros.<br>Trabajamos todos los días para brindarte un mejor servicio.</p>
+  </div>
+
+  <div class="fi-footer">© FINAER Garantías de Alquiler</div>
+</div>
+
+<script>
+(function() {
+  var PORTAL_ID = '145725856';
+  var FORM_GUID = '7ee61e33-ae20-4428-bcd5-66aab5906927';
+
+  window.enviarEncuesta = function() {
+    var alert = document.getElementById('fi-alert');
+    alert.className = 'fi-alert';
+    alert.textContent = '';
+
+    var firstname = document.getElementById('firstname').value.trim();
+    var lastname  = document.getElementById('lastname').value.trim();
+    var email     = document.getElementById('email').value.trim();
+    var edad      = document.getElementById('satisfaccion_edad').value.trim();
+    var oficina   = document.getElementById('satisfaccion_oficina').value;
+    var solicitud = document.querySelector('input[name="calif_solicitud"]:checked');
+    var firma     = document.querySelector('input[name="calif_firma"]:checked');
+    var atencion  = document.querySelector('input[name="calif_atencion"]:checked');
+    var nps       = document.querySelector('input[name="nps"]:checked');
+    var comentario = document.getElementById('satisfaccion_comentario').value.trim();
+    var autoriza  = document.querySelector('input[name="autoriza"]:checked');
+
+    var errores = [];
+    if (!firstname) errores.push('Nombre');
+    if (!lastname)  errores.push('Apellido');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errores.push('Correo Electrónico válido');
+    if (!oficina)   errores.push('Oficina Comercial');
+    if (!solicitud) errores.push('Calificación: Solicitud de Garantía');
+    if (!firma)     errores.push('Calificación: Firma Electrónica');
+    if (!atencion)  errores.push('Calificación: Atención y Asesoramiento');
+    if (!nps)       errores.push('Puntaje de recomendación (NPS)');
+
+    if (errores.length > 0) {
+      alert.textContent = 'Por favor completá los siguientes campos: ' + errores.join(', ') + '.';
+      alert.className = 'fi-alert visible';
+      alert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    var fields = [
+      { name: 'firstname',                    value: firstname },
+      { name: 'lastname',                     value: lastname },
+      { name: 'email',                        value: email },
+      { name: 'satisfaccion_oficina',         value: oficina },
+      { name: 'satisfaccion_calif_solicitud', value: solicitud.value },
+      { name: 'satisfaccion_calif_firma',     value: firma.value },
+      { name: 'satisfaccion_calif_atencion',  value: atencion.value },
+      { name: 'satisfaccion_nps',             value: nps.value }
+    ];
+    if (edad)      fields.push({ name: 'satisfaccion_edad',            value: edad });
+    if (comentario) fields.push({ name: 'satisfaccion_comentario',     value: comentario });
+    if (autoriza)  fields.push({ name: 'satisfaccion_autoriza_publicar', value: autoriza.value });
+
+    var url = 'https://api.hsforms.com/submissions/v3/integration/submit/' + PORTAL_ID + '/' + FORM_GUID;
+
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fields: fields,
+        context: {
+          pageUri: window.location.href,
+          pageName: 'Encuesta de Satisfacción — FINAER'
+        }
+      })
+    })
+    .then(function(res) {
+      if (res.ok) {
+        document.getElementById('form-card').style.display = 'none';
+        document.getElementById('gracias-card').className = 'fi-card fi-gracias visible';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        return res.json().then(function(data) {
+          throw new Error(data.message || 'Error al enviar');
+        });
+      }
+    })
+    .catch(function(err) {
+      alert.textContent = 'Hubo un error al enviar la encuesta. Por favor intentá nuevamente.';
+      alert.className = 'fi-alert visible';
+      btn.disabled = false;
+      btn.textContent = 'Enviar encuesta';
+    });
+  };
+})();
+</script>
+
+</body>
+</html>
