@@ -165,19 +165,20 @@
 
 /* ─── Imagen de pieza ───────────────────────────────────────────────── */
 .fi-pieza-img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  border: 1px solid var(--fi-borde);
   display: block;
-  max-height: 180px;
+  width: auto !important;
+  max-width: 100%;
+  max-height: 1760px !important;
+  margin: 0 auto 20px;
+  border-radius: 10px;
+  border: 1px solid var(--fi-borde);
   object-fit: contain;
 }
 .fi-pieza-img--sm {
-  max-height: 120px;
+  max-height: 1440px !important;
 }
 .fi-pieza-img--md {
-  max-height: 180px;
+  max-height: 1600px !important;
 }
 .fi-check-con-input { margin-bottom: 2px; }
 .fi-check-sub-input { margin: 4px 0 10px 36px; }
@@ -288,6 +289,7 @@
 .fi-campo.con-error .fi-input,
 .fi-campo.con-error .fi-select,
 .fi-campo.con-error .fi-textarea { border-color: var(--fi-rojo); }
+.fi-campo.con-error .fi-opciones { outline: 2px solid var(--fi-rojo); border-radius: 10px; padding: 4px; }
 .fi-campo.con-error .fi-error-msg { display: block; }
 
 /* ─── Éxito ─────────────────────────────────────────────────────────── */
@@ -391,7 +393,7 @@
     <div class="fi-seccion-titulo">Datos de la visita</div>
 
     <div class="fi-campo" id="c-oc">
-      <label class="fi-label">Oficina Comercial (OC)</label>
+      <label class="fi-label">Oficina Comercial (OC)<span class="fi-req"> *</span></label>
       <select class="fi-select" id="f-oc">
         <option value="">Seleccioná la OC</option>
         <option value="belgrano">Belgrano</option>
@@ -413,56 +415,60 @@
     </div>
 
     <div class="fi-campo" id="c-edc">
-      <label class="fi-label">EDC</label>
+      <label class="fi-label">EDC<span class="fi-req"> *</span></label>
       <select class="fi-select" id="f-edc">
         <option value="">Seleccioná el EDC</option>
-        <option value="adorna_claudio">ADORNA CLAUDIO</option>
-        <option value="apolo_diego">APOLO DIEGO</option>
-        <option value="avendano_bernardo">AVENDAÑO BERNARDO</option>
-        <option value="bagnera_santiago">BAGNERA SANTIAGO</option>
-        <option value="camba_valeria">CAMBA VALERIA</option>
-        <option value="cammisa_silva_jorge">CAMMISA SILVA JORGE</option>
-        <option value="capitani_horacio">CAPITANI HORACIO</option>
-        <option value="colmenares_alfonzo">COLMENARES ALFONZO</option>
-        <option value="correa_pereira_jinee">CORREA PEREIRA JINEE</option>
-        <option value="curutchet_analia">CURUTCHET ANALIA</option>
-        <option value="gallardo_garcia_daphne">GALLARDO GARCIA DAPHNE</option>
-        <option value="giani_diego">GIANI DIEGO</option>
-        <option value="guanipa_negrette_gerardo">GUANIPA NEGRETTE GERARDO</option>
-        <option value="insua_camila">INSUA CAMILA</option>
-        <option value="jeagnina_marly_vara">JEAGNINA MARLY VARA</option>
-        <option value="lopez_benitez_anairi">LOPEZ BENITEZ ANAIRI</option>
-        <option value="martinelli_guido">MARTINELLI GUIDO</option>
-        <option value="merayo_baltazar">MERAYO BALTAZAR</option>
-        <option value="moldes_vanesa_yanina">MOLDES VANESA YANINA</option>
-        <option value="morales_emanuel">MORALES EMANUEL</option>
-        <option value="morgante_salvador">MORGANTE SALVADOR</option>
-        <option value="nemina_rozencwaig_aldana">NEMIÑA ROZENCWAIG ALDANA</option>
-        <option value="nunez_vanesa_soledad">NUÑEZ VANESA SOLEDAD</option>
-        <option value="pereyra_moine_gonzalo">PEREYRA MOINE GONZALO</option>
-        <option value="russo_emiliano">RUSSO EMILIANO</option>
-        <option value="testi_ignacio_martin">TESTI IGNACIO MARTIN</option>
-        <option value="vera_montero_rodrigo">VERA MONTERO RODRIGO</option>
-        <option value="villavicencio_thiago">VILLAVICENCIO THIAGO</option>
-        <option value="zarate_ruiz_diaz_gustavo">ZARATE RUIZ DIAZ GUSTAVO</option>
+        <option value="aldana_belen_nemina_rozencwaig">ALDANA BELÉN NEMIÑA ROZENCWAIG</option>
+        <option value="anairis_alicia_lopez_benitez">ANAIRIS ALICIA LOPEZ BENITEZ</option>
+        <option value="analia_curutchet">ANALIA CURUTCHET</option>
+        <option value="baltazar_merayo">BALTAZAR MERAYO</option>
+        <option value="bernardo_luis_avendano">BERNARDO LUIS AVENDAÑO</option>
+        <option value="camila_insua">CAMILA INSUA</option>
+        <option value="claudio_norberto_adorna">CLAUDIO NORBERTO ADORNA</option>
+        <option value="daphne_amanda_gallardo_garcia">DAPHNE AMANDA GALLARDO GARCÍA</option>
+        <option value="demian_andre_iannino">DEMIAN ANDRE IANNINO</option>
+        <option value="diego_gabriel_apolo">DIEGO GABRIEL APOLO</option>
+        <option value="emanuel_alberto_morales">EMANUEL ALBERTO MORALES</option>
+        <option value="flavia_salituri">FLAVIA SALITURI</option>
+        <option value="gerardo_andres_guanipa_negrete">GERARDO ANDRÉS GUANIPA NEGRETE</option>
+        <option value="gonzalo_pereyra_moine">GONZALO PEREYRA MOINE</option>
+        <option value="guido_martinelli">GUIDO MARTINELLI</option>
+        <option value="gustavo_zarate_ruiz_diaz">GUSTAVO ZARATE RUIZ DIAZ</option>
+        <option value="horacio_capitani_apiolazza">HORACIO CAPITANI APIOLAZZA</option>
+        <option value="ignacio_martin_testi">IGNACIO MARTIN TESTI</option>
+        <option value="jeagnina_marly_vara_marcano">JEAGNINA MARLY VARA MARCANO</option>
+        <option value="jessica_carolina_alfonzo_colmenares">JESSICA CAROLINA ALFONZO COLMENARES</option>
+        <option value="jineet_karina_correa_pereira">JINEET KARINA CORREA PEREIRA</option>
+        <option value="kenia_conde">KENIA CONDE</option>
+        <option value="lucas_emanuel_martinez">LUCAS EMANUEL MARTINEZ</option>
+        <option value="rodrigo_vera_montero">RODRIGO VERA MONTERO</option>
+        <option value="salvador_ezequiel_morgante">SALVADOR EZEQUIEL MORGANTE</option>
+        <option value="santiago_bajo_geijo">SANTIAGO BAJO GEIJO</option>
+        <option value="santiago_eduardo_bagnera">SANTIAGO EDUARDO BAGNERA</option>
+        <option value="thiago_villavicencio">THIAGO VILLAVICENCIO</option>
+        <option value="valeria_camba">VALERIA CAMBA</option>
+        <option value="valeria_roxana_alonso">VALERIA ROXANA ALONSO</option>
+        <option value="vanesa_soledad_nunez">VANESA SOLEDAD NUÑEZ</option>
+        <option value="vanesa_yanina_moldes">VANESA YANINA MOLDES</option>
         <option value="otro">Otro no listado</option>
       </select>
       <div class="fi-error-msg">Seleccioná el EDC.</div>
     </div>
 
     <div class="fi-campo" id="c-inmo">
-      <label class="fi-label">Inmobiliaria</label>
+      <label class="fi-label">Inmobiliaria<span class="fi-req"> *</span></label>
       <input type="text" class="fi-input" id="f-inmo" placeholder="Nombre de la inmobiliaria">
       <div class="fi-error-msg">Ingresá el nombre de la inmobiliaria.</div>
     </div>
 
     <div class="fi-campo" id="c-dir">
-      <label class="fi-label">Dirección exacta</label>
+      <label class="fi-label">Dirección exacta<span class="fi-req"> *</span></label>
       <textarea class="fi-textarea" id="f-dir" placeholder="Calle, número, piso, local..."></textarea>
+      <div class="fi-error-msg">Ingresá la dirección exacta.</div>
     </div>
 
     <div class="fi-campo" id="c-loc">
-      <label class="fi-label">Localidad</label>
+      <label class="fi-label">Zona comercial de la inmo<span class="fi-req"> *</span></label>
       <select class="fi-select" id="f-loc">
         <option value="">Seleccioná la localidad</option>
         <option value="Belgrano">Belgrano</option>
@@ -484,19 +490,19 @@
     </div>
 
     <div class="fi-campo" id="c-contacto-nombre">
-      <label class="fi-label">Nombre del contacto en la inmo</label>
+      <label class="fi-label">Nombre del contacto en la inmo<span class="fi-req"> *</span></label>
       <input type="text" class="fi-input" id="f-contacto-nombre" placeholder="Nombre">
       <div class="fi-error-msg">Ingresá el nombre del contacto.</div>
     </div>
 
     <div class="fi-campo" id="c-contacto-apellido">
-      <label class="fi-label">Apellido del contacto</label>
+      <label class="fi-label">Apellido del contacto<span class="fi-req"> *</span></label>
       <input type="text" class="fi-input" id="f-contacto-apellido" placeholder="Apellido">
       <div class="fi-error-msg">Ingresá el apellido del contacto.</div>
     </div>
 
     <div class="fi-campo" id="c-contacto-rol">
-      <label class="fi-label">Rol en la inmobiliaria</label>
+      <label class="fi-label">Rol en la inmobiliaria<span class="fi-req"> *</span></label>
       <select class="fi-select" id="f-contacto-rol" onchange="handleRolSelect(this.value)">
         <option value="">Seleccioná el rol</option>
         <option value="vendedor">Vendedor</option>
@@ -512,7 +518,7 @@
     </div>
 
     <div class="fi-campo" id="c-celular">
-      <label class="fi-label">Celular del contacto</label>
+      <label class="fi-label">Celular del contacto<span class="fi-req"> *</span></label>
       <input type="text" class="fi-input" id="f-celular" placeholder="Ej: 11 1234-5678">
       <div class="fi-error-msg">Ingresá el celular del contacto.</div>
     </div>
@@ -526,10 +532,10 @@
   <div class="fi-card" id="paso-2" style="display:none">
     <div class="fi-seccion-titulo">Poster A4</div>
 
-    <img id="img-a4" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/A4_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--sm" alt="Poster A4">
+    <img id="img-a4" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/A4_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--sm" alt="Poster A4" style="max-height:1440px;width:auto;">
 
     <div class="fi-campo" id="c-a4-solicita">
-      <label class="fi-label">¿Solicitás esta pieza?</label>
+      <label class="fi-label">¿Solicitás esta pieza?<span class="fi-req"> *</span></label>
       <div class="fi-opciones horizontal" id="opts-a4-solicita"></div>
       <div class="fi-error-msg">Seleccioná una opción.</div>
     </div>
@@ -565,7 +571,7 @@
     <img id="img-faja" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/Fajas%20%20Bajo%20Vidrio.jpg" class="fi-pieza-img" alt="Faja">
 
     <div class="fi-campo" id="c-faja-solicita">
-      <label class="fi-label">¿Solicitás esta pieza?</label>
+      <label class="fi-label">¿Solicitás esta pieza?<span class="fi-req"> *</span></label>
       <div class="fi-opciones horizontal" id="opts-faja-solicita"></div>
       <div class="fi-error-msg">Seleccioná una opción.</div>
     </div>
@@ -611,17 +617,6 @@
           <div id="faja-vidriera-panos-inputs"></div>
         </div>
 
-        <div class="fi-campo" id="c-faja-preex">
-          <label class="fi-label">¿Hay material preexistente en la vidriera?</label>
-          <div class="fi-opciones horizontal" id="opts-faja-preex"></div>
-        </div>
-        <div id="sub-faja-preex" style="display:none">
-          <div class="fi-campo" id="c-faja-preex-retira">
-            <label class="fi-label">¿Quién retira el material preexistente?</label>
-            <div class="fi-opciones" id="opts-faja-preex-retira"></div>
-            <div class="fi-error-msg">Seleccioná una opción.</div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -635,7 +630,7 @@
   <div class="fi-card" id="paso-4" style="display:none">
     <div class="fi-seccion-titulo">Grandes Formatos</div>
 
-    <img src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/GrandesFormatos_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--md" alt="Grandes Formatos">
+    <img src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/GrandesFormatos_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--md" alt="Grandes Formatos" style="max-height:1600px;width:auto;">
 
     <div class="fi-alerta">
       Para puertas o superficies de tamaño mayor. Este tipo de pieza permite personalizar el tamaño.<br>
@@ -643,7 +638,7 @@
     </div>
 
     <div class="fi-campo" id="c-gf-solicita">
-      <label class="fi-label">¿Solicitás esta pieza?</label>
+      <label class="fi-label">¿Solicitás esta pieza?<span class="fi-req"> *</span></label>
       <div class="fi-opciones horizontal" id="opts-gf-solicita"></div>
       <div class="fi-error-msg">Seleccioná una opción.</div>
     </div>
@@ -731,6 +726,7 @@
         <div id="sub-gf-datos-texto" style="display:none">
           <div class="fi-campo" id="c-gf-datos-items">
             <label class="fi-label">Datos a incluir (marcá los que apliquen)</label>
+            <div class="fi-nota">Verificá que estén correctamente escritos, ya que se imprimirán exactamente como los ingreses, sin modificaciones de formato ni correcciones.</div>
             <div class="fi-opciones" id="opts-gf-datos-items"></div>
           </div>
           <div id="sub-gf-logo-upload" style="display:none;margin-top:8px;margin-left:36px;">
@@ -758,10 +754,10 @@
   <div class="fi-card" id="paso-5" style="display:none">
     <div class="fi-seccion-titulo">Stickers Apoyo Mutuo</div>
 
-    <img id="img-am" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/Apoyo_Mutuo_Thumbnail_Formulario.jpg" class="fi-pieza-img fi-pieza-img--sm" alt="Stickers Apoyo Mutuo">
+    <img id="img-am" src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/Apoyo_Mutuo_Thumbnail_Formulario-1.jpg" class="fi-pieza-img fi-pieza-img--sm" alt="Stickers Apoyo Mutuo" style="max-height:1440px;width:auto;">
 
     <div class="fi-campo" id="c-am-solicita">
-      <label class="fi-label">¿Solicitás esta pieza?</label>
+      <label class="fi-label">¿Solicitás esta pieza?<span class="fi-req"> *</span></label>
       <div class="fi-opciones horizontal" id="opts-am-solicita"></div>
       <div class="fi-error-msg">Seleccioná una opción.</div>
     </div>
@@ -827,7 +823,7 @@ var logoFileObj = null;
 var OPTS = {
   siNo:          [{v:'si',l:'Sí'},{v:'no',l:'No'}],
   a4Material:    [{v:'bajo_vidrio',l:'Bajo Vidrio'},{v:'microperforado',l:'Microperforado (sin QR)'}],
-  a4Sentido:     [{v:'vertical',l:'Vertical'},{v:'horizontal',l:'Horizontal'}],
+  a4Sentido:     [{v:'vertical',l:'Vertical'}],
   fajaRejas:     [{v:'no',l:'No, no tiene'},{v:'externo',l:'Por el lado externo del local'},{v:'interno',l:'Por el lado interno del local'}],
   gfSuperficie:  [{v:'libre',l:'100% Libre'},{v:'elementos',l:'Tiene elementos'}],
   gfElementos:   [{v:'manija',l:'Manija'},{v:'reja',l:'Reja'},{v:'division',l:'División de paño (Plotter)'},{v:'otro',l:'Otro'}],
@@ -978,6 +974,38 @@ function handleRolSelect(val) {
   show('sub-rol-otro', val === 'otro');
 }
 
+/* ─── Checkboxes GF Elementos con sub-inputs inline ─────────────────── */
+function renderChecksGFElementos() {
+  var c = document.getElementById('opts-gf-elementos');
+  if (!c || c.children.length > 0) return;
+  var subMap = { manija: 'sub-gf-manija', reja: 'sub-gf-reja', division: 'sub-gf-division', otro: 'sub-gf-otro' };
+  OPTS.gfElementos.forEach(function(op) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'fi-check-con-input';
+    var lbl = document.createElement('label');
+    lbl.className = 'fi-opcion-label';
+    lbl.innerHTML =
+      '<input type="checkbox" name="gf-elementos" value="' + op.v + '">' +
+      '<span class="fi-opcion-check" style="border-radius:4px"></span>' +
+      '<span>' + op.l + '</span>';
+    lbl.querySelector('input').addEventListener('change', function() {
+      lbl.classList.toggle('seleccionado', this.checked);
+      handleChange('gf-elementos', null);
+    });
+    wrapper.appendChild(lbl);
+    var subId = subMap[op.v];
+    if (subId) {
+      var sub = document.getElementById(subId);
+      if (sub) {
+        sub.style.marginLeft = '0';
+        sub.style.marginTop  = '8px';
+        wrapper.appendChild(sub);
+      }
+    }
+    c.appendChild(wrapper);
+  });
+}
+
 /* ─── Inicializar opciones ──────────────────────────────────────────── */
 function initOpciones() {
   renderRadios('opts-a4-solicita',        OPTS.siNo,         'a4-solicita');
@@ -987,11 +1015,9 @@ function initOpciones() {
   renderRadios('opts-faja-material',      OPTS.a4Material,   'faja-material');
   renderRadios('opts-faja-rejas',         OPTS.fajaRejas,    'faja-rejas');
   renderRadios('opts-faja-vidriera-pano', OPTS.vidrieraPano, 'faja-vidriera-pano');
-  renderRadios('opts-faja-preex',         OPTS.siNo,         'faja-preex');
-  renderRadios('opts-faja-preex-retira',  OPTS.retiraPreex,  'faja-preex-retira');
-  renderRadios('opts-gf-solicita',        OPTS.siNo,         'gf-solicita');
+renderRadios('opts-gf-solicita',        OPTS.siNo,         'gf-solicita');
   renderRadios('opts-gf-superficie',      OPTS.gfSuperficie, 'gf-superficie');
-  renderChecks('opts-gf-elementos',       OPTS.gfElementos,  'gf-elementos');
+  renderChecksGFElementos();
   renderRadios('opts-gf-reja',            OPTS.gfReja,       'gf-reja');
   renderRadios('opts-gf-material',        OPTS.gfMaterial,   'gf-material');
   renderRadios('opts-gf-datos-inmo',      OPTS.siNo,         'gf-datos-inmo');
@@ -1017,8 +1043,7 @@ function handleChange(name, val) {
     show('sub-faja-vidriera-pano', val === 'si');
     if (val === 'si') generarInputsPanosFaja();
   }
-  if (name === 'faja-preex')    show('sub-faja-preex',       val === 'si');
-  if (name === 'gf-solicita')   show('sub-gf',               val === 'si');
+if (name === 'gf-solicita')   show('sub-gf',               val === 'si');
   if (name === 'gf-superficie') show('sub-gf-elementos',    val === 'elementos');
   if (name === 'gf-datos-inmo') show('sub-gf-datos-texto',  val === 'si');
   if (name === 'am-solicita')   show('sub-am',               val === 'si');
@@ -1037,7 +1062,10 @@ function handleChange(name, val) {
       : 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/A4_Thumbnail_Formulario.jpg';
   }
   if (name === 'am-sentido') {
-    // Imagen de apoyo mutuo se mantiene igual (muestra vertical y horizontal juntos)
+    var imgAm = document.getElementById('img-am');
+    if (imgAm) imgAm.src = val === 'horizontal'
+      ? 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/Apoyo_Mutuo_Thumbnail_Formulario-1.jpg'
+      : 'https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/stickers-formulario/Apoyo_Mutuo_Thumbnail_Formulario-1.jpg';
   }
   if (name === 'faja-material') {
     var imgFaja = document.getElementById('img-faja');
@@ -1094,19 +1122,72 @@ function valReq(val, campoId) {
   limpiarError(campoId); return true;
 }
 
+function valRadio(name, campoId) {
+  if (!getRadio(name)) { marcarError(campoId); return false; }
+  limpiarError(campoId); return true;
+}
+
 function validarPaso(n) {
-  if (n === 3) {
-    if (getRadio('faja-solicita') === 'si') {
-      var ancho = document.getElementById('f-faja-ancho').value;
-      if (!ancho || parseInt(ancho) <= 0) {
-        marcarError('c-faja-ancho');
-        document.getElementById('f-faja-ancho').focus();
-        return false;
-      }
-      limpiarError('c-faja-ancho');
+  var ok = true;
+
+  if (n === 1) {
+    if (!valReq(document.getElementById('f-oc').value,                 'c-oc'))               ok = false;
+    if (!valReq(document.getElementById('f-edc').value,                'c-edc'))              ok = false;
+    if (!valReq(document.getElementById('f-inmo').value,               'c-inmo'))             ok = false;
+    if (!valReq(document.getElementById('f-dir').value,                'c-dir'))              ok = false;
+    if (!valReq(document.getElementById('f-loc').value,                'c-loc'))              ok = false;
+    if (!valReq(document.getElementById('f-contacto-nombre').value,    'c-contacto-nombre'))  ok = false;
+    if (!valReq(document.getElementById('f-contacto-apellido').value,  'c-contacto-apellido'))ok = false;
+    if (!valReq(document.getElementById('f-contacto-rol').value,       'c-contacto-rol'))     ok = false;
+    if (!valReq(document.getElementById('f-celular').value,            'c-celular'))          ok = false;
+    if (!ok) {
+      var primer = document.querySelector('.fi-campo.con-error input, .fi-campo.con-error select, .fi-campo.con-error textarea');
+      if (primer) primer.focus();
     }
   }
-  return true;
+
+  if (n === 2) {
+    if (!valRadio('a4-solicita', 'c-a4-solicita')) ok = false;
+    if (getRadio('a4-solicita') === 'si') {
+      if (!valRadio('a4-sentido',  'c-a4-sentido'))  ok = false;
+      if (!valRadio('a4-material', 'c-a4-material')) ok = false;
+    }
+  }
+
+  if (n === 3) {
+    if (!valRadio('faja-solicita', 'c-faja-solicita')) ok = false;
+    if (getRadio('faja-solicita') === 'si') {
+      var ancho = document.getElementById('f-faja-ancho').value;
+      if (!ancho || parseInt(ancho) <= 0) { marcarError('c-faja-ancho'); ok = false; }
+      else limpiarError('c-faja-ancho');
+      if (!valRadio('faja-material', 'c-faja-material')) ok = false;
+      if (!valRadio('faja-rejas',    'c-faja-rejas'))    ok = false;
+    }
+  }
+
+  if (n === 4) {
+    if (!valRadio('gf-solicita', 'c-gf-solicita')) ok = false;
+    if (getRadio('gf-solicita') === 'si') {
+      if (!valRadio('gf-superficie', 'c-gf-superficie')) ok = false;
+      if (!valReq(document.getElementById('f-gf-ancho').value, 'c-gf-ancho')) ok = false;
+      if (!valReq(document.getElementById('f-gf-alto').value,  'c-gf-alto'))  ok = false;
+      if (!valRadio('gf-material',   'c-gf-material'))   ok = false;
+      if (!valRadio('gf-datos-inmo', 'c-gf-datos-inmo')) ok = false;
+      if (getRadio('gf-superficie') === 'elementos' && getChecks('gf-elementos').length === 0) {
+        marcarError('c-gf-elementos-tipo'); ok = false;
+      } else limpiarError('c-gf-elementos-tipo');
+    }
+  }
+
+  if (n === 5) {
+    if (!valRadio('am-solicita', 'c-am-solicita')) ok = false;
+    if (getRadio('am-solicita') === 'si') {
+      if (!valRadio('am-sentido',  'c-am-sentido'))  ok = false;
+      if (!valRadio('am-material', 'c-am-material')) ok = false;
+    }
+  }
+
+  return ok;
 }
 
 /* ─── Guardar datos del paso ────────────────────────────────────────── */
@@ -1158,8 +1239,6 @@ function guardarDatos(n) {
       material:    getRadioLabel('faja-material'),
       rejas:       getRadioLabel('faja-rejas'),
       vidriera:    { pano: fajaVidrieraPanoVal === 'si', cantidad: fajaVidrieraCantidad, medidas: fajaVidrieraMedidas },
-      preex:       getRadio('faja-preex') === 'si',
-      preexRetira: getRadioLabel('faja-preex-retira')
     };
   }
   if (n === 4) {
@@ -1228,7 +1307,6 @@ function generarDetalle() {
         lineas.push('  Paños vidriera: ' + datos.faja.vidriera.cantidad);
         lineas.push('  Medidas paños: ' + datos.faja.vidriera.medidas);
       }
-      lineas.push('  Material preexistente: ' + (datos.faja.preex ? 'SÍ — retira: ' + datos.faja.preexRetira : 'NO'));
     }
     lineas.push('');
   }
