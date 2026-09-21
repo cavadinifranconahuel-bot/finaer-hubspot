@@ -1399,7 +1399,11 @@ function cargarFormHS() {
         {name: 'sticker_contacto_inmo',    value: datos.contacto},
         {name: 'sticker_contacto_rol',     value: datos.contactoRol},
         {name: 'sticker_celular_contacto', value: datos.celular},
-        {name: 'sticker_detalle_pedido',   value: generarDetalle()}
+        {name: 'sticker_detalle_pedido',   value: generarDetalle()},
+        {name: 'sticker_solicita_a4',      value: (datos.a4   && datos.a4.solicita)   ? 'true' : 'false'},
+        {name: 'sticker_solicita_faja',    value: (datos.faja && datos.faja.solicita) ? 'true' : 'false'},
+        {name: 'sticker_solicita_gf',      value: (datos.gf   && datos.gf.solicita)   ? 'true' : 'false'},
+        {name: 'sticker_solicita_pam',     value: (datos.am   && datos.am.solicita)   ? 'true' : 'false'}
       );
     },
     onFormSubmitted: function() {
