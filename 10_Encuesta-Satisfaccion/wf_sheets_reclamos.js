@@ -99,7 +99,7 @@ async function getContacto(contactId) {
 
 // ── Google Sheets — agregar fila ─────────────────────────────────────────────
 async function appendFila(gToken, fila) {
-  const range = encodeURIComponent(`'${SHEET_TAB}'!A:A`);
+  const range = SHEET_TAB.replace(/ /g, '%20') + '!A1';
   const r = await req({
     hostname: 'sheets.googleapis.com',
     path: `/v4/spreadsheets/${SHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
@@ -112,38 +112,31 @@ async function appendFila(gToken, fila) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 exports.main = async (event, callback) => {
-  try {
-    const contactId = String(event.object.objectId);
+  const contactId = String(event.object.objectId);
 
-    const [p, gToken] = await Promise.all([
-      getContacto(contactId),
-      getGoogleToken()
-    ]);
+  const [p, gToken] = await Promise.all([
+    getContacto(contactId),
+    getGoogleToken()
+  ]);
 
-    const ahora  = new Date().toLocaleString('es-AR', { timeZone: 'America/Buenos_Aires' });
-    const nombre = [p.firstname||'', p.lastname||''].filter(Boolean).join(' ');
+  const ahora  = new Date().toLocaleString('es-AR', { timeZone: 'America/Buenos_Aires' });
+  const nombre = [p.firstname||'', p.lastname||''].filter(Boolean).join(' ');
 
-    // Col E: si tipo = Otro, agrega la especificación entre paréntesis
-    let tipo = p.tipo_de_cliente || '';
-    if (tipo === 'Otro' && p.tipo_de_cliente__otro) tipo = `Otro (${p.tipo_de_cliente__otro})`;
+  let tipo = p.tipo_de_cliente || '';
+  if (tipo === 'Otro' && p.tipo_de_cliente__otro) tipo = `Otro (${p.tipo_de_cliente__otro})`;
 
-    const fila = [
-      ahora,                          // A — Marca temporal
-      nombre,                         // B — Nombre y Apellido
-      p.phone               || '',    // C — Número Celular
-      p.email               || '',    // D — Correo electrónico
-      tipo,                           // E — Tipo de Cliente
-      p.motivo_de_su_reclamo|| '',    // F — Motivo de su reclamo
-      p.content             || '',    // G — Detalle de su reclamo
-      p.informacion_adicional|| '',   // H — Información Adicional
-    ];
+  const fila = [
+    ahora,
+    nombre,
+    p.phone               || '',
+    p.email               || '',
+    tipo,
+    p.motivo_de_su_reclamo|| '',
+    p.content             || '',
+    p.informacion_adicional|| '',
+  ];
 
-    await appendFila(gToken, fila);
-    console.log('Fila agregada para:', p.email);
-    callback({ outputFields: {} });
-
-  } catch (e) {
-    console.error('Error:', e.message);
-    callback({ outputFields: {} });
-  }
+  await appendFila(gToken, fila);
+  console.log('Fila agregada para:', p.email);
+  callback({ outputFields: {} });
 };
