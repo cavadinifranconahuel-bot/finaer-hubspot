@@ -647,12 +647,6 @@
       <div class="fi-subseccion">
         <div class="fi-subseccion-titulo">Detalle — Grandes Formatos</div>
 
-        <div class="fi-campo" id="c-gf-superficie">
-          <label class="fi-label">¿La superficie está libre o tiene elementos?</label>
-          <div class="fi-opciones" id="opts-gf-superficie"></div>
-          <div class="fi-error-msg">Seleccioná una opción.</div>
-        </div>
-
         <div class="fi-campo" id="c-gf-ancho">
           <label class="fi-label">Ancho en cm</label>
           <input type="number" class="fi-input" id="f-gf-ancho" placeholder="Ancho" min="1">
@@ -663,6 +657,12 @@
           <label class="fi-label">Alto en cm</label>
           <input type="number" class="fi-input" id="f-gf-alto" placeholder="Alto" min="1">
           <div class="fi-error-msg">Ingresá el alto.</div>
+        </div>
+
+        <div class="fi-campo" id="c-gf-superficie">
+          <label class="fi-label">¿La superficie está libre o tiene elementos?</label>
+          <div class="fi-opciones" id="opts-gf-superficie"></div>
+          <div class="fi-error-msg">Seleccioná una opción.</div>
         </div>
 
         <div id="sub-gf-elementos" style="display:none">
@@ -694,12 +694,12 @@
           </div>
 
           <div id="sub-gf-division" style="display:none">
-            <div class="fi-campo" id="c-gf-division-medida">
-              <label class="fi-label">División de paño (Plotter) — Medida en cm</label>
-              <input type="text" class="fi-input" id="f-gf-division-medida" placeholder="Medida de la división">
-              <div class="fi-nota">Recordá cargar en el pedido cada uno de los paños individualmente.</div>
-              <div class="fi-error-msg">Ingresá la medida de la división.</div>
+            <div class="fi-campo" id="c-gf-division-cantidad">
+              <label class="fi-label">¿Cuántos paños tiene?</label>
+              <input type="number" class="fi-input" id="f-gf-division-cantidad" min="1" placeholder="Ej: 3">
+              <div class="fi-error-msg">Ingresá la cantidad de paños.</div>
             </div>
+            <div id="gf-division-panos-inputs"></div>
           </div>
 
           <div id="sub-gf-otro" style="display:none">
@@ -950,6 +950,25 @@ function generarInputsPanos() {
   }
 }
 
+/* ─── Inputs dinámicos de paños (GF División de Plotter) ────────────── */
+function generarInputsPanosGFDivision() {
+  var cant = parseInt(document.getElementById('f-gf-division-cantidad').value) || 0;
+  var container = document.getElementById('gf-division-panos-inputs');
+  if (!container) return;
+  container.innerHTML = '';
+  for (var i = 1; i <= cant; i++) {
+    var fila = document.createElement('div');
+    fila.className = 'fi-pano-fila';
+    fila.innerHTML =
+      '<div class="fi-pano-fila-titulo">Paño ' + i + '</div>' +
+      '<div class="fi-pano-fila-cols">' +
+        '<div><label>Ancho en cm</label><input type="number" class="fi-input" id="f-gf-division-pano-ancho-' + i + '" placeholder="Ej: 80" min="1"></div>' +
+        '<div><label>Alto en cm</label><input type="number" class="fi-input" id="f-gf-division-pano-alto-' + i + '" placeholder="Ej: 120" min="1"></div>' +
+      '</div>';
+    container.appendChild(fila);
+  }
+}
+
 /* ─── Inputs dinámicos de paños (faja) ──────────────────────────────── */
 function generarInputsPanosFaja() {
   var cant = parseInt(document.getElementById('f-faja-vidriera-cantidad').value) || 0;
@@ -1028,6 +1047,9 @@ renderRadios('opts-gf-solicita',        OPTS.siNo,         'gf-solicita');
 
   var cantFajaInput = document.getElementById('f-faja-vidriera-cantidad');
   if (cantFajaInput) cantFajaInput.addEventListener('input', generarInputsPanosFaja);
+
+  var cantGFDivInput = document.getElementById('f-gf-division-cantidad');
+  if (cantGFDivInput) cantGFDivInput.addEventListener('input', generarInputsPanosGFDivision);
 }
 initOpciones();
 
@@ -1256,7 +1278,18 @@ function guardarDatos(n) {
       manijaBorde:     document.getElementById('f-gf-manija-borde') ? document.getElementById('f-gf-manija-borde').value : '',
       manijaAltura:    document.getElementById('f-gf-manija-altura') ? document.getElementById('f-gf-manija-altura').value : '',
       rejaUbicacion:   getRadioLabel('gf-reja'),
-      divisionMediada: document.getElementById('f-gf-division-medida').value,
+      divisionMediada: (function() {
+        var cantEl = document.getElementById('f-gf-division-cantidad');
+        var cnt = parseInt(cantEl ? cantEl.value : 0) || 0;
+        if (!cnt) return '';
+        var panos = [];
+        for (var pi = 1; pi <= cnt; pi++) {
+          var aw = document.getElementById('f-gf-division-pano-ancho-' + pi);
+          var ah = document.getElementById('f-gf-division-pano-alto-' + pi);
+          panos.push('Paño ' + pi + ': ' + (aw ? aw.value : '') + ' × ' + (ah ? ah.value : '') + ' cm');
+        }
+        return panos.join(' | ');
+      })(),
       otroDetalle:     document.getElementById('f-gf-otro-detalle').value,
       ancho:           document.getElementById('f-gf-ancho').value,
       alto:            document.getElementById('f-gf-alto').value,
