@@ -418,38 +418,38 @@
       <label class="fi-label">EDC<span class="fi-req"> *</span></label>
       <select class="fi-select" id="f-edc">
         <option value="">Seleccioná el EDC</option>
-        <option value="aldana_belen_nemina_rozencwaig">ALDANA BELÉN NEMIÑA ROZENCWAIG</option>
-        <option value="anairis_alicia_lopez_benitez">ANAIRIS ALICIA LOPEZ BENITEZ</option>
-        <option value="analia_curutchet">ANALIA CURUTCHET</option>
-        <option value="baltazar_merayo">BALTAZAR MERAYO</option>
-        <option value="bernardo_luis_avendano">BERNARDO LUIS AVENDAÑO</option>
-        <option value="camila_insua">CAMILA INSUA</option>
-        <option value="claudio_norberto_adorna">CLAUDIO NORBERTO ADORNA</option>
-        <option value="daphne_amanda_gallardo_garcia">DAPHNE AMANDA GALLARDO GARCÍA</option>
-        <option value="demian_andre_iannino">DEMIAN ANDRE IANNINO</option>
-        <option value="diego_gabriel_apolo">DIEGO GABRIEL APOLO</option>
-        <option value="emanuel_alberto_morales">EMANUEL ALBERTO MORALES</option>
-        <option value="flavia_salituri">FLAVIA SALITURI</option>
-        <option value="gerardo_andres_guanipa_negrete">GERARDO ANDRÉS GUANIPA NEGRETE</option>
-        <option value="gonzalo_pereyra_moine">GONZALO PEREYRA MOINE</option>
-        <option value="guido_martinelli">GUIDO MARTINELLI</option>
-        <option value="gustavo_zarate_ruiz_diaz">GUSTAVO ZARATE RUIZ DIAZ</option>
-        <option value="horacio_capitani_apiolazza">HORACIO CAPITANI APIOLAZZA</option>
-        <option value="ignacio_martin_testi">IGNACIO MARTIN TESTI</option>
-        <option value="jeagnina_marly_vara_marcano">JEAGNINA MARLY VARA MARCANO</option>
-        <option value="jessica_carolina_alfonzo_colmenares">JESSICA CAROLINA ALFONZO COLMENARES</option>
-        <option value="jineet_karina_correa_pereira">JINEET KARINA CORREA PEREIRA</option>
-        <option value="kenia_conde">KENIA CONDE</option>
-        <option value="lucas_emanuel_martinez">LUCAS EMANUEL MARTINEZ</option>
-        <option value="rodrigo_vera_montero">RODRIGO VERA MONTERO</option>
-        <option value="salvador_ezequiel_morgante">SALVADOR EZEQUIEL MORGANTE</option>
-        <option value="santiago_bajo_geijo">SANTIAGO BAJO GEIJO</option>
-        <option value="santiago_eduardo_bagnera">SANTIAGO EDUARDO BAGNERA</option>
-        <option value="thiago_villavicencio">THIAGO VILLAVICENCIO</option>
-        <option value="valeria_camba">VALERIA CAMBA</option>
-        <option value="valeria_roxana_alonso">VALERIA ROXANA ALONSO</option>
-        <option value="vanesa_soledad_nunez">VANESA SOLEDAD NUÑEZ</option>
-        <option value="vanesa_yanina_moldes">VANESA YANINA MOLDES</option>
+        <option value="nemina_rozencwaig_aldana">ALDANA BELÉN NEMIÑA ROZENCWAIG</option>
+        <option value="lopez_benitez_anairi">ANAIRIS ALICIA LOPEZ BENITEZ</option>
+        <option value="curutchet_analia">ANALIA CURUTCHET</option>
+        <option value="merayo_baltazar">BALTAZAR MERAYO</option>
+        <option value="avendano_bernardo">BERNARDO LUIS AVENDAÑO</option>
+        <option value="insua_camila">CAMILA INSUA</option>
+        <option value="adorna_claudio">CLAUDIO NORBERTO ADORNA</option>
+        <option value="gallardo_garcia_daphne">DAPHNE AMANDA GALLARDO GARCÍA</option>
+        <option value="iannino_demian">DEMIAN ANDRE IANNINO</option>
+        <option value="apolo_diego">DIEGO GABRIEL APOLO</option>
+        <option value="morales_emanuel">EMANUEL ALBERTO MORALES</option>
+        <option value="salituri_flavia">FLAVIA SALITURI</option>
+        <option value="guanipa_negrette_gerardo">GERARDO ANDRÉS GUANIPA NEGRETE</option>
+        <option value="pereyra_moine_gonzalo">GONZALO PEREYRA MOINE</option>
+        <option value="martinelli_guido">GUIDO MARTINELLI</option>
+        <option value="zarate_ruiz_diaz_gustavo">GUSTAVO ZARATE RUIZ DIAZ</option>
+        <option value="capitani_horacio">HORACIO CAPITANI APIOLAZZA</option>
+        <option value="testi_ignacio_martin">IGNACIO MARTIN TESTI</option>
+        <option value="jeagnina_marly_vara">JEAGNINA MARLY VARA MARCANO</option>
+        <option value="colmenares_alfonzo">JESSICA CAROLINA ALFONZO COLMENARES</option>
+        <option value="correa_pereira_jinee">JINEET KARINA CORREA PEREIRA</option>
+        <option value="conde_kenia">KENIA CONDE</option>
+        <option value="martinez_lucas">LUCAS EMANUEL MARTINEZ</option>
+        <option value="vera_montero_rodrigo">RODRIGO VERA MONTERO</option>
+        <option value="morgante_salvador">SALVADOR EZEQUIEL MORGANTE</option>
+        <option value="bajo_geijo_santiago">SANTIAGO BAJO GEIJO</option>
+        <option value="bagnera_santiago">SANTIAGO EDUARDO BAGNERA</option>
+        <option value="villavicencio_thiago">THIAGO VILLAVICENCIO</option>
+        <option value="camba_valeria">VALERIA CAMBA</option>
+        <option value="alonso_valeria">VALERIA ROXANA ALONSO</option>
+        <option value="nunez_vanesa_soledad">VANESA SOLEDAD NUÑEZ</option>
+        <option value="moldes_vanesa_yanina">VANESA YANINA MOLDES</option>
         <option value="otro">Otro no listado</option>
       </select>
       <div class="fi-error-msg">Seleccioná el EDC.</div>
@@ -1405,39 +1405,35 @@ function cargarFormHS() {
     formId:   '2b527eac-0b46-4908-9c70-8047d3bf9f46',
     target:   '#hs-form-wrap',
     onFormReady: function($form) {
+      // $form es DOM element (HubSpot SDK >= v2 no usa jQuery)
+      var q = function(name) { return $form.querySelector ? $form.querySelector('[name="' + name + '"]') : null; };
+      var setV = function(name, val) { var el = q(name); if (el) el.value = val || ''; };
+
+      setV('sticker_oc',               datos.oc);
+      setV('sticker_edc',              datos.edc);
+      setV('sticker_inmobiliaria',     datos.inmo);
+      setV('sticker_direccion',        datos.dir);
+      setV('sticker_localidad',        datos.loc);
+      setV('sticker_contacto_inmo',    datos.contacto);
+      setV('sticker_contacto_rol',     datos.contactoRol);
+      setV('sticker_celular_contacto', datos.celular);
+      setV('sticker_detalle_pedido',   generarDetalle());
+      console.log('[WIZ] onFormReady. oc=', q('sticker_oc') ? q('sticker_oc').value : 'NO ENCONTRADO');
+
       if (!obligatoria) {
-        var fotoInput = $form.find('[name="sticker_foto"]');
-        fotoInput.removeAttr('required');
-        fotoInput.closest('.hs-form-field').find('label .hs-form-required').hide();
-      }
-      // Intentar pasar el logo al campo nativo si existe en el form
-      if (logoFileObj) {
-        var logoField = $form.find('[name="sticker_logo"]')[0];
-        if (logoField && window.DataTransfer) {
-          try {
-            var dt = new DataTransfer();
-            dt.items.add(logoFileObj);
-            logoField.files = dt.files;
-          } catch(e) {}
+        var fotoInput = q('sticker_foto');
+        if (fotoInput) {
+          fotoInput.removeAttribute('required');
+          var label = fotoInput.closest('.hs-form-field');
+          if (label) { var req = label.querySelector('label .hs-form-required'); if (req) req.style.display = 'none'; }
         }
       }
-    },
-    onBeforeFormSubmit: function($form, submitData) {
-      submitData.push(
-        {name: 'sticker_oc',               value: datos.oc},
-        {name: 'sticker_edc',              value: datos.edc},
-        {name: 'sticker_inmobiliaria',     value: datos.inmo},
-        {name: 'sticker_direccion',        value: datos.dir},
-        {name: 'sticker_localidad',        value: datos.loc},
-        {name: 'sticker_contacto_inmo',    value: datos.contacto},
-        {name: 'sticker_contacto_rol',     value: datos.contactoRol},
-        {name: 'sticker_celular_contacto', value: datos.celular},
-        {name: 'sticker_detalle_pedido',   value: generarDetalle()},
-        {name: 'sticker_solicita_a4',      value: (datos.a4   && datos.a4.solicita)   ? 'true' : 'false'},
-        {name: 'sticker_solicita_faja',    value: (datos.faja && datos.faja.solicita) ? 'true' : 'false'},
-        {name: 'sticker_solicita_gf',      value: (datos.gf   && datos.gf.solicita)   ? 'true' : 'false'},
-        {name: 'sticker_solicita_pam',     value: (datos.am   && datos.am.solicita)   ? 'true' : 'false'}
-      );
+      if (logoFileObj) {
+        var logoField = q('sticker_logo');
+        if (logoField && window.DataTransfer) {
+          try { var dt = new DataTransfer(); dt.items.add(logoFileObj); logoField.files = dt.files; } catch(e) {}
+        }
+      }
     },
     onFormSubmitted: function() {
       document.getElementById('paso-6').innerHTML =
