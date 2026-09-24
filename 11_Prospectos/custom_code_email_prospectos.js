@@ -3,8 +3,8 @@
  * Envía el "1er correo Prospectos" vía SMTP a contactos no-marketing.
  *
  * Secrets requeridos en el WF:
- *   SMTP_USER_PROSPECTOS = h5gxrpxywe@145725856.smtp.hubspot.net
- *   SMTP_PASS_PROSPECTOS = (token generado en HubSpot > Config > Correo > SMTP)
+ *   SMTP_USER_PROSPECTOS  → HubSpot > Config > Correo > SMTP
+ *   SMTP_PASS_PROSPECTOS  → HubSpot > Config > Correo > SMTP
  *
  * Input del WF: email → propiedad "Email" del contacto
  */
