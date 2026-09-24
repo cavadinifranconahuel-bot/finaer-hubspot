@@ -436,6 +436,9 @@ Al escribir cualquier script que use una API externa:
   Tokens y credenciales SIEMPRE por process.env, nunca hardcodeados en el archivo.
   Si el archivo a modificar ya tiene un token escrito a mano, avisar antes de
   modificarlo — no replicarlo en el archivo nuevo.
+  ANTES de hacer git add en cualquier archivo nuevo: buscar con grep credenciales
+  reales (usuarios SMTP, tokens, keys, emails de service accounts) en comentarios
+  y constantes. Si se encuentra algo, limpiar primero, commitear después.
 
 Antes de crear un script nuevo:
   Buscar si existe un archivo con propósito similar en la carpeta. Si hay versiones

@@ -12,3 +12,8 @@ temp_alumni/
 temp_renovacion/
 nomina_datos.json
 reporte_inscripciones.csv
+
+# Logs operativos y outputs personales
+09_Judiciales/log_*.csv
+09_Judiciales/ejecucion_ya_enviados.txt
+Claude outputs/
