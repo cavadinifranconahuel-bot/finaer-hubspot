@@ -257,13 +257,18 @@ function enviarSMTP(toEmail, htmlBody) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  const args     = process.argv.slice(2);
-  const tipo     = args[args.indexOf('--template') + 1]?.toLowerCase();
-  const filePath = args[args.indexOf('--file') + 1];
-  const dryRun   = args.includes('--dry-run');
-  const preview  = args.includes('--preview');
-  const toIdx    = args.indexOf('--to');
-  const testTo   = toIdx !== -1 ? args[toIdx + 1] : null;
+  const args       = process.argv.slice(2);
+  const tipo       = args[args.indexOf('--template') + 1]?.toLowerCase();
+  const filePath   = args[args.indexOf('--file') + 1];
+  const dryRun     = args.includes('--dry-run');
+  const preview    = args.includes('--preview');
+  const toIdx      = args.indexOf('--to');
+  const testTo     = toIdx !== -1 ? args[toIdx + 1] : null;
+  const skipIdx    = args.indexOf('--skip-file');
+  const skipFile   = skipIdx !== -1 ? args[skipIdx + 1] : null;
+  const skipEmails = skipFile && fs.existsSync(skipFile)
+    ? new Set(fs.readFileSync(skipFile, 'utf8').split('\n').map(e => e.trim().toLowerCase()).filter(Boolean))
+    : new Set();
 
   if (!tipo || !['ejecucion', 'desalojo'].includes(tipo)) {
     console.error('Error: --template debe ser "ejecucion" o "desalojo"');
@@ -300,9 +305,16 @@ async function main() {
   }
 
   // En modo --to: toma el primero del Excel y lo redirige a la dirección de test
-  const destinatarios = testTo
-    ? [{ ...todosLosDestinatarios[0], email: testTo }]
+  const destinatariosBase = skipEmails.size > 0
+    ? todosLosDestinatarios.filter(d => !skipEmails.has(d.email.toLowerCase()))
     : todosLosDestinatarios;
+
+  if (skipEmails.size > 0)
+    console.log(`Skip file: ${skipEmails.size} emails omitidos, quedan ${destinatariosBase.length} por enviar\n`);
+
+  const destinatarios = testTo
+    ? [{ ...destinatariosBase[0], email: testTo }]
+    : destinatariosBase;
 
   console.log(`\nTemplate:      ${tipo.toUpperCase()}`);
   console.log(`Archivo:       ${filePath}`);

@@ -9,25 +9,19 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* ── Flex order: empuja el footer del template al final ── */
+body { display: flex !important; flex-direction: column !important; min-height: 100vh !important; }
+body > footer,
+body > [id*="footer"],
+body > [class*="footer"],
+body > [id*="Footer"],
+body > [class*="Footer"] { order: 4 !important; }
+body > div:has(footer.hs-elevate-footer) { order: 10 !important; }
+#encuesta-root { order: 3 !important; flex-grow: 1 !important; flex-shrink: 0; }
+
 body {
-  margin: 0;
   font-family: 'Kumbh Sans', -apple-system, sans-serif;
   background: #f0f2f5;
-  min-height: 100vh;
-}
-
-/* ── Logo header ── */
-.fi-header {
-  background: #fff;
-  border-bottom: 3px solid #e30613;
-  padding: 18px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.fi-header img {
-  height: 40px;
-  width: auto;
 }
 
 /* ── Page wrapper ── */
@@ -35,6 +29,7 @@ body {
   padding: 36px 16px 60px;
   max-width: 680px;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* ── Hero title ── */
@@ -301,12 +296,7 @@ body {
 </head>
 <body>
 
-<div class="fi-header">
-  <img src="https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/logos/logo-finaer.png"
-       alt="FINAER Garantías"
-       onerror="this.src='https://145725856.fs1.hubspotusercontent-eu1.net/hubfs/145725856/logos/logo-finaer.png'">
-</div>
-
+<div id="encuesta-root">
 <div class="fi-page">
 
   <div class="fi-hero">
@@ -460,6 +450,7 @@ body {
   </div>
 
   <div class="fi-footer">© FINAER Garantías de Alquiler</div>
+</div>
 </div>
 
 <script>

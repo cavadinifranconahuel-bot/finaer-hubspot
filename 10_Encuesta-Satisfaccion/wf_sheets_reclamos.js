@@ -23,9 +23,7 @@ const crypto = require('crypto');
 
 const SHEET_ID  = '1Xg-LazOj8QzTwKcbGhCr91wLO_o5RmV29QUgO0NisjQ';
 const SHEET_TAB = 'Respuestas de formulario';
-const PROPS     = ['firstname','lastname','phone','email',
-                   'tipo_de_cliente','tipo_de_cliente__otro',
-                   'motivo_de_su_reclamo','content','informacion_adicional'];
+const FORM_GUID = '7b30fd58-18ef-4654-9e5e-7badc0da3f55';
 
 // ── HTTP helper ──────────────────────────────────────────────────────────────
 function req(options, body) {
@@ -85,16 +83,56 @@ async function getGoogleToken() {
   return r.body.access_token;
 }
 
-// ── HubSpot — leer contacto ──────────────────────────────────────────────────
-async function getContacto(contactId) {
+// ── HubSpot — leer email del contacto ────────────────────────────────────────
+async function getEmailContacto(contactId) {
   const r = await req({
     hostname: 'api.hubapi.com',
-    path: `/crm/v3/objects/contacts/${contactId}?properties=${PROPS.join(',')}`,
+    path: `/crm/v3/objects/contacts/${contactId}?properties=email`,
     method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + process.env.token, 'Content-Type': 'application/json' }
+    headers: { 'Authorization': 'Bearer ' + process.env.token }
   });
   if (r.status !== 200) throw new Error('No se pudo leer el contacto: ' + JSON.stringify(r.body));
-  return r.body.properties;
+  return r.body.properties.email;
+}
+
+// ── HubSpot — leer último envío del formulario ───────────────────────────────
+async function getUltimaSubmission(contactId) {
+  const [email, r] = await Promise.all([
+    getEmailContacto(contactId),
+    req({
+      hostname: 'api.hubapi.com',
+      path: `/form-integrations/v1/submissions/forms/${FORM_GUID}?count=50`,
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + process.env.token }
+    })
+  ]);
+  if (r.status !== 200) throw new Error('No se pudo leer submissions del form: ' + JSON.stringify(r.body));
+  const results = r.body.results || [];
+  // Cruzar por email dentro de values — la API no devuelve vid
+  const lista = results.filter(s =>
+    (s.values || []).some(v => v.name === 'email' && v.value === email)
+  );
+  if (!lista.length) throw new Error('No hay envíos del formulario para ' + email);
+  // La API devuelve ordenado por tiempo desc — el primero es el más reciente
+  const campos = {};
+  (lista[0].values || []).forEach(({ name, value }) => { campos[name] = value; });
+  return campos;
+}
+
+// ── HubSpot — actualizar propiedades del Contact ─────────────────────────────
+async function actualizarContacto(contactId, campos) {
+  const PROPS_FORM = ['tipo_de_cliente','tipo_de_cliente__otro','motivo_de_su_reclamo',
+                      'content','informacion_adicional','phone'];
+  const properties = {};
+  PROPS_FORM.forEach(k => { if (campos[k]) properties[k] = campos[k]; });
+  if (!Object.keys(properties).length) return;
+  const r = await req({
+    hostname: 'api.hubapi.com',
+    path: `/crm/v3/objects/contacts/${contactId}`,
+    method: 'PATCH',
+    headers: { 'Authorization': 'Bearer ' + process.env.token, 'Content-Type': 'application/json' }
+  }, { properties });
+  if (r.status !== 200) throw new Error('No se pudo actualizar contacto: ' + JSON.stringify(r.body));
 }
 
 // ── Google Sheets — agregar fila ─────────────────────────────────────────────
@@ -102,7 +140,7 @@ async function appendFila(gToken, fila) {
   const range = SHEET_TAB.replace(/ /g, '%20') + '!A1';
   const r = await req({
     hostname: 'sheets.googleapis.com',
-    path: `/v4/spreadsheets/${SHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+    path: `/v4/spreadsheets/${SHEET_ID}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + gToken, 'Content-Type': 'application/json' }
   }, { values: [fila] });
@@ -114,29 +152,31 @@ async function appendFila(gToken, fila) {
 exports.main = async (event, callback) => {
   const contactId = String(event.object.objectId);
 
-  const [p, gToken] = await Promise.all([
-    getContacto(contactId),
+  const [campos, gToken] = await Promise.all([
+    getUltimaSubmission(contactId),
     getGoogleToken()
   ]);
 
-  const ahora  = new Date().toLocaleString('es-AR', { timeZone: 'America/Buenos_Aires' });
-  const nombre = [p.firstname||'', p.lastname||''].filter(Boolean).join(' ');
+  await actualizarContacto(contactId, campos);
 
-  let tipo = p.tipo_de_cliente || '';
-  if (tipo === 'Otro' && p.tipo_de_cliente__otro) tipo = `Otro (${p.tipo_de_cliente__otro})`;
+  const ahora  = new Date().toLocaleString('es-AR', { timeZone: 'America/Buenos_Aires' });
+  const nombre = [campos.firstname||'', campos.lastname||''].filter(Boolean).join(' ');
+
+  let tipo = campos.tipo_de_cliente || '';
+  if (tipo === 'Otro' && campos.tipo_de_cliente__otro) tipo = `Otro (${campos.tipo_de_cliente__otro})`;
 
   const fila = [
     ahora,
     nombre,
-    p.phone               || '',
-    p.email               || '',
+    campos.phone                || '',
+    campos.email                || '',
     tipo,
-    p.motivo_de_su_reclamo|| '',
-    p.content             || '',
-    p.informacion_adicional|| '',
+    campos.motivo_de_su_reclamo || '',
+    campos.content              || '',
+    campos.informacion_adicional|| '',
   ];
 
   await appendFila(gToken, fila);
-  console.log('Fila agregada para:', p.email);
+  console.log('Fila agregada para:', campos.email);
   callback({ outputFields: {} });
 };

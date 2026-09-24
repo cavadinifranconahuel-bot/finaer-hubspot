@@ -113,7 +113,7 @@ async function appendFila(gToken, fila) {
   const range = SHEET_TAB.replace(/ /g, '%20') + '!A1';
   const r = await req({
     hostname: 'sheets.googleapis.com',
-    path: `/v4/spreadsheets/${SHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+    path: `/v4/spreadsheets/${SHEET_ID}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + gToken, 'Content-Type': 'application/json' }
   }, { values: [fila] });
